@@ -41,7 +41,7 @@ from .update_project_conversation_response_200 import UpdateProjectConversationR
 from .update_project_conversation_response_200_data import UpdateProjectConversationResponse200Data
 from .update_project_conversation_response_200_status import UpdateProjectConversationResponse200Status
 from .update_project_json_body import UpdateProjectJsonBody
-from .update_project_pages_multipart_data import UpdateProjectPagesMultipartData
+from .update_project_settings_multipart_data import UpdateProjectSettingsMultipartData
 from .update_user_profile_multipart_data import UpdateUserProfileMultipartData
 from .update_user_profile_response_200 import UpdateUserProfileResponse200
 from .update_user_profile_response_200_data import UpdateUserProfileResponse200Data
@@ -90,7 +90,7 @@ __all__ = (
     "UpdateProjectConversationResponse200Data",
     "UpdateProjectConversationResponse200Status",
     "UpdateProjectJsonBody",
-    "UpdateProjectPagesMultipartData",
+    "UpdateProjectSettingsMultipartData",
     "UpdateUserProfileMultipartData",
     "UpdateUserProfileResponse200",
     "UpdateUserProfileResponse200Data",

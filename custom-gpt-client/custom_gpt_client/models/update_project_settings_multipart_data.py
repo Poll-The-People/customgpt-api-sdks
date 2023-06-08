@@ -6,11 +6,11 @@ import attr
 
 from ..types import UNSET, File, FileJsonType, Unset
 
-T = TypeVar("T", bound="UpdateProjectPagesMultipartData")
+T = TypeVar("T", bound="UpdateProjectSettingsMultipartData")
 
 
 @attr.s(auto_attribs=True)
-class UpdateProjectPagesMultipartData:
+class UpdateProjectSettingsMultipartData:
     """
     Attributes:
         chat_bot_avatar (Union[Unset, File]): Chatbot avatar Example: avatar.png.
@@ -139,7 +139,7 @@ class UpdateProjectPagesMultipartData:
 
         chatbot_msg_lang = d.pop("chatbot_msg_lang", UNSET)
 
-        update_project_pages_multipart_data = cls(
+        update_project_settings_multipart_data = cls(
             chat_bot_avatar=chat_bot_avatar,
             chat_bot_bg=chat_bot_bg,
             default_prompt=default_prompt,
@@ -148,8 +148,8 @@ class UpdateProjectPagesMultipartData:
             chatbot_msg_lang=chatbot_msg_lang,
         )
 
-        update_project_pages_multipart_data.additional_properties = d
-        return update_project_pages_multipart_data
+        update_project_settings_multipart_data.additional_properties = d
+        return update_project_settings_multipart_data
 
     @property
     def additional_keys(self) -> List[str]:

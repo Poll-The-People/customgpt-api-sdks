@@ -23,6 +23,7 @@ class CreateProjectJsonBody:
     file_data_retension: Union[Unset, bool] = UNSET
     file: Union[Unset, File] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
+
     def to_dict(self) -> Dict[str, Any]:
         project_name = self.project_name
         sitemap_path = self.sitemap_path

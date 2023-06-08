@@ -5,7 +5,7 @@ import httpx
 
 from ... import errors
 from ...client import CustomGPT, CustomGPTClient
-from ...models.update_project_pages_multipart_data import UpdateProjectPagesMultipartData
+from ...models.update_project_settings_multipart_data import UpdateProjectSettingsMultipartData
 from ...types import Response
 
 
@@ -13,7 +13,7 @@ def _get_kwargs(
     project_id: int,
     *,
     client: CustomGPT,
-    multipart_data: UpdateProjectPagesMultipartData,
+    multipart_data: UpdateProjectSettingsMultipartData,
 ) -> Dict[str, Any]:
     url = "{}/api/v1/projects/{projectId}/settings".format(client.base_url, projectId=project_id)
 
@@ -61,7 +61,7 @@ def sync_detailed(
     project_id: int,
     *,
     client: CustomGPT,
-    multipart_data: UpdateProjectPagesMultipartData,
+    multipart_data: UpdateProjectSettingsMultipartData,
 ) -> Response[Any]:
     """Update project settings.
 
@@ -69,7 +69,7 @@ def sync_detailed(
 
     Args:
         project_id (int):
-        multipart_data (UpdateProjectPagesMultipartData):
+        multipart_data (UpdateProjectSettingsMultipartData):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -97,7 +97,7 @@ async def asyncio_detailed(
     project_id: int,
     *,
     client: CustomGPT,
-    multipart_data: UpdateProjectPagesMultipartData,
+    multipart_data: UpdateProjectSettingsMultipartData,
 ) -> Response[Any]:
     """Update project settings.
 
@@ -105,7 +105,7 @@ async def asyncio_detailed(
 
     Args:
         project_id (int):
-        multipart_data (UpdateProjectPagesMultipartData):
+        multipart_data (UpdateProjectSettingsMultipartData):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.

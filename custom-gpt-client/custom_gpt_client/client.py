@@ -48,7 +48,6 @@ class CustomGPTClient:
         return self.timeout
 
     def with_timeout(self, timeout: float) -> "Client":
-        print(timeout)
         """Get a new client matching this one with a new timeout (in seconds)"""
         return attr.evolve(self, timeout=timeout)
 

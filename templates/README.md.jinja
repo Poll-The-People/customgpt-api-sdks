@@ -5,15 +5,7 @@
 First, create a client:
 
 ```python
-from {{ package_name }} import Client
-
-client = CustomGPTClient(base_url="https://api.example.com")
-```
-
-If the endpoints you're going to hit require authentication, use `AuthenticatedClient` instead:
-
-```python
-from {{ package_name }} import AuthenticatedClient
+from {{ package_name }} import CustomGPT
 
 client = CustomGPT(base_url="https://api.example.com", token="SuperSecretToken")
 ```

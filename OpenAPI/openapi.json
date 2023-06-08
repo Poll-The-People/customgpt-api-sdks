@@ -770,7 +770,7 @@
                 ]
             },
             "post": {
-                "operationId": "update_project_pages",
+                "operationId": "update_project_settings",
                 "tags": [
                     "Project Settings"
                 ],
