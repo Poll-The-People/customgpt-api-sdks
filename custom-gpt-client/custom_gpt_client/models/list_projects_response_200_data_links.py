@@ -45,6 +45,7 @@ class ListProjectsResponse200DataLinks:
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+        print(src_dict)
         d = src_dict.copy()
         first = d.pop("first", UNSET)
 

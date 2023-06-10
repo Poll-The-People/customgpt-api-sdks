@@ -4,14 +4,13 @@ from typing import Any, Dict, Optional, Union, cast
 import httpx
 
 from ... import errors
-from ...client import CustomGPT, CustomGPTClient
 from ...models.get_user_profile_response_200 import GetUserProfileResponse200
 from ...types import Response
 
 
 def _get_kwargs(
     *,
-    client: CustomGPT,
+    client: {},
 ) -> Dict[str, Any]:
     url = "{}/api/v1/user".format(client.base_url)
 
@@ -28,9 +27,7 @@ def _get_kwargs(
     }
 
 
-def _parse_response(
-    *, client: CustomGPTClient, response: httpx.Response
-) -> Optional[Union[Any, GetUserProfileResponse200]]:
+def _parse_response(*, client: {}, response: httpx.Response) -> Optional[Union[Any, GetUserProfileResponse200]]:
     if response.status_code == HTTPStatus.OK:
         response_200 = GetUserProfileResponse200.from_dict(response.json())
 
@@ -47,9 +44,7 @@ def _parse_response(
         return None
 
 
-def _build_response(
-    *, client: CustomGPTClient, response: httpx.Response
-) -> Response[Union[Any, GetUserProfileResponse200]]:
+def _build_response(*, client: {}, response: httpx.Response) -> Response[Union[Any, GetUserProfileResponse200]]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -60,7 +55,7 @@ def _build_response(
 
 def sync_detailed(
     *,
-    client: CustomGPT,
+    client: {},
 ) -> Response[Union[Any, GetUserProfileResponse200]]:
     """Show the user's profile.
 
@@ -84,73 +79,3 @@ def sync_detailed(
     )
 
     return _build_response(client=client, response=response)
-
-
-def sync(
-    *,
-    client: CustomGPT,
-) -> Optional[Union[Any, GetUserProfileResponse200]]:
-    """Show the user's profile.
-
-     Retrieve the current user's profile.
-
-    Raises:
-        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
-        httpx.TimeoutException: If the request takes longer than Client.timeout.
-
-    Returns:
-        Union[Any, GetUserProfileResponse200]
-    """
-
-    return sync_detailed(
-        client=client,
-    ).parsed
-
-
-async def asyncio_detailed(
-    *,
-    client: CustomGPT,
-) -> Response[Union[Any, GetUserProfileResponse200]]:
-    """Show the user's profile.
-
-     Retrieve the current user's profile.
-
-    Raises:
-        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
-        httpx.TimeoutException: If the request takes longer than Client.timeout.
-
-    Returns:
-        Response[Union[Any, GetUserProfileResponse200]]
-    """
-
-    kwargs = _get_kwargs(
-        client=client,
-    )
-
-    async with httpx.AsyncClient(verify=client.verify_ssl) as _client:
-        response = await _client.request(**kwargs)
-
-    return _build_response(client=client, response=response)
-
-
-async def asyncio(
-    *,
-    client: CustomGPT,
-) -> Optional[Union[Any, GetUserProfileResponse200]]:
-    """Show the user's profile.
-
-     Retrieve the current user's profile.
-
-    Raises:
-        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
-        httpx.TimeoutException: If the request takes longer than Client.timeout.
-
-    Returns:
-        Union[Any, GetUserProfileResponse200]
-    """
-
-    return (
-        await asyncio_detailed(
-            client=client,
-        )
-    ).parsed

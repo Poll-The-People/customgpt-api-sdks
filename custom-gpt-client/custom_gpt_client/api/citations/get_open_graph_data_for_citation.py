@@ -4,7 +4,6 @@ from typing import Any, Dict, Optional, Union, cast
 import httpx
 
 from ... import errors
-from ...client import CustomGPT, CustomGPTClient
 from ...models.get_open_graph_data_for_citation_response_200 import GetOpenGraphDataForCitationResponse200
 from ...types import Response
 
@@ -13,7 +12,7 @@ def _get_kwargs(
     project_id: int,
     citation_id: int,
     *,
-    client: CustomGPT,
+    client: {},
 ) -> Dict[str, Any]:
     url = "{}/api/v1/projects/{projectId}/citations/{citationId}".format(
         client.base_url, projectId=project_id, citationId=citation_id
@@ -33,7 +32,7 @@ def _get_kwargs(
 
 
 def _parse_response(
-    *, client: CustomGPTClient, response: httpx.Response
+    *, client: {}, response: httpx.Response
 ) -> Optional[Union[Any, GetOpenGraphDataForCitationResponse200]]:
     if response.status_code == HTTPStatus.OK:
         response_200 = GetOpenGraphDataForCitationResponse200.from_dict(response.json())
@@ -52,7 +51,7 @@ def _parse_response(
 
 
 def _build_response(
-    *, client: CustomGPTClient, response: httpx.Response
+    *, client: {}, response: httpx.Response
 ) -> Response[Union[Any, GetOpenGraphDataForCitationResponse200]]:
     return Response(
         status_code=HTTPStatus(response.status_code),
@@ -66,7 +65,7 @@ def sync_detailed(
     project_id: int,
     citation_id: int,
     *,
-    client: CustomGPT,
+    client: {},
 ) -> Response[Union[Any, GetOpenGraphDataForCitationResponse200]]:
     """Get the Open Graph data for a citation.
 
@@ -96,97 +95,3 @@ def sync_detailed(
     )
 
     return _build_response(client=client, response=response)
-
-
-def sync(
-    project_id: int,
-    citation_id: int,
-    *,
-    client: CustomGPT,
-) -> Optional[Union[Any, GetOpenGraphDataForCitationResponse200]]:
-    """Get the Open Graph data for a citation.
-
-     Get the Open Graph data for a citation by its unique identifier.
-
-    Args:
-        project_id (int):
-        citation_id (int):
-
-    Raises:
-        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
-        httpx.TimeoutException: If the request takes longer than Client.timeout.
-
-    Returns:
-        Union[Any, GetOpenGraphDataForCitationResponse200]
-    """
-
-    return sync_detailed(
-        project_id=project_id,
-        citation_id=citation_id,
-        client=client,
-    ).parsed
-
-
-async def asyncio_detailed(
-    project_id: int,
-    citation_id: int,
-    *,
-    client: CustomGPT,
-) -> Response[Union[Any, GetOpenGraphDataForCitationResponse200]]:
-    """Get the Open Graph data for a citation.
-
-     Get the Open Graph data for a citation by its unique identifier.
-
-    Args:
-        project_id (int):
-        citation_id (int):
-
-    Raises:
-        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
-        httpx.TimeoutException: If the request takes longer than Client.timeout.
-
-    Returns:
-        Response[Union[Any, GetOpenGraphDataForCitationResponse200]]
-    """
-
-    kwargs = _get_kwargs(
-        project_id=project_id,
-        citation_id=citation_id,
-        client=client,
-    )
-
-    async with httpx.AsyncClient(verify=client.verify_ssl) as _client:
-        response = await _client.request(**kwargs)
-
-    return _build_response(client=client, response=response)
-
-
-async def asyncio(
-    project_id: int,
-    citation_id: int,
-    *,
-    client: CustomGPT,
-) -> Optional[Union[Any, GetOpenGraphDataForCitationResponse200]]:
-    """Get the Open Graph data for a citation.
-
-     Get the Open Graph data for a citation by its unique identifier.
-
-    Args:
-        project_id (int):
-        citation_id (int):
-
-    Raises:
-        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
-        httpx.TimeoutException: If the request takes longer than Client.timeout.
-
-    Returns:
-        Union[Any, GetOpenGraphDataForCitationResponse200]
-    """
-
-    return (
-        await asyncio_detailed(
-            project_id=project_id,
-            citation_id=citation_id,
-            client=client,
-        )
-    ).parsed

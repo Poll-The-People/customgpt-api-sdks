@@ -1,7 +1,28 @@
 import ssl
-from typing import Dict, Union
+from typing import Any, Dict, Union
 
 import attr
+
+from custom_gpt_client.api.citations import get_open_graph_data_for_citation
+from custom_gpt_client.api.conversations import (
+    create_project_conversation,
+    delete_project_conversation,
+    get_project_conversation_messages,
+    get_project_conversations,
+    send_message_to_conversation,
+    update_project_conversation,
+)
+from custom_gpt_client.api.pages import delete_project_pages, get_project_pages
+from custom_gpt_client.api.project_settings import get_project_settings, update_project_settings
+from custom_gpt_client.api.projects import (
+    create_project,
+    delete_project,
+    get_project,
+    get_project_stats,
+    list_projects,
+    update_project,
+)
+from custom_gpt_client.api.users import get_user_profile, update_user_profile
 
 
 @attr.s(auto_attribs=True)
@@ -64,3 +85,60 @@ class CustomGPT(CustomGPTClient):
         """Get headers to be used in authenticated endpoints"""
         auth_header_value = f"{self.prefix} {self.token}" if self.prefix else self.token
         return {self.auth_header_name: auth_header_value, **self.headers}
+
+    def list_projects(self, *args: Any, **kwargs: Any):
+        return list_projects.sync_detailed(client=self, *args, **kwargs)
+
+    def create_project(self, *args: Any, **kwargs: Any):
+        return create_project.sync_detailed(client=self, *args, **kwargs)
+
+    def get_project(self, *args: Any, **kwargs: Any):
+        return get_project.sync_detailed(client=self, *args, **kwargs)
+
+    def update_project(self, *args: Any, **kwargs: Any):
+        return update_project.sync_detailed(client=self, *args, **kwargs)
+
+    def delete_project(self, *args: Any, **kwargs: Any):
+        return delete_project.sync_detailed(client=self, *args, **kwargs)
+
+    def get_project_stats(self, *args: Any, **kwargs: Any):
+        return get_project_stats.sync_detailed(client=self, *args, **kwargs)
+
+    def get_project_pages(self, *args: Any, **kwargs: Any):
+        return get_project_pages.sync_detailed(client=self, *args, **kwargs)
+
+    def delete_project_pages(self, *args: Any, **kwargs: Any):
+        return delete_project_pages.sync_detailed(client=self, *args, **kwargs)
+
+    def get_project_settings(self, *args: Any, **kwargs: Any):
+        return get_project_settings.sync_detailed(client=self, *args, **kwargs)
+
+    def update_project_settings(self, *args: Any, **kwargs: Any):
+        return update_project_settings.sync_detailed(client=self, *args, **kwargs)
+
+    def get_project_conversations(self, *args: Any, **kwargs: Any):
+        return get_project_conversations.sync_detailed(client=self, *args, **kwargs)
+
+    def create_project_conversation(self, *args: Any, **kwargs: Any):
+        return create_project_conversation.sync_detailed(client=self, *args, **kwargs)
+
+    def update_project_conversation(self, *args: Any, **kwargs: Any):
+        return update_project_conversation.sync_detailed(client=self, *args, **kwargs)
+
+    def delete_project_conversation(self, *args: Any, **kwargs: Any):
+        return delete_project_conversation.sync_detailed(client=self, *args, **kwargs)
+
+    def get_project_conversation_messages(self, *args: Any, **kwargs: Any):
+        return get_project_conversation_messages.sync_detailed(client=self, *args, **kwargs)
+
+    def send_message_to_conversation(self, *args: Any, **kwargs: Any):
+        return send_message_to_conversation.sync_detailed(client=self, *args, **kwargs)
+
+    def get_open_graph_data_for_citation(self, *args: Any, **kwargs: Any):
+        return get_open_graph_data_for_citation.sync_detailed(client=self, *args, **kwargs)
+
+    def get_user_profile(self, *args: Any, **kwargs: Any):
+        return get_user_profile.sync_detailed(client=self, *args, **kwargs)
+
+    def update_user_profile(self, *args: Any, **kwargs: Any):
+        return update_user_profile.sync_detailed(client=self, *args, **kwargs)

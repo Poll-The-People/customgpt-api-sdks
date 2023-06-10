@@ -4,7 +4,6 @@ from typing import Any, Dict, Optional
 import httpx
 
 from ... import errors
-from ...client import CustomGPT, CustomGPTClient
 from ...models.update_project_json_body import UpdateProjectJsonBody
 from ...types import Response
 
@@ -12,7 +11,7 @@ from ...types import Response
 def _get_kwargs(
     project_id: int,
     *,
-    client: CustomGPT,
+    client: {},
     json_body: UpdateProjectJsonBody,
 ) -> Dict[str, Any]:
     url = "{}/api/v1/projects/{projectId}".format(client.base_url, projectId=project_id)
@@ -33,7 +32,7 @@ def _get_kwargs(
     }
 
 
-def _parse_response(*, client: CustomGPTClient, response: httpx.Response) -> Optional[Any]:
+def _parse_response(*, client: {}, response: httpx.Response) -> Optional[Any]:
     if response.status_code == HTTPStatus.OK:
         return None
     if response.status_code == HTTPStatus.UNAUTHORIZED:
@@ -48,7 +47,7 @@ def _parse_response(*, client: CustomGPTClient, response: httpx.Response) -> Opt
         return None
 
 
-def _build_response(*, client: CustomGPTClient, response: httpx.Response) -> Response[Any]:
+def _build_response(*, client: {}, response: httpx.Response) -> Response[Any]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -60,7 +59,7 @@ def _build_response(*, client: CustomGPTClient, response: httpx.Response) -> Res
 def sync_detailed(
     project_id: int,
     *,
-    client: CustomGPT,
+    client: {},
     json_body: UpdateProjectJsonBody,
 ) -> Response[Any]:
     """Update a certain project
@@ -87,37 +86,5 @@ def sync_detailed(
         verify=client.verify_ssl,
         **kwargs,
     )
-
-    return _build_response(client=client, response=response)
-
-
-async def asyncio_detailed(
-    project_id: int,
-    *,
-    client: CustomGPT,
-    json_body: UpdateProjectJsonBody,
-) -> Response[Any]:
-    """Update a certain project
-
-    Args:
-        project_id (int):
-        json_body (UpdateProjectJsonBody):
-
-    Raises:
-        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
-        httpx.TimeoutException: If the request takes longer than Client.timeout.
-
-    Returns:
-        Response[Any]
-    """
-
-    kwargs = _get_kwargs(
-        project_id=project_id,
-        client=client,
-        json_body=json_body,
-    )
-
-    async with httpx.AsyncClient(verify=client.verify_ssl) as _client:
-        response = await _client.request(**kwargs)
 
     return _build_response(client=client, response=response)

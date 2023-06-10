@@ -107,10 +107,9 @@ class ListProjectsResponse200Data:
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         from ..models.list_projects_response_200_data_links import ListProjectsResponse200DataLinks
         from ..models.project import Project
-
         d = src_dict.copy()
         current_page = d.pop("current_page", UNSET)
-
+        print(d)
         data = []
         _data = d.pop("data", UNSET)
         for data_item_data in _data or []:
@@ -127,6 +126,7 @@ class ListProjectsResponse200Data:
         last_page_url = d.pop("last_page_url", UNSET)
 
         _links = d.pop("links", UNSET)
+
         links: Union[Unset, ListProjectsResponse200DataLinks]
         if isinstance(_links, Unset):
             links = UNSET

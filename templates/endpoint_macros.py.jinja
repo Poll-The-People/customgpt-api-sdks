@@ -86,9 +86,9 @@ params = {k: v for k, v in params.items() if v is not UNSET and v is not None}
 *,
 {# Proper client based on whether or not the endpoint requires authentication #}
 {% if endpoint.requires_security %}
-client: CustomGPT,
+client: {},
 {% else %}
-client: CustomGPTClient,
+client: {},
 {% endif %}
 {# Form data if any #}
 {% if endpoint.form_body %}

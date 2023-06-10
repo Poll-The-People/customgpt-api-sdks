@@ -1,6 +1,13 @@
 import ssl
-from typing import Dict, Union
+from typing import Any, Dict, Union
 import attr
+{% from "endpoint_macros.py.jinja" import header_params, cookie_params, query_params, json_body, multipart_body,
+    arguments, client, kwargs, parse_response, docstring %}
+{% for collection in endpoint_collections_by_tag.values() %}
+{% for endpoint in collection.endpoints %}
+from custom_gpt_client.api.{{endpoint.tag}} import {{endpoint.name}}
+{% endfor %}
+{% endfor %}
 
 @attr.s(auto_attribs=True)
 class CustomGPTClient:
@@ -49,6 +56,7 @@ class CustomGPTClient:
         """ Get a new client matching this one with a new timeout (in seconds) """
         return attr.evolve(self, timeout=timeout)
 
+
 @attr.s(auto_attribs=True)
 class CustomGPT(CustomGPTClient):
     """ A Client which has been authenticated for use on secured endpoints """
@@ -61,3 +69,14 @@ class CustomGPT(CustomGPTClient):
         """Get headers to be used in authenticated endpoints"""
         auth_header_value = f"{self.prefix} {self.token}" if self.prefix else self.token
         return {self.auth_header_name: auth_header_value, **self.headers}
+
+
+    {% for collection in endpoint_collections_by_tag.values() %}
+    {% for endpoint in collection.endpoints %}
+    def {{ endpoint.name }}(self, *args: Any, **kwargs: Any):
+        return {{endpoint.name}}.sync_detailed(client=self, *args, **kwargs)
+    {% endfor %}
+    {% endfor %}
+
+
+

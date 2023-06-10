@@ -4,7 +4,6 @@ from typing import Any, Dict, Optional, Union, cast
 import httpx
 
 from ... import errors
-from ...client import CustomGPT, CustomGPTClient
 from ...models.update_user_profile_multipart_data import UpdateUserProfileMultipartData
 from ...models.update_user_profile_response_200 import UpdateUserProfileResponse200
 from ...types import Response
@@ -12,7 +11,7 @@ from ...types import Response
 
 def _get_kwargs(
     *,
-    client: CustomGPT,
+    client: {},
     multipart_data: UpdateUserProfileMultipartData,
 ) -> Dict[str, Any]:
     url = "{}/api/v1/user".format(client.base_url)
@@ -33,9 +32,7 @@ def _get_kwargs(
     }
 
 
-def _parse_response(
-    *, client: CustomGPTClient, response: httpx.Response
-) -> Optional[Union[Any, UpdateUserProfileResponse200]]:
+def _parse_response(*, client: {}, response: httpx.Response) -> Optional[Union[Any, UpdateUserProfileResponse200]]:
     if response.status_code == HTTPStatus.OK:
         response_200 = UpdateUserProfileResponse200.from_dict(response.json())
 
@@ -52,9 +49,7 @@ def _parse_response(
         return None
 
 
-def _build_response(
-    *, client: CustomGPTClient, response: httpx.Response
-) -> Response[Union[Any, UpdateUserProfileResponse200]]:
+def _build_response(*, client: {}, response: httpx.Response) -> Response[Union[Any, UpdateUserProfileResponse200]]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -65,7 +60,7 @@ def _build_response(
 
 def sync_detailed(
     *,
-    client: CustomGPT,
+    client: {},
     multipart_data: UpdateUserProfileMultipartData,
 ) -> Response[Union[Any, UpdateUserProfileResponse200]]:
     """Update the user's profile.
@@ -94,88 +89,3 @@ def sync_detailed(
     )
 
     return _build_response(client=client, response=response)
-
-
-def sync(
-    *,
-    client: CustomGPT,
-    multipart_data: UpdateUserProfileMultipartData,
-) -> Optional[Union[Any, UpdateUserProfileResponse200]]:
-    """Update the user's profile.
-
-     Update the current user's profile.
-
-    Args:
-        multipart_data (UpdateUserProfileMultipartData):
-
-    Raises:
-        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
-        httpx.TimeoutException: If the request takes longer than Client.timeout.
-
-    Returns:
-        Union[Any, UpdateUserProfileResponse200]
-    """
-
-    return sync_detailed(
-        client=client,
-        multipart_data=multipart_data,
-    ).parsed
-
-
-async def asyncio_detailed(
-    *,
-    client: CustomGPT,
-    multipart_data: UpdateUserProfileMultipartData,
-) -> Response[Union[Any, UpdateUserProfileResponse200]]:
-    """Update the user's profile.
-
-     Update the current user's profile.
-
-    Args:
-        multipart_data (UpdateUserProfileMultipartData):
-
-    Raises:
-        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
-        httpx.TimeoutException: If the request takes longer than Client.timeout.
-
-    Returns:
-        Response[Union[Any, UpdateUserProfileResponse200]]
-    """
-
-    kwargs = _get_kwargs(
-        client=client,
-        multipart_data=multipart_data,
-    )
-
-    async with httpx.AsyncClient(verify=client.verify_ssl) as _client:
-        response = await _client.request(**kwargs)
-
-    return _build_response(client=client, response=response)
-
-
-async def asyncio(
-    *,
-    client: CustomGPT,
-    multipart_data: UpdateUserProfileMultipartData,
-) -> Optional[Union[Any, UpdateUserProfileResponse200]]:
-    """Update the user's profile.
-
-     Update the current user's profile.
-
-    Args:
-        multipart_data (UpdateUserProfileMultipartData):
-
-    Raises:
-        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
-        httpx.TimeoutException: If the request takes longer than Client.timeout.
-
-    Returns:
-        Union[Any, UpdateUserProfileResponse200]
-    """
-
-    return (
-        await asyncio_detailed(
-            client=client,
-            multipart_data=multipart_data,
-        )
-    ).parsed
