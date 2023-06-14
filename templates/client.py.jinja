@@ -6,6 +6,9 @@ import attr
 {% for collection in endpoint_collections_by_tag.values() %}
 {% for endpoint in collection.endpoints %}
 from custom_gpt_client.api.{{endpoint.tag}} import {{endpoint.name}}
+{% if endpoint.json_body %}
+from custom_gpt_client.models import {{endpoint.json_body.class_info.name}}
+{% endif %}
 {% endfor %}
 {% endfor %}
 
@@ -74,7 +77,29 @@ class CustomGPT(CustomGPTClient):
     {% for collection in endpoint_collections_by_tag.values() %}
     {% for endpoint in collection.endpoints %}
     def {{ endpoint.name }}(self, *args: Any, **kwargs: Any):
+        {% if endpoint.json_body %}
+        json = {}
+        {% for property in endpoint.json_body.data.properties.keys() %}
+        if '{{property}}' in kwargs:
+            field = kwargs.pop('{{property}}')
+            json['{{property}}'] = field
+        {% endfor %}
+        kwargs['json_body'] = {{endpoint.json_body.class_info.name}}(**json)
+        {% endif %}
+ 
         return {{endpoint.name}}.sync_detailed(client=self, *args, **kwargs)
+    def a{{ endpoint.name }}(self, *args: Any, **kwargs: Any):
+        {% if endpoint.json_body %}
+        json = {}
+        {% for property in endpoint.json_body.data.properties.keys() %}
+        if '{{property}}' in kwargs:
+            field = kwargs.pop('{{property}}')
+            json['{{property}}'] = field
+        {% endfor %}
+        kwargs['json_body'] = {{endpoint.json_body.class_info.name}}(**json)
+        {% endif %}
+ 
+        return {{endpoint.name}}.asyncio_detailed(client=self, *args, **kwargs)
     {% endfor %}
     {% endfor %}
 

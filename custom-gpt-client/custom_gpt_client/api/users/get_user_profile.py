@@ -44,10 +44,12 @@ def _parse_response(*, client: {}, response: httpx.Response) -> Optional[Union[A
         return None
 
 
-def _build_response(*, client: {}, response: httpx.Response) -> Response[Union[Any, GetUserProfileResponse200]]:
+def _build_response(
+    *, client: {}, response: httpx.Response, content: Optional[bytes] = None
+) -> Response[Union[Any, GetUserProfileResponse200]]:
     return Response(
         status_code=HTTPStatus(response.status_code),
-        content=response.content,
+        content=response.content if content is None else content,
         headers=response.headers,
         parsed=_parse_response(client=client, response=response),
     )
@@ -56,8 +58,14 @@ def _build_response(*, client: {}, response: httpx.Response) -> Response[Union[A
 def sync_detailed(
     *,
     client: {},
-) -> Response[Union[Any, GetUserProfileResponse200]]:
-    """Show the user's profile.
+):
+    if stream:
+        return list(
+            stream_detailed(
+                client=client,
+            )
+        )
+    """ Show the user's profile.
 
      Retrieve the current user's profile.
 
@@ -67,7 +75,7 @@ def sync_detailed(
 
     Returns:
         Response[Union[Any, GetUserProfileResponse200]]
-    """
+     """
 
     kwargs = _get_kwargs(
         client=client,
@@ -79,3 +87,77 @@ def sync_detailed(
     )
 
     return _build_response(client=client, response=response)
+
+
+def sync(
+    *,
+    client: {},
+) -> Optional[Union[Any, GetUserProfileResponse200]]:
+    """Show the user's profile.
+
+     Retrieve the current user's profile.
+
+    Raises:
+        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
+        httpx.TimeoutException: If the request takes longer than Client.timeout.
+
+    Returns:
+        Union[Any, GetUserProfileResponse200]
+    """
+
+    return sync_detailed(
+        client=client,
+    ).parsed
+
+
+async def asyncio_detailed(
+    *,
+    client: {},
+) -> Response[Union[Any, GetUserProfileResponse200]]:
+    if stream:
+        return astream_detailed(
+            client=client,
+        )
+    """ Show the user's profile.
+
+     Retrieve the current user's profile.
+
+    Raises:
+        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
+        httpx.TimeoutException: If the request takes longer than Client.timeout.
+
+    Returns:
+        Response[Union[Any, GetUserProfileResponse200]]
+     """
+
+    kwargs = _get_kwargs(
+        client=client,
+    )
+
+    async with httpx.AsyncClient(verify=client.verify_ssl) as _client:
+        response = await _client.request(**kwargs)
+
+    return _build_response(client=client, response=response)
+
+
+async def asyncio(
+    *,
+    client: {},
+) -> Optional[Union[Any, GetUserProfileResponse200]]:
+    """Show the user's profile.
+
+     Retrieve the current user's profile.
+
+    Raises:
+        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
+        httpx.TimeoutException: If the request takes longer than Client.timeout.
+
+    Returns:
+        Union[Any, GetUserProfileResponse200]
+    """
+
+    return (
+        await asyncio_detailed(
+            client=client,
+        )
+    ).parsed

@@ -43,10 +43,10 @@ def _parse_response(*, client: {}, response: httpx.Response) -> Optional[Any]:
         return None
 
 
-def _build_response(*, client: {}, response: httpx.Response) -> Response[Any]:
+def _build_response(*, client: {}, response: httpx.Response, content: Optional[bytes] = None) -> Response[Any]:
     return Response(
         status_code=HTTPStatus(response.status_code),
-        content=response.content,
+        content=response.content if content is None else content,
         headers=response.headers,
         parsed=_parse_response(client=client, response=response),
     )
@@ -57,8 +57,16 @@ def sync_detailed(
     page_id: int,
     *,
     client: {},
-) -> Response[Any]:
-    """Delete a certain page that belongs to a certain project.
+):
+    if stream:
+        return list(
+            stream_detailed(
+                project_id=project_id,
+                page_id=page_id,
+                client=client,
+            )
+        )
+    """ Delete a certain page that belongs to a certain project.
 
      Delete a certain page of a specific project by `projectId` and `pageId`.
 
@@ -72,7 +80,7 @@ def sync_detailed(
 
     Returns:
         Response[Any]
-    """
+     """
 
     kwargs = _get_kwargs(
         project_id=project_id,
@@ -84,5 +92,45 @@ def sync_detailed(
         verify=client.verify_ssl,
         **kwargs,
     )
+
+    return _build_response(client=client, response=response)
+
+
+async def asyncio_detailed(
+    project_id: int,
+    page_id: int,
+    *,
+    client: {},
+) -> Response[Any]:
+    if stream:
+        return astream_detailed(
+            project_id=project_id,
+            page_id=page_id,
+            client=client,
+        )
+    """ Delete a certain page that belongs to a certain project.
+
+     Delete a certain page of a specific project by `projectId` and `pageId`.
+
+    Args:
+        project_id (int):
+        page_id (int):
+
+    Raises:
+        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
+        httpx.TimeoutException: If the request takes longer than Client.timeout.
+
+    Returns:
+        Response[Any]
+     """
+
+    kwargs = _get_kwargs(
+        project_id=project_id,
+        page_id=page_id,
+        client=client,
+    )
+
+    async with httpx.AsyncClient(verify=client.verify_ssl) as _client:
+        response = await _client.request(**kwargs)
 
     return _build_response(client=client, response=response)

@@ -52,10 +52,10 @@ def _parse_response(*, client: {}, response: httpx.Response) -> Optional[Any]:
         return None
 
 
-def _build_response(*, client: {}, response: httpx.Response) -> Response[Any]:
+def _build_response(*, client: {}, response: httpx.Response, content: Optional[bytes] = None) -> Response[Any]:
     return Response(
         status_code=HTTPStatus(response.status_code),
-        content=response.content,
+        content=response.content if content is None else content,
         headers=response.headers,
         parsed=_parse_response(client=client, response=response),
     )
@@ -67,8 +67,17 @@ def sync_detailed(
     client: {},
     width: Union[Unset, None, str] = "100%",
     height: Union[Unset, None, str] = "auto",
-) -> Response[Any]:
-    """Show a certain project.
+):
+    if stream:
+        return list(
+            stream_detailed(
+                project_id=project_id,
+                client=client,
+                width=width,
+                height=height,
+            )
+        )
+    """ Show a certain project.
 
      View a specific project by project ID.
 
@@ -83,7 +92,7 @@ def sync_detailed(
 
     Returns:
         Response[Any]
-    """
+     """
 
     kwargs = _get_kwargs(
         project_id=project_id,
@@ -96,5 +105,49 @@ def sync_detailed(
         verify=client.verify_ssl,
         **kwargs,
     )
+
+    return _build_response(client=client, response=response)
+
+
+async def asyncio_detailed(
+    project_id: int,
+    *,
+    client: {},
+    width: Union[Unset, None, str] = "100%",
+    height: Union[Unset, None, str] = "auto",
+) -> Response[Any]:
+    if stream:
+        return astream_detailed(
+            project_id=project_id,
+            client=client,
+            width=width,
+            height=height,
+        )
+    """ Show a certain project.
+
+     View a specific project by project ID.
+
+    Args:
+        project_id (int):  Example: 1.
+        width (Union[Unset, None, str]):  Default: '100%'. Example: 50rem.
+        height (Union[Unset, None, str]):  Default: 'auto'. Example: 50rem.
+
+    Raises:
+        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
+        httpx.TimeoutException: If the request takes longer than Client.timeout.
+
+    Returns:
+        Response[Any]
+     """
+
+    kwargs = _get_kwargs(
+        project_id=project_id,
+        client=client,
+        width=width,
+        height=height,
+    )
+
+    async with httpx.AsyncClient(verify=client.verify_ssl) as _client:
+        response = await _client.request(**kwargs)
 
     return _build_response(client=client, response=response)

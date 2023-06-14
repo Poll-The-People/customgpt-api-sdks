@@ -66,10 +66,12 @@ def _parse_response(*, client: {}, response: httpx.Response) -> Optional[Union[A
         return None
 
 
-def _build_response(*, client: {}, response: httpx.Response) -> Response[Union[Any, GetProjectPagesResponse200]]:
+def _build_response(
+    *, client: {}, response: httpx.Response, content: Optional[bytes] = None
+) -> Response[Union[Any, GetProjectPagesResponse200]]:
     return Response(
         status_code=HTTPStatus(response.status_code),
-        content=response.content,
+        content=response.content if content is None else content,
         headers=response.headers,
         parsed=_parse_response(client=client, response=response),
     )
@@ -82,8 +84,18 @@ def sync_detailed(
     page: Union[Unset, None, int] = 1,
     duration: Union[Unset, None, int] = 90,
     order: Union[Unset, None, GetProjectPagesOrder] = GetProjectPagesOrder.DESC,
-) -> Response[Union[Any, GetProjectPagesResponse200]]:
-    """List all pages that belong to a project.
+):
+    if stream:
+        return list(
+            stream_detailed(
+                project_id=project_id,
+                client=client,
+                page=page,
+                duration=duration,
+                order=order,
+            )
+        )
+    """ List all pages that belong to a project.
 
      Get a list of all pages that belong to a project.
 
@@ -99,7 +111,7 @@ def sync_detailed(
 
     Returns:
         Response[Union[Any, GetProjectPagesResponse200]]
-    """
+     """
 
     kwargs = _get_kwargs(
         project_id=project_id,
@@ -115,3 +127,123 @@ def sync_detailed(
     )
 
     return _build_response(client=client, response=response)
+
+
+def sync(
+    project_id: int,
+    *,
+    client: {},
+    page: Union[Unset, None, int] = 1,
+    duration: Union[Unset, None, int] = 90,
+    order: Union[Unset, None, GetProjectPagesOrder] = GetProjectPagesOrder.DESC,
+) -> Optional[Union[Any, GetProjectPagesResponse200]]:
+    """List all pages that belong to a project.
+
+     Get a list of all pages that belong to a project.
+
+    Args:
+        project_id (int):  Example: 1.
+        page (Union[Unset, None, int]):  Default: 1.
+        duration (Union[Unset, None, int]):  Default: 90.
+        order (Union[Unset, None, GetProjectPagesOrder]):  Default: GetProjectPagesOrder.DESC.
+
+    Raises:
+        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
+        httpx.TimeoutException: If the request takes longer than Client.timeout.
+
+    Returns:
+        Union[Any, GetProjectPagesResponse200]
+    """
+
+    return sync_detailed(
+        project_id=project_id,
+        client=client,
+        page=page,
+        duration=duration,
+        order=order,
+    ).parsed
+
+
+async def asyncio_detailed(
+    project_id: int,
+    *,
+    client: {},
+    page: Union[Unset, None, int] = 1,
+    duration: Union[Unset, None, int] = 90,
+    order: Union[Unset, None, GetProjectPagesOrder] = GetProjectPagesOrder.DESC,
+) -> Response[Union[Any, GetProjectPagesResponse200]]:
+    if stream:
+        return astream_detailed(
+            project_id=project_id,
+            client=client,
+            page=page,
+            duration=duration,
+            order=order,
+        )
+    """ List all pages that belong to a project.
+
+     Get a list of all pages that belong to a project.
+
+    Args:
+        project_id (int):  Example: 1.
+        page (Union[Unset, None, int]):  Default: 1.
+        duration (Union[Unset, None, int]):  Default: 90.
+        order (Union[Unset, None, GetProjectPagesOrder]):  Default: GetProjectPagesOrder.DESC.
+
+    Raises:
+        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
+        httpx.TimeoutException: If the request takes longer than Client.timeout.
+
+    Returns:
+        Response[Union[Any, GetProjectPagesResponse200]]
+     """
+
+    kwargs = _get_kwargs(
+        project_id=project_id,
+        client=client,
+        page=page,
+        duration=duration,
+        order=order,
+    )
+
+    async with httpx.AsyncClient(verify=client.verify_ssl) as _client:
+        response = await _client.request(**kwargs)
+
+    return _build_response(client=client, response=response)
+
+
+async def asyncio(
+    project_id: int,
+    *,
+    client: {},
+    page: Union[Unset, None, int] = 1,
+    duration: Union[Unset, None, int] = 90,
+    order: Union[Unset, None, GetProjectPagesOrder] = GetProjectPagesOrder.DESC,
+) -> Optional[Union[Any, GetProjectPagesResponse200]]:
+    """List all pages that belong to a project.
+
+     Get a list of all pages that belong to a project.
+
+    Args:
+        project_id (int):  Example: 1.
+        page (Union[Unset, None, int]):  Default: 1.
+        duration (Union[Unset, None, int]):  Default: 90.
+        order (Union[Unset, None, GetProjectPagesOrder]):  Default: GetProjectPagesOrder.DESC.
+
+    Raises:
+        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
+        httpx.TimeoutException: If the request takes longer than Client.timeout.
+
+    Returns:
+        Union[Any, GetProjectPagesResponse200]
+    """
+
+    return (
+        await asyncio_detailed(
+            project_id=project_id,
+            client=client,
+            page=page,
+            duration=duration,
+            order=order,
+        )
+    ).parsed

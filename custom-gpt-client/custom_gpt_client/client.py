@@ -23,6 +23,13 @@ from custom_gpt_client.api.projects import (
     update_project,
 )
 from custom_gpt_client.api.users import get_user_profile, update_user_profile
+from custom_gpt_client.models import (
+    CreateProjectConversationJsonBody,
+    CreateProjectJsonBody,
+    SendMessageToConversationJsonBody,
+    UpdateProjectConversationJsonBody,
+    UpdateProjectJsonBody,
+)
 
 
 @attr.s(auto_attribs=True)
@@ -89,56 +96,215 @@ class CustomGPT(CustomGPTClient):
     def list_projects(self, *args: Any, **kwargs: Any):
         return list_projects.sync_detailed(client=self, *args, **kwargs)
 
+    def alist_projects(self, *args: Any, **kwargs: Any):
+        return list_projects.asyncio_detailed(client=self, *args, **kwargs)
+
     def create_project(self, *args: Any, **kwargs: Any):
+        json = {}
+        if "project_name" in kwargs:
+            field = kwargs.pop("project_name")
+            json["project_name"] = field
+        if "sitemap_path" in kwargs:
+            field = kwargs.pop("sitemap_path")
+            json["sitemap_path"] = field
+        if "file_data_retension" in kwargs:
+            field = kwargs.pop("file_data_retension")
+            json["file_data_retension"] = field
+        if "file" in kwargs:
+            field = kwargs.pop("file")
+            json["file"] = field
+        kwargs["json_body"] = CreateProjectJsonBody(**json)
+
         return create_project.sync_detailed(client=self, *args, **kwargs)
+
+    def acreate_project(self, *args: Any, **kwargs: Any):
+        json = {}
+        if "project_name" in kwargs:
+            field = kwargs.pop("project_name")
+            json["project_name"] = field
+        if "sitemap_path" in kwargs:
+            field = kwargs.pop("sitemap_path")
+            json["sitemap_path"] = field
+        if "file_data_retension" in kwargs:
+            field = kwargs.pop("file_data_retension")
+            json["file_data_retension"] = field
+        if "file" in kwargs:
+            field = kwargs.pop("file")
+            json["file"] = field
+        kwargs["json_body"] = CreateProjectJsonBody(**json)
+
+        return create_project.asyncio_detailed(client=self, *args, **kwargs)
 
     def get_project(self, *args: Any, **kwargs: Any):
         return get_project.sync_detailed(client=self, *args, **kwargs)
 
+    def aget_project(self, *args: Any, **kwargs: Any):
+        return get_project.asyncio_detailed(client=self, *args, **kwargs)
+
     def update_project(self, *args: Any, **kwargs: Any):
+        json = {}
+        if "project_name" in kwargs:
+            field = kwargs.pop("project_name")
+            json["project_name"] = field
+        if "is_shared" in kwargs:
+            field = kwargs.pop("is_shared")
+            json["is_shared"] = field
+        if "sitemap_path" in kwargs:
+            field = kwargs.pop("sitemap_path")
+            json["sitemap_path"] = field
+        if "file_data_retension" in kwargs:
+            field = kwargs.pop("file_data_retension")
+            json["file_data_retension"] = field
+        if "file" in kwargs:
+            field = kwargs.pop("file")
+            json["file"] = field
+        kwargs["json_body"] = UpdateProjectJsonBody(**json)
+
         return update_project.sync_detailed(client=self, *args, **kwargs)
+
+    def aupdate_project(self, *args: Any, **kwargs: Any):
+        json = {}
+        if "project_name" in kwargs:
+            field = kwargs.pop("project_name")
+            json["project_name"] = field
+        if "is_shared" in kwargs:
+            field = kwargs.pop("is_shared")
+            json["is_shared"] = field
+        if "sitemap_path" in kwargs:
+            field = kwargs.pop("sitemap_path")
+            json["sitemap_path"] = field
+        if "file_data_retension" in kwargs:
+            field = kwargs.pop("file_data_retension")
+            json["file_data_retension"] = field
+        if "file" in kwargs:
+            field = kwargs.pop("file")
+            json["file"] = field
+        kwargs["json_body"] = UpdateProjectJsonBody(**json)
+
+        return update_project.asyncio_detailed(client=self, *args, **kwargs)
 
     def delete_project(self, *args: Any, **kwargs: Any):
         return delete_project.sync_detailed(client=self, *args, **kwargs)
 
+    def adelete_project(self, *args: Any, **kwargs: Any):
+        return delete_project.asyncio_detailed(client=self, *args, **kwargs)
+
     def get_project_stats(self, *args: Any, **kwargs: Any):
         return get_project_stats.sync_detailed(client=self, *args, **kwargs)
+
+    def aget_project_stats(self, *args: Any, **kwargs: Any):
+        return get_project_stats.asyncio_detailed(client=self, *args, **kwargs)
 
     def get_project_pages(self, *args: Any, **kwargs: Any):
         return get_project_pages.sync_detailed(client=self, *args, **kwargs)
 
+    def aget_project_pages(self, *args: Any, **kwargs: Any):
+        return get_project_pages.asyncio_detailed(client=self, *args, **kwargs)
+
     def delete_project_pages(self, *args: Any, **kwargs: Any):
         return delete_project_pages.sync_detailed(client=self, *args, **kwargs)
+
+    def adelete_project_pages(self, *args: Any, **kwargs: Any):
+        return delete_project_pages.asyncio_detailed(client=self, *args, **kwargs)
 
     def get_project_settings(self, *args: Any, **kwargs: Any):
         return get_project_settings.sync_detailed(client=self, *args, **kwargs)
 
+    def aget_project_settings(self, *args: Any, **kwargs: Any):
+        return get_project_settings.asyncio_detailed(client=self, *args, **kwargs)
+
     def update_project_settings(self, *args: Any, **kwargs: Any):
         return update_project_settings.sync_detailed(client=self, *args, **kwargs)
+
+    def aupdate_project_settings(self, *args: Any, **kwargs: Any):
+        return update_project_settings.asyncio_detailed(client=self, *args, **kwargs)
 
     def get_project_conversations(self, *args: Any, **kwargs: Any):
         return get_project_conversations.sync_detailed(client=self, *args, **kwargs)
 
+    def aget_project_conversations(self, *args: Any, **kwargs: Any):
+        return get_project_conversations.asyncio_detailed(client=self, *args, **kwargs)
+
     def create_project_conversation(self, *args: Any, **kwargs: Any):
+        json = {}
+        if "name" in kwargs:
+            field = kwargs.pop("name")
+            json["name"] = field
+        kwargs["json_body"] = CreateProjectConversationJsonBody(**json)
+
         return create_project_conversation.sync_detailed(client=self, *args, **kwargs)
 
+    def acreate_project_conversation(self, *args: Any, **kwargs: Any):
+        json = {}
+        if "name" in kwargs:
+            field = kwargs.pop("name")
+            json["name"] = field
+        kwargs["json_body"] = CreateProjectConversationJsonBody(**json)
+
+        return create_project_conversation.asyncio_detailed(client=self, *args, **kwargs)
+
     def update_project_conversation(self, *args: Any, **kwargs: Any):
+        json = {}
+        if "name" in kwargs:
+            field = kwargs.pop("name")
+            json["name"] = field
+        kwargs["json_body"] = UpdateProjectConversationJsonBody(**json)
+
         return update_project_conversation.sync_detailed(client=self, *args, **kwargs)
+
+    def aupdate_project_conversation(self, *args: Any, **kwargs: Any):
+        json = {}
+        if "name" in kwargs:
+            field = kwargs.pop("name")
+            json["name"] = field
+        kwargs["json_body"] = UpdateProjectConversationJsonBody(**json)
+
+        return update_project_conversation.asyncio_detailed(client=self, *args, **kwargs)
 
     def delete_project_conversation(self, *args: Any, **kwargs: Any):
         return delete_project_conversation.sync_detailed(client=self, *args, **kwargs)
 
+    def adelete_project_conversation(self, *args: Any, **kwargs: Any):
+        return delete_project_conversation.asyncio_detailed(client=self, *args, **kwargs)
+
     def get_project_conversation_messages(self, *args: Any, **kwargs: Any):
         return get_project_conversation_messages.sync_detailed(client=self, *args, **kwargs)
 
+    def aget_project_conversation_messages(self, *args: Any, **kwargs: Any):
+        return get_project_conversation_messages.asyncio_detailed(client=self, *args, **kwargs)
+
     def send_message_to_conversation(self, *args: Any, **kwargs: Any):
+        json = {}
+        if "prompt" in kwargs:
+            field = kwargs.pop("prompt")
+            json["prompt"] = field
+        kwargs["json_body"] = SendMessageToConversationJsonBody(**json)
+
         return send_message_to_conversation.sync_detailed(client=self, *args, **kwargs)
+
+    def asend_message_to_conversation(self, *args: Any, **kwargs: Any):
+        json = {}
+        if "prompt" in kwargs:
+            field = kwargs.pop("prompt")
+            json["prompt"] = field
+        kwargs["json_body"] = SendMessageToConversationJsonBody(**json)
+
+        return send_message_to_conversation.asyncio_detailed(client=self, *args, **kwargs)
 
     def get_open_graph_data_for_citation(self, *args: Any, **kwargs: Any):
         return get_open_graph_data_for_citation.sync_detailed(client=self, *args, **kwargs)
 
+    def aget_open_graph_data_for_citation(self, *args: Any, **kwargs: Any):
+        return get_open_graph_data_for_citation.asyncio_detailed(client=self, *args, **kwargs)
+
     def get_user_profile(self, *args: Any, **kwargs: Any):
         return get_user_profile.sync_detailed(client=self, *args, **kwargs)
 
+    def aget_user_profile(self, *args: Any, **kwargs: Any):
+        return get_user_profile.asyncio_detailed(client=self, *args, **kwargs)
+
     def update_user_profile(self, *args: Any, **kwargs: Any):
         return update_user_profile.sync_detailed(client=self, *args, **kwargs)
+
+    def aupdate_user_profile(self, *args: Any, **kwargs: Any):
+        return update_user_profile.asyncio_detailed(client=self, *args, **kwargs)
