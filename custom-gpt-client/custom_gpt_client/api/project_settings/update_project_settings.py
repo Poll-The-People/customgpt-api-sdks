@@ -35,9 +35,9 @@ def _get_kwargs(
 def _parse_response(*, client: {}, response: httpx.Response) -> Optional[Any]:
     if response.status_code == HTTPStatus.OK:
         return None
-    if response.status_code == HTTPStatus.UNAUTHORIZED:
+    if response.status_code == HTTPStatus.BAD_REQUEST:
         return None
-    if response.status_code == HTTPStatus.NOT_FOUND:
+    if response.status_code == HTTPStatus.UNAUTHORIZED:
         return None
     if response.status_code == HTTPStatus.INTERNAL_SERVER_ERROR:
         return None
@@ -62,15 +62,7 @@ def sync_detailed(
     client: {},
     multipart_data: UpdateProjectSettingsMultipartData,
 ):
-    if stream:
-        return list(
-            stream_detailed(
-                project_id=project_id,
-                client=client,
-                multipart_data=multipart_data,
-            )
-        )
-    """ Update project settings.
+    """Update project settings.
 
      Update project settings of a specific project by `projectId`.
 
@@ -84,7 +76,7 @@ def sync_detailed(
 
     Returns:
         Response[Any]
-     """
+    """
 
     kwargs = _get_kwargs(
         project_id=project_id,
@@ -106,13 +98,7 @@ async def asyncio_detailed(
     client: {},
     multipart_data: UpdateProjectSettingsMultipartData,
 ) -> Response[Any]:
-    if stream:
-        return astream_detailed(
-            project_id=project_id,
-            client=client,
-            multipart_data=multipart_data,
-        )
-    """ Update project settings.
+    """Update project settings.
 
      Update project settings of a specific project by `projectId`.
 
@@ -126,7 +112,7 @@ async def asyncio_detailed(
 
     Returns:
         Response[Any]
-     """
+    """
 
     kwargs = _get_kwargs(
         project_id=project_id,

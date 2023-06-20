@@ -5,20 +5,22 @@ import attr
 
 from ..types import UNSET, File, FileJsonType, Unset
 
-T = TypeVar("T", bound="CreateProjectJsonBody")
+T = TypeVar("T", bound="UpdateProjectMultipartData")
 
 
 @attr.s(auto_attribs=True)
-class CreateProjectJsonBody:
+class UpdateProjectMultipartData:
     """
     Attributes:
         project_name (Union[Unset, str]): Project name Example: My project.
-        sitemap_path (Union[Unset, str]): The sitemap path Example: https://example.com/sitemap.xml.
+        is_shared (Union[Unset, bool]): Whether the project is shared or not Example: True.
+        sitemap_path (Union[Unset, str]): Sitemap path Example: https://example.com/sitemap.xml.
         file_data_retension (Union[Unset, bool]): File data retension Example: True.
-        file (Union[Unset, File]): The submitted file. Example: file.pdf.
+        file (Union[Unset, File]): File Example: file.pdf.
     """
 
     project_name: Union[Unset, str] = UNSET
+    is_shared: Union[Unset, bool] = UNSET
     sitemap_path: Union[Unset, str] = UNSET
     file_data_retension: Union[Unset, bool] = UNSET
     file: Union[Unset, File] = UNSET
@@ -26,6 +28,7 @@ class CreateProjectJsonBody:
 
     def to_dict(self) -> Dict[str, Any]:
         project_name = self.project_name
+        is_shared = self.is_shared
         sitemap_path = self.sitemap_path
         file_data_retension = self.file_data_retension
         file: Union[Unset, FileJsonType] = UNSET
@@ -37,6 +40,49 @@ class CreateProjectJsonBody:
         field_dict.update({})
         if project_name is not UNSET:
             field_dict["project_name"] = project_name
+        if is_shared is not UNSET:
+            field_dict["is_shared"] = is_shared
+        if sitemap_path is not UNSET:
+            field_dict["sitemap_path"] = sitemap_path
+        if file_data_retension is not UNSET:
+            field_dict["file_data_retension"] = file_data_retension
+        if file is not UNSET:
+            field_dict["file"] = file
+
+        return field_dict
+
+    def to_multipart(self) -> Dict[str, Any]:
+        project_name = (
+            self.project_name
+            if isinstance(self.project_name, Unset)
+            else (None, str(self.project_name).encode(), "text/plain")
+        )
+        is_shared = (
+            self.is_shared if isinstance(self.is_shared, Unset) else (None, str(self.is_shared).encode(), "text/plain")
+        )
+        sitemap_path = (
+            self.sitemap_path
+            if isinstance(self.sitemap_path, Unset)
+            else (None, str(self.sitemap_path).encode(), "text/plain")
+        )
+        file_data_retension = (
+            self.file_data_retension
+            if isinstance(self.file_data_retension, Unset)
+            else (None, str(self.file_data_retension).encode(), "text/plain")
+        )
+        file: Union[Unset, FileJsonType] = UNSET
+        if not isinstance(self.file, Unset):
+            file = self.file.to_tuple()
+
+        field_dict: Dict[str, Any] = {}
+        field_dict.update(
+            {key: (None, str(value).encode(), "text/plain") for key, value in self.additional_properties.items()}
+        )
+        field_dict.update({})
+        if project_name is not UNSET:
+            field_dict["project_name"] = project_name
+        if is_shared is not UNSET:
+            field_dict["is_shared"] = is_shared
         if sitemap_path is not UNSET:
             field_dict["sitemap_path"] = sitemap_path
         if file_data_retension is not UNSET:
@@ -51,6 +97,8 @@ class CreateProjectJsonBody:
         d = src_dict.copy()
         project_name = d.pop("project_name", UNSET)
 
+        is_shared = d.pop("is_shared", UNSET)
+
         sitemap_path = d.pop("sitemap_path", UNSET)
 
         file_data_retension = d.pop("file_data_retension", UNSET)
@@ -62,15 +110,16 @@ class CreateProjectJsonBody:
         else:
             file = File(payload=BytesIO(_file))
 
-        create_project_json_body = cls(
+        update_project_multipart_data = cls(
             project_name=project_name,
+            is_shared=is_shared,
             sitemap_path=sitemap_path,
             file_data_retension=file_data_retension,
             file=file,
         )
 
-        create_project_json_body.additional_properties = d
-        return create_project_json_body
+        update_project_multipart_data.additional_properties = d
+        return update_project_multipart_data
 
     @property
     def additional_keys(self) -> List[str]:

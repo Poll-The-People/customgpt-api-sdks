@@ -85,17 +85,7 @@ def sync_detailed(
     duration: Union[Unset, None, int] = 90,
     order: Union[Unset, None, GetProjectPagesOrder] = GetProjectPagesOrder.DESC,
 ):
-    if stream:
-        return list(
-            stream_detailed(
-                project_id=project_id,
-                client=client,
-                page=page,
-                duration=duration,
-                order=order,
-            )
-        )
-    """ List all pages that belong to a project.
+    """List all pages that belong to a project.
 
      Get a list of all pages that belong to a project.
 
@@ -111,7 +101,7 @@ def sync_detailed(
 
     Returns:
         Response[Union[Any, GetProjectPagesResponse200]]
-     """
+    """
 
     kwargs = _get_kwargs(
         project_id=project_id,
@@ -172,15 +162,7 @@ async def asyncio_detailed(
     duration: Union[Unset, None, int] = 90,
     order: Union[Unset, None, GetProjectPagesOrder] = GetProjectPagesOrder.DESC,
 ) -> Response[Union[Any, GetProjectPagesResponse200]]:
-    if stream:
-        return astream_detailed(
-            project_id=project_id,
-            client=client,
-            page=page,
-            duration=duration,
-            order=order,
-        )
-    """ List all pages that belong to a project.
+    """List all pages that belong to a project.
 
      Get a list of all pages that belong to a project.
 
@@ -196,7 +178,7 @@ async def asyncio_detailed(
 
     Returns:
         Response[Union[Any, GetProjectPagesResponse200]]
-     """
+    """
 
     kwargs = _get_kwargs(
         project_id=project_id,

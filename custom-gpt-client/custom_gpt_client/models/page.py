@@ -34,12 +34,12 @@ class Page:
             not a file Example: file.pdf.
         filesize (Union[Unset, None, int]): Filesize of the page.\nNote: This is omitted in the response if the page is
             not a file Example: 100.
-        created_at (Union[Unset, datetime.datetime]): Date and time when the page was created Example:
-            2021-01-01T00:00:00.000000Z.
-        updated_at (Union[Unset, datetime.datetime]): Date and time when the page was updated Example:
-            2021-01-01T00:00:00.000000Z.
-        deleted_at (Union[Unset, datetime.datetime]): Date and time when the page was deleted Example:
-            2021-01-01T00:00:00.000000Z.
+        created_at (Union[Unset, datetime.datetime]): Date and time when the page was created Example: 2021-01-01
+            00:00:00.
+        updated_at (Union[Unset, datetime.datetime]): Date and time when the page was updated Example: 2021-01-01
+            00:00:00.
+        deleted_at (Union[Unset, datetime.datetime]): Date and time when the page was deleted Example: 2021-01-01
+            00:00:00.
     """
 
     id: Union[Unset, int] = UNSET

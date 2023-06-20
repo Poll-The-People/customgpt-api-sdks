@@ -1,4 +1,3 @@
-import json
 from io import BytesIO
 from typing import Any, Dict, List, Tuple, Type, TypeVar, Union, cast
 
@@ -56,7 +55,8 @@ class UpdateProjectSettingsMultipartData:
         if default_prompt is not UNSET:
             field_dict["default_prompt"] = default_prompt
         if example_questions is not UNSET:
-            field_dict["example_questions"] = example_questions
+            for index, field_value in enumerate(example_questions):
+                field_dict[f"example_questions[]{index}"] = field_value
         if response_source is not UNSET:
             field_dict["response_source"] = response_source
         if chatbot_msg_lang is not UNSET:
@@ -80,8 +80,11 @@ class UpdateProjectSettingsMultipartData:
         )
         example_questions: Union[Unset, Tuple[None, bytes, str]] = UNSET
         if not isinstance(self.example_questions, Unset):
-            _temp_example_questions = self.example_questions
-            example_questions = (None, json.dumps(_temp_example_questions).encode(), "application/json")
+            self.example_questions
+            example_questions = []
+            for index, value in enumerate(self.example_questions):
+                field_value = (None, str(value).encode(), "text/plain")
+                example_questions.append(field_value)
 
         response_source = (
             self.response_source
@@ -106,7 +109,8 @@ class UpdateProjectSettingsMultipartData:
         if default_prompt is not UNSET:
             field_dict["default_prompt"] = default_prompt
         if example_questions is not UNSET:
-            field_dict["example_questions"] = example_questions
+            for index, field_value in enumerate(example_questions):
+                field_dict[f"example_questions[]{index}"] = field_value
         if response_source is not UNSET:
             field_dict["response_source"] = response_source
         if chatbot_msg_lang is not UNSET:

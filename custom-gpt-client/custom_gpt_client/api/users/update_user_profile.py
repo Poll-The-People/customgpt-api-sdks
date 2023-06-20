@@ -65,14 +65,7 @@ def sync_detailed(
     client: {},
     multipart_data: UpdateUserProfileMultipartData,
 ):
-    if stream:
-        return list(
-            stream_detailed(
-                client=client,
-                multipart_data=multipart_data,
-            )
-        )
-    """ Update the user's profile.
+    """Update the user's profile.
 
      Update the current user's profile.
 
@@ -85,7 +78,7 @@ def sync_detailed(
 
     Returns:
         Response[Union[Any, UpdateUserProfileResponse200]]
-     """
+    """
 
     kwargs = _get_kwargs(
         client=client,
@@ -131,12 +124,7 @@ async def asyncio_detailed(
     client: {},
     multipart_data: UpdateUserProfileMultipartData,
 ) -> Response[Union[Any, UpdateUserProfileResponse200]]:
-    if stream:
-        return astream_detailed(
-            client=client,
-            multipart_data=multipart_data,
-        )
-    """ Update the user's profile.
+    """Update the user's profile.
 
      Update the current user's profile.
 
@@ -149,7 +137,7 @@ async def asyncio_detailed(
 
     Returns:
         Response[Union[Any, UpdateUserProfileResponse200]]
-     """
+    """
 
     kwargs = _get_kwargs(
         client=client,

@@ -28,7 +28,6 @@ def _get_kwargs(
 
     headers: Dict[str, str] = client.get_headers()
     cookies: Dict[str, Any] = client.get_cookies()
-
     {{ header_params(endpoint) | indent(4) }}
 
     {{ cookie_params(endpoint) | indent(4) }}
@@ -120,8 +119,10 @@ async def astream_detailed({{ arguments(endpoint) | indent(4) }}):
 def sync_detailed(
     {{ arguments(endpoint) | indent(4) }}
 ):
+    {% if 'stream' in endpoint.query_parameters.keys() %}
     if stream:
         return list(stream_detailed({{ kwargs(endpoint) }}))
+    {% endif %}
     {{ docstring(endpoint, return_string, is_detailed=true) | indent(4) }}
 
     kwargs = _get_kwargs(
@@ -149,8 +150,10 @@ def sync(
 async def asyncio_detailed(
     {{ arguments(endpoint) | indent(4) }}
 ) -> Response[{{ return_string }}]:
+    {% if 'stream' in endpoint.query_parameters.keys() %}
     if stream:
         return astream_detailed({{ kwargs(endpoint) }})
+    {% endif %}
     {{ docstring(endpoint, return_string, is_detailed=true) | indent(4) }}
 
     kwargs = _get_kwargs(

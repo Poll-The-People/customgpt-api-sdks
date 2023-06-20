@@ -68,16 +68,7 @@ def sync_detailed(
     width: Union[Unset, None, str] = "100%",
     height: Union[Unset, None, str] = "auto",
 ):
-    if stream:
-        return list(
-            stream_detailed(
-                project_id=project_id,
-                client=client,
-                width=width,
-                height=height,
-            )
-        )
-    """ Show a certain project.
+    """Show a certain project.
 
      View a specific project by project ID.
 
@@ -92,7 +83,7 @@ def sync_detailed(
 
     Returns:
         Response[Any]
-     """
+    """
 
     kwargs = _get_kwargs(
         project_id=project_id,
@@ -116,14 +107,7 @@ async def asyncio_detailed(
     width: Union[Unset, None, str] = "100%",
     height: Union[Unset, None, str] = "auto",
 ) -> Response[Any]:
-    if stream:
-        return astream_detailed(
-            project_id=project_id,
-            client=client,
-            width=width,
-            height=height,
-        )
-    """ Show a certain project.
+    """Show a certain project.
 
      View a specific project by project ID.
 
@@ -138,7 +122,7 @@ async def asyncio_detailed(
 
     Returns:
         Response[Any]
-     """
+    """
 
     kwargs = _get_kwargs(
         project_id=project_id,

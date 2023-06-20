@@ -56,14 +56,7 @@ def sync_detailed(
     *,
     client: {},
 ):
-    if stream:
-        return list(
-            stream_detailed(
-                project_id=project_id,
-                client=client,
-            )
-        )
-    """ Get project settings.
+    """Get project settings.
 
      Retrieve the current project settings for a project.
 
@@ -76,7 +69,7 @@ def sync_detailed(
 
     Returns:
         Response[Any]
-     """
+    """
 
     kwargs = _get_kwargs(
         project_id=project_id,
@@ -96,12 +89,7 @@ async def asyncio_detailed(
     *,
     client: {},
 ) -> Response[Any]:
-    if stream:
-        return astream_detailed(
-            project_id=project_id,
-            client=client,
-        )
-    """ Get project settings.
+    """Get project settings.
 
      Retrieve the current project settings for a project.
 
@@ -114,7 +102,7 @@ async def asyncio_detailed(
 
     Returns:
         Response[Any]
-     """
+    """
 
     kwargs = _get_kwargs(
         project_id=project_id,

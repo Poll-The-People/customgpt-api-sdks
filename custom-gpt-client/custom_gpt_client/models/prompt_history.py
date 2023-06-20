@@ -72,7 +72,8 @@ class PromptHistory:
         if conversation_id is not UNSET:
             field_dict["conversation_id"] = conversation_id
         if citations is not UNSET:
-            field_dict["citations"] = citations
+            for index, field_value in enumerate(citations):
+                field_dict[f"citations[]{index}"] = field_value
 
         return field_dict
 

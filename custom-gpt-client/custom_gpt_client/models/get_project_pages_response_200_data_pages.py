@@ -17,7 +17,7 @@ class GetProjectPagesResponse200DataPages:
     """
     Attributes:
         current_page (Union[Unset, int]): The current page number Example: 1.
-        data (Union[Unset, List[List['Page']]]):
+        data (Union[Unset, List['Page']]):
         first_page_url (Union[Unset, str]): The first page url Example: https://app.customgpt.ai/api/v1/users?page=1.
         from_ (Union[Unset, int]): The first item number of the current page Example: 1.
         last_page (Union[Unset, int]): The last page number Example: 1.
@@ -32,7 +32,7 @@ class GetProjectPagesResponse200DataPages:
     """
 
     current_page: Union[Unset, int] = UNSET
-    data: Union[Unset, List[List["Page"]]] = UNSET
+    data: Union[Unset, List["Page"]] = UNSET
     first_page_url: Union[Unset, str] = UNSET
     from_: Union[Unset, int] = UNSET
     last_page: Union[Unset, int] = UNSET
@@ -48,15 +48,11 @@ class GetProjectPagesResponse200DataPages:
 
     def to_dict(self) -> Dict[str, Any]:
         current_page = self.current_page
-        data: Union[Unset, List[List[Dict[str, Any]]]] = UNSET
+        data: Union[Unset, List[Dict[str, Any]]] = UNSET
         if not isinstance(self.data, Unset):
             data = []
             for data_item_data in self.data:
-                data_item = []
-                for data_item_item_data in data_item_data:
-                    data_item_item = data_item_item_data.to_dict()
-
-                    data_item.append(data_item_item)
+                data_item = data_item_data.to_dict()
 
                 data.append(data_item)
 
@@ -81,7 +77,8 @@ class GetProjectPagesResponse200DataPages:
         if current_page is not UNSET:
             field_dict["current_page"] = current_page
         if data is not UNSET:
-            field_dict["data"] = data
+            for index, field_value in enumerate(data):
+                field_dict[f"data[]{index}"] = field_value
         if first_page_url is not UNSET:
             field_dict["first_page_url"] = first_page_url
         if from_ is not UNSET:
@@ -118,12 +115,7 @@ class GetProjectPagesResponse200DataPages:
         data = []
         _data = d.pop("data", UNSET)
         for data_item_data in _data or []:
-            data_item = []
-            _data_item = data_item_data
-            for data_item_item_data in _data_item:
-                data_item_item = Page.from_dict(data_item_item_data)
-
-                data_item.append(data_item_item)
+            data_item = Page.from_dict(data_item_data)
 
             data.append(data_item)
 

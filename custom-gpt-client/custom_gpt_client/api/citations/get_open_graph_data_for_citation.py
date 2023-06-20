@@ -67,15 +67,7 @@ def sync_detailed(
     *,
     client: {},
 ):
-    if stream:
-        return list(
-            stream_detailed(
-                project_id=project_id,
-                citation_id=citation_id,
-                client=client,
-            )
-        )
-    """ Get the Open Graph data for a citation.
+    """Get the Open Graph data for a citation.
 
      Get the Open Graph data for a citation by its unique identifier.
 
@@ -89,7 +81,7 @@ def sync_detailed(
 
     Returns:
         Response[Union[Any, GetOpenGraphDataForCitationResponse200]]
-     """
+    """
 
     kwargs = _get_kwargs(
         project_id=project_id,
@@ -140,13 +132,7 @@ async def asyncio_detailed(
     *,
     client: {},
 ) -> Response[Union[Any, GetOpenGraphDataForCitationResponse200]]:
-    if stream:
-        return astream_detailed(
-            project_id=project_id,
-            citation_id=citation_id,
-            client=client,
-        )
-    """ Get the Open Graph data for a citation.
+    """Get the Open Graph data for a citation.
 
      Get the Open Graph data for a citation by its unique identifier.
 
@@ -160,7 +146,7 @@ async def asyncio_detailed(
 
     Returns:
         Response[Union[Any, GetOpenGraphDataForCitationResponse200]]
-     """
+    """
 
     kwargs = _get_kwargs(
         project_id=project_id,

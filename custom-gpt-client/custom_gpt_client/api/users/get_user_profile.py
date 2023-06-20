@@ -59,13 +59,7 @@ def sync_detailed(
     *,
     client: {},
 ):
-    if stream:
-        return list(
-            stream_detailed(
-                client=client,
-            )
-        )
-    """ Show the user's profile.
+    """Show the user's profile.
 
      Retrieve the current user's profile.
 
@@ -75,7 +69,7 @@ def sync_detailed(
 
     Returns:
         Response[Union[Any, GetUserProfileResponse200]]
-     """
+    """
 
     kwargs = _get_kwargs(
         client=client,
@@ -114,11 +108,7 @@ async def asyncio_detailed(
     *,
     client: {},
 ) -> Response[Union[Any, GetUserProfileResponse200]]:
-    if stream:
-        return astream_detailed(
-            client=client,
-        )
-    """ Show the user's profile.
+    """Show the user's profile.
 
      Retrieve the current user's profile.
 
@@ -128,7 +118,7 @@ async def asyncio_detailed(
 
     Returns:
         Response[Union[Any, GetUserProfileResponse200]]
-     """
+    """
 
     kwargs = _get_kwargs(
         client=client,

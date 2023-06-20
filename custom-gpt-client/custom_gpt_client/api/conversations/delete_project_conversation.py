@@ -60,15 +60,7 @@ def sync_detailed(
     *,
     client: {},
 ):
-    if stream:
-        return list(
-            stream_detailed(
-                project_id=project_id,
-                session_id=session_id,
-                client=client,
-            )
-        )
-    """ Delete a conversation.
+    """Delete a conversation.
 
      Delete a conversation by `projectId` and `sessionId`.
 
@@ -82,7 +74,7 @@ def sync_detailed(
 
     Returns:
         Response[Any]
-     """
+    """
 
     kwargs = _get_kwargs(
         project_id=project_id,
@@ -104,13 +96,7 @@ async def asyncio_detailed(
     *,
     client: {},
 ) -> Response[Any]:
-    if stream:
-        return astream_detailed(
-            project_id=project_id,
-            session_id=session_id,
-            client=client,
-        )
-    """ Delete a conversation.
+    """Delete a conversation.
 
      Delete a conversation by `projectId` and `sessionId`.
 
@@ -124,7 +110,7 @@ async def asyncio_detailed(
 
     Returns:
         Response[Any]
-     """
+    """
 
     kwargs = _get_kwargs(
         project_id=project_id,

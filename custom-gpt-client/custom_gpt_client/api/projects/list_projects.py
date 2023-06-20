@@ -88,18 +88,7 @@ def sync_detailed(
     width: Union[Unset, None, str] = "100%",
     height: Union[Unset, None, str] = "auto",
 ):
-    if stream:
-        return list(
-            stream_detailed(
-                client=client,
-                page=page,
-                duration=duration,
-                order=order,
-                width=width,
-                height=height,
-            )
-        )
-    """ List all projects.
+    """List all projects.
 
      Get a list of all projects that belong to the user.
 
@@ -116,7 +105,7 @@ def sync_detailed(
 
     Returns:
         Response[Union[Any, ListProjectsResponse200]]
-     """
+    """
 
     kwargs = _get_kwargs(
         client=client,
@@ -182,16 +171,7 @@ async def asyncio_detailed(
     width: Union[Unset, None, str] = "100%",
     height: Union[Unset, None, str] = "auto",
 ) -> Response[Union[Any, ListProjectsResponse200]]:
-    if stream:
-        return astream_detailed(
-            client=client,
-            page=page,
-            duration=duration,
-            order=order,
-            width=width,
-            height=height,
-        )
-    """ List all projects.
+    """List all projects.
 
      Get a list of all projects that belong to the user.
 
@@ -208,7 +188,7 @@ async def asyncio_detailed(
 
     Returns:
         Response[Union[Any, ListProjectsResponse200]]
-     """
+    """
 
     kwargs = _get_kwargs(
         client=client,

@@ -77,7 +77,8 @@ class ListProjectsResponse200Data:
         if current_page is not UNSET:
             field_dict["current_page"] = current_page
         if data is not UNSET:
-            field_dict["data"] = data
+            for index, field_value in enumerate(data):
+                field_dict[f"data[]{index}"] = field_value
         if first_page_url is not UNSET:
             field_dict["first_page_url"] = first_page_url
         if from_ is not UNSET:

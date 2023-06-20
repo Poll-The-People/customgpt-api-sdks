@@ -12,7 +12,7 @@ T = TypeVar("T", bound="UpdateUserProfileMultipartData")
 class UpdateUserProfileMultipartData:
     """
     Attributes:
-        profile_photo (Union[Unset, File]): User profile photo
+        profile_photo (Union[Unset, File]): User profile photo Example: avatar.png.
         name (Union[Unset, str]): User name Example: John Doe.
     """
 

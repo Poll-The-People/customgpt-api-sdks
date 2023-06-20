@@ -4,37 +4,30 @@ from typing import Any, Dict, Optional
 import httpx
 
 from ... import errors
-from ...models.update_project_multipart_data import UpdateProjectMultipartData
 from ...types import Response
 
 
 def _get_kwargs(
-    project_id: int,
+    id: str,
     *,
     client: {},
-    multipart_data: UpdateProjectMultipartData,
 ) -> Dict[str, Any]:
-    url = "{}/api/v1/projects/{projectId}".format(client.base_url, projectId=project_id)
+    url = "{}/api/v1/preview/{id}".format(client.base_url, id=id)
 
     headers: Dict[str, str] = client.get_headers()
     cookies: Dict[str, Any] = client.get_cookies()
 
-    multipart_multipart_data = multipart_data.to_multipart()
-
     return {
-        "method": "post",
+        "method": "get",
         "url": url,
         "headers": headers,
         "cookies": cookies,
         "timeout": client.get_timeout(),
         "follow_redirects": client.follow_redirects,
-        "files": multipart_multipart_data,
     }
 
 
 def _parse_response(*, client: {}, response: httpx.Response) -> Optional[Any]:
-    if response.status_code == HTTPStatus.OK:
-        return None
     if response.status_code == HTTPStatus.UNAUTHORIZED:
         return None
     if response.status_code == HTTPStatus.NOT_FOUND:
@@ -57,16 +50,14 @@ def _build_response(*, client: {}, response: httpx.Response, content: Optional[b
 
 
 def sync_detailed(
-    project_id: int,
+    id: str,
     *,
     client: {},
-    multipart_data: UpdateProjectMultipartData,
 ):
-    """Update a certain project
+    """Preview file from citation.
 
     Args:
-        project_id (int):
-        multipart_data (UpdateProjectMultipartData):
+        id (str):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -77,9 +68,8 @@ def sync_detailed(
     """
 
     kwargs = _get_kwargs(
-        project_id=project_id,
+        id=id,
         client=client,
-        multipart_data=multipart_data,
     )
 
     response = httpx.request(
@@ -91,16 +81,14 @@ def sync_detailed(
 
 
 async def asyncio_detailed(
-    project_id: int,
+    id: str,
     *,
     client: {},
-    multipart_data: UpdateProjectMultipartData,
 ) -> Response[Any]:
-    """Update a certain project
+    """Preview file from citation.
 
     Args:
-        project_id (int):
-        multipart_data (UpdateProjectMultipartData):
+        id (str):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -111,9 +99,8 @@ async def asyncio_detailed(
     """
 
     kwargs = _get_kwargs(
-        project_id=project_id,
+        id=id,
         client=client,
-        multipart_data=multipart_data,
     )
 
     async with httpx.AsyncClient(verify=client.verify_ssl) as _client:

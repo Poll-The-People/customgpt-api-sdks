@@ -117,7 +117,12 @@ field_dict.update({
 {% for property in model.optional_properties %}
 {% if not property.required %}
 if {{ property.python_name }} is not UNSET:
+    {% if property.__class__.__name__ == 'ListProperty' %}
+    for index, field_value in enumerate({{property.name}}):
+        field_dict[f"{{property.name}}[]{index}"] = field_value
+    {% else %}
     field_dict["{{ property.name }}"] = {{ property.python_name }}
+    {% endif %}
 {% endif %}
 {% endfor %}
 

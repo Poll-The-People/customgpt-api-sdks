@@ -4,21 +4,21 @@ from typing import Any, Dict, Optional
 import httpx
 
 from ... import errors
-from ...models.create_project_json_body import CreateProjectJsonBody
+from ...models.create_project_multipart_data import CreateProjectMultipartData
 from ...types import Response
 
 
 def _get_kwargs(
     *,
     client: {},
-    json_body: CreateProjectJsonBody,
+    multipart_data: CreateProjectMultipartData,
 ) -> Dict[str, Any]:
     url = "{}/api/v1/projects".format(client.base_url)
 
     headers: Dict[str, str] = client.get_headers()
     cookies: Dict[str, Any] = client.get_cookies()
 
-    json_json_body = json_body.to_dict()
+    multipart_multipart_data = multipart_data.to_multipart()
 
     return {
         "method": "post",
@@ -27,7 +27,7 @@ def _get_kwargs(
         "cookies": cookies,
         "timeout": client.get_timeout(),
         "follow_redirects": client.follow_redirects,
-        "json": json_json_body,
+        "files": multipart_multipart_data,
     }
 
 
@@ -58,21 +58,14 @@ def _build_response(*, client: {}, response: httpx.Response, content: Optional[b
 def sync_detailed(
     *,
     client: {},
-    json_body: CreateProjectJsonBody,
+    multipart_data: CreateProjectMultipartData,
 ):
-    if stream:
-        return list(
-            stream_detailed(
-                client=client,
-                json_body=json_body,
-            )
-        )
-    """ Create a new project.
+    """Create a new project.
 
      Create a new project from either sitemap or uploaded file.
 
     Args:
-        json_body (CreateProjectJsonBody):
+        multipart_data (CreateProjectMultipartData):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -80,11 +73,11 @@ def sync_detailed(
 
     Returns:
         Response[Any]
-     """
+    """
 
     kwargs = _get_kwargs(
         client=client,
-        json_body=json_body,
+        multipart_data=multipart_data,
     )
 
     response = httpx.request(
@@ -98,19 +91,14 @@ def sync_detailed(
 async def asyncio_detailed(
     *,
     client: {},
-    json_body: CreateProjectJsonBody,
+    multipart_data: CreateProjectMultipartData,
 ) -> Response[Any]:
-    if stream:
-        return astream_detailed(
-            client=client,
-            json_body=json_body,
-        )
-    """ Create a new project.
+    """Create a new project.
 
      Create a new project from either sitemap or uploaded file.
 
     Args:
-        json_body (CreateProjectJsonBody):
+        multipart_data (CreateProjectMultipartData):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -118,11 +106,11 @@ async def asyncio_detailed(
 
     Returns:
         Response[Any]
-     """
+    """
 
     kwargs = _get_kwargs(
         client=client,
-        json_body=json_body,
+        multipart_data=multipart_data,
     )
 
     async with httpx.AsyncClient(verify=client.verify_ssl) as _client:

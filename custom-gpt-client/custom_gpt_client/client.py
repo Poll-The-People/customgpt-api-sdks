@@ -12,7 +12,7 @@ from custom_gpt_client.api.conversations import (
     send_message_to_conversation,
     update_project_conversation,
 )
-from custom_gpt_client.api.pages import delete_project_pages, get_project_pages
+from custom_gpt_client.api.pages import delete_project_page, get_preview, get_project_pages
 from custom_gpt_client.api.project_settings import get_project_settings, update_project_settings
 from custom_gpt_client.api.projects import (
     create_project,
@@ -25,10 +25,12 @@ from custom_gpt_client.api.projects import (
 from custom_gpt_client.api.users import get_user_profile, update_user_profile
 from custom_gpt_client.models import (
     CreateProjectConversationJsonBody,
-    CreateProjectJsonBody,
+    CreateProjectMultipartData,
     SendMessageToConversationJsonBody,
     UpdateProjectConversationJsonBody,
-    UpdateProjectJsonBody,
+    UpdateProjectMultipartData,
+    UpdateProjectSettingsMultipartData,
+    UpdateUserProfileMultipartData,
 )
 
 
@@ -113,7 +115,7 @@ class CustomGPT(CustomGPTClient):
         if "file" in kwargs:
             field = kwargs.pop("file")
             json["file"] = field
-        kwargs["json_body"] = CreateProjectJsonBody(**json)
+        kwargs["multipart_data"] = CreateProjectMultipartData(**json)
 
         return create_project.sync_detailed(client=self, *args, **kwargs)
 
@@ -131,7 +133,7 @@ class CustomGPT(CustomGPTClient):
         if "file" in kwargs:
             field = kwargs.pop("file")
             json["file"] = field
-        kwargs["json_body"] = CreateProjectJsonBody(**json)
+        kwargs["multipart_data"] = CreateProjectMultipartData(**json)
 
         return create_project.asyncio_detailed(client=self, *args, **kwargs)
 
@@ -158,7 +160,7 @@ class CustomGPT(CustomGPTClient):
         if "file" in kwargs:
             field = kwargs.pop("file")
             json["file"] = field
-        kwargs["json_body"] = UpdateProjectJsonBody(**json)
+        kwargs["multipart_data"] = UpdateProjectMultipartData(**json)
 
         return update_project.sync_detailed(client=self, *args, **kwargs)
 
@@ -179,7 +181,7 @@ class CustomGPT(CustomGPTClient):
         if "file" in kwargs:
             field = kwargs.pop("file")
             json["file"] = field
-        kwargs["json_body"] = UpdateProjectJsonBody(**json)
+        kwargs["multipart_data"] = UpdateProjectMultipartData(**json)
 
         return update_project.asyncio_detailed(client=self, *args, **kwargs)
 
@@ -201,11 +203,17 @@ class CustomGPT(CustomGPTClient):
     def aget_project_pages(self, *args: Any, **kwargs: Any):
         return get_project_pages.asyncio_detailed(client=self, *args, **kwargs)
 
-    def delete_project_pages(self, *args: Any, **kwargs: Any):
-        return delete_project_pages.sync_detailed(client=self, *args, **kwargs)
+    def delete_project_page(self, *args: Any, **kwargs: Any):
+        return delete_project_page.sync_detailed(client=self, *args, **kwargs)
 
-    def adelete_project_pages(self, *args: Any, **kwargs: Any):
-        return delete_project_pages.asyncio_detailed(client=self, *args, **kwargs)
+    def adelete_project_page(self, *args: Any, **kwargs: Any):
+        return delete_project_page.asyncio_detailed(client=self, *args, **kwargs)
+
+    def get_preview(self, *args: Any, **kwargs: Any):
+        return get_preview.sync_detailed(client=self, *args, **kwargs)
+
+    def aget_preview(self, *args: Any, **kwargs: Any):
+        return get_preview.asyncio_detailed(client=self, *args, **kwargs)
 
     def get_project_settings(self, *args: Any, **kwargs: Any):
         return get_project_settings.sync_detailed(client=self, *args, **kwargs)
@@ -214,9 +222,51 @@ class CustomGPT(CustomGPTClient):
         return get_project_settings.asyncio_detailed(client=self, *args, **kwargs)
 
     def update_project_settings(self, *args: Any, **kwargs: Any):
+        json = {}
+        if "chat_bot_avatar" in kwargs:
+            field = kwargs.pop("chat_bot_avatar")
+            json["chat_bot_avatar"] = field
+        if "chat_bot_bg" in kwargs:
+            field = kwargs.pop("chat_bot_bg")
+            json["chat_bot_bg"] = field
+        if "default_prompt" in kwargs:
+            field = kwargs.pop("default_prompt")
+            json["default_prompt"] = field
+        if "example_questions" in kwargs:
+            field = kwargs.pop("example_questions")
+            json["example_questions"] = field
+        if "response_source" in kwargs:
+            field = kwargs.pop("response_source")
+            json["response_source"] = field
+        if "chatbot_msg_lang" in kwargs:
+            field = kwargs.pop("chatbot_msg_lang")
+            json["chatbot_msg_lang"] = field
+        kwargs["multipart_data"] = UpdateProjectSettingsMultipartData(**json)
+
         return update_project_settings.sync_detailed(client=self, *args, **kwargs)
 
     def aupdate_project_settings(self, *args: Any, **kwargs: Any):
+        json = {}
+        if "chat_bot_avatar" in kwargs:
+            field = kwargs.pop("chat_bot_avatar")
+            json["chat_bot_avatar"] = field
+        if "chat_bot_bg" in kwargs:
+            field = kwargs.pop("chat_bot_bg")
+            json["chat_bot_bg"] = field
+        if "default_prompt" in kwargs:
+            field = kwargs.pop("default_prompt")
+            json["default_prompt"] = field
+        if "example_questions" in kwargs:
+            field = kwargs.pop("example_questions")
+            json["example_questions"] = field
+        if "response_source" in kwargs:
+            field = kwargs.pop("response_source")
+            json["response_source"] = field
+        if "chatbot_msg_lang" in kwargs:
+            field = kwargs.pop("chatbot_msg_lang")
+            json["chatbot_msg_lang"] = field
+        kwargs["multipart_data"] = UpdateProjectSettingsMultipartData(**json)
+
         return update_project_settings.asyncio_detailed(client=self, *args, **kwargs)
 
     def get_project_conversations(self, *args: Any, **kwargs: Any):
@@ -304,7 +354,25 @@ class CustomGPT(CustomGPTClient):
         return get_user_profile.asyncio_detailed(client=self, *args, **kwargs)
 
     def update_user_profile(self, *args: Any, **kwargs: Any):
+        json = {}
+        if "profile_photo" in kwargs:
+            field = kwargs.pop("profile_photo")
+            json["profile_photo"] = field
+        if "name" in kwargs:
+            field = kwargs.pop("name")
+            json["name"] = field
+        kwargs["multipart_data"] = UpdateUserProfileMultipartData(**json)
+
         return update_user_profile.sync_detailed(client=self, *args, **kwargs)
 
     def aupdate_user_profile(self, *args: Any, **kwargs: Any):
+        json = {}
+        if "profile_photo" in kwargs:
+            field = kwargs.pop("profile_photo")
+            json["profile_photo"] = field
+        if "name" in kwargs:
+            field = kwargs.pop("name")
+            json["name"] = field
+        kwargs["multipart_data"] = UpdateUserProfileMultipartData(**json)
+
         return update_user_profile.asyncio_detailed(client=self, *args, **kwargs)

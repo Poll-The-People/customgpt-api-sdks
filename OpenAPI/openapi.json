@@ -217,9 +217,9 @@
                 "summary": "Create a new project.",
                 "description": "Create a new project from either sitemap or uploaded file.",
                 "requestBody": {
-                    "description": "Create a new project from a sitemap",
+                    "description": "Create a new project from a sitemap or a file",
                     "content": {
-                        "application\/json": {
+                        "multipart\/form-data": {
                             "schema": {
                                 "type": "object",
                                 "properties": {
@@ -350,9 +350,9 @@
                     }
                 ],
                 "requestBody": {
-                    "description": "Create a new project from a sitemap",
+                    "description": "Update a project from a sitemap or a file",
                     "content": {
-                        "application\/json": {
+                        "multipart\/form-data": {
                             "schema": {
                                 "type": "object",
                                 "properties": {
@@ -574,10 +574,7 @@
                                                         "data": {
                                                             "type": "array",
                                                             "items": {
-                                                                "type": "array",
-                                                                "items": {
-                                                                    "$ref": "#\/components\/schemas\/Page"
-                                                                }
+                                                                "$ref": "#\/components\/schemas\/Page"
                                                             }
                                                         },
                                                         "first_page_url": {
@@ -683,7 +680,7 @@
         },
         "\/api\/v1\/projects\/{projectId}\/pages\/{pageId}": {
             "delete": {
-                "operationId": "delete_project_pages",
+                "operationId": "delete_project_page",
                 "tags": [
                     "Pages"
                 ],
@@ -840,11 +837,11 @@
                     "200": {
                         "$ref": "#\/components\/responses\/UpdateProjectSettingsResponse"
                     },
+                    "400": {
+                        "$ref": "#\/components\/responses\/UpdateProjectSettingsErrorResponse"
+                    },
                     "401": {
                         "$ref": "#\/components\/responses\/ApiTokenValidationErrorResponse"
-                    },
-                    "404": {
-                        "$ref": "#\/components\/responses\/ProjectNotFoundErrorResponse"
                     },
                     "500": {
                         "$ref": "#\/components\/responses\/InternalServerErrorResponse"
@@ -1460,6 +1457,41 @@
                 ]
             }
         },
+        "\/api\/v1\/preview\/{id}": {
+            "get": {
+                "operationId": "get_preview",
+                "tags": [
+                    "Pages"
+                ],
+                "summary": "Preview file from citation.",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "401": {
+                        "$ref": "#\/components\/responses\/ApiTokenValidationErrorResponse"
+                    },
+                    "404": {
+                        "$ref": "#\/components\/responses\/PageNotFoundErrorResponse"
+                    },
+                    "500": {
+                        "$ref": "#\/components\/responses\/InternalServerErrorResponse"
+                    }
+                },
+                "security": [
+                    {
+                        "BearerToken": []
+                    }
+                ]
+            }
+        },
         "\/api\/v1\/user": {
             "get": {
                 "operationId": "get_user_profile",
@@ -1528,7 +1560,7 @@
                                         "description": "User profile photo",
                                         "format": "binary",
                                         "type": "string",
-                                        "example": ""
+                                        "example": "avatar.png"
                                     },
                                     "name": {
                                         "description": "User name",
@@ -1815,7 +1847,7 @@
                         "default": [],
                         "type": "array",
                         "items": {
-                            "type": "integer"
+                           "type": "integer"
                         },
                         "example": [
                             1,
@@ -1847,7 +1879,7 @@
                         "description": "The example questions",
                         "type": "array",
                         "items": {
-                            "type": "string"
+                           "type": "string"
                         },
                         "example": [
                             "How do I get started?"
@@ -1867,6 +1899,47 @@
                         "description": "The chatbot message language",
                         "type": "string",
                         "example": "en"
+                    }
+                }
+            },
+            "ProjectPlugin": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "description": "Plugin ID",
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "model_name": {
+                        "description": "Model Name",
+                        "type": "string",
+                        "example": "IndoorPlants"
+                    },
+                    "human_name": {
+                        "description": "Name For Human",
+                        "type": "string",
+                        "example": "The Indoor Plants Channel"
+                    },
+                    "keywords": {
+                        "description": "Keywords For Model",
+                        "type": "string",
+                        "example": "Indoor plants, Gardening, Trusted information."
+                    },
+                    "description": {
+                        "description": "Description For Human",
+                        "type": "string",
+                        "example": "Trusted information about indoor plants and gardening."
+                    },
+                    "logo": {
+                        "description": "Project plugin logo",
+                        "type": "string",
+                        "example": "https:\/\/app.customgpt.ai\/logo.svg"
+                    },
+                    "is_active": {
+                        "description": "Whether the project plugin is active or not",
+                        "default": false,
+                        "type": "boolean",
+                        "example": true
                     }
                 }
             },
@@ -1955,19 +2028,19 @@
                         "description": "Date and time when the page was created",
                         "format": "date-time",
                         "type": "string",
-                        "example": "2021-01-01T00:00:00.000000Z"
+                        "example": "2021-01-01 00:00:00"
                     },
                     "updated_at": {
                         "description": "Date and time when the page was updated",
                         "format": "date-time",
                         "type": "string",
-                        "example": "2021-01-01T00:00:00.000000Z"
+                        "example": "2021-01-01 00:00:00"
                     },
                     "deleted_at": {
                         "description": "Date and time when the page was deleted",
                         "format": "date-time",
                         "type": "string",
-                        "example": "2021-01-01T00:00:00.000000Z"
+                        "example": "2021-01-01 00:00:00"
                     }
                 }
             },
@@ -2014,7 +2087,9 @@
                     },
                     "session_id": {
                         "description": "Session ID for this conversation",
-                        "type": "string"
+                        "format": "uuid",
+                        "type": "string",
+                        "example": "f1b9aaf0-5e4e-11eb-ae93-0242ac130002"
                     }
                 }
             }
@@ -2130,6 +2205,114 @@
                                     "properties": {
                                         "": {
                                             "$ref": "#\/components\/schemas\/ProjectSettings"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "ProjectPluginNotFoundErrorResponse": {
+                "description": "Project plugin not found",
+                "content": {
+                    "application\/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "status": {
+                                    "description": "The status of the response",
+                                    "enum": [
+                                        "error",
+                                        "success"
+                                    ],
+                                    "type": "string",
+                                    "example": "error"
+                                },
+                                "url": {
+                                    "description": "The URL of the request",
+                                    "type": "string",
+                                    "example": "https:\/\/app.customgpt.ai\/api\/v1\/projects\/1"
+                                },
+                                "data": {
+                                    "type": "object",
+                                    "properties": {
+                                        "code": {
+                                            "description": "The error status code",
+                                            "enum": [
+                                                400,
+                                                401,
+                                                403,
+                                                404,
+                                                500,
+                                                503
+                                            ],
+                                            "type": "integer",
+                                            "example": 404
+                                        },
+                                        "message": {
+                                            "description": "The error message",
+                                            "enum": [
+                                                "Project plugin id is required",
+                                                "Project plugin with id {projectPluginId} not found",
+                                                "Project plugin with slug {slug} not found"
+                                            ],
+                                            "type": "string",
+                                            "example": "Project plugin with id 1 not found"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "UpdateProjectSettingsErrorResponse": {
+                "description": "Update project settings failed",
+                "content": {
+                    "application\/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "status": {
+                                    "description": "The status of the response",
+                                    "enum": [
+                                        "error",
+                                        "success"
+                                    ],
+                                    "type": "string",
+                                    "example": "error"
+                                },
+                                "url": {
+                                    "description": "The URL of the request",
+                                    "type": "string",
+                                    "example": "https:\/\/app.customgpt.ai\/api\/v1\/projects\/1"
+                                },
+                                "data": {
+                                    "type": "object",
+                                    "properties": {
+                                        "code": {
+                                            "description": "The error status code",
+                                            "enum": [
+                                                400,
+                                                401,
+                                                403,
+                                                404,
+                                                500,
+                                                503
+                                            ],
+                                            "type": "integer",
+                                            "example": 400
+                                        },
+                                        "message": {
+                                            "description": "The error message",
+                                            "enum": [
+                                                "Please upload a valid image file for avatar",
+                                                "Please upload a valid image file for background",
+                                                "Language Proficiency is required."
+                                            ],
+                                            "type": "string",
+                                            "example": "Please upload a valid image file for avatar"
                                         }
                                     }
                                 }
@@ -2485,6 +2668,88 @@
                                             ],
                                             "type": "string",
                                             "example": "Project name can't be empty"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "PageNotFoundErrorResponse": {
+                "description": "Page not found",
+                "content": {
+                    "application\/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "status": {
+                                    "description": "The status of the response",
+                                    "enum": [
+                                        "error",
+                                        "success"
+                                    ],
+                                    "type": "string",
+                                    "example": "error"
+                                },
+                                "url": {
+                                    "description": "The URL of the request",
+                                    "type": "string",
+                                    "example": "https:\/\/app.customgpt.ai\/api\/v1\/projects\/1"
+                                },
+                                "data": {
+                                    "type": "object",
+                                    "properties": {
+                                        "code": {
+                                            "description": "The error status code",
+                                            "enum": [
+                                                400,
+                                                401,
+                                                403,
+                                                404,
+                                                500,
+                                                503
+                                            ],
+                                            "type": "integer",
+                                            "example": 404
+                                        },
+                                        "message": {
+                                            "description": "The error message",
+                                            "enum": [
+                                                "Page id is required",
+                                                "Page with id {pageId} not found"
+                                            ],
+                                            "type": "string",
+                                            "example": "Page with id 1 not found"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "ListProjectPluginResponse": {
+                "description": "Retrieve certain project plugin by given slug",
+                "content": {
+                    "application\/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "status": {
+                                    "description": "The status of the response",
+                                    "enum": [
+                                        "error",
+                                        "success"
+                                    ],
+                                    "type": "string",
+                                    "example": "success"
+                                },
+                                "data": {
+                                    "type": "object",
+                                    "properties": {
+                                        "projectPlugin": {
+                                            "$ref": "#\/components\/schemas\/ProjectPlugin"
                                         }
                                     }
                                 }

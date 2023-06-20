@@ -20,7 +20,7 @@ class Conversation:
         name (Union[Unset, str]): Conversation name Example: Conversation 1.
         project_id (Union[Unset, str]): Project ID for this conversation Example: 1.
         created_by (Union[Unset, str]): User ID for the user who created this conversation Example: 1.
-        session_id (Union[Unset, str]): Session ID for this conversation
+        session_id (Union[Unset, str]): Session ID for this conversation Example: f1b9aaf0-5e4e-11eb-ae93-0242ac130002.
     """
 
     created_at: Union[Unset, datetime.datetime] = UNSET

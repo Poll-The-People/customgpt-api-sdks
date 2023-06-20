@@ -2,7 +2,7 @@
 
 from .conversation import Conversation
 from .create_project_conversation_json_body import CreateProjectConversationJsonBody
-from .create_project_json_body import CreateProjectJsonBody
+from .create_project_multipart_data import CreateProjectMultipartData
 from .get_open_graph_data_for_citation_response_200 import GetOpenGraphDataForCitationResponse200
 from .get_open_graph_data_for_citation_response_200_data import GetOpenGraphDataForCitationResponse200Data
 from .get_open_graph_data_for_citation_response_200_status import GetOpenGraphDataForCitationResponse200Status
@@ -31,6 +31,7 @@ from .page import Page
 from .page_crawl_status import PageCrawlStatus
 from .page_index_status import PageIndexStatus
 from .project import Project
+from .project_plugin import ProjectPlugin
 from .project_settings import ProjectSettings
 from .project_settings_response_source import ProjectSettingsResponseSource
 from .project_type import ProjectType
@@ -40,7 +41,7 @@ from .update_project_conversation_json_body import UpdateProjectConversationJson
 from .update_project_conversation_response_200 import UpdateProjectConversationResponse200
 from .update_project_conversation_response_200_data import UpdateProjectConversationResponse200Data
 from .update_project_conversation_response_200_status import UpdateProjectConversationResponse200Status
-from .update_project_json_body import UpdateProjectJsonBody
+from .update_project_multipart_data import UpdateProjectMultipartData
 from .update_project_settings_multipart_data import UpdateProjectSettingsMultipartData
 from .update_user_profile_multipart_data import UpdateUserProfileMultipartData
 from .update_user_profile_response_200 import UpdateUserProfileResponse200
@@ -51,7 +52,7 @@ from .user import User
 __all__ = (
     "Conversation",
     "CreateProjectConversationJsonBody",
-    "CreateProjectJsonBody",
+    "CreateProjectMultipartData",
     "GetOpenGraphDataForCitationResponse200",
     "GetOpenGraphDataForCitationResponse200Data",
     "GetOpenGraphDataForCitationResponse200Status",
@@ -80,6 +81,7 @@ __all__ = (
     "PageCrawlStatus",
     "PageIndexStatus",
     "Project",
+    "ProjectPlugin",
     "ProjectSettings",
     "ProjectSettingsResponseSource",
     "ProjectType",
@@ -89,7 +91,7 @@ __all__ = (
     "UpdateProjectConversationResponse200",
     "UpdateProjectConversationResponse200Data",
     "UpdateProjectConversationResponse200Status",
-    "UpdateProjectJsonBody",
+    "UpdateProjectMultipartData",
     "UpdateProjectSettingsMultipartData",
     "UpdateUserProfileMultipartData",
     "UpdateUserProfileResponse200",

@@ -34,7 +34,10 @@ for {{ inner_source }} in {{ source }}:
 {{ destination }} = {{ source }}
 {% endif %}
 {% if multipart %}
-{{ multipart_destination }} = (None, json.dumps({{ destination }}).encode(), 'application/json')
+{{ multipart_destination }} = []
+for index, value in enumerate(self.{{multipart_destination}}):
+    field_value = (None, str(value).encode(), "text/plain")
+    {{multipart_destination}}.append(field_value)
 {% endif %}
 {% endmacro %}
 

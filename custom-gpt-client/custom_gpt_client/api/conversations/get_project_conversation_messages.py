@@ -77,17 +77,7 @@ def sync_detailed(
     page: Union[Unset, None, int] = 1,
     order: Union[Unset, None, GetProjectConversationMessagesOrder] = GetProjectConversationMessagesOrder.DESC,
 ):
-    if stream:
-        return list(
-            stream_detailed(
-                project_id=project_id,
-                session_id=session_id,
-                client=client,
-                page=page,
-                order=order,
-            )
-        )
-    """ Retrieve messages that have been sent in a conversation.
+    """Retrieve messages that have been sent in a conversation.
 
      Get all the messages that have been sent in a conversation by `projectId` and `sessionId`.
 
@@ -104,7 +94,7 @@ def sync_detailed(
 
     Returns:
         Response[Any]
-     """
+    """
 
     kwargs = _get_kwargs(
         project_id=project_id,
@@ -130,15 +120,7 @@ async def asyncio_detailed(
     page: Union[Unset, None, int] = 1,
     order: Union[Unset, None, GetProjectConversationMessagesOrder] = GetProjectConversationMessagesOrder.DESC,
 ) -> Response[Any]:
-    if stream:
-        return astream_detailed(
-            project_id=project_id,
-            session_id=session_id,
-            client=client,
-            page=page,
-            order=order,
-        )
-    """ Retrieve messages that have been sent in a conversation.
+    """Retrieve messages that have been sent in a conversation.
 
      Get all the messages that have been sent in a conversation by `projectId` and `sessionId`.
 
@@ -155,7 +137,7 @@ async def asyncio_detailed(
 
     Returns:
         Response[Any]
-     """
+    """
 
     kwargs = _get_kwargs(
         project_id=project_id,

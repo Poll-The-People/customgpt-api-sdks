@@ -62,15 +62,7 @@ def sync_detailed(
     client: {},
     json_body: CreateProjectConversationJsonBody,
 ):
-    if stream:
-        return list(
-            stream_detailed(
-                project_id=project_id,
-                client=client,
-                json_body=json_body,
-            )
-        )
-    """ Create a new conversation.
+    """Create a new conversation.
 
      Create a new conversation for a project by `projectId`.
 
@@ -84,7 +76,7 @@ def sync_detailed(
 
     Returns:
         Response[Any]
-     """
+    """
 
     kwargs = _get_kwargs(
         project_id=project_id,
@@ -106,13 +98,7 @@ async def asyncio_detailed(
     client: {},
     json_body: CreateProjectConversationJsonBody,
 ) -> Response[Any]:
-    if stream:
-        return astream_detailed(
-            project_id=project_id,
-            client=client,
-            json_body=json_body,
-        )
-    """ Create a new conversation.
+    """Create a new conversation.
 
      Create a new conversation for a project by `projectId`.
 
@@ -126,7 +112,7 @@ async def asyncio_detailed(
 
     Returns:
         Response[Any]
-     """
+    """
 
     kwargs = _get_kwargs(
         project_id=project_id,

@@ -54,7 +54,8 @@ class ProjectSettings:
         if default_prompt is not UNSET:
             field_dict["default_prompt"] = default_prompt
         if example_questions is not UNSET:
-            field_dict["example_questions"] = example_questions
+            for index, field_value in enumerate(example_questions):
+                field_dict[f"example_questions[]{index}"] = field_value
         if response_source is not UNSET:
             field_dict["response_source"] = response_source
         if chatbot_msg_lang is not UNSET:
