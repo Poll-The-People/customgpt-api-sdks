@@ -5,7 +5,7 @@ import attr
 from ..types import UNSET, Unset
 
 if TYPE_CHECKING:
-    from ..models.user import User
+    from ..models.update_user_profile_response_200_data_user import UpdateUserProfileResponse200DataUser
 
 
 T = TypeVar("T", bound="UpdateUserProfileResponse200Data")
@@ -15,10 +15,10 @@ T = TypeVar("T", bound="UpdateUserProfileResponse200Data")
 class UpdateUserProfileResponse200Data:
     """
     Attributes:
-        user (Union[Unset, User]):
+        user (Union[Unset, UpdateUserProfileResponse200DataUser]):
     """
 
-    user: Union[Unset, "User"] = UNSET
+    user: Union[Unset, "UpdateUserProfileResponse200DataUser"] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
@@ -36,15 +36,15 @@ class UpdateUserProfileResponse200Data:
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        from ..models.user import User
+        from ..models.update_user_profile_response_200_data_user import UpdateUserProfileResponse200DataUser
 
         d = src_dict.copy()
         _user = d.pop("user", UNSET)
-        user: Union[Unset, User]
+        user: Union[Unset, UpdateUserProfileResponse200DataUser]
         if isinstance(_user, Unset):
             user = UNSET
         else:
-            user = User.from_dict(_user)
+            user = UpdateUserProfileResponse200DataUser.from_dict(_user)
 
         update_user_profile_response_200_data = cls(
             user=user,

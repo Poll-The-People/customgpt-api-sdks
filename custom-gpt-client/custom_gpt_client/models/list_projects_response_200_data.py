@@ -5,8 +5,8 @@ import attr
 from ..types import UNSET, Unset
 
 if TYPE_CHECKING:
+    from ..models.list_projects_response_200_data_data_item import ListProjectsResponse200DataDataItem
     from ..models.list_projects_response_200_data_links import ListProjectsResponse200DataLinks
-    from ..models.project import Project
 
 
 T = TypeVar("T", bound="ListProjectsResponse200Data")
@@ -17,7 +17,7 @@ class ListProjectsResponse200Data:
     """
     Attributes:
         current_page (Union[Unset, int]): The current page number Example: 1.
-        data (Union[Unset, List['Project']]):
+        data (Union[Unset, List['ListProjectsResponse200DataDataItem']]):
         first_page_url (Union[Unset, str]): The first page url Example: https://app.customgpt.ai/api/v1/users?page=1.
         from_ (Union[Unset, int]): The first item number of the current page Example: 1.
         last_page (Union[Unset, int]): The last page number Example: 1.
@@ -32,7 +32,7 @@ class ListProjectsResponse200Data:
     """
 
     current_page: Union[Unset, int] = UNSET
-    data: Union[Unset, List["Project"]] = UNSET
+    data: Union[Unset, List["ListProjectsResponse200DataDataItem"]] = UNSET
     first_page_url: Union[Unset, str] = UNSET
     from_: Union[Unset, int] = UNSET
     last_page: Union[Unset, int] = UNSET
@@ -106,8 +106,8 @@ class ListProjectsResponse200Data:
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+        from ..models.list_projects_response_200_data_data_item import ListProjectsResponse200DataDataItem
         from ..models.list_projects_response_200_data_links import ListProjectsResponse200DataLinks
-        from ..models.project import Project
 
         d = src_dict.copy()
         current_page = d.pop("current_page", UNSET)
@@ -115,7 +115,7 @@ class ListProjectsResponse200Data:
         data = []
         _data = d.pop("data", UNSET)
         for data_item_data in _data or []:
-            data_item = Project.from_dict(data_item_data)
+            data_item = ListProjectsResponse200DataDataItem.from_dict(data_item_data)
 
             data.append(data_item)
 

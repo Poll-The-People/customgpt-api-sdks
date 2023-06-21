@@ -5,6 +5,10 @@ import httpx
 
 from ... import errors
 from ...models.send_message_to_conversation_json_body import SendMessageToConversationJsonBody
+from ...models.send_message_to_conversation_response_200 import SendMessageToConversationResponse200
+from ...models.send_message_to_conversation_response_401 import SendMessageToConversationResponse401
+from ...models.send_message_to_conversation_response_404 import SendMessageToConversationResponse404
+from ...models.send_message_to_conversation_response_500 import SendMessageToConversationResponse500
 from ...types import UNSET, Response, Unset
 
 
@@ -45,22 +49,48 @@ def _get_kwargs(
     }
 
 
-def _parse_response(*, client: {}, response: httpx.Response) -> Optional[Any]:
+def _parse_response(
+    *, client: {}, response: httpx.Response
+) -> Optional[
+    Union[
+        SendMessageToConversationResponse200,
+        SendMessageToConversationResponse401,
+        SendMessageToConversationResponse404,
+        SendMessageToConversationResponse500,
+    ]
+]:
     if response.status_code == HTTPStatus.OK:
-        return None
+        response_200 = SendMessageToConversationResponse200.from_dict(response.json())
+
+        return response_200
     if response.status_code == HTTPStatus.UNAUTHORIZED:
-        return None
+        response_401 = SendMessageToConversationResponse401.from_dict(response.json())
+
+        return response_401
     if response.status_code == HTTPStatus.NOT_FOUND:
-        return None
+        response_404 = SendMessageToConversationResponse404.from_dict(response.json())
+
+        return response_404
     if response.status_code == HTTPStatus.INTERNAL_SERVER_ERROR:
-        return None
+        response_500 = SendMessageToConversationResponse500.from_dict(response.json())
+
+        return response_500
     if client.raise_on_unexpected_status:
         raise errors.UnexpectedStatus(response.status_code, response.content)
     else:
         return None
 
 
-def _build_response(*, client: {}, response: httpx.Response, content: Optional[bytes] = None) -> Response[Any]:
+def _build_response(
+    *, client: {}, response: httpx.Response, content: Optional[bytes] = None
+) -> Response[
+    Union[
+        SendMessageToConversationResponse200,
+        SendMessageToConversationResponse401,
+        SendMessageToConversationResponse404,
+        SendMessageToConversationResponse500,
+    ]
+]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content if content is None else content,
@@ -77,7 +107,14 @@ def stream_detailed(
     json_body: SendMessageToConversationJsonBody,
     stream: Union[Unset, None, bool] = False,
     lang: Union[Unset, None, str] = "en",
-) -> Response[Any]:
+) -> Response[
+    Union[
+        SendMessageToConversationResponse200,
+        SendMessageToConversationResponse401,
+        SendMessageToConversationResponse404,
+        SendMessageToConversationResponse500,
+    ]
+]:
     """Send a message to a conversation.
 
      Send a message to a conversation by `projectId` and `sessionId`.
@@ -94,7 +131,7 @@ def stream_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Any]
+        Response[Union[SendMessageToConversationResponse200, SendMessageToConversationResponse401, SendMessageToConversationResponse404, SendMessageToConversationResponse500]]
     """
 
     kwargs = _get_kwargs(
@@ -176,7 +213,7 @@ def sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Any]
+        Response[Union[SendMessageToConversationResponse200, SendMessageToConversationResponse401, SendMessageToConversationResponse404, SendMessageToConversationResponse500]]
      """
 
     kwargs = _get_kwargs(
@@ -196,6 +233,51 @@ def sync_detailed(
     return _build_response(client=client, response=response)
 
 
+def sync(
+    project_id: int,
+    session_id: str,
+    *,
+    client: {},
+    json_body: SendMessageToConversationJsonBody,
+    stream: Union[Unset, None, bool] = False,
+    lang: Union[Unset, None, str] = "en",
+) -> Optional[
+    Union[
+        SendMessageToConversationResponse200,
+        SendMessageToConversationResponse401,
+        SendMessageToConversationResponse404,
+        SendMessageToConversationResponse500,
+    ]
+]:
+    """Send a message to a conversation.
+
+     Send a message to a conversation by `projectId` and `sessionId`.
+
+    Args:
+        project_id (int):  Example: 1.
+        session_id (str):  Example: 1.
+        stream (Union[Unset, None, bool]):
+        lang (Union[Unset, None, str]):  Default: 'en'.
+        json_body (SendMessageToConversationJsonBody):
+
+    Raises:
+        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
+        httpx.TimeoutException: If the request takes longer than Client.timeout.
+
+    Returns:
+        Union[SendMessageToConversationResponse200, SendMessageToConversationResponse401, SendMessageToConversationResponse404, SendMessageToConversationResponse500]
+    """
+
+    return sync_detailed(
+        project_id=project_id,
+        session_id=session_id,
+        client=client,
+        json_body=json_body,
+        stream=stream,
+        lang=lang,
+    ).parsed
+
+
 async def asyncio_detailed(
     project_id: int,
     session_id: str,
@@ -204,7 +286,14 @@ async def asyncio_detailed(
     json_body: SendMessageToConversationJsonBody,
     stream: Union[Unset, None, bool] = False,
     lang: Union[Unset, None, str] = "en",
-) -> Response[Any]:
+) -> Response[
+    Union[
+        SendMessageToConversationResponse200,
+        SendMessageToConversationResponse401,
+        SendMessageToConversationResponse404,
+        SendMessageToConversationResponse500,
+    ]
+]:
     if stream:
         return astream_detailed(
             project_id=project_id,
@@ -230,7 +319,7 @@ async def asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Any]
+        Response[Union[SendMessageToConversationResponse200, SendMessageToConversationResponse401, SendMessageToConversationResponse404, SendMessageToConversationResponse500]]
      """
 
     kwargs = _get_kwargs(
@@ -246,3 +335,50 @@ async def asyncio_detailed(
         response = await _client.request(**kwargs)
 
     return _build_response(client=client, response=response)
+
+
+async def asyncio(
+    project_id: int,
+    session_id: str,
+    *,
+    client: {},
+    json_body: SendMessageToConversationJsonBody,
+    stream: Union[Unset, None, bool] = False,
+    lang: Union[Unset, None, str] = "en",
+) -> Optional[
+    Union[
+        SendMessageToConversationResponse200,
+        SendMessageToConversationResponse401,
+        SendMessageToConversationResponse404,
+        SendMessageToConversationResponse500,
+    ]
+]:
+    """Send a message to a conversation.
+
+     Send a message to a conversation by `projectId` and `sessionId`.
+
+    Args:
+        project_id (int):  Example: 1.
+        session_id (str):  Example: 1.
+        stream (Union[Unset, None, bool]):
+        lang (Union[Unset, None, str]):  Default: 'en'.
+        json_body (SendMessageToConversationJsonBody):
+
+    Raises:
+        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
+        httpx.TimeoutException: If the request takes longer than Client.timeout.
+
+    Returns:
+        Union[SendMessageToConversationResponse200, SendMessageToConversationResponse401, SendMessageToConversationResponse404, SendMessageToConversationResponse500]
+    """
+
+    return (
+        await asyncio_detailed(
+            project_id=project_id,
+            session_id=session_id,
+            client=client,
+            json_body=json_body,
+            stream=stream,
+            lang=lang,
+        )
+    ).parsed

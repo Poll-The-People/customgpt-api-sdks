@@ -7,9 +7,7 @@ from custom_gpt_client import CustomGPT
 
 
 def test_citations():
-    client = CustomGPT(
-        base_url="https://dev.customgpt.ai", token="", timeout=10000
-    )
+    client = CustomGPT(base_url="https://dev.customgpt.ai", token="", timeout=10000)
     response = client.create_project(project_name="test", sitemap_path="https://adorosario.github.io/small-sitemap.xml")
     response_create = json.loads(response.content.decode("utf-8"))
     project_id = response_create["data"]["id"]
@@ -40,9 +38,7 @@ def test_citations():
 
 @pytest.mark.asyncio
 async def test_citations():
-    client = CustomGPT(
-        base_url="https://dev.customgpt.ai", token="", timeout=10000
-    )
+    client = CustomGPT(base_url="https://dev.customgpt.ai", token="", timeout=10000)
     response = await client.acreate_project(
         project_name="test", sitemap_path="https://adorosario.github.io/small-sitemap.xml"
     )

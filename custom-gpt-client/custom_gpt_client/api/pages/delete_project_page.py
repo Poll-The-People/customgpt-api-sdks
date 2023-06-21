@@ -1,9 +1,13 @@
 from http import HTTPStatus
-from typing import Any, Dict, Optional
+from typing import Any, Dict, Optional, Union
 
 import httpx
 
 from ... import errors
+from ...models.delete_project_page_response_200 import DeleteProjectPageResponse200
+from ...models.delete_project_page_response_401 import DeleteProjectPageResponse401
+from ...models.delete_project_page_response_404 import DeleteProjectPageResponse404
+from ...models.delete_project_page_response_500 import DeleteProjectPageResponse500
 from ...types import Response
 
 
@@ -28,22 +32,48 @@ def _get_kwargs(
     }
 
 
-def _parse_response(*, client: {}, response: httpx.Response) -> Optional[Any]:
+def _parse_response(
+    *, client: {}, response: httpx.Response
+) -> Optional[
+    Union[
+        DeleteProjectPageResponse200,
+        DeleteProjectPageResponse401,
+        DeleteProjectPageResponse404,
+        DeleteProjectPageResponse500,
+    ]
+]:
     if response.status_code == HTTPStatus.OK:
-        return None
+        response_200 = DeleteProjectPageResponse200.from_dict(response.json())
+
+        return response_200
     if response.status_code == HTTPStatus.UNAUTHORIZED:
-        return None
+        response_401 = DeleteProjectPageResponse401.from_dict(response.json())
+
+        return response_401
     if response.status_code == HTTPStatus.NOT_FOUND:
-        return None
+        response_404 = DeleteProjectPageResponse404.from_dict(response.json())
+
+        return response_404
     if response.status_code == HTTPStatus.INTERNAL_SERVER_ERROR:
-        return None
+        response_500 = DeleteProjectPageResponse500.from_dict(response.json())
+
+        return response_500
     if client.raise_on_unexpected_status:
         raise errors.UnexpectedStatus(response.status_code, response.content)
     else:
         return None
 
 
-def _build_response(*, client: {}, response: httpx.Response, content: Optional[bytes] = None) -> Response[Any]:
+def _build_response(
+    *, client: {}, response: httpx.Response, content: Optional[bytes] = None
+) -> Response[
+    Union[
+        DeleteProjectPageResponse200,
+        DeleteProjectPageResponse401,
+        DeleteProjectPageResponse404,
+        DeleteProjectPageResponse500,
+    ]
+]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content if content is None else content,
@@ -71,7 +101,7 @@ def sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Any]
+        Response[Union[DeleteProjectPageResponse200, DeleteProjectPageResponse401, DeleteProjectPageResponse404, DeleteProjectPageResponse500]]
     """
 
     kwargs = _get_kwargs(
@@ -88,12 +118,19 @@ def sync_detailed(
     return _build_response(client=client, response=response)
 
 
-async def asyncio_detailed(
+def sync(
     project_id: int,
     page_id: int,
     *,
     client: {},
-) -> Response[Any]:
+) -> Optional[
+    Union[
+        DeleteProjectPageResponse200,
+        DeleteProjectPageResponse401,
+        DeleteProjectPageResponse404,
+        DeleteProjectPageResponse500,
+    ]
+]:
     """Delete a certain page that belongs to a certain project.
 
      Delete a certain page of a specific project by `projectId` and `pageId`.
@@ -107,7 +144,43 @@ async def asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Any]
+        Union[DeleteProjectPageResponse200, DeleteProjectPageResponse401, DeleteProjectPageResponse404, DeleteProjectPageResponse500]
+    """
+
+    return sync_detailed(
+        project_id=project_id,
+        page_id=page_id,
+        client=client,
+    ).parsed
+
+
+async def asyncio_detailed(
+    project_id: int,
+    page_id: int,
+    *,
+    client: {},
+) -> Response[
+    Union[
+        DeleteProjectPageResponse200,
+        DeleteProjectPageResponse401,
+        DeleteProjectPageResponse404,
+        DeleteProjectPageResponse500,
+    ]
+]:
+    """Delete a certain page that belongs to a certain project.
+
+     Delete a certain page of a specific project by `projectId` and `pageId`.
+
+    Args:
+        project_id (int):
+        page_id (int):
+
+    Raises:
+        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
+        httpx.TimeoutException: If the request takes longer than Client.timeout.
+
+    Returns:
+        Response[Union[DeleteProjectPageResponse200, DeleteProjectPageResponse401, DeleteProjectPageResponse404, DeleteProjectPageResponse500]]
     """
 
     kwargs = _get_kwargs(
@@ -120,3 +193,41 @@ async def asyncio_detailed(
         response = await _client.request(**kwargs)
 
     return _build_response(client=client, response=response)
+
+
+async def asyncio(
+    project_id: int,
+    page_id: int,
+    *,
+    client: {},
+) -> Optional[
+    Union[
+        DeleteProjectPageResponse200,
+        DeleteProjectPageResponse401,
+        DeleteProjectPageResponse404,
+        DeleteProjectPageResponse500,
+    ]
+]:
+    """Delete a certain page that belongs to a certain project.
+
+     Delete a certain page of a specific project by `projectId` and `pageId`.
+
+    Args:
+        project_id (int):
+        page_id (int):
+
+    Raises:
+        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
+        httpx.TimeoutException: If the request takes longer than Client.timeout.
+
+    Returns:
+        Union[DeleteProjectPageResponse200, DeleteProjectPageResponse401, DeleteProjectPageResponse404, DeleteProjectPageResponse500]
+    """
+
+    return (
+        await asyncio_detailed(
+            project_id=project_id,
+            page_id=page_id,
+            client=client,
+        )
+    ).parsed

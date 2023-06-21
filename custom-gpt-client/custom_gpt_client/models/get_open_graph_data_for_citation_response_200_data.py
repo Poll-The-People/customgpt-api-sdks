@@ -5,7 +5,9 @@ import attr
 from ..types import UNSET, Unset
 
 if TYPE_CHECKING:
-    from ..models.open_graph_cache import OpenGraphCache
+    from ..models.get_open_graph_data_for_citation_response_200_data_open_graph_cache_schema import (
+        GetOpenGraphDataForCitationResponse200DataOpenGraphCacheSchema,
+    )
 
 
 T = TypeVar("T", bound="GetOpenGraphDataForCitationResponse200Data")
@@ -15,10 +17,10 @@ T = TypeVar("T", bound="GetOpenGraphDataForCitationResponse200Data")
 class GetOpenGraphDataForCitationResponse200Data:
     """
     Attributes:
-        open_graph_cache_schema (Union[Unset, OpenGraphCache]):
+        open_graph_cache_schema (Union[Unset, GetOpenGraphDataForCitationResponse200DataOpenGraphCacheSchema]):
     """
 
-    open_graph_cache_schema: Union[Unset, "OpenGraphCache"] = UNSET
+    open_graph_cache_schema: Union[Unset, "GetOpenGraphDataForCitationResponse200DataOpenGraphCacheSchema"] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
@@ -36,15 +38,19 @@ class GetOpenGraphDataForCitationResponse200Data:
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        from ..models.open_graph_cache import OpenGraphCache
+        from ..models.get_open_graph_data_for_citation_response_200_data_open_graph_cache_schema import (
+            GetOpenGraphDataForCitationResponse200DataOpenGraphCacheSchema,
+        )
 
         d = src_dict.copy()
         _open_graph_cache_schema = d.pop("OpenGraphCacheSchema", UNSET)
-        open_graph_cache_schema: Union[Unset, OpenGraphCache]
+        open_graph_cache_schema: Union[Unset, GetOpenGraphDataForCitationResponse200DataOpenGraphCacheSchema]
         if isinstance(_open_graph_cache_schema, Unset):
             open_graph_cache_schema = UNSET
         else:
-            open_graph_cache_schema = OpenGraphCache.from_dict(_open_graph_cache_schema)
+            open_graph_cache_schema = GetOpenGraphDataForCitationResponse200DataOpenGraphCacheSchema.from_dict(
+                _open_graph_cache_schema
+            )
 
         get_open_graph_data_for_citation_response_200_data = cls(
             open_graph_cache_schema=open_graph_cache_schema,

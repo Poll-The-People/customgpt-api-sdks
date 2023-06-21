@@ -1,11 +1,13 @@
 from http import HTTPStatus
-from typing import Any, Dict, Optional, Union, cast
+from typing import Any, Dict, Optional, Union
 
 import httpx
 
 from ... import errors
 from ...models.update_user_profile_multipart_data import UpdateUserProfileMultipartData
 from ...models.update_user_profile_response_200 import UpdateUserProfileResponse200
+from ...models.update_user_profile_response_401 import UpdateUserProfileResponse401
+from ...models.update_user_profile_response_500 import UpdateUserProfileResponse500
 from ...types import Response
 
 
@@ -32,16 +34,20 @@ def _get_kwargs(
     }
 
 
-def _parse_response(*, client: {}, response: httpx.Response) -> Optional[Union[Any, UpdateUserProfileResponse200]]:
+def _parse_response(
+    *, client: {}, response: httpx.Response
+) -> Optional[Union[UpdateUserProfileResponse200, UpdateUserProfileResponse401, UpdateUserProfileResponse500]]:
     if response.status_code == HTTPStatus.OK:
         response_200 = UpdateUserProfileResponse200.from_dict(response.json())
 
         return response_200
     if response.status_code == HTTPStatus.UNAUTHORIZED:
-        response_401 = cast(Any, None)
+        response_401 = UpdateUserProfileResponse401.from_dict(response.json())
+
         return response_401
     if response.status_code == HTTPStatus.INTERNAL_SERVER_ERROR:
-        response_500 = cast(Any, None)
+        response_500 = UpdateUserProfileResponse500.from_dict(response.json())
+
         return response_500
     if client.raise_on_unexpected_status:
         raise errors.UnexpectedStatus(response.status_code, response.content)
@@ -51,7 +57,7 @@ def _parse_response(*, client: {}, response: httpx.Response) -> Optional[Union[A
 
 def _build_response(
     *, client: {}, response: httpx.Response, content: Optional[bytes] = None
-) -> Response[Union[Any, UpdateUserProfileResponse200]]:
+) -> Response[Union[UpdateUserProfileResponse200, UpdateUserProfileResponse401, UpdateUserProfileResponse500]]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content if content is None else content,
@@ -77,7 +83,7 @@ def sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Union[Any, UpdateUserProfileResponse200]]
+        Response[Union[UpdateUserProfileResponse200, UpdateUserProfileResponse401, UpdateUserProfileResponse500]]
     """
 
     kwargs = _get_kwargs(
@@ -97,7 +103,7 @@ def sync(
     *,
     client: {},
     multipart_data: UpdateUserProfileMultipartData,
-) -> Optional[Union[Any, UpdateUserProfileResponse200]]:
+) -> Optional[Union[UpdateUserProfileResponse200, UpdateUserProfileResponse401, UpdateUserProfileResponse500]]:
     """Update the user's profile.
 
      Update the current user's profile.
@@ -110,7 +116,7 @@ def sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Union[Any, UpdateUserProfileResponse200]
+        Union[UpdateUserProfileResponse200, UpdateUserProfileResponse401, UpdateUserProfileResponse500]
     """
 
     return sync_detailed(
@@ -123,7 +129,7 @@ async def asyncio_detailed(
     *,
     client: {},
     multipart_data: UpdateUserProfileMultipartData,
-) -> Response[Union[Any, UpdateUserProfileResponse200]]:
+) -> Response[Union[UpdateUserProfileResponse200, UpdateUserProfileResponse401, UpdateUserProfileResponse500]]:
     """Update the user's profile.
 
      Update the current user's profile.
@@ -136,7 +142,7 @@ async def asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Union[Any, UpdateUserProfileResponse200]]
+        Response[Union[UpdateUserProfileResponse200, UpdateUserProfileResponse401, UpdateUserProfileResponse500]]
     """
 
     kwargs = _get_kwargs(
@@ -154,7 +160,7 @@ async def asyncio(
     *,
     client: {},
     multipart_data: UpdateUserProfileMultipartData,
-) -> Optional[Union[Any, UpdateUserProfileResponse200]]:
+) -> Optional[Union[UpdateUserProfileResponse200, UpdateUserProfileResponse401, UpdateUserProfileResponse500]]:
     """Update the user's profile.
 
      Update the current user's profile.
@@ -167,7 +173,7 @@ async def asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Union[Any, UpdateUserProfileResponse200]
+        Union[UpdateUserProfileResponse200, UpdateUserProfileResponse401, UpdateUserProfileResponse500]
     """
 
     return (

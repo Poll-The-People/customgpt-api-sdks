@@ -1,9 +1,13 @@
 from http import HTTPStatus
-from typing import Any, Dict, Optional
+from typing import Any, Dict, Optional, Union
 
 import httpx
 
 from ... import errors
+from ...models.delete_project_response_200 import DeleteProjectResponse200
+from ...models.delete_project_response_401 import DeleteProjectResponse401
+from ...models.delete_project_response_404 import DeleteProjectResponse404
+from ...models.delete_project_response_500 import DeleteProjectResponse500
 from ...types import Response
 
 
@@ -27,22 +31,38 @@ def _get_kwargs(
     }
 
 
-def _parse_response(*, client: {}, response: httpx.Response) -> Optional[Any]:
+def _parse_response(
+    *, client: {}, response: httpx.Response
+) -> Optional[
+    Union[DeleteProjectResponse200, DeleteProjectResponse401, DeleteProjectResponse404, DeleteProjectResponse500]
+]:
     if response.status_code == HTTPStatus.OK:
-        return None
+        response_200 = DeleteProjectResponse200.from_dict(response.json())
+
+        return response_200
     if response.status_code == HTTPStatus.UNAUTHORIZED:
-        return None
+        response_401 = DeleteProjectResponse401.from_dict(response.json())
+
+        return response_401
     if response.status_code == HTTPStatus.NOT_FOUND:
-        return None
+        response_404 = DeleteProjectResponse404.from_dict(response.json())
+
+        return response_404
     if response.status_code == HTTPStatus.INTERNAL_SERVER_ERROR:
-        return None
+        response_500 = DeleteProjectResponse500.from_dict(response.json())
+
+        return response_500
     if client.raise_on_unexpected_status:
         raise errors.UnexpectedStatus(response.status_code, response.content)
     else:
         return None
 
 
-def _build_response(*, client: {}, response: httpx.Response, content: Optional[bytes] = None) -> Response[Any]:
+def _build_response(
+    *, client: {}, response: httpx.Response, content: Optional[bytes] = None
+) -> Response[
+    Union[DeleteProjectResponse200, DeleteProjectResponse401, DeleteProjectResponse404, DeleteProjectResponse500]
+]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content if content is None else content,
@@ -68,7 +88,7 @@ def sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Any]
+        Response[Union[DeleteProjectResponse200, DeleteProjectResponse401, DeleteProjectResponse404, DeleteProjectResponse500]]
     """
 
     kwargs = _get_kwargs(
@@ -84,11 +104,13 @@ def sync_detailed(
     return _build_response(client=client, response=response)
 
 
-async def asyncio_detailed(
+def sync(
     project_id: int,
     *,
     client: {},
-) -> Response[Any]:
+) -> Optional[
+    Union[DeleteProjectResponse200, DeleteProjectResponse401, DeleteProjectResponse404, DeleteProjectResponse500]
+]:
     """Delete a certain project.
 
      Delete an existing project by project ID.
@@ -101,7 +123,35 @@ async def asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Any]
+        Union[DeleteProjectResponse200, DeleteProjectResponse401, DeleteProjectResponse404, DeleteProjectResponse500]
+    """
+
+    return sync_detailed(
+        project_id=project_id,
+        client=client,
+    ).parsed
+
+
+async def asyncio_detailed(
+    project_id: int,
+    *,
+    client: {},
+) -> Response[
+    Union[DeleteProjectResponse200, DeleteProjectResponse401, DeleteProjectResponse404, DeleteProjectResponse500]
+]:
+    """Delete a certain project.
+
+     Delete an existing project by project ID.
+
+    Args:
+        project_id (int):
+
+    Raises:
+        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
+        httpx.TimeoutException: If the request takes longer than Client.timeout.
+
+    Returns:
+        Response[Union[DeleteProjectResponse200, DeleteProjectResponse401, DeleteProjectResponse404, DeleteProjectResponse500]]
     """
 
     kwargs = _get_kwargs(
@@ -113,3 +163,33 @@ async def asyncio_detailed(
         response = await _client.request(**kwargs)
 
     return _build_response(client=client, response=response)
+
+
+async def asyncio(
+    project_id: int,
+    *,
+    client: {},
+) -> Optional[
+    Union[DeleteProjectResponse200, DeleteProjectResponse401, DeleteProjectResponse404, DeleteProjectResponse500]
+]:
+    """Delete a certain project.
+
+     Delete an existing project by project ID.
+
+    Args:
+        project_id (int):
+
+    Raises:
+        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
+        httpx.TimeoutException: If the request takes longer than Client.timeout.
+
+    Returns:
+        Union[DeleteProjectResponse200, DeleteProjectResponse401, DeleteProjectResponse404, DeleteProjectResponse500]
+    """
+
+    return (
+        await asyncio_detailed(
+            project_id=project_id,
+            client=client,
+        )
+    ).parsed

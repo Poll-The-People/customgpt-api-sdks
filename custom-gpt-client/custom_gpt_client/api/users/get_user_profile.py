@@ -1,10 +1,12 @@
 from http import HTTPStatus
-from typing import Any, Dict, Optional, Union, cast
+from typing import Any, Dict, Optional, Union
 
 import httpx
 
 from ... import errors
 from ...models.get_user_profile_response_200 import GetUserProfileResponse200
+from ...models.get_user_profile_response_401 import GetUserProfileResponse401
+from ...models.get_user_profile_response_500 import GetUserProfileResponse500
 from ...types import Response
 
 
@@ -27,16 +29,20 @@ def _get_kwargs(
     }
 
 
-def _parse_response(*, client: {}, response: httpx.Response) -> Optional[Union[Any, GetUserProfileResponse200]]:
+def _parse_response(
+    *, client: {}, response: httpx.Response
+) -> Optional[Union[GetUserProfileResponse200, GetUserProfileResponse401, GetUserProfileResponse500]]:
     if response.status_code == HTTPStatus.OK:
         response_200 = GetUserProfileResponse200.from_dict(response.json())
 
         return response_200
     if response.status_code == HTTPStatus.UNAUTHORIZED:
-        response_401 = cast(Any, None)
+        response_401 = GetUserProfileResponse401.from_dict(response.json())
+
         return response_401
     if response.status_code == HTTPStatus.INTERNAL_SERVER_ERROR:
-        response_500 = cast(Any, None)
+        response_500 = GetUserProfileResponse500.from_dict(response.json())
+
         return response_500
     if client.raise_on_unexpected_status:
         raise errors.UnexpectedStatus(response.status_code, response.content)
@@ -46,7 +52,7 @@ def _parse_response(*, client: {}, response: httpx.Response) -> Optional[Union[A
 
 def _build_response(
     *, client: {}, response: httpx.Response, content: Optional[bytes] = None
-) -> Response[Union[Any, GetUserProfileResponse200]]:
+) -> Response[Union[GetUserProfileResponse200, GetUserProfileResponse401, GetUserProfileResponse500]]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content if content is None else content,
@@ -68,7 +74,7 @@ def sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Union[Any, GetUserProfileResponse200]]
+        Response[Union[GetUserProfileResponse200, GetUserProfileResponse401, GetUserProfileResponse500]]
     """
 
     kwargs = _get_kwargs(
@@ -86,7 +92,7 @@ def sync_detailed(
 def sync(
     *,
     client: {},
-) -> Optional[Union[Any, GetUserProfileResponse200]]:
+) -> Optional[Union[GetUserProfileResponse200, GetUserProfileResponse401, GetUserProfileResponse500]]:
     """Show the user's profile.
 
      Retrieve the current user's profile.
@@ -96,7 +102,7 @@ def sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Union[Any, GetUserProfileResponse200]
+        Union[GetUserProfileResponse200, GetUserProfileResponse401, GetUserProfileResponse500]
     """
 
     return sync_detailed(
@@ -107,7 +113,7 @@ def sync(
 async def asyncio_detailed(
     *,
     client: {},
-) -> Response[Union[Any, GetUserProfileResponse200]]:
+) -> Response[Union[GetUserProfileResponse200, GetUserProfileResponse401, GetUserProfileResponse500]]:
     """Show the user's profile.
 
      Retrieve the current user's profile.
@@ -117,7 +123,7 @@ async def asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Union[Any, GetUserProfileResponse200]]
+        Response[Union[GetUserProfileResponse200, GetUserProfileResponse401, GetUserProfileResponse500]]
     """
 
     kwargs = _get_kwargs(
@@ -133,7 +139,7 @@ async def asyncio_detailed(
 async def asyncio(
     *,
     client: {},
-) -> Optional[Union[Any, GetUserProfileResponse200]]:
+) -> Optional[Union[GetUserProfileResponse200, GetUserProfileResponse401, GetUserProfileResponse500]]:
     """Show the user's profile.
 
      Retrieve the current user's profile.
@@ -143,7 +149,7 @@ async def asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Union[Any, GetUserProfileResponse200]
+        Union[GetUserProfileResponse200, GetUserProfileResponse401, GetUserProfileResponse500]
     """
 
     return (

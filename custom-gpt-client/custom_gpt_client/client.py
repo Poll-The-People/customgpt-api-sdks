@@ -18,8 +18,8 @@ from custom_gpt_client.api.projects import (
     create_project,
     delete_project,
     get_project,
-    get_project_stats,
     list_projects,
+    stats_project,
     update_project,
 )
 from custom_gpt_client.api.users import get_user_profile, update_user_profile
@@ -35,9 +35,8 @@ from custom_gpt_client.models import (
 
 
 @attr.s(auto_attribs=True)
-class CustomGPTClient:
-    """A class for keeping track of data related to the API
-
+class CustomGPT:
+    """A Client which has been authenticated for use on secured endpoints
     Attributes:
         base_url: The base URL for the API, all requests are made to a relative path to this URL
         cookies: A dictionary of cookies to be sent with every request
@@ -51,7 +50,10 @@ class CustomGPTClient:
         follow_redirects: Whether or not to follow redirects. Default value is False.
     """
 
-    base_url: str
+    api_key: str
+    prefix: str = "Bearer"
+    auth_header_name: str = "Authorization"
+    base_url: str = attr.ib("https://app.customgpt.ai")
     cookies: Dict[str, str] = attr.ib(factory=dict, kw_only=True)
     headers: Dict[str, str] = attr.ib(factory=dict, kw_only=True)
     timeout: float = attr.ib(5.0, kw_only=True)
@@ -59,320 +61,439 @@ class CustomGPTClient:
     raise_on_unexpected_status: bool = attr.ib(False, kw_only=True)
     follow_redirects: bool = attr.ib(False, kw_only=True)
 
-    def get_headers(self) -> Dict[str, str]:
-        """Get headers to be used in all endpoints"""
-        return {**self.headers}
-
-    def with_headers(self, headers: Dict[str, str]) -> "Client":
+    def with_headers(self, headers: Dict[str, str]) -> "CustomGPT":
         """Get a new client matching this one with additional headers"""
         return attr.evolve(self, headers={**self.headers, **headers})
 
     def get_cookies(self) -> Dict[str, str]:
         return {**self.cookies}
 
-    def with_cookies(self, cookies: Dict[str, str]) -> "Client":
+    def with_cookies(self, cookies: Dict[str, str]) -> "CustomGPT":
         """Get a new client matching this one with additional cookies"""
         return attr.evolve(self, cookies={**self.cookies, **cookies})
 
     def get_timeout(self) -> float:
         return self.timeout
 
-    def with_timeout(self, timeout: float) -> "Client":
+    def with_timeout(self, timeout: float) -> "CustomGPT":
         """Get a new client matching this one with a new timeout (in seconds)"""
         return attr.evolve(self, timeout=timeout)
 
-
-@attr.s(auto_attribs=True)
-class CustomGPT(CustomGPTClient):
-    """A Client which has been authenticated for use on secured endpoints"""
-
-    token: str
-    prefix: str = "Bearer"
-    auth_header_name: str = "Authorization"
-
     def get_headers(self) -> Dict[str, str]:
         """Get headers to be used in authenticated endpoints"""
-        auth_header_value = f"{self.prefix} {self.token}" if self.prefix else self.token
+        auth_header_value = f"{self.prefix} {self.api_key}" if self.prefix else self.api_key
         return {self.auth_header_name: auth_header_value, **self.headers}
 
-    def list_projects(self, *args: Any, **kwargs: Any):
-        return list_projects.sync_detailed(client=self, *args, **kwargs)
+    class Project:
+        def list(*args: Any, **kwargs: Any):
+            client = CustomGPT(api_key=CustomGPT.api_key, base_url=CustomGPT.base_url, timeout=CustomGPT.timeout)
 
-    def alist_projects(self, *args: Any, **kwargs: Any):
-        return list_projects.asyncio_detailed(client=self, *args, **kwargs)
+            return list_projects.sync_detailed(client=client, *args, **kwargs)
 
-    def create_project(self, *args: Any, **kwargs: Any):
-        json = {}
-        if "project_name" in kwargs:
-            field = kwargs.pop("project_name")
-            json["project_name"] = field
-        if "sitemap_path" in kwargs:
-            field = kwargs.pop("sitemap_path")
-            json["sitemap_path"] = field
-        if "file_data_retension" in kwargs:
-            field = kwargs.pop("file_data_retension")
-            json["file_data_retension"] = field
-        if "file" in kwargs:
-            field = kwargs.pop("file")
-            json["file"] = field
-        kwargs["multipart_data"] = CreateProjectMultipartData(**json)
+        def alist(*args: Any, **kwargs: Any):
+            client = CustomGPT("")
+            client.api_key = CustomGPT.api_key
+            client.base_url = CustomGPT.base_url
+            client.timeout = CustomGPT("").get_timeout()
 
-        return create_project.sync_detailed(client=self, *args, **kwargs)
+            return list_projects.asyncio_detailed(client=client, *args, **kwargs)
 
-    def acreate_project(self, *args: Any, **kwargs: Any):
-        json = {}
-        if "project_name" in kwargs:
-            field = kwargs.pop("project_name")
-            json["project_name"] = field
-        if "sitemap_path" in kwargs:
-            field = kwargs.pop("sitemap_path")
-            json["sitemap_path"] = field
-        if "file_data_retension" in kwargs:
-            field = kwargs.pop("file_data_retension")
-            json["file_data_retension"] = field
-        if "file" in kwargs:
-            field = kwargs.pop("file")
-            json["file"] = field
-        kwargs["multipart_data"] = CreateProjectMultipartData(**json)
+        def create(*args: Any, **kwargs: Any):
+            client = CustomGPT(api_key=CustomGPT.api_key, base_url=CustomGPT.base_url, timeout=CustomGPT.timeout)
+            json = {}
+            if "project_name" in kwargs:
+                field = kwargs.pop("project_name")
+                json["project_name"] = field
+            if "sitemap_path" in kwargs:
+                field = kwargs.pop("sitemap_path")
+                json["sitemap_path"] = field
+            if "file_data_retension" in kwargs:
+                field = kwargs.pop("file_data_retension")
+                json["file_data_retension"] = field
+            if "file" in kwargs:
+                field = kwargs.pop("file")
+                json["file"] = field
+            kwargs["multipart_data"] = CreateProjectMultipartData(**json)
 
-        return create_project.asyncio_detailed(client=self, *args, **kwargs)
+            return create_project.sync_detailed(client=client, *args, **kwargs)
 
-    def get_project(self, *args: Any, **kwargs: Any):
-        return get_project.sync_detailed(client=self, *args, **kwargs)
+        def acreate(*args: Any, **kwargs: Any):
+            client = CustomGPT("")
+            client.api_key = CustomGPT.api_key
+            client.base_url = CustomGPT.base_url
+            client.timeout = CustomGPT("").get_timeout()
+            json = {}
+            if "project_name" in kwargs:
+                field = kwargs.pop("project_name")
+                json["project_name"] = field
+            if "sitemap_path" in kwargs:
+                field = kwargs.pop("sitemap_path")
+                json["sitemap_path"] = field
+            if "file_data_retension" in kwargs:
+                field = kwargs.pop("file_data_retension")
+                json["file_data_retension"] = field
+            if "file" in kwargs:
+                field = kwargs.pop("file")
+                json["file"] = field
+            kwargs["multipart_data"] = CreateProjectMultipartData(**json)
 
-    def aget_project(self, *args: Any, **kwargs: Any):
-        return get_project.asyncio_detailed(client=self, *args, **kwargs)
+            return create_project.asyncio_detailed(client=client, *args, **kwargs)
 
-    def update_project(self, *args: Any, **kwargs: Any):
-        json = {}
-        if "project_name" in kwargs:
-            field = kwargs.pop("project_name")
-            json["project_name"] = field
-        if "is_shared" in kwargs:
-            field = kwargs.pop("is_shared")
-            json["is_shared"] = field
-        if "sitemap_path" in kwargs:
-            field = kwargs.pop("sitemap_path")
-            json["sitemap_path"] = field
-        if "file_data_retension" in kwargs:
-            field = kwargs.pop("file_data_retension")
-            json["file_data_retension"] = field
-        if "file" in kwargs:
-            field = kwargs.pop("file")
-            json["file"] = field
-        kwargs["multipart_data"] = UpdateProjectMultipartData(**json)
+        def get(*args: Any, **kwargs: Any):
+            client = CustomGPT(api_key=CustomGPT.api_key, base_url=CustomGPT.base_url, timeout=CustomGPT.timeout)
 
-        return update_project.sync_detailed(client=self, *args, **kwargs)
+            return get_project.sync_detailed(client=client, *args, **kwargs)
 
-    def aupdate_project(self, *args: Any, **kwargs: Any):
-        json = {}
-        if "project_name" in kwargs:
-            field = kwargs.pop("project_name")
-            json["project_name"] = field
-        if "is_shared" in kwargs:
-            field = kwargs.pop("is_shared")
-            json["is_shared"] = field
-        if "sitemap_path" in kwargs:
-            field = kwargs.pop("sitemap_path")
-            json["sitemap_path"] = field
-        if "file_data_retension" in kwargs:
-            field = kwargs.pop("file_data_retension")
-            json["file_data_retension"] = field
-        if "file" in kwargs:
-            field = kwargs.pop("file")
-            json["file"] = field
-        kwargs["multipart_data"] = UpdateProjectMultipartData(**json)
+        def aget(*args: Any, **kwargs: Any):
+            client = CustomGPT("")
+            client.api_key = CustomGPT.api_key
+            client.base_url = CustomGPT.base_url
+            client.timeout = CustomGPT("").get_timeout()
 
-        return update_project.asyncio_detailed(client=self, *args, **kwargs)
+            return get_project.asyncio_detailed(client=client, *args, **kwargs)
 
-    def delete_project(self, *args: Any, **kwargs: Any):
-        return delete_project.sync_detailed(client=self, *args, **kwargs)
+        def update(*args: Any, **kwargs: Any):
+            client = CustomGPT(api_key=CustomGPT.api_key, base_url=CustomGPT.base_url, timeout=CustomGPT.timeout)
+            json = {}
+            if "project_name" in kwargs:
+                field = kwargs.pop("project_name")
+                json["project_name"] = field
+            if "is_shared" in kwargs:
+                field = kwargs.pop("is_shared")
+                json["is_shared"] = field
+            if "sitemap_path" in kwargs:
+                field = kwargs.pop("sitemap_path")
+                json["sitemap_path"] = field
+            if "file_data_retension" in kwargs:
+                field = kwargs.pop("file_data_retension")
+                json["file_data_retension"] = field
+            if "file" in kwargs:
+                field = kwargs.pop("file")
+                json["file"] = field
+            kwargs["multipart_data"] = UpdateProjectMultipartData(**json)
 
-    def adelete_project(self, *args: Any, **kwargs: Any):
-        return delete_project.asyncio_detailed(client=self, *args, **kwargs)
+            return update_project.sync_detailed(client=client, *args, **kwargs)
 
-    def get_project_stats(self, *args: Any, **kwargs: Any):
-        return get_project_stats.sync_detailed(client=self, *args, **kwargs)
+        def aupdate(*args: Any, **kwargs: Any):
+            client = CustomGPT("")
+            client.api_key = CustomGPT.api_key
+            client.base_url = CustomGPT.base_url
+            client.timeout = CustomGPT("").get_timeout()
+            json = {}
+            if "project_name" in kwargs:
+                field = kwargs.pop("project_name")
+                json["project_name"] = field
+            if "is_shared" in kwargs:
+                field = kwargs.pop("is_shared")
+                json["is_shared"] = field
+            if "sitemap_path" in kwargs:
+                field = kwargs.pop("sitemap_path")
+                json["sitemap_path"] = field
+            if "file_data_retension" in kwargs:
+                field = kwargs.pop("file_data_retension")
+                json["file_data_retension"] = field
+            if "file" in kwargs:
+                field = kwargs.pop("file")
+                json["file"] = field
+            kwargs["multipart_data"] = UpdateProjectMultipartData(**json)
 
-    def aget_project_stats(self, *args: Any, **kwargs: Any):
-        return get_project_stats.asyncio_detailed(client=self, *args, **kwargs)
+            return update_project.asyncio_detailed(client=client, *args, **kwargs)
 
-    def get_project_pages(self, *args: Any, **kwargs: Any):
-        return get_project_pages.sync_detailed(client=self, *args, **kwargs)
+        def delete(*args: Any, **kwargs: Any):
+            client = CustomGPT(api_key=CustomGPT.api_key, base_url=CustomGPT.base_url, timeout=CustomGPT.timeout)
 
-    def aget_project_pages(self, *args: Any, **kwargs: Any):
-        return get_project_pages.asyncio_detailed(client=self, *args, **kwargs)
+            return delete_project.sync_detailed(client=client, *args, **kwargs)
 
-    def delete_project_page(self, *args: Any, **kwargs: Any):
-        return delete_project_page.sync_detailed(client=self, *args, **kwargs)
+        def adelete(*args: Any, **kwargs: Any):
+            client = CustomGPT("")
+            client.api_key = CustomGPT.api_key
+            client.base_url = CustomGPT.base_url
+            client.timeout = CustomGPT("").get_timeout()
 
-    def adelete_project_page(self, *args: Any, **kwargs: Any):
-        return delete_project_page.asyncio_detailed(client=self, *args, **kwargs)
+            return delete_project.asyncio_detailed(client=client, *args, **kwargs)
 
-    def get_preview(self, *args: Any, **kwargs: Any):
-        return get_preview.sync_detailed(client=self, *args, **kwargs)
+        def stats(*args: Any, **kwargs: Any):
+            client = CustomGPT(api_key=CustomGPT.api_key, base_url=CustomGPT.base_url, timeout=CustomGPT.timeout)
 
-    def aget_preview(self, *args: Any, **kwargs: Any):
-        return get_preview.asyncio_detailed(client=self, *args, **kwargs)
+            return stats_project.sync_detailed(client=client, *args, **kwargs)
 
-    def get_project_settings(self, *args: Any, **kwargs: Any):
-        return get_project_settings.sync_detailed(client=self, *args, **kwargs)
+        def astats(*args: Any, **kwargs: Any):
+            client = CustomGPT("")
+            client.api_key = CustomGPT.api_key
+            client.base_url = CustomGPT.base_url
+            client.timeout = CustomGPT("").get_timeout()
 
-    def aget_project_settings(self, *args: Any, **kwargs: Any):
-        return get_project_settings.asyncio_detailed(client=self, *args, **kwargs)
+            return stats_project.asyncio_detailed(client=client, *args, **kwargs)
 
-    def update_project_settings(self, *args: Any, **kwargs: Any):
-        json = {}
-        if "chat_bot_avatar" in kwargs:
-            field = kwargs.pop("chat_bot_avatar")
-            json["chat_bot_avatar"] = field
-        if "chat_bot_bg" in kwargs:
-            field = kwargs.pop("chat_bot_bg")
-            json["chat_bot_bg"] = field
-        if "default_prompt" in kwargs:
-            field = kwargs.pop("default_prompt")
-            json["default_prompt"] = field
-        if "example_questions" in kwargs:
-            field = kwargs.pop("example_questions")
-            json["example_questions"] = field
-        if "response_source" in kwargs:
-            field = kwargs.pop("response_source")
-            json["response_source"] = field
-        if "chatbot_msg_lang" in kwargs:
-            field = kwargs.pop("chatbot_msg_lang")
-            json["chatbot_msg_lang"] = field
-        kwargs["multipart_data"] = UpdateProjectSettingsMultipartData(**json)
+    class Page:
+        def get(*args: Any, **kwargs: Any):
+            client = CustomGPT(api_key=CustomGPT.api_key, base_url=CustomGPT.base_url, timeout=CustomGPT.timeout)
 
-        return update_project_settings.sync_detailed(client=self, *args, **kwargs)
+            return get_project_pages.sync_detailed(client=client, *args, **kwargs)
 
-    def aupdate_project_settings(self, *args: Any, **kwargs: Any):
-        json = {}
-        if "chat_bot_avatar" in kwargs:
-            field = kwargs.pop("chat_bot_avatar")
-            json["chat_bot_avatar"] = field
-        if "chat_bot_bg" in kwargs:
-            field = kwargs.pop("chat_bot_bg")
-            json["chat_bot_bg"] = field
-        if "default_prompt" in kwargs:
-            field = kwargs.pop("default_prompt")
-            json["default_prompt"] = field
-        if "example_questions" in kwargs:
-            field = kwargs.pop("example_questions")
-            json["example_questions"] = field
-        if "response_source" in kwargs:
-            field = kwargs.pop("response_source")
-            json["response_source"] = field
-        if "chatbot_msg_lang" in kwargs:
-            field = kwargs.pop("chatbot_msg_lang")
-            json["chatbot_msg_lang"] = field
-        kwargs["multipart_data"] = UpdateProjectSettingsMultipartData(**json)
+        def aget(*args: Any, **kwargs: Any):
+            client = CustomGPT("")
+            client.api_key = CustomGPT.api_key
+            client.base_url = CustomGPT.base_url
+            client.timeout = CustomGPT("").get_timeout()
 
-        return update_project_settings.asyncio_detailed(client=self, *args, **kwargs)
+            return get_project_pages.asyncio_detailed(client=client, *args, **kwargs)
 
-    def get_project_conversations(self, *args: Any, **kwargs: Any):
-        return get_project_conversations.sync_detailed(client=self, *args, **kwargs)
+        def delete(*args: Any, **kwargs: Any):
+            client = CustomGPT(api_key=CustomGPT.api_key, base_url=CustomGPT.base_url, timeout=CustomGPT.timeout)
 
-    def aget_project_conversations(self, *args: Any, **kwargs: Any):
-        return get_project_conversations.asyncio_detailed(client=self, *args, **kwargs)
+            return delete_project_page.sync_detailed(client=client, *args, **kwargs)
 
-    def create_project_conversation(self, *args: Any, **kwargs: Any):
-        json = {}
-        if "name" in kwargs:
-            field = kwargs.pop("name")
-            json["name"] = field
-        kwargs["json_body"] = CreateProjectConversationJsonBody(**json)
+        def adelete(*args: Any, **kwargs: Any):
+            client = CustomGPT("")
+            client.api_key = CustomGPT.api_key
+            client.base_url = CustomGPT.base_url
+            client.timeout = CustomGPT("").get_timeout()
 
-        return create_project_conversation.sync_detailed(client=self, *args, **kwargs)
+            return delete_project_page.asyncio_detailed(client=client, *args, **kwargs)
 
-    def acreate_project_conversation(self, *args: Any, **kwargs: Any):
-        json = {}
-        if "name" in kwargs:
-            field = kwargs.pop("name")
-            json["name"] = field
-        kwargs["json_body"] = CreateProjectConversationJsonBody(**json)
+        def get(*args: Any, **kwargs: Any):
+            client = CustomGPT(api_key=CustomGPT.api_key, base_url=CustomGPT.base_url, timeout=CustomGPT.timeout)
 
-        return create_project_conversation.asyncio_detailed(client=self, *args, **kwargs)
+            return get_preview.sync_detailed(client=client, *args, **kwargs)
 
-    def update_project_conversation(self, *args: Any, **kwargs: Any):
-        json = {}
-        if "name" in kwargs:
-            field = kwargs.pop("name")
-            json["name"] = field
-        kwargs["json_body"] = UpdateProjectConversationJsonBody(**json)
+        def aget(*args: Any, **kwargs: Any):
+            client = CustomGPT("")
+            client.api_key = CustomGPT.api_key
+            client.base_url = CustomGPT.base_url
+            client.timeout = CustomGPT("").get_timeout()
 
-        return update_project_conversation.sync_detailed(client=self, *args, **kwargs)
+            return get_preview.asyncio_detailed(client=client, *args, **kwargs)
 
-    def aupdate_project_conversation(self, *args: Any, **kwargs: Any):
-        json = {}
-        if "name" in kwargs:
-            field = kwargs.pop("name")
-            json["name"] = field
-        kwargs["json_body"] = UpdateProjectConversationJsonBody(**json)
+    class Project_setting:
+        def get(*args: Any, **kwargs: Any):
+            client = CustomGPT(api_key=CustomGPT.api_key, base_url=CustomGPT.base_url, timeout=CustomGPT.timeout)
 
-        return update_project_conversation.asyncio_detailed(client=self, *args, **kwargs)
+            return get_project_settings.sync_detailed(client=client, *args, **kwargs)
 
-    def delete_project_conversation(self, *args: Any, **kwargs: Any):
-        return delete_project_conversation.sync_detailed(client=self, *args, **kwargs)
+        def aget(*args: Any, **kwargs: Any):
+            client = CustomGPT("")
+            client.api_key = CustomGPT.api_key
+            client.base_url = CustomGPT.base_url
+            client.timeout = CustomGPT("").get_timeout()
 
-    def adelete_project_conversation(self, *args: Any, **kwargs: Any):
-        return delete_project_conversation.asyncio_detailed(client=self, *args, **kwargs)
+            return get_project_settings.asyncio_detailed(client=client, *args, **kwargs)
 
-    def get_project_conversation_messages(self, *args: Any, **kwargs: Any):
-        return get_project_conversation_messages.sync_detailed(client=self, *args, **kwargs)
+        def update(*args: Any, **kwargs: Any):
+            client = CustomGPT(api_key=CustomGPT.api_key, base_url=CustomGPT.base_url, timeout=CustomGPT.timeout)
+            json = {}
+            if "chat_bot_avatar" in kwargs:
+                field = kwargs.pop("chat_bot_avatar")
+                json["chat_bot_avatar"] = field
+            if "chat_bot_bg" in kwargs:
+                field = kwargs.pop("chat_bot_bg")
+                json["chat_bot_bg"] = field
+            if "default_prompt" in kwargs:
+                field = kwargs.pop("default_prompt")
+                json["default_prompt"] = field
+            if "example_questions" in kwargs:
+                field = kwargs.pop("example_questions")
+                json["example_questions"] = field
+            if "response_source" in kwargs:
+                field = kwargs.pop("response_source")
+                json["response_source"] = field
+            if "chatbot_msg_lang" in kwargs:
+                field = kwargs.pop("chatbot_msg_lang")
+                json["chatbot_msg_lang"] = field
+            kwargs["multipart_data"] = UpdateProjectSettingsMultipartData(**json)
 
-    def aget_project_conversation_messages(self, *args: Any, **kwargs: Any):
-        return get_project_conversation_messages.asyncio_detailed(client=self, *args, **kwargs)
+            return update_project_settings.sync_detailed(client=client, *args, **kwargs)
 
-    def send_message_to_conversation(self, *args: Any, **kwargs: Any):
-        json = {}
-        if "prompt" in kwargs:
-            field = kwargs.pop("prompt")
-            json["prompt"] = field
-        kwargs["json_body"] = SendMessageToConversationJsonBody(**json)
+        def aupdate(*args: Any, **kwargs: Any):
+            client = CustomGPT("")
+            client.api_key = CustomGPT.api_key
+            client.base_url = CustomGPT.base_url
+            client.timeout = CustomGPT("").get_timeout()
+            json = {}
+            if "chat_bot_avatar" in kwargs:
+                field = kwargs.pop("chat_bot_avatar")
+                json["chat_bot_avatar"] = field
+            if "chat_bot_bg" in kwargs:
+                field = kwargs.pop("chat_bot_bg")
+                json["chat_bot_bg"] = field
+            if "default_prompt" in kwargs:
+                field = kwargs.pop("default_prompt")
+                json["default_prompt"] = field
+            if "example_questions" in kwargs:
+                field = kwargs.pop("example_questions")
+                json["example_questions"] = field
+            if "response_source" in kwargs:
+                field = kwargs.pop("response_source")
+                json["response_source"] = field
+            if "chatbot_msg_lang" in kwargs:
+                field = kwargs.pop("chatbot_msg_lang")
+                json["chatbot_msg_lang"] = field
+            kwargs["multipart_data"] = UpdateProjectSettingsMultipartData(**json)
 
-        return send_message_to_conversation.sync_detailed(client=self, *args, **kwargs)
+            return update_project_settings.asyncio_detailed(client=client, *args, **kwargs)
 
-    def asend_message_to_conversation(self, *args: Any, **kwargs: Any):
-        json = {}
-        if "prompt" in kwargs:
-            field = kwargs.pop("prompt")
-            json["prompt"] = field
-        kwargs["json_body"] = SendMessageToConversationJsonBody(**json)
+    class Conversation:
+        def get(*args: Any, **kwargs: Any):
+            client = CustomGPT(api_key=CustomGPT.api_key, base_url=CustomGPT.base_url, timeout=CustomGPT.timeout)
 
-        return send_message_to_conversation.asyncio_detailed(client=self, *args, **kwargs)
+            return get_project_conversations.sync_detailed(client=client, *args, **kwargs)
 
-    def get_open_graph_data_for_citation(self, *args: Any, **kwargs: Any):
-        return get_open_graph_data_for_citation.sync_detailed(client=self, *args, **kwargs)
+        def aget(*args: Any, **kwargs: Any):
+            client = CustomGPT("")
+            client.api_key = CustomGPT.api_key
+            client.base_url = CustomGPT.base_url
+            client.timeout = CustomGPT("").get_timeout()
 
-    def aget_open_graph_data_for_citation(self, *args: Any, **kwargs: Any):
-        return get_open_graph_data_for_citation.asyncio_detailed(client=self, *args, **kwargs)
+            return get_project_conversations.asyncio_detailed(client=client, *args, **kwargs)
 
-    def get_user_profile(self, *args: Any, **kwargs: Any):
-        return get_user_profile.sync_detailed(client=self, *args, **kwargs)
+        def create(*args: Any, **kwargs: Any):
+            client = CustomGPT(api_key=CustomGPT.api_key, base_url=CustomGPT.base_url, timeout=CustomGPT.timeout)
+            json = {}
+            if "name" in kwargs:
+                field = kwargs.pop("name")
+                json["name"] = field
+            kwargs["json_body"] = CreateProjectConversationJsonBody(**json)
 
-    def aget_user_profile(self, *args: Any, **kwargs: Any):
-        return get_user_profile.asyncio_detailed(client=self, *args, **kwargs)
+            return create_project_conversation.sync_detailed(client=client, *args, **kwargs)
 
-    def update_user_profile(self, *args: Any, **kwargs: Any):
-        json = {}
-        if "profile_photo" in kwargs:
-            field = kwargs.pop("profile_photo")
-            json["profile_photo"] = field
-        if "name" in kwargs:
-            field = kwargs.pop("name")
-            json["name"] = field
-        kwargs["multipart_data"] = UpdateUserProfileMultipartData(**json)
+        def acreate(*args: Any, **kwargs: Any):
+            client = CustomGPT("")
+            client.api_key = CustomGPT.api_key
+            client.base_url = CustomGPT.base_url
+            client.timeout = CustomGPT("").get_timeout()
+            json = {}
+            if "name" in kwargs:
+                field = kwargs.pop("name")
+                json["name"] = field
+            kwargs["json_body"] = CreateProjectConversationJsonBody(**json)
 
-        return update_user_profile.sync_detailed(client=self, *args, **kwargs)
+            return create_project_conversation.asyncio_detailed(client=client, *args, **kwargs)
 
-    def aupdate_user_profile(self, *args: Any, **kwargs: Any):
-        json = {}
-        if "profile_photo" in kwargs:
-            field = kwargs.pop("profile_photo")
-            json["profile_photo"] = field
-        if "name" in kwargs:
-            field = kwargs.pop("name")
-            json["name"] = field
-        kwargs["multipart_data"] = UpdateUserProfileMultipartData(**json)
+        def update(*args: Any, **kwargs: Any):
+            client = CustomGPT(api_key=CustomGPT.api_key, base_url=CustomGPT.base_url, timeout=CustomGPT.timeout)
+            json = {}
+            if "name" in kwargs:
+                field = kwargs.pop("name")
+                json["name"] = field
+            kwargs["json_body"] = UpdateProjectConversationJsonBody(**json)
 
-        return update_user_profile.asyncio_detailed(client=self, *args, **kwargs)
+            return update_project_conversation.sync_detailed(client=client, *args, **kwargs)
+
+        def aupdate(*args: Any, **kwargs: Any):
+            client = CustomGPT("")
+            client.api_key = CustomGPT.api_key
+            client.base_url = CustomGPT.base_url
+            client.timeout = CustomGPT("").get_timeout()
+            json = {}
+            if "name" in kwargs:
+                field = kwargs.pop("name")
+                json["name"] = field
+            kwargs["json_body"] = UpdateProjectConversationJsonBody(**json)
+
+            return update_project_conversation.asyncio_detailed(client=client, *args, **kwargs)
+
+        def delete(*args: Any, **kwargs: Any):
+            client = CustomGPT(api_key=CustomGPT.api_key, base_url=CustomGPT.base_url, timeout=CustomGPT.timeout)
+
+            return delete_project_conversation.sync_detailed(client=client, *args, **kwargs)
+
+        def adelete(*args: Any, **kwargs: Any):
+            client = CustomGPT("")
+            client.api_key = CustomGPT.api_key
+            client.base_url = CustomGPT.base_url
+            client.timeout = CustomGPT("").get_timeout()
+
+            return delete_project_conversation.asyncio_detailed(client=client, *args, **kwargs)
+
+        def get(*args: Any, **kwargs: Any):
+            client = CustomGPT(api_key=CustomGPT.api_key, base_url=CustomGPT.base_url, timeout=CustomGPT.timeout)
+
+            return get_project_conversation_messages.sync_detailed(client=client, *args, **kwargs)
+
+        def aget(*args: Any, **kwargs: Any):
+            client = CustomGPT("")
+            client.api_key = CustomGPT.api_key
+            client.base_url = CustomGPT.base_url
+            client.timeout = CustomGPT("").get_timeout()
+
+            return get_project_conversation_messages.asyncio_detailed(client=client, *args, **kwargs)
+
+        def send(*args: Any, **kwargs: Any):
+            client = CustomGPT(api_key=CustomGPT.api_key, base_url=CustomGPT.base_url, timeout=CustomGPT.timeout)
+            json = {}
+            if "prompt" in kwargs:
+                field = kwargs.pop("prompt")
+                json["prompt"] = field
+            kwargs["json_body"] = SendMessageToConversationJsonBody(**json)
+
+            return send_message_to_conversation.sync_detailed(client=client, *args, **kwargs)
+
+        def asend(*args: Any, **kwargs: Any):
+            client = CustomGPT("")
+            client.api_key = CustomGPT.api_key
+            client.base_url = CustomGPT.base_url
+            client.timeout = CustomGPT("").get_timeout()
+            json = {}
+            if "prompt" in kwargs:
+                field = kwargs.pop("prompt")
+                json["prompt"] = field
+            kwargs["json_body"] = SendMessageToConversationJsonBody(**json)
+
+            return send_message_to_conversation.asyncio_detailed(client=client, *args, **kwargs)
+
+    class Citation:
+        def get(*args: Any, **kwargs: Any):
+            client = CustomGPT(api_key=CustomGPT.api_key, base_url=CustomGPT.base_url, timeout=CustomGPT.timeout)
+
+            return get_open_graph_data_for_citation.sync_detailed(client=client, *args, **kwargs)
+
+        def aget(*args: Any, **kwargs: Any):
+            client = CustomGPT("")
+            client.api_key = CustomGPT.api_key
+            client.base_url = CustomGPT.base_url
+            client.timeout = CustomGPT("").get_timeout()
+
+            return get_open_graph_data_for_citation.asyncio_detailed(client=client, *args, **kwargs)
+
+    class User:
+        def get(*args: Any, **kwargs: Any):
+            client = CustomGPT(api_key=CustomGPT.api_key, base_url=CustomGPT.base_url, timeout=CustomGPT.timeout)
+
+            return get_user_profile.sync_detailed(client=client, *args, **kwargs)
+
+        def aget(*args: Any, **kwargs: Any):
+            client = CustomGPT("")
+            client.api_key = CustomGPT.api_key
+            client.base_url = CustomGPT.base_url
+            client.timeout = CustomGPT("").get_timeout()
+
+            return get_user_profile.asyncio_detailed(client=client, *args, **kwargs)
+
+        def update(*args: Any, **kwargs: Any):
+            client = CustomGPT(api_key=CustomGPT.api_key, base_url=CustomGPT.base_url, timeout=CustomGPT.timeout)
+            json = {}
+            if "profile_photo" in kwargs:
+                field = kwargs.pop("profile_photo")
+                json["profile_photo"] = field
+            if "name" in kwargs:
+                field = kwargs.pop("name")
+                json["name"] = field
+            kwargs["multipart_data"] = UpdateUserProfileMultipartData(**json)
+
+            return update_user_profile.sync_detailed(client=client, *args, **kwargs)
+
+        def aupdate(*args: Any, **kwargs: Any):
+            client = CustomGPT("")
+            client.api_key = CustomGPT.api_key
+            client.base_url = CustomGPT.base_url
+            client.timeout = CustomGPT("").get_timeout()
+            json = {}
+            if "profile_photo" in kwargs:
+                field = kwargs.pop("profile_photo")
+                json["profile_photo"] = field
+            if "name" in kwargs:
+                field = kwargs.pop("name")
+                json["name"] = field
+            kwargs["multipart_data"] = UpdateUserProfileMultipartData(**json)
+
+            return update_user_profile.asyncio_detailed(client=client, *args, **kwargs)

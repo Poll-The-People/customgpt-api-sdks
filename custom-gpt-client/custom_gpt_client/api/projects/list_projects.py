@@ -1,11 +1,13 @@
 from http import HTTPStatus
-from typing import Any, Dict, Optional, Union, cast
+from typing import Any, Dict, Optional, Union
 
 import httpx
 
 from ... import errors
 from ...models.list_projects_order import ListProjectsOrder
 from ...models.list_projects_response_200 import ListProjectsResponse200
+from ...models.list_projects_response_401 import ListProjectsResponse401
+from ...models.list_projects_response_500 import ListProjectsResponse500
 from ...types import UNSET, Response, Unset
 
 
@@ -51,16 +53,20 @@ def _get_kwargs(
     }
 
 
-def _parse_response(*, client: {}, response: httpx.Response) -> Optional[Union[Any, ListProjectsResponse200]]:
+def _parse_response(
+    *, client: {}, response: httpx.Response
+) -> Optional[Union[ListProjectsResponse200, ListProjectsResponse401, ListProjectsResponse500]]:
     if response.status_code == HTTPStatus.OK:
         response_200 = ListProjectsResponse200.from_dict(response.json())
 
         return response_200
     if response.status_code == HTTPStatus.UNAUTHORIZED:
-        response_401 = cast(Any, None)
+        response_401 = ListProjectsResponse401.from_dict(response.json())
+
         return response_401
     if response.status_code == HTTPStatus.INTERNAL_SERVER_ERROR:
-        response_500 = cast(Any, None)
+        response_500 = ListProjectsResponse500.from_dict(response.json())
+
         return response_500
     if client.raise_on_unexpected_status:
         raise errors.UnexpectedStatus(response.status_code, response.content)
@@ -70,7 +76,7 @@ def _parse_response(*, client: {}, response: httpx.Response) -> Optional[Union[A
 
 def _build_response(
     *, client: {}, response: httpx.Response, content: Optional[bytes] = None
-) -> Response[Union[Any, ListProjectsResponse200]]:
+) -> Response[Union[ListProjectsResponse200, ListProjectsResponse401, ListProjectsResponse500]]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content if content is None else content,
@@ -104,7 +110,7 @@ def sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Union[Any, ListProjectsResponse200]]
+        Response[Union[ListProjectsResponse200, ListProjectsResponse401, ListProjectsResponse500]]
     """
 
     kwargs = _get_kwargs(
@@ -132,7 +138,7 @@ def sync(
     order: Union[Unset, None, ListProjectsOrder] = ListProjectsOrder.DESC,
     width: Union[Unset, None, str] = "100%",
     height: Union[Unset, None, str] = "auto",
-) -> Optional[Union[Any, ListProjectsResponse200]]:
+) -> Optional[Union[ListProjectsResponse200, ListProjectsResponse401, ListProjectsResponse500]]:
     """List all projects.
 
      Get a list of all projects that belong to the user.
@@ -149,7 +155,7 @@ def sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Union[Any, ListProjectsResponse200]
+        Union[ListProjectsResponse200, ListProjectsResponse401, ListProjectsResponse500]
     """
 
     return sync_detailed(
@@ -170,7 +176,7 @@ async def asyncio_detailed(
     order: Union[Unset, None, ListProjectsOrder] = ListProjectsOrder.DESC,
     width: Union[Unset, None, str] = "100%",
     height: Union[Unset, None, str] = "auto",
-) -> Response[Union[Any, ListProjectsResponse200]]:
+) -> Response[Union[ListProjectsResponse200, ListProjectsResponse401, ListProjectsResponse500]]:
     """List all projects.
 
      Get a list of all projects that belong to the user.
@@ -187,7 +193,7 @@ async def asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Union[Any, ListProjectsResponse200]]
+        Response[Union[ListProjectsResponse200, ListProjectsResponse401, ListProjectsResponse500]]
     """
 
     kwargs = _get_kwargs(
@@ -213,7 +219,7 @@ async def asyncio(
     order: Union[Unset, None, ListProjectsOrder] = ListProjectsOrder.DESC,
     width: Union[Unset, None, str] = "100%",
     height: Union[Unset, None, str] = "auto",
-) -> Optional[Union[Any, ListProjectsResponse200]]:
+) -> Optional[Union[ListProjectsResponse200, ListProjectsResponse401, ListProjectsResponse500]]:
     """List all projects.
 
      Get a list of all projects that belong to the user.
@@ -230,7 +236,7 @@ async def asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Union[Any, ListProjectsResponse200]
+        Union[ListProjectsResponse200, ListProjectsResponse401, ListProjectsResponse500]
     """
 
     return (

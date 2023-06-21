@@ -12,7 +12,6 @@ from ... import errors
 
 {% from "endpoint_macros.py.jinja" import header_params, cookie_params, query_params, json_body, multipart_body,
     arguments, client, kwargs, parse_response, docstring %}
-
 {% set return_string = endpoint.response_type() %}
 {% set parsed_responses = (endpoint.responses | length > 0) and return_string != "Any" %}
 

@@ -1,10 +1,14 @@
 from http import HTTPStatus
-from typing import Any, Dict, Optional
+from typing import Any, Dict, Optional, Union
 
 import httpx
 
 from ... import errors
 from ...models.create_project_multipart_data import CreateProjectMultipartData
+from ...models.create_project_response_201 import CreateProjectResponse201
+from ...models.create_project_response_400 import CreateProjectResponse400
+from ...models.create_project_response_401 import CreateProjectResponse401
+from ...models.create_project_response_500 import CreateProjectResponse500
 from ...types import Response
 
 
@@ -31,22 +35,38 @@ def _get_kwargs(
     }
 
 
-def _parse_response(*, client: {}, response: httpx.Response) -> Optional[Any]:
+def _parse_response(
+    *, client: {}, response: httpx.Response
+) -> Optional[
+    Union[CreateProjectResponse201, CreateProjectResponse400, CreateProjectResponse401, CreateProjectResponse500]
+]:
     if response.status_code == HTTPStatus.CREATED:
-        return None
+        response_201 = CreateProjectResponse201.from_dict(response.json())
+
+        return response_201
     if response.status_code == HTTPStatus.BAD_REQUEST:
-        return None
+        response_400 = CreateProjectResponse400.from_dict(response.json())
+
+        return response_400
     if response.status_code == HTTPStatus.UNAUTHORIZED:
-        return None
+        response_401 = CreateProjectResponse401.from_dict(response.json())
+
+        return response_401
     if response.status_code == HTTPStatus.INTERNAL_SERVER_ERROR:
-        return None
+        response_500 = CreateProjectResponse500.from_dict(response.json())
+
+        return response_500
     if client.raise_on_unexpected_status:
         raise errors.UnexpectedStatus(response.status_code, response.content)
     else:
         return None
 
 
-def _build_response(*, client: {}, response: httpx.Response, content: Optional[bytes] = None) -> Response[Any]:
+def _build_response(
+    *, client: {}, response: httpx.Response, content: Optional[bytes] = None
+) -> Response[
+    Union[CreateProjectResponse201, CreateProjectResponse400, CreateProjectResponse401, CreateProjectResponse500]
+]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content if content is None else content,
@@ -72,7 +92,7 @@ def sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Any]
+        Response[Union[CreateProjectResponse201, CreateProjectResponse400, CreateProjectResponse401, CreateProjectResponse500]]
     """
 
     kwargs = _get_kwargs(
@@ -88,11 +108,13 @@ def sync_detailed(
     return _build_response(client=client, response=response)
 
 
-async def asyncio_detailed(
+def sync(
     *,
     client: {},
     multipart_data: CreateProjectMultipartData,
-) -> Response[Any]:
+) -> Optional[
+    Union[CreateProjectResponse201, CreateProjectResponse400, CreateProjectResponse401, CreateProjectResponse500]
+]:
     """Create a new project.
 
      Create a new project from either sitemap or uploaded file.
@@ -105,7 +127,35 @@ async def asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Any]
+        Union[CreateProjectResponse201, CreateProjectResponse400, CreateProjectResponse401, CreateProjectResponse500]
+    """
+
+    return sync_detailed(
+        client=client,
+        multipart_data=multipart_data,
+    ).parsed
+
+
+async def asyncio_detailed(
+    *,
+    client: {},
+    multipart_data: CreateProjectMultipartData,
+) -> Response[
+    Union[CreateProjectResponse201, CreateProjectResponse400, CreateProjectResponse401, CreateProjectResponse500]
+]:
+    """Create a new project.
+
+     Create a new project from either sitemap or uploaded file.
+
+    Args:
+        multipart_data (CreateProjectMultipartData):
+
+    Raises:
+        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
+        httpx.TimeoutException: If the request takes longer than Client.timeout.
+
+    Returns:
+        Response[Union[CreateProjectResponse201, CreateProjectResponse400, CreateProjectResponse401, CreateProjectResponse500]]
     """
 
     kwargs = _get_kwargs(
@@ -117,3 +167,33 @@ async def asyncio_detailed(
         response = await _client.request(**kwargs)
 
     return _build_response(client=client, response=response)
+
+
+async def asyncio(
+    *,
+    client: {},
+    multipart_data: CreateProjectMultipartData,
+) -> Optional[
+    Union[CreateProjectResponse201, CreateProjectResponse400, CreateProjectResponse401, CreateProjectResponse500]
+]:
+    """Create a new project.
+
+     Create a new project from either sitemap or uploaded file.
+
+    Args:
+        multipart_data (CreateProjectMultipartData):
+
+    Raises:
+        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
+        httpx.TimeoutException: If the request takes longer than Client.timeout.
+
+    Returns:
+        Union[CreateProjectResponse201, CreateProjectResponse400, CreateProjectResponse401, CreateProjectResponse500]
+    """
+
+    return (
+        await asyncio_detailed(
+            client=client,
+            multipart_data=multipart_data,
+        )
+    ).parsed

@@ -5,6 +5,10 @@ import httpx
 
 from ... import errors
 from ...models.get_project_conversation_messages_order import GetProjectConversationMessagesOrder
+from ...models.get_project_conversation_messages_response_200 import GetProjectConversationMessagesResponse200
+from ...models.get_project_conversation_messages_response_401 import GetProjectConversationMessagesResponse401
+from ...models.get_project_conversation_messages_response_404 import GetProjectConversationMessagesResponse404
+from ...models.get_project_conversation_messages_response_500 import GetProjectConversationMessagesResponse500
 from ...types import UNSET, Response, Unset
 
 
@@ -45,22 +49,48 @@ def _get_kwargs(
     }
 
 
-def _parse_response(*, client: {}, response: httpx.Response) -> Optional[Any]:
+def _parse_response(
+    *, client: {}, response: httpx.Response
+) -> Optional[
+    Union[
+        GetProjectConversationMessagesResponse200,
+        GetProjectConversationMessagesResponse401,
+        GetProjectConversationMessagesResponse404,
+        GetProjectConversationMessagesResponse500,
+    ]
+]:
     if response.status_code == HTTPStatus.OK:
-        return None
+        response_200 = GetProjectConversationMessagesResponse200.from_dict(response.json())
+
+        return response_200
     if response.status_code == HTTPStatus.UNAUTHORIZED:
-        return None
+        response_401 = GetProjectConversationMessagesResponse401.from_dict(response.json())
+
+        return response_401
     if response.status_code == HTTPStatus.NOT_FOUND:
-        return None
+        response_404 = GetProjectConversationMessagesResponse404.from_dict(response.json())
+
+        return response_404
     if response.status_code == HTTPStatus.INTERNAL_SERVER_ERROR:
-        return None
+        response_500 = GetProjectConversationMessagesResponse500.from_dict(response.json())
+
+        return response_500
     if client.raise_on_unexpected_status:
         raise errors.UnexpectedStatus(response.status_code, response.content)
     else:
         return None
 
 
-def _build_response(*, client: {}, response: httpx.Response, content: Optional[bytes] = None) -> Response[Any]:
+def _build_response(
+    *, client: {}, response: httpx.Response, content: Optional[bytes] = None
+) -> Response[
+    Union[
+        GetProjectConversationMessagesResponse200,
+        GetProjectConversationMessagesResponse401,
+        GetProjectConversationMessagesResponse404,
+        GetProjectConversationMessagesResponse500,
+    ]
+]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content if content is None else content,
@@ -93,7 +123,7 @@ def sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Any]
+        Response[Union[GetProjectConversationMessagesResponse200, GetProjectConversationMessagesResponse401, GetProjectConversationMessagesResponse404, GetProjectConversationMessagesResponse500]]
     """
 
     kwargs = _get_kwargs(
@@ -112,14 +142,21 @@ def sync_detailed(
     return _build_response(client=client, response=response)
 
 
-async def asyncio_detailed(
+def sync(
     project_id: int,
     session_id: str,
     *,
     client: {},
     page: Union[Unset, None, int] = 1,
     order: Union[Unset, None, GetProjectConversationMessagesOrder] = GetProjectConversationMessagesOrder.DESC,
-) -> Response[Any]:
+) -> Optional[
+    Union[
+        GetProjectConversationMessagesResponse200,
+        GetProjectConversationMessagesResponse401,
+        GetProjectConversationMessagesResponse404,
+        GetProjectConversationMessagesResponse500,
+    ]
+]:
     """Retrieve messages that have been sent in a conversation.
 
      Get all the messages that have been sent in a conversation by `projectId` and `sessionId`.
@@ -136,7 +173,50 @@ async def asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Any]
+        Union[GetProjectConversationMessagesResponse200, GetProjectConversationMessagesResponse401, GetProjectConversationMessagesResponse404, GetProjectConversationMessagesResponse500]
+    """
+
+    return sync_detailed(
+        project_id=project_id,
+        session_id=session_id,
+        client=client,
+        page=page,
+        order=order,
+    ).parsed
+
+
+async def asyncio_detailed(
+    project_id: int,
+    session_id: str,
+    *,
+    client: {},
+    page: Union[Unset, None, int] = 1,
+    order: Union[Unset, None, GetProjectConversationMessagesOrder] = GetProjectConversationMessagesOrder.DESC,
+) -> Response[
+    Union[
+        GetProjectConversationMessagesResponse200,
+        GetProjectConversationMessagesResponse401,
+        GetProjectConversationMessagesResponse404,
+        GetProjectConversationMessagesResponse500,
+    ]
+]:
+    """Retrieve messages that have been sent in a conversation.
+
+     Get all the messages that have been sent in a conversation by `projectId` and `sessionId`.
+
+    Args:
+        project_id (int):  Example: 1.
+        session_id (str):  Example: 1.
+        page (Union[Unset, None, int]):  Default: 1.
+        order (Union[Unset, None, GetProjectConversationMessagesOrder]):  Default:
+            GetProjectConversationMessagesOrder.DESC. Example: desc.
+
+    Raises:
+        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
+        httpx.TimeoutException: If the request takes longer than Client.timeout.
+
+    Returns:
+        Response[Union[GetProjectConversationMessagesResponse200, GetProjectConversationMessagesResponse401, GetProjectConversationMessagesResponse404, GetProjectConversationMessagesResponse500]]
     """
 
     kwargs = _get_kwargs(
@@ -151,3 +231,48 @@ async def asyncio_detailed(
         response = await _client.request(**kwargs)
 
     return _build_response(client=client, response=response)
+
+
+async def asyncio(
+    project_id: int,
+    session_id: str,
+    *,
+    client: {},
+    page: Union[Unset, None, int] = 1,
+    order: Union[Unset, None, GetProjectConversationMessagesOrder] = GetProjectConversationMessagesOrder.DESC,
+) -> Optional[
+    Union[
+        GetProjectConversationMessagesResponse200,
+        GetProjectConversationMessagesResponse401,
+        GetProjectConversationMessagesResponse404,
+        GetProjectConversationMessagesResponse500,
+    ]
+]:
+    """Retrieve messages that have been sent in a conversation.
+
+     Get all the messages that have been sent in a conversation by `projectId` and `sessionId`.
+
+    Args:
+        project_id (int):  Example: 1.
+        session_id (str):  Example: 1.
+        page (Union[Unset, None, int]):  Default: 1.
+        order (Union[Unset, None, GetProjectConversationMessagesOrder]):  Default:
+            GetProjectConversationMessagesOrder.DESC. Example: desc.
+
+    Raises:
+        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
+        httpx.TimeoutException: If the request takes longer than Client.timeout.
+
+    Returns:
+        Union[GetProjectConversationMessagesResponse200, GetProjectConversationMessagesResponse401, GetProjectConversationMessagesResponse404, GetProjectConversationMessagesResponse500]
+    """
+
+    return (
+        await asyncio_detailed(
+            project_id=project_id,
+            session_id=session_id,
+            client=client,
+            page=page,
+            order=order,
+        )
+    ).parsed

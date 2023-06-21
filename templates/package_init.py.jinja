@@ -1,9 +1,8 @@
 {% from "helpers.jinja" import safe_docstring %}
 
 {{ safe_docstring(package_description) }}
-from .client import CustomGPT, CustomGPTClient
+from .client import CustomGPT
 
 __all__ = (
-    "CustomGPTClient",
     "CustomGPT",
 )

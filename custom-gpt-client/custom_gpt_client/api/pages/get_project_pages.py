@@ -1,11 +1,14 @@
 from http import HTTPStatus
-from typing import Any, Dict, Optional, Union, cast
+from typing import Any, Dict, Optional, Union
 
 import httpx
 
 from ... import errors
 from ...models.get_project_pages_order import GetProjectPagesOrder
 from ...models.get_project_pages_response_200 import GetProjectPagesResponse200
+from ...models.get_project_pages_response_401 import GetProjectPagesResponse401
+from ...models.get_project_pages_response_404 import GetProjectPagesResponse404
+from ...models.get_project_pages_response_500 import GetProjectPagesResponse500
 from ...types import UNSET, Response, Unset
 
 
@@ -46,19 +49,28 @@ def _get_kwargs(
     }
 
 
-def _parse_response(*, client: {}, response: httpx.Response) -> Optional[Union[Any, GetProjectPagesResponse200]]:
+def _parse_response(
+    *, client: {}, response: httpx.Response
+) -> Optional[
+    Union[
+        GetProjectPagesResponse200, GetProjectPagesResponse401, GetProjectPagesResponse404, GetProjectPagesResponse500
+    ]
+]:
     if response.status_code == HTTPStatus.OK:
         response_200 = GetProjectPagesResponse200.from_dict(response.json())
 
         return response_200
     if response.status_code == HTTPStatus.UNAUTHORIZED:
-        response_401 = cast(Any, None)
+        response_401 = GetProjectPagesResponse401.from_dict(response.json())
+
         return response_401
     if response.status_code == HTTPStatus.NOT_FOUND:
-        response_404 = cast(Any, None)
+        response_404 = GetProjectPagesResponse404.from_dict(response.json())
+
         return response_404
     if response.status_code == HTTPStatus.INTERNAL_SERVER_ERROR:
-        response_500 = cast(Any, None)
+        response_500 = GetProjectPagesResponse500.from_dict(response.json())
+
         return response_500
     if client.raise_on_unexpected_status:
         raise errors.UnexpectedStatus(response.status_code, response.content)
@@ -68,7 +80,11 @@ def _parse_response(*, client: {}, response: httpx.Response) -> Optional[Union[A
 
 def _build_response(
     *, client: {}, response: httpx.Response, content: Optional[bytes] = None
-) -> Response[Union[Any, GetProjectPagesResponse200]]:
+) -> Response[
+    Union[
+        GetProjectPagesResponse200, GetProjectPagesResponse401, GetProjectPagesResponse404, GetProjectPagesResponse500
+    ]
+]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content if content is None else content,
@@ -100,7 +116,7 @@ def sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Union[Any, GetProjectPagesResponse200]]
+        Response[Union[GetProjectPagesResponse200, GetProjectPagesResponse401, GetProjectPagesResponse404, GetProjectPagesResponse500]]
     """
 
     kwargs = _get_kwargs(
@@ -126,7 +142,11 @@ def sync(
     page: Union[Unset, None, int] = 1,
     duration: Union[Unset, None, int] = 90,
     order: Union[Unset, None, GetProjectPagesOrder] = GetProjectPagesOrder.DESC,
-) -> Optional[Union[Any, GetProjectPagesResponse200]]:
+) -> Optional[
+    Union[
+        GetProjectPagesResponse200, GetProjectPagesResponse401, GetProjectPagesResponse404, GetProjectPagesResponse500
+    ]
+]:
     """List all pages that belong to a project.
 
      Get a list of all pages that belong to a project.
@@ -142,7 +162,7 @@ def sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Union[Any, GetProjectPagesResponse200]
+        Union[GetProjectPagesResponse200, GetProjectPagesResponse401, GetProjectPagesResponse404, GetProjectPagesResponse500]
     """
 
     return sync_detailed(
@@ -161,7 +181,11 @@ async def asyncio_detailed(
     page: Union[Unset, None, int] = 1,
     duration: Union[Unset, None, int] = 90,
     order: Union[Unset, None, GetProjectPagesOrder] = GetProjectPagesOrder.DESC,
-) -> Response[Union[Any, GetProjectPagesResponse200]]:
+) -> Response[
+    Union[
+        GetProjectPagesResponse200, GetProjectPagesResponse401, GetProjectPagesResponse404, GetProjectPagesResponse500
+    ]
+]:
     """List all pages that belong to a project.
 
      Get a list of all pages that belong to a project.
@@ -177,7 +201,7 @@ async def asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Union[Any, GetProjectPagesResponse200]]
+        Response[Union[GetProjectPagesResponse200, GetProjectPagesResponse401, GetProjectPagesResponse404, GetProjectPagesResponse500]]
     """
 
     kwargs = _get_kwargs(
@@ -201,7 +225,11 @@ async def asyncio(
     page: Union[Unset, None, int] = 1,
     duration: Union[Unset, None, int] = 90,
     order: Union[Unset, None, GetProjectPagesOrder] = GetProjectPagesOrder.DESC,
-) -> Optional[Union[Any, GetProjectPagesResponse200]]:
+) -> Optional[
+    Union[
+        GetProjectPagesResponse200, GetProjectPagesResponse401, GetProjectPagesResponse404, GetProjectPagesResponse500
+    ]
+]:
     """List all pages that belong to a project.
 
      Get a list of all pages that belong to a project.
@@ -217,7 +245,7 @@ async def asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Union[Any, GetProjectPagesResponse200]
+        Union[GetProjectPagesResponse200, GetProjectPagesResponse401, GetProjectPagesResponse404, GetProjectPagesResponse500]
     """
 
     return (

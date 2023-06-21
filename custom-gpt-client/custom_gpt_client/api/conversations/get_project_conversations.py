@@ -1,11 +1,14 @@
 from http import HTTPStatus
-from typing import Any, Dict, Optional, Union, cast
+from typing import Any, Dict, Optional, Union
 
 import httpx
 
 from ... import errors
 from ...models.get_project_conversations_order import GetProjectConversationsOrder
 from ...models.get_project_conversations_response_200 import GetProjectConversationsResponse200
+from ...models.get_project_conversations_response_401 import GetProjectConversationsResponse401
+from ...models.get_project_conversations_response_404 import GetProjectConversationsResponse404
+from ...models.get_project_conversations_response_500 import GetProjectConversationsResponse500
 from ...types import UNSET, Response, Unset
 
 
@@ -45,19 +48,29 @@ def _get_kwargs(
 
 def _parse_response(
     *, client: {}, response: httpx.Response
-) -> Optional[Union[Any, GetProjectConversationsResponse200]]:
+) -> Optional[
+    Union[
+        GetProjectConversationsResponse200,
+        GetProjectConversationsResponse401,
+        GetProjectConversationsResponse404,
+        GetProjectConversationsResponse500,
+    ]
+]:
     if response.status_code == HTTPStatus.OK:
         response_200 = GetProjectConversationsResponse200.from_dict(response.json())
 
         return response_200
     if response.status_code == HTTPStatus.UNAUTHORIZED:
-        response_401 = cast(Any, None)
+        response_401 = GetProjectConversationsResponse401.from_dict(response.json())
+
         return response_401
     if response.status_code == HTTPStatus.NOT_FOUND:
-        response_404 = cast(Any, None)
+        response_404 = GetProjectConversationsResponse404.from_dict(response.json())
+
         return response_404
     if response.status_code == HTTPStatus.INTERNAL_SERVER_ERROR:
-        response_500 = cast(Any, None)
+        response_500 = GetProjectConversationsResponse500.from_dict(response.json())
+
         return response_500
     if client.raise_on_unexpected_status:
         raise errors.UnexpectedStatus(response.status_code, response.content)
@@ -67,7 +80,14 @@ def _parse_response(
 
 def _build_response(
     *, client: {}, response: httpx.Response, content: Optional[bytes] = None
-) -> Response[Union[Any, GetProjectConversationsResponse200]]:
+) -> Response[
+    Union[
+        GetProjectConversationsResponse200,
+        GetProjectConversationsResponse401,
+        GetProjectConversationsResponse404,
+        GetProjectConversationsResponse500,
+    ]
+]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content if content is None else content,
@@ -97,7 +117,7 @@ def sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Union[Any, GetProjectConversationsResponse200]]
+        Response[Union[GetProjectConversationsResponse200, GetProjectConversationsResponse401, GetProjectConversationsResponse404, GetProjectConversationsResponse500]]
     """
 
     kwargs = _get_kwargs(
@@ -121,7 +141,14 @@ def sync(
     client: {},
     page: Union[Unset, None, int] = 1,
     order: Union[Unset, None, GetProjectConversationsOrder] = GetProjectConversationsOrder.DESC,
-) -> Optional[Union[Any, GetProjectConversationsResponse200]]:
+) -> Optional[
+    Union[
+        GetProjectConversationsResponse200,
+        GetProjectConversationsResponse401,
+        GetProjectConversationsResponse404,
+        GetProjectConversationsResponse500,
+    ]
+]:
     """List all conversations for a project
     Retrieve all conversations for a project by `projectId`.
 
@@ -136,7 +163,7 @@ def sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Union[Any, GetProjectConversationsResponse200]
+        Union[GetProjectConversationsResponse200, GetProjectConversationsResponse401, GetProjectConversationsResponse404, GetProjectConversationsResponse500]
     """
 
     return sync_detailed(
@@ -153,7 +180,14 @@ async def asyncio_detailed(
     client: {},
     page: Union[Unset, None, int] = 1,
     order: Union[Unset, None, GetProjectConversationsOrder] = GetProjectConversationsOrder.DESC,
-) -> Response[Union[Any, GetProjectConversationsResponse200]]:
+) -> Response[
+    Union[
+        GetProjectConversationsResponse200,
+        GetProjectConversationsResponse401,
+        GetProjectConversationsResponse404,
+        GetProjectConversationsResponse500,
+    ]
+]:
     """List all conversations for a project
     Retrieve all conversations for a project by `projectId`.
 
@@ -168,7 +202,7 @@ async def asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Union[Any, GetProjectConversationsResponse200]]
+        Response[Union[GetProjectConversationsResponse200, GetProjectConversationsResponse401, GetProjectConversationsResponse404, GetProjectConversationsResponse500]]
     """
 
     kwargs = _get_kwargs(
@@ -190,7 +224,14 @@ async def asyncio(
     client: {},
     page: Union[Unset, None, int] = 1,
     order: Union[Unset, None, GetProjectConversationsOrder] = GetProjectConversationsOrder.DESC,
-) -> Optional[Union[Any, GetProjectConversationsResponse200]]:
+) -> Optional[
+    Union[
+        GetProjectConversationsResponse200,
+        GetProjectConversationsResponse401,
+        GetProjectConversationsResponse404,
+        GetProjectConversationsResponse500,
+    ]
+]:
     """List all conversations for a project
     Retrieve all conversations for a project by `projectId`.
 
@@ -205,7 +246,7 @@ async def asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Union[Any, GetProjectConversationsResponse200]
+        Union[GetProjectConversationsResponse200, GetProjectConversationsResponse401, GetProjectConversationsResponse404, GetProjectConversationsResponse500]
     """
 
     return (

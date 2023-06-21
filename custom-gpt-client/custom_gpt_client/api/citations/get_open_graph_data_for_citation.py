@@ -1,10 +1,12 @@
 from http import HTTPStatus
-from typing import Any, Dict, Optional, Union, cast
+from typing import Any, Dict, Optional, Union
 
 import httpx
 
 from ... import errors
 from ...models.get_open_graph_data_for_citation_response_200 import GetOpenGraphDataForCitationResponse200
+from ...models.get_open_graph_data_for_citation_response_401 import GetOpenGraphDataForCitationResponse401
+from ...models.get_open_graph_data_for_citation_response_404 import GetOpenGraphDataForCitationResponse404
 from ...types import Response
 
 
@@ -33,16 +35,24 @@ def _get_kwargs(
 
 def _parse_response(
     *, client: {}, response: httpx.Response
-) -> Optional[Union[Any, GetOpenGraphDataForCitationResponse200]]:
+) -> Optional[
+    Union[
+        GetOpenGraphDataForCitationResponse200,
+        GetOpenGraphDataForCitationResponse401,
+        GetOpenGraphDataForCitationResponse404,
+    ]
+]:
     if response.status_code == HTTPStatus.OK:
         response_200 = GetOpenGraphDataForCitationResponse200.from_dict(response.json())
 
         return response_200
     if response.status_code == HTTPStatus.UNAUTHORIZED:
-        response_401 = cast(Any, None)
+        response_401 = GetOpenGraphDataForCitationResponse401.from_dict(response.json())
+
         return response_401
     if response.status_code == HTTPStatus.NOT_FOUND:
-        response_404 = cast(Any, None)
+        response_404 = GetOpenGraphDataForCitationResponse404.from_dict(response.json())
+
         return response_404
     if client.raise_on_unexpected_status:
         raise errors.UnexpectedStatus(response.status_code, response.content)
@@ -52,7 +62,13 @@ def _parse_response(
 
 def _build_response(
     *, client: {}, response: httpx.Response, content: Optional[bytes] = None
-) -> Response[Union[Any, GetOpenGraphDataForCitationResponse200]]:
+) -> Response[
+    Union[
+        GetOpenGraphDataForCitationResponse200,
+        GetOpenGraphDataForCitationResponse401,
+        GetOpenGraphDataForCitationResponse404,
+    ]
+]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content if content is None else content,
@@ -80,7 +96,7 @@ def sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Union[Any, GetOpenGraphDataForCitationResponse200]]
+        Response[Union[GetOpenGraphDataForCitationResponse200, GetOpenGraphDataForCitationResponse401, GetOpenGraphDataForCitationResponse404]]
     """
 
     kwargs = _get_kwargs(
@@ -102,7 +118,13 @@ def sync(
     citation_id: int,
     *,
     client: {},
-) -> Optional[Union[Any, GetOpenGraphDataForCitationResponse200]]:
+) -> Optional[
+    Union[
+        GetOpenGraphDataForCitationResponse200,
+        GetOpenGraphDataForCitationResponse401,
+        GetOpenGraphDataForCitationResponse404,
+    ]
+]:
     """Get the Open Graph data for a citation.
 
      Get the Open Graph data for a citation by its unique identifier.
@@ -116,7 +138,7 @@ def sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Union[Any, GetOpenGraphDataForCitationResponse200]
+        Union[GetOpenGraphDataForCitationResponse200, GetOpenGraphDataForCitationResponse401, GetOpenGraphDataForCitationResponse404]
     """
 
     return sync_detailed(
@@ -131,7 +153,13 @@ async def asyncio_detailed(
     citation_id: int,
     *,
     client: {},
-) -> Response[Union[Any, GetOpenGraphDataForCitationResponse200]]:
+) -> Response[
+    Union[
+        GetOpenGraphDataForCitationResponse200,
+        GetOpenGraphDataForCitationResponse401,
+        GetOpenGraphDataForCitationResponse404,
+    ]
+]:
     """Get the Open Graph data for a citation.
 
      Get the Open Graph data for a citation by its unique identifier.
@@ -145,7 +173,7 @@ async def asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Union[Any, GetOpenGraphDataForCitationResponse200]]
+        Response[Union[GetOpenGraphDataForCitationResponse200, GetOpenGraphDataForCitationResponse401, GetOpenGraphDataForCitationResponse404]]
     """
 
     kwargs = _get_kwargs(
@@ -165,7 +193,13 @@ async def asyncio(
     citation_id: int,
     *,
     client: {},
-) -> Optional[Union[Any, GetOpenGraphDataForCitationResponse200]]:
+) -> Optional[
+    Union[
+        GetOpenGraphDataForCitationResponse200,
+        GetOpenGraphDataForCitationResponse401,
+        GetOpenGraphDataForCitationResponse404,
+    ]
+]:
     """Get the Open Graph data for a citation.
 
      Get the Open Graph data for a citation by its unique identifier.
@@ -179,7 +213,7 @@ async def asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Union[Any, GetOpenGraphDataForCitationResponse200]
+        Union[GetOpenGraphDataForCitationResponse200, GetOpenGraphDataForCitationResponse401, GetOpenGraphDataForCitationResponse404]
     """
 
     return (

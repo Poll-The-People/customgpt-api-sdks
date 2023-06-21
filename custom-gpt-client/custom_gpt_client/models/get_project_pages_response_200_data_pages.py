@@ -5,8 +5,8 @@ import attr
 from ..types import UNSET, Unset
 
 if TYPE_CHECKING:
+    from ..models.get_project_pages_response_200_data_pages_data_item import GetProjectPagesResponse200DataPagesDataItem
     from ..models.get_project_pages_response_200_data_pages_links import GetProjectPagesResponse200DataPagesLinks
-    from ..models.page import Page
 
 
 T = TypeVar("T", bound="GetProjectPagesResponse200DataPages")
@@ -17,7 +17,7 @@ class GetProjectPagesResponse200DataPages:
     """
     Attributes:
         current_page (Union[Unset, int]): The current page number Example: 1.
-        data (Union[Unset, List['Page']]):
+        data (Union[Unset, List['GetProjectPagesResponse200DataPagesDataItem']]):
         first_page_url (Union[Unset, str]): The first page url Example: https://app.customgpt.ai/api/v1/users?page=1.
         from_ (Union[Unset, int]): The first item number of the current page Example: 1.
         last_page (Union[Unset, int]): The last page number Example: 1.
@@ -32,7 +32,7 @@ class GetProjectPagesResponse200DataPages:
     """
 
     current_page: Union[Unset, int] = UNSET
-    data: Union[Unset, List["Page"]] = UNSET
+    data: Union[Unset, List["GetProjectPagesResponse200DataPagesDataItem"]] = UNSET
     first_page_url: Union[Unset, str] = UNSET
     from_: Union[Unset, int] = UNSET
     last_page: Union[Unset, int] = UNSET
@@ -106,8 +106,10 @@ class GetProjectPagesResponse200DataPages:
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+        from ..models.get_project_pages_response_200_data_pages_data_item import (
+            GetProjectPagesResponse200DataPagesDataItem,
+        )
         from ..models.get_project_pages_response_200_data_pages_links import GetProjectPagesResponse200DataPagesLinks
-        from ..models.page import Page
 
         d = src_dict.copy()
         current_page = d.pop("current_page", UNSET)
@@ -115,7 +117,7 @@ class GetProjectPagesResponse200DataPages:
         data = []
         _data = d.pop("data", UNSET)
         for data_item_data in _data or []:
-            data_item = Page.from_dict(data_item_data)
+            data_item = GetProjectPagesResponse200DataPagesDataItem.from_dict(data_item_data)
 
             data.append(data_item)
 

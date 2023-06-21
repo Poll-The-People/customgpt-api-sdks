@@ -6,7 +6,7 @@ from ..types import UNSET, Unset
 
 if TYPE_CHECKING:
     from ..models.get_project_pages_response_200_data_pages import GetProjectPagesResponse200DataPages
-    from ..models.project import Project
+    from ..models.get_project_pages_response_200_data_project import GetProjectPagesResponse200DataProject
 
 
 T = TypeVar("T", bound="GetProjectPagesResponse200Data")
@@ -16,11 +16,11 @@ T = TypeVar("T", bound="GetProjectPagesResponse200Data")
 class GetProjectPagesResponse200Data:
     """
     Attributes:
-        project (Union[Unset, Project]):
+        project (Union[Unset, GetProjectPagesResponse200DataProject]):
         pages (Union[Unset, GetProjectPagesResponse200DataPages]):
     """
 
-    project: Union[Unset, "Project"] = UNSET
+    project: Union[Unset, "GetProjectPagesResponse200DataProject"] = UNSET
     pages: Union[Unset, "GetProjectPagesResponse200DataPages"] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
@@ -46,15 +46,15 @@ class GetProjectPagesResponse200Data:
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         from ..models.get_project_pages_response_200_data_pages import GetProjectPagesResponse200DataPages
-        from ..models.project import Project
+        from ..models.get_project_pages_response_200_data_project import GetProjectPagesResponse200DataProject
 
         d = src_dict.copy()
         _project = d.pop("project", UNSET)
-        project: Union[Unset, Project]
+        project: Union[Unset, GetProjectPagesResponse200DataProject]
         if isinstance(_project, Unset):
             project = UNSET
         else:
-            project = Project.from_dict(_project)
+            project = GetProjectPagesResponse200DataProject.from_dict(_project)
 
         _pages = d.pop("pages", UNSET)
         pages: Union[Unset, GetProjectPagesResponse200DataPages]

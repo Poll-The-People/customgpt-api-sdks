@@ -25,11 +25,12 @@ session_id = "f5755e0f-3007-47bf-9b93-de2cd0b2765b"
 
 # response_create['data']['session_id']
 # print(session_id)
+CustomGPT.base_url = "https://dev.customgpt.ai"
+CustomGPT.api_key = "13|0tozJdzYhUrQ7HojFRSFzwtMAPNJXwAbYRhaNFMB"
+CustomGPT.timeout = 10000
 
-client = CustomGPT(
-    base_url="https://dev.customgpt.ai", token="", timeout=10000
-)
-x = client.create_project(project_name="test214", sitemap_path="https://adorosario.github.io/small-sitemap.xml")
+x = CustomGPT.Project.create(project_name="test", sitemap_path="https://adorosario.github.io/small-sitemap.xml")
+print(x.parsed.data["id"])
 # x = client.send_message_to_conversation(
 #     project_id=project_id,
 #     session_id=session_id,
@@ -37,10 +38,9 @@ x = client.create_project(project_name="test214", sitemap_path="https://adorosar
 # )
 # x = client.get_open_graph_data_for_citation(project_id=187, citation_id=json.loads(x.content.decode('utf-8'))['data']['citations'][0])
 # x =client.get_user_profile()
-x = client.get_project_pages(
-    project_id=project_id,
-)
-print(x)
+# x = client.get_project_pages(
+#     project_id=project_id,
+# )
 
 # async def main():
 #     response = await client.asend_message_to_conversation(

@@ -5,7 +5,9 @@ import attr
 from ..types import UNSET, Unset
 
 if TYPE_CHECKING:
-    from ..models.conversation import Conversation
+    from ..models.update_project_conversation_response_200_data_conversation_schema import (
+        UpdateProjectConversationResponse200DataConversationSchema,
+    )
 
 
 T = TypeVar("T", bound="UpdateProjectConversationResponse200Data")
@@ -15,10 +17,10 @@ T = TypeVar("T", bound="UpdateProjectConversationResponse200Data")
 class UpdateProjectConversationResponse200Data:
     """
     Attributes:
-        conversation_schema (Union[Unset, Conversation]):
+        conversation_schema (Union[Unset, UpdateProjectConversationResponse200DataConversationSchema]):
     """
 
-    conversation_schema: Union[Unset, "Conversation"] = UNSET
+    conversation_schema: Union[Unset, "UpdateProjectConversationResponse200DataConversationSchema"] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
@@ -36,15 +38,19 @@ class UpdateProjectConversationResponse200Data:
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        from ..models.conversation import Conversation
+        from ..models.update_project_conversation_response_200_data_conversation_schema import (
+            UpdateProjectConversationResponse200DataConversationSchema,
+        )
 
         d = src_dict.copy()
         _conversation_schema = d.pop("ConversationSchema", UNSET)
-        conversation_schema: Union[Unset, Conversation]
+        conversation_schema: Union[Unset, UpdateProjectConversationResponse200DataConversationSchema]
         if isinstance(_conversation_schema, Unset):
             conversation_schema = UNSET
         else:
-            conversation_schema = Conversation.from_dict(_conversation_schema)
+            conversation_schema = UpdateProjectConversationResponse200DataConversationSchema.from_dict(
+                _conversation_schema
+            )
 
         update_project_conversation_response_200_data = cls(
             conversation_schema=conversation_schema,

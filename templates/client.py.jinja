@@ -16,10 +16,10 @@ from custom_gpt_client.models import {{endpoint.multipart_body.class_info.name}}
 {% endfor %}
 {% endfor %}
 
-@attr.s(auto_attribs=True)
-class CustomGPTClient:
-    """ A class for keeping track of data related to the API
 
+@attr.s(auto_attribs=True)
+class CustomGPT:
+    """ A Client which has been authenticated for use on secured endpoints 
     Attributes:
         base_url: The base URL for the API, all requests are made to a relative path to this URL
         cookies: A dictionary of cookies to be sent with every request
@@ -33,7 +33,10 @@ class CustomGPTClient:
         follow_redirects: Whether or not to follow redirects. Default value is False.
     """
 
-    base_url: str
+    api_key: str
+    prefix: str = "Bearer"
+    auth_header_name: str = "Authorization"
+    base_url: str = attr.ib("https://app.customgpt.ai")
     cookies: Dict[str, str] = attr.ib(factory=dict, kw_only=True)
     headers: Dict[str, str] = attr.ib(factory=dict, kw_only=True)
     timeout: float = attr.ib(5.0, kw_only=True)
@@ -41,87 +44,80 @@ class CustomGPTClient:
     raise_on_unexpected_status: bool = attr.ib(False, kw_only=True)
     follow_redirects: bool = attr.ib(False, kw_only=True)
 
-    def get_headers(self) -> Dict[str, str]:
-        """ Get headers to be used in all endpoints """
-        return {**self.headers}
-
-    def with_headers(self, headers: Dict[str, str]) -> "Client":
+    def with_headers(self, headers: Dict[str, str]) -> "CustomGPT":
         """ Get a new client matching this one with additional headers """
         return attr.evolve(self, headers={**self.headers, **headers})
 
     def get_cookies(self) -> Dict[str, str]:
         return {**self.cookies}
 
-    def with_cookies(self, cookies: Dict[str, str]) -> "Client":
+    def with_cookies(self, cookies: Dict[str, str]) -> "CustomGPT":
         """ Get a new client matching this one with additional cookies """
         return attr.evolve(self, cookies={**self.cookies, **cookies})
 
     def get_timeout(self) -> float:
         return self.timeout
 
-    def with_timeout(self, timeout: float) -> "Client":
+    def with_timeout(self, timeout: float) -> "CustomGPT":
         """ Get a new client matching this one with a new timeout (in seconds) """
         return attr.evolve(self, timeout=timeout)
 
-
-@attr.s(auto_attribs=True)
-class CustomGPT(CustomGPTClient):
-    """ A Client which has been authenticated for use on secured endpoints """
-
-    token: str
-    prefix: str = "Bearer"
-    auth_header_name: str = "Authorization"
-
     def get_headers(self) -> Dict[str, str]:
         """Get headers to be used in authenticated endpoints"""
-        auth_header_value = f"{self.prefix} {self.token}" if self.prefix else self.token
+        auth_header_value = f"{self.prefix} {self.api_key}" if self.prefix else self.api_key
         return {self.auth_header_name: auth_header_value, **self.headers}
 
-
-    {% for collection in endpoint_collections_by_tag.values() %}
-    {% for endpoint in collection.endpoints %}
-    def {{ endpoint.name }}(self, *args: Any, **kwargs: Any):
-        {% if endpoint.json_body %}
-        json = {}
-        {% for property in endpoint.json_body.data.properties.keys() %}
-        if '{{property}}' in kwargs:
-            field = kwargs.pop('{{property}}')
-            json['{{property}}'] = field
-        {% endfor %}
-        kwargs['json_body'] = {{endpoint.json_body.class_info.name}}(**json)
-        {% endif %}
-        {% if endpoint.multipart_body %}
-        json = {}
-        {% for property in endpoint.multipart_body.data.properties.keys() %}
-        if '{{property}}' in kwargs:
-            field = kwargs.pop('{{property}}')
-            json['{{property}}'] = field
-        {% endfor %}
-        kwargs['multipart_data'] = {{endpoint.multipart_body.class_info.name}}(**json)
-        {% endif %}
- 
-        return {{endpoint.name}}.sync_detailed(client=self, *args, **kwargs)
-    def a{{ endpoint.name }}(self, *args: Any, **kwargs: Any):
-        {% if endpoint.json_body %}
-        json = {}
-        {% for property in endpoint.json_body.data.properties.keys() %}
-        if '{{property}}' in kwargs:
-            field = kwargs.pop('{{property}}')
-            json['{{property}}'] = field
-        {% endfor %}
-        kwargs['json_body'] = {{endpoint.json_body.class_info.name}}(**json)
-        {% endif %}
-        {% if endpoint.multipart_body %}
-        json = {}
-        {% for property in endpoint.multipart_body.data.properties.keys() %}
-        if '{{property}}' in kwargs:
-            field = kwargs.pop('{{property}}')
-            json['{{property}}'] = field
-        {% endfor %}
-        kwargs['multipart_data'] = {{endpoint.multipart_body.class_info.name}}(**json)
-        {% endif %}
- 
-        return {{endpoint.name}}.asyncio_detailed(client=self, *args, **kwargs)
+    {% for key, collection in endpoint_collections_by_tag.items() %}
+    {% set class_name = key[:-1] if key.endswith("s") else key %}
+    class {{class_name.capitalize()}}:
+        {% for endpoint in collection.endpoints %}
+        def {{ endpoint.name.split('_')[0] }}(*args: Any, **kwargs: Any):
+            client = CustomGPT(api_key=CustomGPT.api_key, base_url=CustomGPT.base_url, timeout=CustomGPT.timeout)
+            {% if endpoint.json_body %}
+            json = {}
+            {% for property in endpoint.json_body.data.properties.keys() %}
+            if '{{property}}' in kwargs:
+                field = kwargs.pop('{{property}}')
+                json['{{property}}'] = field
+            {% endfor %}
+            kwargs['json_body'] = {{endpoint.json_body.class_info.name}}(**json)
+            {% endif %}
+            {% if endpoint.multipart_body %}
+            json = {}
+            {% for property in endpoint.multipart_body.data.properties.keys() %}
+            if '{{property}}' in kwargs:
+                field = kwargs.pop('{{property}}')
+                json['{{property}}'] = field
+            {% endfor %}
+            kwargs['multipart_data'] = {{endpoint.multipart_body.class_info.name}}(**json)
+            {% endif %}
+     
+            return {{endpoint.name}}.sync_detailed(client=client, *args, **kwargs)
+        def a{{ endpoint.name.split('_')[0]}}(*args: Any, **kwargs: Any):
+            client = CustomGPT("")
+            client.api_key = CustomGPT.api_key
+            client.base_url = CustomGPT.base_url
+            client.timeout = CustomGPT("").get_timeout()
+            {% if endpoint.json_body %}
+            json = {}
+            {% for property in endpoint.json_body.data.properties.keys() %}
+            if '{{property}}' in kwargs:
+                field = kwargs.pop('{{property}}')
+                json['{{property}}'] = field
+            {% endfor %}
+            kwargs['json_body'] = {{endpoint.json_body.class_info.name}}(**json)
+            {% endif %}
+            {% if endpoint.multipart_body %}
+            json = {}
+            {% for property in endpoint.multipart_body.data.properties.keys() %}
+            if '{{property}}' in kwargs:
+                field = kwargs.pop('{{property}}')
+                json['{{property}}'] = field
+            {% endfor %}
+            kwargs['multipart_data'] = {{endpoint.multipart_body.class_info.name}}(**json)
+            {% endif %}
+     
+            return {{endpoint.name}}.asyncio_detailed(client=client, *args, **kwargs)
     {% endfor %}
     {% endfor %}
 

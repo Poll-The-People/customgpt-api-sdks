@@ -27,7 +27,6 @@ if TYPE_CHECKING:
 {% if model.additional_properties %}
 {% set additional_property_type = 'Any' if model.additional_properties == True else model.additional_properties.get_type_string(quoted=not model.additional_properties.is_base_type) %}
 {% endif %}
-
 {% set class_name = model.class_info.name %}
 {% set module_name = model.class_info.module_name %}
 

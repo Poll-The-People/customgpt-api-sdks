@@ -1,11 +1,14 @@
 from http import HTTPStatus
-from typing import Any, Dict, Optional, Union, cast
+from typing import Any, Dict, Optional, Union
 
 import httpx
 
 from ... import errors
 from ...models.update_project_conversation_json_body import UpdateProjectConversationJsonBody
 from ...models.update_project_conversation_response_200 import UpdateProjectConversationResponse200
+from ...models.update_project_conversation_response_401 import UpdateProjectConversationResponse401
+from ...models.update_project_conversation_response_404 import UpdateProjectConversationResponse404
+from ...models.update_project_conversation_response_500 import UpdateProjectConversationResponse500
 from ...types import Response
 
 
@@ -38,19 +41,29 @@ def _get_kwargs(
 
 def _parse_response(
     *, client: {}, response: httpx.Response
-) -> Optional[Union[Any, UpdateProjectConversationResponse200]]:
+) -> Optional[
+    Union[
+        UpdateProjectConversationResponse200,
+        UpdateProjectConversationResponse401,
+        UpdateProjectConversationResponse404,
+        UpdateProjectConversationResponse500,
+    ]
+]:
     if response.status_code == HTTPStatus.OK:
         response_200 = UpdateProjectConversationResponse200.from_dict(response.json())
 
         return response_200
     if response.status_code == HTTPStatus.UNAUTHORIZED:
-        response_401 = cast(Any, None)
+        response_401 = UpdateProjectConversationResponse401.from_dict(response.json())
+
         return response_401
     if response.status_code == HTTPStatus.NOT_FOUND:
-        response_404 = cast(Any, None)
+        response_404 = UpdateProjectConversationResponse404.from_dict(response.json())
+
         return response_404
     if response.status_code == HTTPStatus.INTERNAL_SERVER_ERROR:
-        response_500 = cast(Any, None)
+        response_500 = UpdateProjectConversationResponse500.from_dict(response.json())
+
         return response_500
     if client.raise_on_unexpected_status:
         raise errors.UnexpectedStatus(response.status_code, response.content)
@@ -60,7 +73,14 @@ def _parse_response(
 
 def _build_response(
     *, client: {}, response: httpx.Response, content: Optional[bytes] = None
-) -> Response[Union[Any, UpdateProjectConversationResponse200]]:
+) -> Response[
+    Union[
+        UpdateProjectConversationResponse200,
+        UpdateProjectConversationResponse401,
+        UpdateProjectConversationResponse404,
+        UpdateProjectConversationResponse500,
+    ]
+]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content if content is None else content,
@@ -90,7 +110,7 @@ def sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Union[Any, UpdateProjectConversationResponse200]]
+        Response[Union[UpdateProjectConversationResponse200, UpdateProjectConversationResponse401, UpdateProjectConversationResponse404, UpdateProjectConversationResponse500]]
     """
 
     kwargs = _get_kwargs(
@@ -114,7 +134,14 @@ def sync(
     *,
     client: {},
     json_body: UpdateProjectConversationJsonBody,
-) -> Optional[Union[Any, UpdateProjectConversationResponse200]]:
+) -> Optional[
+    Union[
+        UpdateProjectConversationResponse200,
+        UpdateProjectConversationResponse401,
+        UpdateProjectConversationResponse404,
+        UpdateProjectConversationResponse500,
+    ]
+]:
     """Update a conversation.
 
      Update a conversation by `projectId` and `sessionId`.
@@ -129,7 +156,7 @@ def sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Union[Any, UpdateProjectConversationResponse200]
+        Union[UpdateProjectConversationResponse200, UpdateProjectConversationResponse401, UpdateProjectConversationResponse404, UpdateProjectConversationResponse500]
     """
 
     return sync_detailed(
@@ -146,7 +173,14 @@ async def asyncio_detailed(
     *,
     client: {},
     json_body: UpdateProjectConversationJsonBody,
-) -> Response[Union[Any, UpdateProjectConversationResponse200]]:
+) -> Response[
+    Union[
+        UpdateProjectConversationResponse200,
+        UpdateProjectConversationResponse401,
+        UpdateProjectConversationResponse404,
+        UpdateProjectConversationResponse500,
+    ]
+]:
     """Update a conversation.
 
      Update a conversation by `projectId` and `sessionId`.
@@ -161,7 +195,7 @@ async def asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Union[Any, UpdateProjectConversationResponse200]]
+        Response[Union[UpdateProjectConversationResponse200, UpdateProjectConversationResponse401, UpdateProjectConversationResponse404, UpdateProjectConversationResponse500]]
     """
 
     kwargs = _get_kwargs(
@@ -183,7 +217,14 @@ async def asyncio(
     *,
     client: {},
     json_body: UpdateProjectConversationJsonBody,
-) -> Optional[Union[Any, UpdateProjectConversationResponse200]]:
+) -> Optional[
+    Union[
+        UpdateProjectConversationResponse200,
+        UpdateProjectConversationResponse401,
+        UpdateProjectConversationResponse404,
+        UpdateProjectConversationResponse500,
+    ]
+]:
     """Update a conversation.
 
      Update a conversation by `projectId` and `sessionId`.
@@ -198,7 +239,7 @@ async def asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Union[Any, UpdateProjectConversationResponse200]
+        Union[UpdateProjectConversationResponse200, UpdateProjectConversationResponse401, UpdateProjectConversationResponse404, UpdateProjectConversationResponse500]
     """
 
     return (
