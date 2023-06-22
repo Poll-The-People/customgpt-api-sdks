@@ -1,3 +1,4 @@
+import inspect
 from http import HTTPStatus
 from typing import Any, Dict, Optional, Union
 
@@ -91,11 +92,18 @@ def _build_response(
         SendMessageToConversationResponse500,
     ]
 ]:
+    caller_frame = inspect.currentframe().f_back
+    caller_method_name = caller_frame.f_code.co_name
+    parse = (
+        _parse_response(client=client, response=response)
+        if not caller_method_name in ["stream_detailed", "astream_detailed"]
+        else None
+    )
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content if content is None else content,
         headers=response.headers,
-        parsed=_parse_response(client=client, response=response),
+        parsed=parse,
     )
 
 

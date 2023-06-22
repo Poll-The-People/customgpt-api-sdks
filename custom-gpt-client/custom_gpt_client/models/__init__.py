@@ -4,9 +4,6 @@ from .conversation import Conversation
 from .create_project_conversation_json_body import CreateProjectConversationJsonBody
 from .create_project_conversation_response_201 import CreateProjectConversationResponse201
 from .create_project_conversation_response_201_data import CreateProjectConversationResponse201Data
-from .create_project_conversation_response_201_data_conversation import (
-    CreateProjectConversationResponse201DataConversation,
-)
 from .create_project_conversation_response_201_status import CreateProjectConversationResponse201Status
 from .create_project_conversation_response_401 import CreateProjectConversationResponse401
 from .create_project_conversation_response_401_data import CreateProjectConversationResponse401Data
@@ -24,8 +21,7 @@ from .create_project_conversation_response_500_status import CreateProjectConver
 from .create_project_multipart_data import CreateProjectMultipartData
 from .create_project_response_201 import CreateProjectResponse201
 from .create_project_response_201_data import CreateProjectResponse201Data
-from .create_project_response_201_data_project import CreateProjectResponse201DataProject
-from .create_project_response_201_data_project_type import CreateProjectResponse201DataProjectType
+from .create_project_response_201_data_type import CreateProjectResponse201DataType
 from .create_project_response_201_status import CreateProjectResponse201Status
 from .create_project_response_400 import CreateProjectResponse400
 from .create_project_response_400_data import CreateProjectResponse400Data
@@ -90,9 +86,6 @@ from .delete_project_response_500_data_code import DeleteProjectResponse500DataC
 from .delete_project_response_500_status import DeleteProjectResponse500Status
 from .get_open_graph_data_for_citation_response_200 import GetOpenGraphDataForCitationResponse200
 from .get_open_graph_data_for_citation_response_200_data import GetOpenGraphDataForCitationResponse200Data
-from .get_open_graph_data_for_citation_response_200_data_open_graph_cache_schema import (
-    GetOpenGraphDataForCitationResponse200DataOpenGraphCacheSchema,
-)
 from .get_open_graph_data_for_citation_response_200_status import GetOpenGraphDataForCitationResponse200Status
 from .get_open_graph_data_for_citation_response_401 import GetOpenGraphDataForCitationResponse401
 from .get_open_graph_data_for_citation_response_401_data import GetOpenGraphDataForCitationResponse401Data
@@ -105,47 +98,6 @@ from .get_open_graph_data_for_citation_response_404_data_message import (
     GetOpenGraphDataForCitationResponse404DataMessage,
 )
 from .get_open_graph_data_for_citation_response_404_status import GetOpenGraphDataForCitationResponse404Status
-from .get_preview_response_401 import GetPreviewResponse401
-from .get_preview_response_401_data import GetPreviewResponse401Data
-from .get_preview_response_401_data_code import GetPreviewResponse401DataCode
-from .get_preview_response_401_status import GetPreviewResponse401Status
-from .get_preview_response_404 import GetPreviewResponse404
-from .get_preview_response_404_data import GetPreviewResponse404Data
-from .get_preview_response_404_data_code import GetPreviewResponse404DataCode
-from .get_preview_response_404_data_message import GetPreviewResponse404DataMessage
-from .get_preview_response_404_status import GetPreviewResponse404Status
-from .get_preview_response_500 import GetPreviewResponse500
-from .get_preview_response_500_data import GetPreviewResponse500Data
-from .get_preview_response_500_data_code import GetPreviewResponse500DataCode
-from .get_preview_response_500_status import GetPreviewResponse500Status
-from .get_project_conversation_messages_order import GetProjectConversationMessagesOrder
-from .get_project_conversation_messages_response_200 import GetProjectConversationMessagesResponse200
-from .get_project_conversation_messages_response_200_conversation import (
-    GetProjectConversationMessagesResponse200Conversation,
-)
-from .get_project_conversation_messages_response_200_messages import GetProjectConversationMessagesResponse200Messages
-from .get_project_conversation_messages_response_200_messages_data_item import (
-    GetProjectConversationMessagesResponse200MessagesDataItem,
-)
-from .get_project_conversation_messages_response_200_messages_links import (
-    GetProjectConversationMessagesResponse200MessagesLinks,
-)
-from .get_project_conversation_messages_response_200_status import GetProjectConversationMessagesResponse200Status
-from .get_project_conversation_messages_response_401 import GetProjectConversationMessagesResponse401
-from .get_project_conversation_messages_response_401_data import GetProjectConversationMessagesResponse401Data
-from .get_project_conversation_messages_response_401_data_code import GetProjectConversationMessagesResponse401DataCode
-from .get_project_conversation_messages_response_401_status import GetProjectConversationMessagesResponse401Status
-from .get_project_conversation_messages_response_404 import GetProjectConversationMessagesResponse404
-from .get_project_conversation_messages_response_404_data import GetProjectConversationMessagesResponse404Data
-from .get_project_conversation_messages_response_404_data_code import GetProjectConversationMessagesResponse404DataCode
-from .get_project_conversation_messages_response_404_data_message import (
-    GetProjectConversationMessagesResponse404DataMessage,
-)
-from .get_project_conversation_messages_response_404_status import GetProjectConversationMessagesResponse404Status
-from .get_project_conversation_messages_response_500 import GetProjectConversationMessagesResponse500
-from .get_project_conversation_messages_response_500_data import GetProjectConversationMessagesResponse500Data
-from .get_project_conversation_messages_response_500_data_code import GetProjectConversationMessagesResponse500DataCode
-from .get_project_conversation_messages_response_500_status import GetProjectConversationMessagesResponse500Status
 from .get_project_conversations_order import GetProjectConversationsOrder
 from .get_project_conversations_response_200 import GetProjectConversationsResponse200
 from .get_project_conversations_response_200_data import GetProjectConversationsResponse200Data
@@ -195,8 +147,7 @@ from .get_project_pages_response_500_data_code import GetProjectPagesResponse500
 from .get_project_pages_response_500_status import GetProjectPagesResponse500Status
 from .get_project_response_200 import GetProjectResponse200
 from .get_project_response_200_data import GetProjectResponse200Data
-from .get_project_response_200_data_project import GetProjectResponse200DataProject
-from .get_project_response_200_data_project_type import GetProjectResponse200DataProjectType
+from .get_project_response_200_data_type import GetProjectResponse200DataType
 from .get_project_response_200_status import GetProjectResponse200Status
 from .get_project_response_401 import GetProjectResponse401
 from .get_project_response_401_data import GetProjectResponse401Data
@@ -211,6 +162,10 @@ from .get_project_response_500 import GetProjectResponse500
 from .get_project_response_500_data import GetProjectResponse500Data
 from .get_project_response_500_data_code import GetProjectResponse500DataCode
 from .get_project_response_500_status import GetProjectResponse500Status
+from .get_project_settings_response_200 import GetProjectSettingsResponse200
+from .get_project_settings_response_200_data import GetProjectSettingsResponse200Data
+from .get_project_settings_response_200_data_response_source import GetProjectSettingsResponse200DataResponseSource
+from .get_project_settings_response_200_status import GetProjectSettingsResponse200Status
 from .get_project_settings_response_401 import GetProjectSettingsResponse401
 from .get_project_settings_response_401_data import GetProjectSettingsResponse401Data
 from .get_project_settings_response_401_data_code import GetProjectSettingsResponse401DataCode
@@ -226,7 +181,6 @@ from .get_project_settings_response_500_data_code import GetProjectSettingsRespo
 from .get_project_settings_response_500_status import GetProjectSettingsResponse500Status
 from .get_user_profile_response_200 import GetUserProfileResponse200
 from .get_user_profile_response_200_data import GetUserProfileResponse200Data
-from .get_user_profile_response_200_data_user import GetUserProfileResponse200DataUser
 from .get_user_profile_response_200_status import GetUserProfileResponse200Status
 from .get_user_profile_response_401 import GetUserProfileResponse401
 from .get_user_profile_response_401_data import GetUserProfileResponse401Data
@@ -251,10 +205,43 @@ from .list_projects_response_500 import ListProjectsResponse500
 from .list_projects_response_500_data import ListProjectsResponse500Data
 from .list_projects_response_500_data_code import ListProjectsResponse500DataCode
 from .list_projects_response_500_status import ListProjectsResponse500Status
+from .messages_order import MessagesOrder
+from .messages_response_200 import MessagesResponse200
+from .messages_response_200_conversation import MessagesResponse200Conversation
+from .messages_response_200_messages import MessagesResponse200Messages
+from .messages_response_200_messages_data_item import MessagesResponse200MessagesDataItem
+from .messages_response_200_messages_links import MessagesResponse200MessagesLinks
+from .messages_response_200_status import MessagesResponse200Status
+from .messages_response_401 import MessagesResponse401
+from .messages_response_401_data import MessagesResponse401Data
+from .messages_response_401_data_code import MessagesResponse401DataCode
+from .messages_response_401_status import MessagesResponse401Status
+from .messages_response_404 import MessagesResponse404
+from .messages_response_404_data import MessagesResponse404Data
+from .messages_response_404_data_code import MessagesResponse404DataCode
+from .messages_response_404_data_message import MessagesResponse404DataMessage
+from .messages_response_404_status import MessagesResponse404Status
+from .messages_response_500 import MessagesResponse500
+from .messages_response_500_data import MessagesResponse500Data
+from .messages_response_500_data_code import MessagesResponse500DataCode
+from .messages_response_500_status import MessagesResponse500Status
 from .open_graph_cache import OpenGraphCache
 from .page import Page
 from .page_crawl_status import PageCrawlStatus
 from .page_index_status import PageIndexStatus
+from .preview_response_401 import PreviewResponse401
+from .preview_response_401_data import PreviewResponse401Data
+from .preview_response_401_data_code import PreviewResponse401DataCode
+from .preview_response_401_status import PreviewResponse401Status
+from .preview_response_404 import PreviewResponse404
+from .preview_response_404_data import PreviewResponse404Data
+from .preview_response_404_data_code import PreviewResponse404DataCode
+from .preview_response_404_data_message import PreviewResponse404DataMessage
+from .preview_response_404_status import PreviewResponse404Status
+from .preview_response_500 import PreviewResponse500
+from .preview_response_500_data import PreviewResponse500Data
+from .preview_response_500_data_code import PreviewResponse500DataCode
+from .preview_response_500_status import PreviewResponse500Status
 from .project import Project
 from .project_plugin import ProjectPlugin
 from .project_settings import ProjectSettings
@@ -264,7 +251,6 @@ from .prompt_history import PromptHistory
 from .send_message_to_conversation_json_body import SendMessageToConversationJsonBody
 from .send_message_to_conversation_response_200 import SendMessageToConversationResponse200
 from .send_message_to_conversation_response_200_data import SendMessageToConversationResponse200Data
-from .send_message_to_conversation_response_200_data_message import SendMessageToConversationResponse200DataMessage
 from .send_message_to_conversation_response_200_status import SendMessageToConversationResponse200Status
 from .send_message_to_conversation_response_401 import SendMessageToConversationResponse401
 from .send_message_to_conversation_response_401_data import SendMessageToConversationResponse401Data
@@ -298,9 +284,6 @@ from .stats_project_response_500_status import StatsProjectResponse500Status
 from .update_project_conversation_json_body import UpdateProjectConversationJsonBody
 from .update_project_conversation_response_200 import UpdateProjectConversationResponse200
 from .update_project_conversation_response_200_data import UpdateProjectConversationResponse200Data
-from .update_project_conversation_response_200_data_conversation_schema import (
-    UpdateProjectConversationResponse200DataConversationSchema,
-)
 from .update_project_conversation_response_200_status import UpdateProjectConversationResponse200Status
 from .update_project_conversation_response_401 import UpdateProjectConversationResponse401
 from .update_project_conversation_response_401_data import UpdateProjectConversationResponse401Data
@@ -318,8 +301,7 @@ from .update_project_conversation_response_500_status import UpdateProjectConver
 from .update_project_multipart_data import UpdateProjectMultipartData
 from .update_project_response_200 import UpdateProjectResponse200
 from .update_project_response_200_data import UpdateProjectResponse200Data
-from .update_project_response_200_data_project import UpdateProjectResponse200DataProject
-from .update_project_response_200_data_project_type import UpdateProjectResponse200DataProjectType
+from .update_project_response_200_data_type import UpdateProjectResponse200DataType
 from .update_project_response_200_status import UpdateProjectResponse200Status
 from .update_project_response_401 import UpdateProjectResponse401
 from .update_project_response_401_data import UpdateProjectResponse401Data
@@ -354,7 +336,6 @@ from .update_project_settings_response_500_status import UpdateProjectSettingsRe
 from .update_user_profile_multipart_data import UpdateUserProfileMultipartData
 from .update_user_profile_response_200 import UpdateUserProfileResponse200
 from .update_user_profile_response_200_data import UpdateUserProfileResponse200Data
-from .update_user_profile_response_200_data_user import UpdateUserProfileResponse200DataUser
 from .update_user_profile_response_200_status import UpdateUserProfileResponse200Status
 from .update_user_profile_response_401 import UpdateUserProfileResponse401
 from .update_user_profile_response_401_data import UpdateUserProfileResponse401Data
@@ -371,7 +352,6 @@ __all__ = (
     "CreateProjectConversationJsonBody",
     "CreateProjectConversationResponse201",
     "CreateProjectConversationResponse201Data",
-    "CreateProjectConversationResponse201DataConversation",
     "CreateProjectConversationResponse201Status",
     "CreateProjectConversationResponse401",
     "CreateProjectConversationResponse401Data",
@@ -389,8 +369,7 @@ __all__ = (
     "CreateProjectMultipartData",
     "CreateProjectResponse201",
     "CreateProjectResponse201Data",
-    "CreateProjectResponse201DataProject",
-    "CreateProjectResponse201DataProjectType",
+    "CreateProjectResponse201DataType",
     "CreateProjectResponse201Status",
     "CreateProjectResponse400",
     "CreateProjectResponse400Data",
@@ -455,7 +434,6 @@ __all__ = (
     "DeleteProjectResponse500Status",
     "GetOpenGraphDataForCitationResponse200",
     "GetOpenGraphDataForCitationResponse200Data",
-    "GetOpenGraphDataForCitationResponse200DataOpenGraphCacheSchema",
     "GetOpenGraphDataForCitationResponse200Status",
     "GetOpenGraphDataForCitationResponse401",
     "GetOpenGraphDataForCitationResponse401Data",
@@ -466,39 +444,6 @@ __all__ = (
     "GetOpenGraphDataForCitationResponse404DataCode",
     "GetOpenGraphDataForCitationResponse404DataMessage",
     "GetOpenGraphDataForCitationResponse404Status",
-    "GetPreviewResponse401",
-    "GetPreviewResponse401Data",
-    "GetPreviewResponse401DataCode",
-    "GetPreviewResponse401Status",
-    "GetPreviewResponse404",
-    "GetPreviewResponse404Data",
-    "GetPreviewResponse404DataCode",
-    "GetPreviewResponse404DataMessage",
-    "GetPreviewResponse404Status",
-    "GetPreviewResponse500",
-    "GetPreviewResponse500Data",
-    "GetPreviewResponse500DataCode",
-    "GetPreviewResponse500Status",
-    "GetProjectConversationMessagesOrder",
-    "GetProjectConversationMessagesResponse200",
-    "GetProjectConversationMessagesResponse200Conversation",
-    "GetProjectConversationMessagesResponse200Messages",
-    "GetProjectConversationMessagesResponse200MessagesDataItem",
-    "GetProjectConversationMessagesResponse200MessagesLinks",
-    "GetProjectConversationMessagesResponse200Status",
-    "GetProjectConversationMessagesResponse401",
-    "GetProjectConversationMessagesResponse401Data",
-    "GetProjectConversationMessagesResponse401DataCode",
-    "GetProjectConversationMessagesResponse401Status",
-    "GetProjectConversationMessagesResponse404",
-    "GetProjectConversationMessagesResponse404Data",
-    "GetProjectConversationMessagesResponse404DataCode",
-    "GetProjectConversationMessagesResponse404DataMessage",
-    "GetProjectConversationMessagesResponse404Status",
-    "GetProjectConversationMessagesResponse500",
-    "GetProjectConversationMessagesResponse500Data",
-    "GetProjectConversationMessagesResponse500DataCode",
-    "GetProjectConversationMessagesResponse500Status",
     "GetProjectConversationsOrder",
     "GetProjectConversationsResponse200",
     "GetProjectConversationsResponse200Data",
@@ -544,8 +489,7 @@ __all__ = (
     "GetProjectPagesResponse500Status",
     "GetProjectResponse200",
     "GetProjectResponse200Data",
-    "GetProjectResponse200DataProject",
-    "GetProjectResponse200DataProjectType",
+    "GetProjectResponse200DataType",
     "GetProjectResponse200Status",
     "GetProjectResponse401",
     "GetProjectResponse401Data",
@@ -560,6 +504,10 @@ __all__ = (
     "GetProjectResponse500Data",
     "GetProjectResponse500DataCode",
     "GetProjectResponse500Status",
+    "GetProjectSettingsResponse200",
+    "GetProjectSettingsResponse200Data",
+    "GetProjectSettingsResponse200DataResponseSource",
+    "GetProjectSettingsResponse200Status",
     "GetProjectSettingsResponse401",
     "GetProjectSettingsResponse401Data",
     "GetProjectSettingsResponse401DataCode",
@@ -575,7 +523,6 @@ __all__ = (
     "GetProjectSettingsResponse500Status",
     "GetUserProfileResponse200",
     "GetUserProfileResponse200Data",
-    "GetUserProfileResponse200DataUser",
     "GetUserProfileResponse200Status",
     "GetUserProfileResponse401",
     "GetUserProfileResponse401Data",
@@ -600,10 +547,43 @@ __all__ = (
     "ListProjectsResponse500Data",
     "ListProjectsResponse500DataCode",
     "ListProjectsResponse500Status",
+    "MessagesOrder",
+    "MessagesResponse200",
+    "MessagesResponse200Conversation",
+    "MessagesResponse200Messages",
+    "MessagesResponse200MessagesDataItem",
+    "MessagesResponse200MessagesLinks",
+    "MessagesResponse200Status",
+    "MessagesResponse401",
+    "MessagesResponse401Data",
+    "MessagesResponse401DataCode",
+    "MessagesResponse401Status",
+    "MessagesResponse404",
+    "MessagesResponse404Data",
+    "MessagesResponse404DataCode",
+    "MessagesResponse404DataMessage",
+    "MessagesResponse404Status",
+    "MessagesResponse500",
+    "MessagesResponse500Data",
+    "MessagesResponse500DataCode",
+    "MessagesResponse500Status",
     "OpenGraphCache",
     "Page",
     "PageCrawlStatus",
     "PageIndexStatus",
+    "PreviewResponse401",
+    "PreviewResponse401Data",
+    "PreviewResponse401DataCode",
+    "PreviewResponse401Status",
+    "PreviewResponse404",
+    "PreviewResponse404Data",
+    "PreviewResponse404DataCode",
+    "PreviewResponse404DataMessage",
+    "PreviewResponse404Status",
+    "PreviewResponse500",
+    "PreviewResponse500Data",
+    "PreviewResponse500DataCode",
+    "PreviewResponse500Status",
     "Project",
     "ProjectPlugin",
     "ProjectSettings",
@@ -613,7 +593,6 @@ __all__ = (
     "SendMessageToConversationJsonBody",
     "SendMessageToConversationResponse200",
     "SendMessageToConversationResponse200Data",
-    "SendMessageToConversationResponse200DataMessage",
     "SendMessageToConversationResponse200Status",
     "SendMessageToConversationResponse401",
     "SendMessageToConversationResponse401Data",
@@ -647,7 +626,6 @@ __all__ = (
     "UpdateProjectConversationJsonBody",
     "UpdateProjectConversationResponse200",
     "UpdateProjectConversationResponse200Data",
-    "UpdateProjectConversationResponse200DataConversationSchema",
     "UpdateProjectConversationResponse200Status",
     "UpdateProjectConversationResponse401",
     "UpdateProjectConversationResponse401Data",
@@ -665,8 +643,7 @@ __all__ = (
     "UpdateProjectMultipartData",
     "UpdateProjectResponse200",
     "UpdateProjectResponse200Data",
-    "UpdateProjectResponse200DataProject",
-    "UpdateProjectResponse200DataProjectType",
+    "UpdateProjectResponse200DataType",
     "UpdateProjectResponse200Status",
     "UpdateProjectResponse401",
     "UpdateProjectResponse401Data",
@@ -701,7 +678,6 @@ __all__ = (
     "UpdateUserProfileMultipartData",
     "UpdateUserProfileResponse200",
     "UpdateUserProfileResponse200Data",
-    "UpdateUserProfileResponse200DataUser",
     "UpdateUserProfileResponse200Status",
     "UpdateUserProfileResponse401",
     "UpdateUserProfileResponse401Data",

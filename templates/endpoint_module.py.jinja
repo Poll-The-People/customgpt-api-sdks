@@ -1,6 +1,6 @@
 from http import HTTPStatus
 from typing import Any, Dict, List, Optional, Union, cast
-
+import inspect
 import httpx
 
 from ...types import Response, UNSET
@@ -78,11 +78,18 @@ def _parse_response(*, client: {}, response: httpx.Response) -> Optional[{{ retu
 
 
 def _build_response(*, client: {}, response: httpx.Response, content: Optional[bytes] = None) -> Response[{{ return_string }}]:
+    {% if 'stream' in endpoint.query_parameters.keys() %} 
+    caller_frame = inspect.currentframe().f_back
+    caller_method_name = caller_frame.f_code.co_name
+    parse = _parse_response(client=client, response=response) if caller_method_name in ['stream_detailed', 'astream_detailed'] else None
+    {% else %}
+    parse = _parse_response(client=client, response=response)
+    {% endif %}
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content if content is None else content,
         headers=response.headers,
-        parsed=_parse_response(client=client, response=response),
+        parsed=parse,
     )
 
 {% if 'stream' in endpoint.query_parameters.keys() %}

@@ -69,11 +69,12 @@ def _parse_response(
 def _build_response(
     *, client: {}, response: httpx.Response, content: Optional[bytes] = None
 ) -> Response[Union[GetProjectResponse200, GetProjectResponse401, GetProjectResponse404, GetProjectResponse500]]:
+    parse = _parse_response(client=client, response=response)
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content if content is None else content,
         headers=response.headers,
-        parsed=_parse_response(client=client, response=response),
+        parsed=parse,
     )
 
 

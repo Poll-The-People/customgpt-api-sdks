@@ -7,12 +7,12 @@ from custom_gpt_client.api.citations import get_open_graph_data_for_citation
 from custom_gpt_client.api.conversations import (
     create_project_conversation,
     delete_project_conversation,
-    get_project_conversation_messages,
     get_project_conversations,
+    messages,
     send_message_to_conversation,
     update_project_conversation,
 )
-from custom_gpt_client.api.pages import delete_project_page, get_preview, get_project_pages
+from custom_gpt_client.api.pages import delete_project_page, get_project_pages, preview
 from custom_gpt_client.api.project_settings import get_project_settings, update_project_settings
 from custom_gpt_client.api.projects import (
     create_project,
@@ -91,10 +91,7 @@ class CustomGPT:
             return list_projects.sync_detailed(client=client, *args, **kwargs)
 
         def alist(*args: Any, **kwargs: Any):
-            client = CustomGPT("")
-            client.api_key = CustomGPT.api_key
-            client.base_url = CustomGPT.base_url
-            client.timeout = CustomGPT("").get_timeout()
+            client = CustomGPT(api_key=CustomGPT.api_key, base_url=CustomGPT.base_url, timeout=CustomGPT.timeout)
 
             return list_projects.asyncio_detailed(client=client, *args, **kwargs)
 
@@ -118,10 +115,7 @@ class CustomGPT:
             return create_project.sync_detailed(client=client, *args, **kwargs)
 
         def acreate(*args: Any, **kwargs: Any):
-            client = CustomGPT("")
-            client.api_key = CustomGPT.api_key
-            client.base_url = CustomGPT.base_url
-            client.timeout = CustomGPT("").get_timeout()
+            client = CustomGPT(api_key=CustomGPT.api_key, base_url=CustomGPT.base_url, timeout=CustomGPT.timeout)
             json = {}
             if "project_name" in kwargs:
                 field = kwargs.pop("project_name")
@@ -145,10 +139,7 @@ class CustomGPT:
             return get_project.sync_detailed(client=client, *args, **kwargs)
 
         def aget(*args: Any, **kwargs: Any):
-            client = CustomGPT("")
-            client.api_key = CustomGPT.api_key
-            client.base_url = CustomGPT.base_url
-            client.timeout = CustomGPT("").get_timeout()
+            client = CustomGPT(api_key=CustomGPT.api_key, base_url=CustomGPT.base_url, timeout=CustomGPT.timeout)
 
             return get_project.asyncio_detailed(client=client, *args, **kwargs)
 
@@ -175,10 +166,7 @@ class CustomGPT:
             return update_project.sync_detailed(client=client, *args, **kwargs)
 
         def aupdate(*args: Any, **kwargs: Any):
-            client = CustomGPT("")
-            client.api_key = CustomGPT.api_key
-            client.base_url = CustomGPT.base_url
-            client.timeout = CustomGPT("").get_timeout()
+            client = CustomGPT(api_key=CustomGPT.api_key, base_url=CustomGPT.base_url, timeout=CustomGPT.timeout)
             json = {}
             if "project_name" in kwargs:
                 field = kwargs.pop("project_name")
@@ -205,10 +193,7 @@ class CustomGPT:
             return delete_project.sync_detailed(client=client, *args, **kwargs)
 
         def adelete(*args: Any, **kwargs: Any):
-            client = CustomGPT("")
-            client.api_key = CustomGPT.api_key
-            client.base_url = CustomGPT.base_url
-            client.timeout = CustomGPT("").get_timeout()
+            client = CustomGPT(api_key=CustomGPT.api_key, base_url=CustomGPT.base_url, timeout=CustomGPT.timeout)
 
             return delete_project.asyncio_detailed(client=client, *args, **kwargs)
 
@@ -218,10 +203,7 @@ class CustomGPT:
             return stats_project.sync_detailed(client=client, *args, **kwargs)
 
         def astats(*args: Any, **kwargs: Any):
-            client = CustomGPT("")
-            client.api_key = CustomGPT.api_key
-            client.base_url = CustomGPT.base_url
-            client.timeout = CustomGPT("").get_timeout()
+            client = CustomGPT(api_key=CustomGPT.api_key, base_url=CustomGPT.base_url, timeout=CustomGPT.timeout)
 
             return stats_project.asyncio_detailed(client=client, *args, **kwargs)
 
@@ -232,10 +214,7 @@ class CustomGPT:
             return get_project_pages.sync_detailed(client=client, *args, **kwargs)
 
         def aget(*args: Any, **kwargs: Any):
-            client = CustomGPT("")
-            client.api_key = CustomGPT.api_key
-            client.base_url = CustomGPT.base_url
-            client.timeout = CustomGPT("").get_timeout()
+            client = CustomGPT(api_key=CustomGPT.api_key, base_url=CustomGPT.base_url, timeout=CustomGPT.timeout)
 
             return get_project_pages.asyncio_detailed(client=client, *args, **kwargs)
 
@@ -245,37 +224,28 @@ class CustomGPT:
             return delete_project_page.sync_detailed(client=client, *args, **kwargs)
 
         def adelete(*args: Any, **kwargs: Any):
-            client = CustomGPT("")
-            client.api_key = CustomGPT.api_key
-            client.base_url = CustomGPT.base_url
-            client.timeout = CustomGPT("").get_timeout()
+            client = CustomGPT(api_key=CustomGPT.api_key, base_url=CustomGPT.base_url, timeout=CustomGPT.timeout)
 
             return delete_project_page.asyncio_detailed(client=client, *args, **kwargs)
 
-        def get(*args: Any, **kwargs: Any):
+        def preview(*args: Any, **kwargs: Any):
             client = CustomGPT(api_key=CustomGPT.api_key, base_url=CustomGPT.base_url, timeout=CustomGPT.timeout)
 
-            return get_preview.sync_detailed(client=client, *args, **kwargs)
+            return preview.sync_detailed(client=client, *args, **kwargs)
 
-        def aget(*args: Any, **kwargs: Any):
-            client = CustomGPT("")
-            client.api_key = CustomGPT.api_key
-            client.base_url = CustomGPT.base_url
-            client.timeout = CustomGPT("").get_timeout()
+        def apreview(*args: Any, **kwargs: Any):
+            client = CustomGPT(api_key=CustomGPT.api_key, base_url=CustomGPT.base_url, timeout=CustomGPT.timeout)
 
-            return get_preview.asyncio_detailed(client=client, *args, **kwargs)
+            return preview.asyncio_detailed(client=client, *args, **kwargs)
 
-    class Project_setting:
+    class ProjectSettings:
         def get(*args: Any, **kwargs: Any):
             client = CustomGPT(api_key=CustomGPT.api_key, base_url=CustomGPT.base_url, timeout=CustomGPT.timeout)
 
             return get_project_settings.sync_detailed(client=client, *args, **kwargs)
 
         def aget(*args: Any, **kwargs: Any):
-            client = CustomGPT("")
-            client.api_key = CustomGPT.api_key
-            client.base_url = CustomGPT.base_url
-            client.timeout = CustomGPT("").get_timeout()
+            client = CustomGPT(api_key=CustomGPT.api_key, base_url=CustomGPT.base_url, timeout=CustomGPT.timeout)
 
             return get_project_settings.asyncio_detailed(client=client, *args, **kwargs)
 
@@ -305,10 +275,7 @@ class CustomGPT:
             return update_project_settings.sync_detailed(client=client, *args, **kwargs)
 
         def aupdate(*args: Any, **kwargs: Any):
-            client = CustomGPT("")
-            client.api_key = CustomGPT.api_key
-            client.base_url = CustomGPT.base_url
-            client.timeout = CustomGPT("").get_timeout()
+            client = CustomGPT(api_key=CustomGPT.api_key, base_url=CustomGPT.base_url, timeout=CustomGPT.timeout)
             json = {}
             if "chat_bot_avatar" in kwargs:
                 field = kwargs.pop("chat_bot_avatar")
@@ -339,10 +306,7 @@ class CustomGPT:
             return get_project_conversations.sync_detailed(client=client, *args, **kwargs)
 
         def aget(*args: Any, **kwargs: Any):
-            client = CustomGPT("")
-            client.api_key = CustomGPT.api_key
-            client.base_url = CustomGPT.base_url
-            client.timeout = CustomGPT("").get_timeout()
+            client = CustomGPT(api_key=CustomGPT.api_key, base_url=CustomGPT.base_url, timeout=CustomGPT.timeout)
 
             return get_project_conversations.asyncio_detailed(client=client, *args, **kwargs)
 
@@ -357,10 +321,7 @@ class CustomGPT:
             return create_project_conversation.sync_detailed(client=client, *args, **kwargs)
 
         def acreate(*args: Any, **kwargs: Any):
-            client = CustomGPT("")
-            client.api_key = CustomGPT.api_key
-            client.base_url = CustomGPT.base_url
-            client.timeout = CustomGPT("").get_timeout()
+            client = CustomGPT(api_key=CustomGPT.api_key, base_url=CustomGPT.base_url, timeout=CustomGPT.timeout)
             json = {}
             if "name" in kwargs:
                 field = kwargs.pop("name")
@@ -380,10 +341,7 @@ class CustomGPT:
             return update_project_conversation.sync_detailed(client=client, *args, **kwargs)
 
         def aupdate(*args: Any, **kwargs: Any):
-            client = CustomGPT("")
-            client.api_key = CustomGPT.api_key
-            client.base_url = CustomGPT.base_url
-            client.timeout = CustomGPT("").get_timeout()
+            client = CustomGPT(api_key=CustomGPT.api_key, base_url=CustomGPT.base_url, timeout=CustomGPT.timeout)
             json = {}
             if "name" in kwargs:
                 field = kwargs.pop("name")
@@ -398,25 +356,19 @@ class CustomGPT:
             return delete_project_conversation.sync_detailed(client=client, *args, **kwargs)
 
         def adelete(*args: Any, **kwargs: Any):
-            client = CustomGPT("")
-            client.api_key = CustomGPT.api_key
-            client.base_url = CustomGPT.base_url
-            client.timeout = CustomGPT("").get_timeout()
+            client = CustomGPT(api_key=CustomGPT.api_key, base_url=CustomGPT.base_url, timeout=CustomGPT.timeout)
 
             return delete_project_conversation.asyncio_detailed(client=client, *args, **kwargs)
 
-        def get(*args: Any, **kwargs: Any):
+        def messages(*args: Any, **kwargs: Any):
             client = CustomGPT(api_key=CustomGPT.api_key, base_url=CustomGPT.base_url, timeout=CustomGPT.timeout)
 
-            return get_project_conversation_messages.sync_detailed(client=client, *args, **kwargs)
+            return messages.sync_detailed(client=client, *args, **kwargs)
 
-        def aget(*args: Any, **kwargs: Any):
-            client = CustomGPT("")
-            client.api_key = CustomGPT.api_key
-            client.base_url = CustomGPT.base_url
-            client.timeout = CustomGPT("").get_timeout()
+        def amessages(*args: Any, **kwargs: Any):
+            client = CustomGPT(api_key=CustomGPT.api_key, base_url=CustomGPT.base_url, timeout=CustomGPT.timeout)
 
-            return get_project_conversation_messages.asyncio_detailed(client=client, *args, **kwargs)
+            return messages.asyncio_detailed(client=client, *args, **kwargs)
 
         def send(*args: Any, **kwargs: Any):
             client = CustomGPT(api_key=CustomGPT.api_key, base_url=CustomGPT.base_url, timeout=CustomGPT.timeout)
@@ -429,10 +381,7 @@ class CustomGPT:
             return send_message_to_conversation.sync_detailed(client=client, *args, **kwargs)
 
         def asend(*args: Any, **kwargs: Any):
-            client = CustomGPT("")
-            client.api_key = CustomGPT.api_key
-            client.base_url = CustomGPT.base_url
-            client.timeout = CustomGPT("").get_timeout()
+            client = CustomGPT(api_key=CustomGPT.api_key, base_url=CustomGPT.base_url, timeout=CustomGPT.timeout)
             json = {}
             if "prompt" in kwargs:
                 field = kwargs.pop("prompt")
@@ -448,10 +397,7 @@ class CustomGPT:
             return get_open_graph_data_for_citation.sync_detailed(client=client, *args, **kwargs)
 
         def aget(*args: Any, **kwargs: Any):
-            client = CustomGPT("")
-            client.api_key = CustomGPT.api_key
-            client.base_url = CustomGPT.base_url
-            client.timeout = CustomGPT("").get_timeout()
+            client = CustomGPT(api_key=CustomGPT.api_key, base_url=CustomGPT.base_url, timeout=CustomGPT.timeout)
 
             return get_open_graph_data_for_citation.asyncio_detailed(client=client, *args, **kwargs)
 
@@ -462,10 +408,7 @@ class CustomGPT:
             return get_user_profile.sync_detailed(client=client, *args, **kwargs)
 
         def aget(*args: Any, **kwargs: Any):
-            client = CustomGPT("")
-            client.api_key = CustomGPT.api_key
-            client.base_url = CustomGPT.base_url
-            client.timeout = CustomGPT("").get_timeout()
+            client = CustomGPT(api_key=CustomGPT.api_key, base_url=CustomGPT.base_url, timeout=CustomGPT.timeout)
 
             return get_user_profile.asyncio_detailed(client=client, *args, **kwargs)
 
@@ -483,10 +426,7 @@ class CustomGPT:
             return update_user_profile.sync_detailed(client=client, *args, **kwargs)
 
         def aupdate(*args: Any, **kwargs: Any):
-            client = CustomGPT("")
-            client.api_key = CustomGPT.api_key
-            client.base_url = CustomGPT.base_url
-            client.timeout = CustomGPT("").get_timeout()
+            client = CustomGPT(api_key=CustomGPT.api_key, base_url=CustomGPT.base_url, timeout=CustomGPT.timeout)
             json = {}
             if "profile_photo" in kwargs:
                 field = kwargs.pop("profile_photo")

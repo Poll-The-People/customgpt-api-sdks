@@ -1,14 +1,8 @@
-from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar, Union
+from typing import Any, Dict, List, Type, TypeVar, Union
 
 import attr
 
 from ..types import UNSET, Unset
-
-if TYPE_CHECKING:
-    from ..models.get_open_graph_data_for_citation_response_200_data_open_graph_cache_schema import (
-        GetOpenGraphDataForCitationResponse200DataOpenGraphCacheSchema,
-    )
-
 
 T = TypeVar("T", bound="GetOpenGraphDataForCitationResponse200Data")
 
@@ -17,43 +11,96 @@ T = TypeVar("T", bound="GetOpenGraphDataForCitationResponse200Data")
 class GetOpenGraphDataForCitationResponse200Data:
     """
     Attributes:
-        open_graph_cache_schema (Union[Unset, GetOpenGraphDataForCitationResponse200DataOpenGraphCacheSchema]):
+        page_url (Union[Unset, str]): The URL of the page Example: https://www.example.com.
+        title (Union[Unset, str]): The title of the page Example: Example Domain.
+        description (Union[Unset, str]): The description of the page Example: This domain is for use in illustrative
+            examples in documents. You may use this domain in literature without prior coordination or asking for
+            permission..
+        image (Union[Unset, str]): The image of the page Example: https://www.example.com/image.png.
+        image_width (Union[Unset, int]): The width of the image of the page Example: 1200.
+        image_height (Union[Unset, int]): The height of the image of the page Example: 630.
+        url (Union[Unset, str]): The URL of the page Example: https://www.example.com.
+        favicon (Union[Unset, str]): The favicon of the page Example: https://www.example.com/favicon.ico.
+        site_name (Union[Unset, str]): The site name of the page Example: Example Domain.
     """
 
-    open_graph_cache_schema: Union[Unset, "GetOpenGraphDataForCitationResponse200DataOpenGraphCacheSchema"] = UNSET
+    page_url: Union[Unset, str] = UNSET
+    title: Union[Unset, str] = UNSET
+    description: Union[Unset, str] = UNSET
+    image: Union[Unset, str] = UNSET
+    image_width: Union[Unset, int] = UNSET
+    image_height: Union[Unset, int] = UNSET
+    url: Union[Unset, str] = UNSET
+    favicon: Union[Unset, str] = UNSET
+    site_name: Union[Unset, str] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        open_graph_cache_schema: Union[Unset, Dict[str, Any]] = UNSET
-        if not isinstance(self.open_graph_cache_schema, Unset):
-            open_graph_cache_schema = self.open_graph_cache_schema.to_dict()
+        page_url = self.page_url
+        title = self.title
+        description = self.description
+        image = self.image
+        image_width = self.image_width
+        image_height = self.image_height
+        url = self.url
+        favicon = self.favicon
+        site_name = self.site_name
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
-        if open_graph_cache_schema is not UNSET:
-            field_dict["OpenGraphCacheSchema"] = open_graph_cache_schema
+        if page_url is not UNSET:
+            field_dict["page_url"] = page_url
+        if title is not UNSET:
+            field_dict["title"] = title
+        if description is not UNSET:
+            field_dict["description"] = description
+        if image is not UNSET:
+            field_dict["image"] = image
+        if image_width is not UNSET:
+            field_dict["image_width"] = image_width
+        if image_height is not UNSET:
+            field_dict["image_height"] = image_height
+        if url is not UNSET:
+            field_dict["url"] = url
+        if favicon is not UNSET:
+            field_dict["favicon"] = favicon
+        if site_name is not UNSET:
+            field_dict["site_name"] = site_name
 
         return field_dict
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        from ..models.get_open_graph_data_for_citation_response_200_data_open_graph_cache_schema import (
-            GetOpenGraphDataForCitationResponse200DataOpenGraphCacheSchema,
-        )
-
         d = src_dict.copy()
-        _open_graph_cache_schema = d.pop("OpenGraphCacheSchema", UNSET)
-        open_graph_cache_schema: Union[Unset, GetOpenGraphDataForCitationResponse200DataOpenGraphCacheSchema]
-        if isinstance(_open_graph_cache_schema, Unset):
-            open_graph_cache_schema = UNSET
-        else:
-            open_graph_cache_schema = GetOpenGraphDataForCitationResponse200DataOpenGraphCacheSchema.from_dict(
-                _open_graph_cache_schema
-            )
+        page_url = d.pop("page_url", UNSET)
+
+        title = d.pop("title", UNSET)
+
+        description = d.pop("description", UNSET)
+
+        image = d.pop("image", UNSET)
+
+        image_width = d.pop("image_width", UNSET)
+
+        image_height = d.pop("image_height", UNSET)
+
+        url = d.pop("url", UNSET)
+
+        favicon = d.pop("favicon", UNSET)
+
+        site_name = d.pop("site_name", UNSET)
 
         get_open_graph_data_for_citation_response_200_data = cls(
-            open_graph_cache_schema=open_graph_cache_schema,
+            page_url=page_url,
+            title=title,
+            description=description,
+            image=image,
+            image_width=image_width,
+            image_height=image_height,
+            url=url,
+            favicon=favicon,
+            site_name=site_name,
         )
 
         get_open_graph_data_for_citation_response_200_data.additional_properties = d
