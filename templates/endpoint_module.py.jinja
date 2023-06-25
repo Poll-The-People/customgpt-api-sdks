@@ -81,7 +81,7 @@ def _build_response(*, client: {}, response: httpx.Response, content: Optional[b
     {% if 'stream' in endpoint.query_parameters.keys() %} 
     caller_frame = inspect.currentframe().f_back
     caller_method_name = caller_frame.f_code.co_name
-    parse = _parse_response(client=client, response=response) if caller_method_name in ['stream_detailed', 'astream_detailed'] else None
+    parse = _parse_response(client=client, response=response) if not caller_method_name in ['stream_detailed', 'astream_detailed'] else None
     {% else %}
     parse = _parse_response(client=client, response=response)
     {% endif %}

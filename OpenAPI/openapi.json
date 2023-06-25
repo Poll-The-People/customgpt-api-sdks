@@ -537,7 +537,7 @@
                                                     "type": "string",
                                                     "nullable": true
                                                 }
-                                                    }
+                                            }
                                         }
                                     }
                                 }
