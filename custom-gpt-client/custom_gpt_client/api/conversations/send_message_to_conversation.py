@@ -1,6 +1,6 @@
 import inspect
 from http import HTTPStatus
-from typing import Any, Dict, Optional, Union
+from typing import Any, Dict, Optional, Union, Generator
 
 import httpx
 
@@ -195,7 +195,7 @@ def sync_detailed(
     lang: Union[Unset, None, str] = "en",
 ):
     if stream:
-        return list(
+        return Generator(
             stream_detailed(
                 project_id=project_id,
                 session_id=session_id,
