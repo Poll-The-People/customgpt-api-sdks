@@ -1,9 +1,9 @@
 import pytest
 
-from custom_gpt_client import CustomGPT
+from customgpt_client import CustomGPT
 
 
-def test_project_settings():
+def test_users():
     CustomGPT.base_url = "https://dev.customgpt.ai"
     CustomGPT.api_key = ""
     CustomGPT.timeout = 10000
@@ -11,21 +11,17 @@ def test_project_settings():
         project_name="test", sitemap_path="https://adorosario.github.io/small-sitemap.xml"
     )
     response_create = response.parsed
-    project_id = response_create.data.id
-    response = CustomGPT.ProjectSettings.update(
-        project_id=project_id,
-        default_prompt="Hello World",
-        example_questions=["Who are you?"],
-        response_source="test",
-        chatbot_msg_lang="ur",
-    )
+    response_create.data.id
+    response = CustomGPT.User.get()
     assert response.status_code == 200
-    response = CustomGPT.ProjectSettings.get(project_id=project_id)
+    response = CustomGPT.User.update(name="Hamza 2")
+    response_json = response.parsed
     assert response.status_code == 200
+    assert response_json.data.name == "Hamza 2"
 
 
 @pytest.mark.asyncio
-async def test_project_settings():
+async def test_users():
     CustomGPT.base_url = "https://dev.customgpt.ai"
     CustomGPT.api_key = ""
     CustomGPT.timeout = 10000
@@ -33,10 +29,10 @@ async def test_project_settings():
         project_name="test", sitemap_path="https://adorosario.github.io/small-sitemap.xml"
     )
     response_create = response.parsed
-    project_id = response_create.data.id
-    response = await CustomGPT.ProjectSettings.aupdate(
-        project_id=project_id, default_prompt="Hello World", example_questions=["Who are you?"], chatbot_msg_lang="ur"
-    )
+    response_create.data.id
+    response = await CustomGPT.User.aget()
     assert response.status_code == 200
-    response = await CustomGPT.ProjectSettings.aget(project_id=project_id)
+    response = await CustomGPT.User.aupdate(name="Hamza 3")
+    response_json = response.parsed
     assert response.status_code == 200
+    assert response_json.data.name == "Hamza 3"

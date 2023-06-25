@@ -3,8 +3,8 @@ from typing import Any, Dict, Union
 
 import attr
 
-from custom_gpt_client.api.citations import get_open_graph_data_for_citation
-from custom_gpt_client.api.conversations import (
+from customgpt_client.api.citations import get_open_graph_data_for_citation
+from customgpt_client.api.conversations import (
     create_project_conversation,
     delete_project_conversation,
     get_project_conversations,
@@ -12,9 +12,9 @@ from custom_gpt_client.api.conversations import (
     send_message_to_conversation,
     update_project_conversation,
 )
-from custom_gpt_client.api.pages import delete_project_page, get_project_pages, preview
-from custom_gpt_client.api.project_settings import get_project_settings, update_project_settings
-from custom_gpt_client.api.projects import (
+from customgpt_client.api.pages import delete_project_page, get_project_pages, preview
+from customgpt_client.api.project_settings import get_project_settings, update_project_settings
+from customgpt_client.api.projects import (
     create_project,
     delete_project,
     get_project,
@@ -22,8 +22,8 @@ from custom_gpt_client.api.projects import (
     stats_project,
     update_project,
 )
-from custom_gpt_client.api.users import get_user_profile, update_user_profile
-from custom_gpt_client.models import (
+from customgpt_client.api.users import get_user_profile, update_user_profile
+from customgpt_client.models import (
     CreateProjectConversationJsonBody,
     CreateProjectMultipartData,
     SendMessageToConversationJsonBody,

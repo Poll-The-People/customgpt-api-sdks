@@ -1,5 +1,5 @@
 from http import HTTPStatus
-from typing import Any, Dict, List, Optional, Union, cast
+from typing import Any, Dict, List, Optional, Union, cast, Generator
 import inspect
 import httpx
 
@@ -127,7 +127,7 @@ def sync_detailed(
 ):
     {% if 'stream' in endpoint.query_parameters.keys() %}
     if stream:
-        return list(stream_detailed({{ kwargs(endpoint) }}))
+        return Generator(stream_detailed({{ kwargs(endpoint) }}))
     {% endif %}
     {{ docstring(endpoint, return_string, is_detailed=true) | indent(4) }}
 

@@ -1,15 +1,15 @@
 [tool.poetry]
 name = "customgpt-client"
-version = "1.0.7"
-description = "A client library for accessing CustomGPT"
+version = "1.1.0"
+description = "A client library for accessing customgpt"
 
 authors = []
 
 readme = "README.md"
 packages = [
-    {include = "custom_gpt_client"},
+    {include = "customgpt_client"},
 ]
-include = ["CHANGELOG.md", "custom_gpt_client/py.typed"]
+include = ["CHANGELOG.md", "customgpt_client/py.typed"]
 
 [tool.poetry.dependencies]
 python = "^3.8"

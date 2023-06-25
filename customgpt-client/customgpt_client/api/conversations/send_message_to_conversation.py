@@ -1,6 +1,6 @@
 import inspect
 from http import HTTPStatus
-from typing import Any, Dict, Optional, Union, Generator
+from typing import Any, Dict, Generator, Optional, Union
 
 import httpx
 

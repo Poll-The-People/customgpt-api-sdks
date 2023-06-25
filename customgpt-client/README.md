@@ -4,7 +4,7 @@
 First, create a client:
 
 ```python
-from custom_gpt_client import CustomGPT
+from customgpt_client import CustomGPT
 
 CustomGPT.api_key="SuperSecretToken"
 ```

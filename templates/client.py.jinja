@@ -6,12 +6,12 @@ import attr
 
 {% for collection in endpoint_collections_by_tag.values() %}
 {% for endpoint in collection.endpoints %}
-from custom_gpt_client.api.{{endpoint.tag}} import {{endpoint.name}}
+from customgpt_client.api.{{endpoint.tag}} import {{endpoint.name}}
 {% if endpoint.json_body %}
-from custom_gpt_client.models import {{endpoint.json_body.class_info.name}}
+from customgpt_client.models import {{endpoint.json_body.class_info.name}}
 {% endif %}
 {% if endpoint.multipart_body %}
-from custom_gpt_client.models import {{endpoint.multipart_body.class_info.name}}
+from customgpt_client.models import {{endpoint.multipart_body.class_info.name}}
 {% endif %}
 {% endfor %}
 {% endfor %}

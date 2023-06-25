@@ -1,11 +1,11 @@
 import pytest
 
-from custom_gpt_client import CustomGPT
+from customgpt_client import CustomGPT
 
 
 def test_projects():
     CustomGPT.base_url = "https://dev.customgpt.ai"
-    CustomGPT.api_key = "13|0tozJdzYhUrQ7HojFRSFzwtMAPNJXwAbYRhaNFMB"
+    CustomGPT.api_key = ""
     CustomGPT.timeout = 10000
     response = CustomGPT.Project.create(
         project_name="test", sitemap_path="https://adorosario.github.io/small-sitemap.xml"

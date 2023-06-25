@@ -2,7 +2,7 @@ import time
 
 import pytest
 
-from custom_gpt_client import CustomGPT
+from customgpt_client import CustomGPT
 
 
 def test_citations():
