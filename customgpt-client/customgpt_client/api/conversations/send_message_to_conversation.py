@@ -1,6 +1,8 @@
 import inspect
+import json
+import re
 from http import HTTPStatus
-from typing import Any, Dict, Generator, Optional, Union
+from typing import Any, Dict, Optional, Union
 
 import httpx
 
@@ -152,14 +154,15 @@ def stream_detailed(
     )
 
     response = httpx.request(**kwargs)
+    with httpx.stream(**kwargs) as response:
+        response_text = ""
+        for chunk in response.iter_text():
+            response_text += chunk
 
-    lines = response.iter_lines()
-    while True:
-        try:
-            line = next(lines)
-            yield _build_response(client=client, response=response, content=line)
-        except StopIteration:
-            break
+        json_objects = re.findall(r"\{.*?\}", response_text)
+        for json_str in json_objects:
+            json_data = json.loads(json_str)
+            yield _build_response(client=client, response=response, content=json_data)
 
 
 async def astream_detailed(
@@ -181,8 +184,14 @@ async def astream_detailed(
     )
     async with httpx.AsyncClient() as client:
         async with client.stream(**kwargs) as response:
-            async for chunk in response.aiter_raw():
-                yield _build_response(client=client, response=response, content=chunk)
+            response_text = ""
+            async for chunk in response.aiter_text():
+                response_text += chunk
+
+            json_objects = re.findall(r"\{.*?\}", response_text)
+            for json_str in json_objects:
+                json_data = json.loads(json_str)
+                yield _build_response(client=client, response=response, content=json_data)
 
 
 def sync_detailed(
@@ -195,50 +204,49 @@ def sync_detailed(
     lang: Union[Unset, None, str] = "en",
 ):
     if stream:
-        return Generator(
-            stream_detailed(
-                project_id=project_id,
-                session_id=session_id,
-                client=client,
-                json_body=json_body,
-                stream=stream,
-                lang=lang,
-            )
+        yield from stream_detailed(
+            project_id=project_id,
+            session_id=session_id,
+            client=client,
+            json_body=json_body,
+            stream=stream,
+            lang=lang,
         )
-    """ Send a message to a conversation.
+    else:
+        """Send a message to a conversation.
 
-     Send a message to a conversation by `projectId` and `sessionId`.
+         Send a message to a conversation by `projectId` and `sessionId`.
 
-    Args:
-        project_id (int):  Example: 1.
-        session_id (str):  Example: 1.
-        stream (Union[Unset, None, bool]):
-        lang (Union[Unset, None, str]):  Default: 'en'.
-        json_body (SendMessageToConversationJsonBody):
+        Args:
+            project_id (int):  Example: 1.
+            session_id (str):  Example: 1.
+            stream (Union[Unset, None, bool]):
+            lang (Union[Unset, None, str]):  Default: 'en'.
+            json_body (SendMessageToConversationJsonBody):
 
-    Raises:
-        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
-        httpx.TimeoutException: If the request takes longer than Client.timeout.
+        Raises:
+            errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
+            httpx.TimeoutException: If the request takes longer than Client.timeout.
 
-    Returns:
-        Response[Union[SendMessageToConversationResponse200, SendMessageToConversationResponse401, SendMessageToConversationResponse404, SendMessageToConversationResponse500]]
-     """
+        Returns:
+            Response[Union[SendMessageToConversationResponse200, SendMessageToConversationResponse401, SendMessageToConversationResponse404, SendMessageToConversationResponse500]]
+        """
 
-    kwargs = _get_kwargs(
-        project_id=project_id,
-        session_id=session_id,
-        client=client,
-        json_body=json_body,
-        stream=stream,
-        lang=lang,
-    )
+        kwargs = _get_kwargs(
+            project_id=project_id,
+            session_id=session_id,
+            client=client,
+            json_body=json_body,
+            stream=stream,
+            lang=lang,
+        )
 
-    response = httpx.request(
-        verify=client.verify_ssl,
-        **kwargs,
-    )
+        response = httpx.request(
+            verify=client.verify_ssl,
+            **kwargs,
+        )
 
-    return _build_response(client=client, response=response)
+        return _build_response(client=client, response=response)
 
 
 def sync(
@@ -311,38 +319,39 @@ async def asyncio_detailed(
             stream=stream,
             lang=lang,
         )
-    """ Send a message to a conversation.
+    else:
+        """Send a message to a conversation.
 
-     Send a message to a conversation by `projectId` and `sessionId`.
+         Send a message to a conversation by `projectId` and `sessionId`.
 
-    Args:
-        project_id (int):  Example: 1.
-        session_id (str):  Example: 1.
-        stream (Union[Unset, None, bool]):
-        lang (Union[Unset, None, str]):  Default: 'en'.
-        json_body (SendMessageToConversationJsonBody):
+        Args:
+            project_id (int):  Example: 1.
+            session_id (str):  Example: 1.
+            stream (Union[Unset, None, bool]):
+            lang (Union[Unset, None, str]):  Default: 'en'.
+            json_body (SendMessageToConversationJsonBody):
 
-    Raises:
-        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
-        httpx.TimeoutException: If the request takes longer than Client.timeout.
+        Raises:
+            errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
+            httpx.TimeoutException: If the request takes longer than Client.timeout.
 
-    Returns:
-        Response[Union[SendMessageToConversationResponse200, SendMessageToConversationResponse401, SendMessageToConversationResponse404, SendMessageToConversationResponse500]]
-     """
+        Returns:
+            Response[Union[SendMessageToConversationResponse200, SendMessageToConversationResponse401, SendMessageToConversationResponse404, SendMessageToConversationResponse500]]
+        """
 
-    kwargs = _get_kwargs(
-        project_id=project_id,
-        session_id=session_id,
-        client=client,
-        json_body=json_body,
-        stream=stream,
-        lang=lang,
-    )
+        kwargs = _get_kwargs(
+            project_id=project_id,
+            session_id=session_id,
+            client=client,
+            json_body=json_body,
+            stream=stream,
+            lang=lang,
+        )
 
-    async with httpx.AsyncClient(verify=client.verify_ssl) as _client:
-        response = await _client.request(**kwargs)
+        async with httpx.AsyncClient(verify=client.verify_ssl) as _client:
+            response = await _client.request(**kwargs)
 
-    return _build_response(client=client, response=response)
+        return _build_response(client=client, response=response)
 
 
 async def asyncio(

@@ -1,8 +1,9 @@
 from http import HTTPStatus
-from typing import Any, Dict, List, Optional, Union, cast, Generator
+from typing import Any, Dict, List, Optional, Union, cast
 import inspect
 import httpx
-
+import re
+import json
 from ...types import Response, UNSET
 from ... import errors
 
@@ -103,14 +104,15 @@ def stream_detailed(
     )
 
     response = httpx.request(**kwargs)
+    with httpx.stream(**kwargs) as response:
+        response_text = ""
+        for chunk in response.iter_text():
+            response_text += chunk
 
-    lines = response.iter_lines()
-    while True:
-        try:
-            line = next(lines)
-            yield _build_response(client=client, response=response, content=line)
-        except StopIteration:
-            break
+        json_objects = re.findall(r"\{.*?\}", response_text)
+        for json_str in json_objects:
+            json_data = json.loads(json_str)
+            yield _build_response(client=client, response=response, content=json_data)
 
 async def astream_detailed({{ arguments(endpoint) | indent(4) }}):
     kwargs = _get_kwargs(
@@ -118,8 +120,15 @@ async def astream_detailed({{ arguments(endpoint) | indent(4) }}):
     )
     async with httpx.AsyncClient() as client:
         async with client.stream(**kwargs) as response:
-            async for chunk in response.aiter_raw():
-                yield _build_response(client=client, response=response, content=chunk)
+            response_text = ""
+            async for chunk in response.aiter_text():
+                response_text += chunk
+
+            json_objects = re.findall(r"\{.*?\}", response_text)
+            for json_str in json_objects:
+                json_data = json.loads(json_str)
+                yield _build_response(client=client, response=response, content=json_data)
+
 {% endif %}
 
 def sync_detailed(
@@ -127,8 +136,21 @@ def sync_detailed(
 ):
     {% if 'stream' in endpoint.query_parameters.keys() %}
     if stream:
-        return Generator(stream_detailed({{ kwargs(endpoint) }}))
-    {% endif %}
+        yield from stream_detailed({{ kwargs(endpoint) }})
+    else:
+        {{ docstring(endpoint, return_string, is_detailed=true) | indent(4) }}
+
+        kwargs = _get_kwargs(
+            {{ kwargs(endpoint) }}
+        )
+
+        response = httpx.request(
+            verify=client.verify_ssl,
+            **kwargs,
+        )
+
+        return _build_response(client=client, response=response)
+    {% else %}
     {{ docstring(endpoint, return_string, is_detailed=true) | indent(4) }}
 
     kwargs = _get_kwargs(
@@ -141,6 +163,7 @@ def sync_detailed(
     )
 
     return _build_response(client=client, response=response)
+    {% endif %}
 
 {% if parsed_responses %}
 def sync(
@@ -159,7 +182,20 @@ async def asyncio_detailed(
     {% if 'stream' in endpoint.query_parameters.keys() %}
     if stream:
         return astream_detailed({{ kwargs(endpoint) }})
-    {% endif %}
+    else:
+        {{ docstring(endpoint, return_string, is_detailed=true) | indent(4) }}
+
+        kwargs = _get_kwargs(
+            {{ kwargs(endpoint) }}
+        )
+
+        async with httpx.AsyncClient(verify=client.verify_ssl) as _client:
+            response = await _client.request(
+                **kwargs
+            )
+
+        return _build_response(client=client, response=response)
+    {% else %}
     {{ docstring(endpoint, return_string, is_detailed=true) | indent(4) }}
 
     kwargs = _get_kwargs(
@@ -172,7 +208,7 @@ async def asyncio_detailed(
         )
 
     return _build_response(client=client, response=response)
-
+    {% endif %}
 {% if parsed_responses %}
 async def asyncio(
     {{ arguments(endpoint) | indent(4) }}

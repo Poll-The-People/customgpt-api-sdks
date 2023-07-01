@@ -86,17 +86,26 @@ class CustomGPT:
 
     class Project:
         def list(*args: Any, **kwargs: Any):
-            client = CustomGPT(api_key=CustomGPT.api_key, base_url=CustomGPT.base_url, timeout=CustomGPT.timeout)
+            api_key = CustomGPT.api_key
+            base_url = CustomGPT.base_url if hasattr(CustomGPT, "base_url") else "https://app.customgpt.ai"
+            timeout = CustomGPT.timeout if hasattr(CustomGPT, "timeout") else 100.0
+            client = CustomGPT(api_key=api_key, base_url=base_url, timeout=timeout)
 
             return list_projects.sync_detailed(client=client, *args, **kwargs)
 
         def alist(*args: Any, **kwargs: Any):
-            client = CustomGPT(api_key=CustomGPT.api_key, base_url=CustomGPT.base_url, timeout=CustomGPT.timeout)
+            api_key = CustomGPT.api_key
+            base_url = CustomGPT.base_url if hasattr(CustomGPT, "base_url") else "https://app.customgpt.ai"
+            timeout = CustomGPT.timeout if hasattr(CustomGPT, "timeout") else 100.0
+            client = CustomGPT(api_key=api_key, base_url=base_url, timeout=timeout)
 
             return list_projects.asyncio_detailed(client=client, *args, **kwargs)
 
         def create(*args: Any, **kwargs: Any):
-            client = CustomGPT(api_key=CustomGPT.api_key, base_url=CustomGPT.base_url, timeout=CustomGPT.timeout)
+            api_key = CustomGPT.api_key
+            base_url = CustomGPT.base_url if hasattr(CustomGPT, "base_url") else "https://app.customgpt.ai"
+            timeout = CustomGPT.timeout if hasattr(CustomGPT, "timeout") else 100.0
+            client = CustomGPT(api_key=api_key, base_url=base_url, timeout=timeout)
             json = {}
             if "project_name" in kwargs:
                 field = kwargs.pop("project_name")
@@ -115,7 +124,10 @@ class CustomGPT:
             return create_project.sync_detailed(client=client, *args, **kwargs)
 
         def acreate(*args: Any, **kwargs: Any):
-            client = CustomGPT(api_key=CustomGPT.api_key, base_url=CustomGPT.base_url, timeout=CustomGPT.timeout)
+            api_key = CustomGPT.api_key
+            base_url = CustomGPT.base_url if hasattr(CustomGPT, "base_url") else "https://app.customgpt.ai"
+            timeout = CustomGPT.timeout if hasattr(CustomGPT, "timeout") else 100.0
+            client = CustomGPT(api_key=api_key, base_url=base_url, timeout=timeout)
             json = {}
             if "project_name" in kwargs:
                 field = kwargs.pop("project_name")
@@ -134,17 +146,26 @@ class CustomGPT:
             return create_project.asyncio_detailed(client=client, *args, **kwargs)
 
         def get(*args: Any, **kwargs: Any):
-            client = CustomGPT(api_key=CustomGPT.api_key, base_url=CustomGPT.base_url, timeout=CustomGPT.timeout)
+            api_key = CustomGPT.api_key
+            base_url = CustomGPT.base_url if hasattr(CustomGPT, "base_url") else "https://app.customgpt.ai"
+            timeout = CustomGPT.timeout if hasattr(CustomGPT, "timeout") else 100.0
+            client = CustomGPT(api_key=api_key, base_url=base_url, timeout=timeout)
 
             return get_project.sync_detailed(client=client, *args, **kwargs)
 
         def aget(*args: Any, **kwargs: Any):
-            client = CustomGPT(api_key=CustomGPT.api_key, base_url=CustomGPT.base_url, timeout=CustomGPT.timeout)
+            api_key = CustomGPT.api_key
+            base_url = CustomGPT.base_url if hasattr(CustomGPT, "base_url") else "https://app.customgpt.ai"
+            timeout = CustomGPT.timeout if hasattr(CustomGPT, "timeout") else 100.0
+            client = CustomGPT(api_key=api_key, base_url=base_url, timeout=timeout)
 
             return get_project.asyncio_detailed(client=client, *args, **kwargs)
 
         def update(*args: Any, **kwargs: Any):
-            client = CustomGPT(api_key=CustomGPT.api_key, base_url=CustomGPT.base_url, timeout=CustomGPT.timeout)
+            api_key = CustomGPT.api_key
+            base_url = CustomGPT.base_url if hasattr(CustomGPT, "base_url") else "https://app.customgpt.ai"
+            timeout = CustomGPT.timeout if hasattr(CustomGPT, "timeout") else 100.0
+            client = CustomGPT(api_key=api_key, base_url=base_url, timeout=timeout)
             json = {}
             if "project_name" in kwargs:
                 field = kwargs.pop("project_name")
@@ -166,7 +187,10 @@ class CustomGPT:
             return update_project.sync_detailed(client=client, *args, **kwargs)
 
         def aupdate(*args: Any, **kwargs: Any):
-            client = CustomGPT(api_key=CustomGPT.api_key, base_url=CustomGPT.base_url, timeout=CustomGPT.timeout)
+            api_key = CustomGPT.api_key
+            base_url = CustomGPT.base_url if hasattr(CustomGPT, "base_url") else "https://app.customgpt.ai"
+            timeout = CustomGPT.timeout if hasattr(CustomGPT, "timeout") else 100.0
+            client = CustomGPT(api_key=api_key, base_url=base_url, timeout=timeout)
             json = {}
             if "project_name" in kwargs:
                 field = kwargs.pop("project_name")
@@ -188,69 +212,108 @@ class CustomGPT:
             return update_project.asyncio_detailed(client=client, *args, **kwargs)
 
         def delete(*args: Any, **kwargs: Any):
-            client = CustomGPT(api_key=CustomGPT.api_key, base_url=CustomGPT.base_url, timeout=CustomGPT.timeout)
+            api_key = CustomGPT.api_key
+            base_url = CustomGPT.base_url if hasattr(CustomGPT, "base_url") else "https://app.customgpt.ai"
+            timeout = CustomGPT.timeout if hasattr(CustomGPT, "timeout") else 100.0
+            client = CustomGPT(api_key=api_key, base_url=base_url, timeout=timeout)
 
             return delete_project.sync_detailed(client=client, *args, **kwargs)
 
         def adelete(*args: Any, **kwargs: Any):
-            client = CustomGPT(api_key=CustomGPT.api_key, base_url=CustomGPT.base_url, timeout=CustomGPT.timeout)
+            api_key = CustomGPT.api_key
+            base_url = CustomGPT.base_url if hasattr(CustomGPT, "base_url") else "https://app.customgpt.ai"
+            timeout = CustomGPT.timeout if hasattr(CustomGPT, "timeout") else 100.0
+            client = CustomGPT(api_key=api_key, base_url=base_url, timeout=timeout)
 
             return delete_project.asyncio_detailed(client=client, *args, **kwargs)
 
         def stats(*args: Any, **kwargs: Any):
-            client = CustomGPT(api_key=CustomGPT.api_key, base_url=CustomGPT.base_url, timeout=CustomGPT.timeout)
+            api_key = CustomGPT.api_key
+            base_url = CustomGPT.base_url if hasattr(CustomGPT, "base_url") else "https://app.customgpt.ai"
+            timeout = CustomGPT.timeout if hasattr(CustomGPT, "timeout") else 100.0
+            client = CustomGPT(api_key=api_key, base_url=base_url, timeout=timeout)
 
             return stats_project.sync_detailed(client=client, *args, **kwargs)
 
         def astats(*args: Any, **kwargs: Any):
-            client = CustomGPT(api_key=CustomGPT.api_key, base_url=CustomGPT.base_url, timeout=CustomGPT.timeout)
+            api_key = CustomGPT.api_key
+            base_url = CustomGPT.base_url if hasattr(CustomGPT, "base_url") else "https://app.customgpt.ai"
+            timeout = CustomGPT.timeout if hasattr(CustomGPT, "timeout") else 100.0
+            client = CustomGPT(api_key=api_key, base_url=base_url, timeout=timeout)
 
             return stats_project.asyncio_detailed(client=client, *args, **kwargs)
 
     class Page:
         def get(*args: Any, **kwargs: Any):
-            client = CustomGPT(api_key=CustomGPT.api_key, base_url=CustomGPT.base_url, timeout=CustomGPT.timeout)
+            api_key = CustomGPT.api_key
+            base_url = CustomGPT.base_url if hasattr(CustomGPT, "base_url") else "https://app.customgpt.ai"
+            timeout = CustomGPT.timeout if hasattr(CustomGPT, "timeout") else 100.0
+            client = CustomGPT(api_key=api_key, base_url=base_url, timeout=timeout)
 
             return get_project_pages.sync_detailed(client=client, *args, **kwargs)
 
         def aget(*args: Any, **kwargs: Any):
-            client = CustomGPT(api_key=CustomGPT.api_key, base_url=CustomGPT.base_url, timeout=CustomGPT.timeout)
+            api_key = CustomGPT.api_key
+            base_url = CustomGPT.base_url if hasattr(CustomGPT, "base_url") else "https://app.customgpt.ai"
+            timeout = CustomGPT.timeout if hasattr(CustomGPT, "timeout") else 100.0
+            client = CustomGPT(api_key=api_key, base_url=base_url, timeout=timeout)
 
             return get_project_pages.asyncio_detailed(client=client, *args, **kwargs)
 
         def delete(*args: Any, **kwargs: Any):
-            client = CustomGPT(api_key=CustomGPT.api_key, base_url=CustomGPT.base_url, timeout=CustomGPT.timeout)
+            api_key = CustomGPT.api_key
+            base_url = CustomGPT.base_url if hasattr(CustomGPT, "base_url") else "https://app.customgpt.ai"
+            timeout = CustomGPT.timeout if hasattr(CustomGPT, "timeout") else 100.0
+            client = CustomGPT(api_key=api_key, base_url=base_url, timeout=timeout)
 
             return delete_project_page.sync_detailed(client=client, *args, **kwargs)
 
         def adelete(*args: Any, **kwargs: Any):
-            client = CustomGPT(api_key=CustomGPT.api_key, base_url=CustomGPT.base_url, timeout=CustomGPT.timeout)
+            api_key = CustomGPT.api_key
+            base_url = CustomGPT.base_url if hasattr(CustomGPT, "base_url") else "https://app.customgpt.ai"
+            timeout = CustomGPT.timeout if hasattr(CustomGPT, "timeout") else 100.0
+            client = CustomGPT(api_key=api_key, base_url=base_url, timeout=timeout)
 
             return delete_project_page.asyncio_detailed(client=client, *args, **kwargs)
 
         def preview(*args: Any, **kwargs: Any):
-            client = CustomGPT(api_key=CustomGPT.api_key, base_url=CustomGPT.base_url, timeout=CustomGPT.timeout)
+            api_key = CustomGPT.api_key
+            base_url = CustomGPT.base_url if hasattr(CustomGPT, "base_url") else "https://app.customgpt.ai"
+            timeout = CustomGPT.timeout if hasattr(CustomGPT, "timeout") else 100.0
+            client = CustomGPT(api_key=api_key, base_url=base_url, timeout=timeout)
 
             return preview.sync_detailed(client=client, *args, **kwargs)
 
         def apreview(*args: Any, **kwargs: Any):
-            client = CustomGPT(api_key=CustomGPT.api_key, base_url=CustomGPT.base_url, timeout=CustomGPT.timeout)
+            api_key = CustomGPT.api_key
+            base_url = CustomGPT.base_url if hasattr(CustomGPT, "base_url") else "https://app.customgpt.ai"
+            timeout = CustomGPT.timeout if hasattr(CustomGPT, "timeout") else 100.0
+            client = CustomGPT(api_key=api_key, base_url=base_url, timeout=timeout)
 
             return preview.asyncio_detailed(client=client, *args, **kwargs)
 
     class ProjectSettings:
         def get(*args: Any, **kwargs: Any):
-            client = CustomGPT(api_key=CustomGPT.api_key, base_url=CustomGPT.base_url, timeout=CustomGPT.timeout)
+            api_key = CustomGPT.api_key
+            base_url = CustomGPT.base_url if hasattr(CustomGPT, "base_url") else "https://app.customgpt.ai"
+            timeout = CustomGPT.timeout if hasattr(CustomGPT, "timeout") else 100.0
+            client = CustomGPT(api_key=api_key, base_url=base_url, timeout=timeout)
 
             return get_project_settings.sync_detailed(client=client, *args, **kwargs)
 
         def aget(*args: Any, **kwargs: Any):
-            client = CustomGPT(api_key=CustomGPT.api_key, base_url=CustomGPT.base_url, timeout=CustomGPT.timeout)
+            api_key = CustomGPT.api_key
+            base_url = CustomGPT.base_url if hasattr(CustomGPT, "base_url") else "https://app.customgpt.ai"
+            timeout = CustomGPT.timeout if hasattr(CustomGPT, "timeout") else 100.0
+            client = CustomGPT(api_key=api_key, base_url=base_url, timeout=timeout)
 
             return get_project_settings.asyncio_detailed(client=client, *args, **kwargs)
 
         def update(*args: Any, **kwargs: Any):
-            client = CustomGPT(api_key=CustomGPT.api_key, base_url=CustomGPT.base_url, timeout=CustomGPT.timeout)
+            api_key = CustomGPT.api_key
+            base_url = CustomGPT.base_url if hasattr(CustomGPT, "base_url") else "https://app.customgpt.ai"
+            timeout = CustomGPT.timeout if hasattr(CustomGPT, "timeout") else 100.0
+            client = CustomGPT(api_key=api_key, base_url=base_url, timeout=timeout)
             json = {}
             if "chat_bot_avatar" in kwargs:
                 field = kwargs.pop("chat_bot_avatar")
@@ -275,7 +338,10 @@ class CustomGPT:
             return update_project_settings.sync_detailed(client=client, *args, **kwargs)
 
         def aupdate(*args: Any, **kwargs: Any):
-            client = CustomGPT(api_key=CustomGPT.api_key, base_url=CustomGPT.base_url, timeout=CustomGPT.timeout)
+            api_key = CustomGPT.api_key
+            base_url = CustomGPT.base_url if hasattr(CustomGPT, "base_url") else "https://app.customgpt.ai"
+            timeout = CustomGPT.timeout if hasattr(CustomGPT, "timeout") else 100.0
+            client = CustomGPT(api_key=api_key, base_url=base_url, timeout=timeout)
             json = {}
             if "chat_bot_avatar" in kwargs:
                 field = kwargs.pop("chat_bot_avatar")
@@ -301,17 +367,26 @@ class CustomGPT:
 
     class Conversation:
         def get(*args: Any, **kwargs: Any):
-            client = CustomGPT(api_key=CustomGPT.api_key, base_url=CustomGPT.base_url, timeout=CustomGPT.timeout)
+            api_key = CustomGPT.api_key
+            base_url = CustomGPT.base_url if hasattr(CustomGPT, "base_url") else "https://app.customgpt.ai"
+            timeout = CustomGPT.timeout if hasattr(CustomGPT, "timeout") else 100.0
+            client = CustomGPT(api_key=api_key, base_url=base_url, timeout=timeout)
 
             return get_project_conversations.sync_detailed(client=client, *args, **kwargs)
 
         def aget(*args: Any, **kwargs: Any):
-            client = CustomGPT(api_key=CustomGPT.api_key, base_url=CustomGPT.base_url, timeout=CustomGPT.timeout)
+            api_key = CustomGPT.api_key
+            base_url = CustomGPT.base_url if hasattr(CustomGPT, "base_url") else "https://app.customgpt.ai"
+            timeout = CustomGPT.timeout if hasattr(CustomGPT, "timeout") else 100.0
+            client = CustomGPT(api_key=api_key, base_url=base_url, timeout=timeout)
 
             return get_project_conversations.asyncio_detailed(client=client, *args, **kwargs)
 
         def create(*args: Any, **kwargs: Any):
-            client = CustomGPT(api_key=CustomGPT.api_key, base_url=CustomGPT.base_url, timeout=CustomGPT.timeout)
+            api_key = CustomGPT.api_key
+            base_url = CustomGPT.base_url if hasattr(CustomGPT, "base_url") else "https://app.customgpt.ai"
+            timeout = CustomGPT.timeout if hasattr(CustomGPT, "timeout") else 100.0
+            client = CustomGPT(api_key=api_key, base_url=base_url, timeout=timeout)
             json = {}
             if "name" in kwargs:
                 field = kwargs.pop("name")
@@ -321,7 +396,10 @@ class CustomGPT:
             return create_project_conversation.sync_detailed(client=client, *args, **kwargs)
 
         def acreate(*args: Any, **kwargs: Any):
-            client = CustomGPT(api_key=CustomGPT.api_key, base_url=CustomGPT.base_url, timeout=CustomGPT.timeout)
+            api_key = CustomGPT.api_key
+            base_url = CustomGPT.base_url if hasattr(CustomGPT, "base_url") else "https://app.customgpt.ai"
+            timeout = CustomGPT.timeout if hasattr(CustomGPT, "timeout") else 100.0
+            client = CustomGPT(api_key=api_key, base_url=base_url, timeout=timeout)
             json = {}
             if "name" in kwargs:
                 field = kwargs.pop("name")
@@ -331,7 +409,10 @@ class CustomGPT:
             return create_project_conversation.asyncio_detailed(client=client, *args, **kwargs)
 
         def update(*args: Any, **kwargs: Any):
-            client = CustomGPT(api_key=CustomGPT.api_key, base_url=CustomGPT.base_url, timeout=CustomGPT.timeout)
+            api_key = CustomGPT.api_key
+            base_url = CustomGPT.base_url if hasattr(CustomGPT, "base_url") else "https://app.customgpt.ai"
+            timeout = CustomGPT.timeout if hasattr(CustomGPT, "timeout") else 100.0
+            client = CustomGPT(api_key=api_key, base_url=base_url, timeout=timeout)
             json = {}
             if "name" in kwargs:
                 field = kwargs.pop("name")
@@ -341,7 +422,10 @@ class CustomGPT:
             return update_project_conversation.sync_detailed(client=client, *args, **kwargs)
 
         def aupdate(*args: Any, **kwargs: Any):
-            client = CustomGPT(api_key=CustomGPT.api_key, base_url=CustomGPT.base_url, timeout=CustomGPT.timeout)
+            api_key = CustomGPT.api_key
+            base_url = CustomGPT.base_url if hasattr(CustomGPT, "base_url") else "https://app.customgpt.ai"
+            timeout = CustomGPT.timeout if hasattr(CustomGPT, "timeout") else 100.0
+            client = CustomGPT(api_key=api_key, base_url=base_url, timeout=timeout)
             json = {}
             if "name" in kwargs:
                 field = kwargs.pop("name")
@@ -351,27 +435,42 @@ class CustomGPT:
             return update_project_conversation.asyncio_detailed(client=client, *args, **kwargs)
 
         def delete(*args: Any, **kwargs: Any):
-            client = CustomGPT(api_key=CustomGPT.api_key, base_url=CustomGPT.base_url, timeout=CustomGPT.timeout)
+            api_key = CustomGPT.api_key
+            base_url = CustomGPT.base_url if hasattr(CustomGPT, "base_url") else "https://app.customgpt.ai"
+            timeout = CustomGPT.timeout if hasattr(CustomGPT, "timeout") else 100.0
+            client = CustomGPT(api_key=api_key, base_url=base_url, timeout=timeout)
 
             return delete_project_conversation.sync_detailed(client=client, *args, **kwargs)
 
         def adelete(*args: Any, **kwargs: Any):
-            client = CustomGPT(api_key=CustomGPT.api_key, base_url=CustomGPT.base_url, timeout=CustomGPT.timeout)
+            api_key = CustomGPT.api_key
+            base_url = CustomGPT.base_url if hasattr(CustomGPT, "base_url") else "https://app.customgpt.ai"
+            timeout = CustomGPT.timeout if hasattr(CustomGPT, "timeout") else 100.0
+            client = CustomGPT(api_key=api_key, base_url=base_url, timeout=timeout)
 
             return delete_project_conversation.asyncio_detailed(client=client, *args, **kwargs)
 
         def messages(*args: Any, **kwargs: Any):
-            client = CustomGPT(api_key=CustomGPT.api_key, base_url=CustomGPT.base_url, timeout=CustomGPT.timeout)
+            api_key = CustomGPT.api_key
+            base_url = CustomGPT.base_url if hasattr(CustomGPT, "base_url") else "https://app.customgpt.ai"
+            timeout = CustomGPT.timeout if hasattr(CustomGPT, "timeout") else 100.0
+            client = CustomGPT(api_key=api_key, base_url=base_url, timeout=timeout)
 
             return messages.sync_detailed(client=client, *args, **kwargs)
 
         def amessages(*args: Any, **kwargs: Any):
-            client = CustomGPT(api_key=CustomGPT.api_key, base_url=CustomGPT.base_url, timeout=CustomGPT.timeout)
+            api_key = CustomGPT.api_key
+            base_url = CustomGPT.base_url if hasattr(CustomGPT, "base_url") else "https://app.customgpt.ai"
+            timeout = CustomGPT.timeout if hasattr(CustomGPT, "timeout") else 100.0
+            client = CustomGPT(api_key=api_key, base_url=base_url, timeout=timeout)
 
             return messages.asyncio_detailed(client=client, *args, **kwargs)
 
         def send(*args: Any, **kwargs: Any):
-            client = CustomGPT(api_key=CustomGPT.api_key, base_url=CustomGPT.base_url, timeout=CustomGPT.timeout)
+            api_key = CustomGPT.api_key
+            base_url = CustomGPT.base_url if hasattr(CustomGPT, "base_url") else "https://app.customgpt.ai"
+            timeout = CustomGPT.timeout if hasattr(CustomGPT, "timeout") else 100.0
+            client = CustomGPT(api_key=api_key, base_url=base_url, timeout=timeout)
             json = {}
             if "prompt" in kwargs:
                 field = kwargs.pop("prompt")
@@ -381,7 +480,10 @@ class CustomGPT:
             return send_message_to_conversation.sync_detailed(client=client, *args, **kwargs)
 
         def asend(*args: Any, **kwargs: Any):
-            client = CustomGPT(api_key=CustomGPT.api_key, base_url=CustomGPT.base_url, timeout=CustomGPT.timeout)
+            api_key = CustomGPT.api_key
+            base_url = CustomGPT.base_url if hasattr(CustomGPT, "base_url") else "https://app.customgpt.ai"
+            timeout = CustomGPT.timeout if hasattr(CustomGPT, "timeout") else 100.0
+            client = CustomGPT(api_key=api_key, base_url=base_url, timeout=timeout)
             json = {}
             if "prompt" in kwargs:
                 field = kwargs.pop("prompt")
@@ -392,28 +494,43 @@ class CustomGPT:
 
     class Citation:
         def get(*args: Any, **kwargs: Any):
-            client = CustomGPT(api_key=CustomGPT.api_key, base_url=CustomGPT.base_url, timeout=CustomGPT.timeout)
+            api_key = CustomGPT.api_key
+            base_url = CustomGPT.base_url if hasattr(CustomGPT, "base_url") else "https://app.customgpt.ai"
+            timeout = CustomGPT.timeout if hasattr(CustomGPT, "timeout") else 100.0
+            client = CustomGPT(api_key=api_key, base_url=base_url, timeout=timeout)
 
             return get_open_graph_data_for_citation.sync_detailed(client=client, *args, **kwargs)
 
         def aget(*args: Any, **kwargs: Any):
-            client = CustomGPT(api_key=CustomGPT.api_key, base_url=CustomGPT.base_url, timeout=CustomGPT.timeout)
+            api_key = CustomGPT.api_key
+            base_url = CustomGPT.base_url if hasattr(CustomGPT, "base_url") else "https://app.customgpt.ai"
+            timeout = CustomGPT.timeout if hasattr(CustomGPT, "timeout") else 100.0
+            client = CustomGPT(api_key=api_key, base_url=base_url, timeout=timeout)
 
             return get_open_graph_data_for_citation.asyncio_detailed(client=client, *args, **kwargs)
 
     class User:
         def get(*args: Any, **kwargs: Any):
-            client = CustomGPT(api_key=CustomGPT.api_key, base_url=CustomGPT.base_url, timeout=CustomGPT.timeout)
+            api_key = CustomGPT.api_key
+            base_url = CustomGPT.base_url if hasattr(CustomGPT, "base_url") else "https://app.customgpt.ai"
+            timeout = CustomGPT.timeout if hasattr(CustomGPT, "timeout") else 100.0
+            client = CustomGPT(api_key=api_key, base_url=base_url, timeout=timeout)
 
             return get_user_profile.sync_detailed(client=client, *args, **kwargs)
 
         def aget(*args: Any, **kwargs: Any):
-            client = CustomGPT(api_key=CustomGPT.api_key, base_url=CustomGPT.base_url, timeout=CustomGPT.timeout)
+            api_key = CustomGPT.api_key
+            base_url = CustomGPT.base_url if hasattr(CustomGPT, "base_url") else "https://app.customgpt.ai"
+            timeout = CustomGPT.timeout if hasattr(CustomGPT, "timeout") else 100.0
+            client = CustomGPT(api_key=api_key, base_url=base_url, timeout=timeout)
 
             return get_user_profile.asyncio_detailed(client=client, *args, **kwargs)
 
         def update(*args: Any, **kwargs: Any):
-            client = CustomGPT(api_key=CustomGPT.api_key, base_url=CustomGPT.base_url, timeout=CustomGPT.timeout)
+            api_key = CustomGPT.api_key
+            base_url = CustomGPT.base_url if hasattr(CustomGPT, "base_url") else "https://app.customgpt.ai"
+            timeout = CustomGPT.timeout if hasattr(CustomGPT, "timeout") else 100.0
+            client = CustomGPT(api_key=api_key, base_url=base_url, timeout=timeout)
             json = {}
             if "profile_photo" in kwargs:
                 field = kwargs.pop("profile_photo")
@@ -426,7 +543,10 @@ class CustomGPT:
             return update_user_profile.sync_detailed(client=client, *args, **kwargs)
 
         def aupdate(*args: Any, **kwargs: Any):
-            client = CustomGPT(api_key=CustomGPT.api_key, base_url=CustomGPT.base_url, timeout=CustomGPT.timeout)
+            api_key = CustomGPT.api_key
+            base_url = CustomGPT.base_url if hasattr(CustomGPT, "base_url") else "https://app.customgpt.ai"
+            timeout = CustomGPT.timeout if hasattr(CustomGPT, "timeout") else 100.0
+            client = CustomGPT(api_key=api_key, base_url=base_url, timeout=timeout)
             json = {}
             if "profile_photo" in kwargs:
                 field = kwargs.pop("profile_photo")

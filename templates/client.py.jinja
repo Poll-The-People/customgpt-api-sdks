@@ -83,7 +83,10 @@ class CustomGPT:
     class {{class_name}}:
         {% for endpoint in collection.endpoints %}
         def {{ endpoint.name.split('_')[0] }}(*args: Any, **kwargs: Any):
-            client = CustomGPT(api_key=CustomGPT.api_key, base_url=CustomGPT.base_url, timeout=CustomGPT.timeout)
+            api_key = CustomGPT.api_key
+            base_url = CustomGPT.base_url if hasattr(CustomGPT, 'base_url') else "https://app.customgpt.ai"
+            timeout = CustomGPT.timeout if hasattr(CustomGPT, 'timeout') else 100.0
+            client = CustomGPT(api_key=api_key, base_url=base_url, timeout=timeout)
             {% if endpoint.json_body %}
             json = {}
             {% for property in endpoint.json_body.data.properties.keys() %}
@@ -105,7 +108,10 @@ class CustomGPT:
      
             return {{endpoint.name}}.sync_detailed(client=client, *args, **kwargs)
         def a{{ endpoint.name.split('_')[0]}}(*args: Any, **kwargs: Any):
-            client = CustomGPT(api_key=CustomGPT.api_key, base_url=CustomGPT.base_url, timeout=CustomGPT.timeout)
+            api_key = CustomGPT.api_key
+            base_url = CustomGPT.base_url if hasattr(CustomGPT, 'base_url') else "https://app.customgpt.ai"
+            timeout = CustomGPT.timeout if hasattr(CustomGPT, 'timeout') else 100.0
+            client = CustomGPT(api_key=api_key, base_url=base_url, timeout=timeout)
             {% if endpoint.json_body %}
             json = {}
             {% for property in endpoint.json_body.data.properties.keys() %}
