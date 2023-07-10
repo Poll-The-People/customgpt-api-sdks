@@ -120,28 +120,27 @@ class UpdateProjectSettingsMultipartData:
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        d = src_dict.copy()
-        _chat_bot_avatar = d.pop("chat_bot_avatar", UNSET)
+        _chat_bot_avatar = src_dict.get("chat_bot_avatar")
         chat_bot_avatar: Union[Unset, File]
         if isinstance(_chat_bot_avatar, Unset):
             chat_bot_avatar = UNSET
         else:
             chat_bot_avatar = File(payload=BytesIO(_chat_bot_avatar))
 
-        _chat_bot_bg = d.pop("chat_bot_bg", UNSET)
+        _chat_bot_bg = src_dict.get("chat_bot_bg")
         chat_bot_bg: Union[Unset, File]
         if isinstance(_chat_bot_bg, Unset):
             chat_bot_bg = UNSET
         else:
             chat_bot_bg = File(payload=BytesIO(_chat_bot_bg))
 
-        default_prompt = d.pop("default_prompt", UNSET)
+        default_prompt = src_dict.get("default_prompt")
 
-        example_questions = cast(List[str], d.pop("example_questions", UNSET))
+        example_questions = cast(List[str], src_dict.get("example_questions"))
 
-        response_source = d.pop("response_source", UNSET)
+        response_source = src_dict.get("response_source")
 
-        chatbot_msg_lang = d.pop("chatbot_msg_lang", UNSET)
+        chatbot_msg_lang = src_dict.get("chatbot_msg_lang")
 
         update_project_settings_multipart_data = cls(
             chat_bot_avatar=chat_bot_avatar,
@@ -152,7 +151,7 @@ class UpdateProjectSettingsMultipartData:
             chatbot_msg_lang=chatbot_msg_lang,
         )
 
-        update_project_settings_multipart_data.additional_properties = d
+        update_project_settings_multipart_data.additional_properties = src_dict
         return update_project_settings_multipart_data
 
     @property

@@ -1,5 +1,4 @@
 import datetime
-from io import BytesIO
 from typing import Any, Dict, List, Type, TypeVar, Union
 
 import attr
@@ -7,7 +6,7 @@ from dateutil.parser import isoparse
 
 from ..models.page_crawl_status import PageCrawlStatus
 from ..models.page_index_status import PageIndexStatus
-from ..types import UNSET, File, FileJsonType, Unset
+from ..types import UNSET, Unset
 
 T = TypeVar("T", bound="Page")
 
@@ -30,7 +29,7 @@ class Page:
         is_file (Union[Unset, bool]): Whether the page is a file or not Example: True.
         is_file_kept (Union[Unset, bool]): Whether the file is kept after processing or not.\nNote: This is omitted in
             the response if the page is not a file Default: True. Example: True.
-        filename (Union[Unset, None, File]): Filename of the page.\nNote: This is omitted in the response if the page is
+        filename (Union[Unset, None, str]): Filename of the page.\nNote: This is omitted in the response if the page is
             not a file Example: file.pdf.
         filesize (Union[Unset, None, int]): Filesize of the page.\nNote: This is omitted in the response if the page is
             not a file Example: 100.
@@ -38,7 +37,7 @@ class Page:
             00:00:00.
         updated_at (Union[Unset, datetime.datetime]): Date and time when the page was updated Example: 2021-01-01
             00:00:00.
-        deleted_at (Union[Unset, datetime.datetime]): Date and time when the page was deleted Example: 2021-01-01
+        deleted_at (Union[Unset, None, datetime.datetime]): Date and time when the page was deleted Example: 2021-01-01
             00:00:00.
     """
 
@@ -51,11 +50,11 @@ class Page:
     index_status: Union[Unset, PageIndexStatus] = PageIndexStatus.QUEUED
     is_file: Union[Unset, bool] = False
     is_file_kept: Union[Unset, bool] = True
-    filename: Union[Unset, None, File] = UNSET
+    filename: Union[Unset, None, str] = UNSET
     filesize: Union[Unset, None, int] = UNSET
     created_at: Union[Unset, datetime.datetime] = UNSET
     updated_at: Union[Unset, datetime.datetime] = UNSET
-    deleted_at: Union[Unset, datetime.datetime] = UNSET
+    deleted_at: Union[Unset, None, datetime.datetime] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
@@ -74,10 +73,7 @@ class Page:
 
         is_file = self.is_file
         is_file_kept = self.is_file_kept
-        filename: Union[Unset, None, FileJsonType] = UNSET
-        if not isinstance(self.filename, Unset):
-            filename = self.filename.to_tuple() if self.filename else None
-
+        filename = self.filename
         filesize = self.filesize
         created_at: Union[Unset, str] = UNSET
         if not isinstance(self.created_at, Unset):
@@ -87,9 +83,9 @@ class Page:
         if not isinstance(self.updated_at, Unset):
             updated_at = self.updated_at.isoformat()
 
-        deleted_at: Union[Unset, str] = UNSET
+        deleted_at: Union[Unset, None, str] = UNSET
         if not isinstance(self.deleted_at, Unset):
-            deleted_at = self.deleted_at.isoformat()
+            deleted_at = self.deleted_at.isoformat() if self.deleted_at else None
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
@@ -127,63 +123,57 @@ class Page:
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        d = src_dict.copy()
-        id = d.pop("id", UNSET)
+        id = src_dict.get("id")
 
-        page_url = d.pop("page_url", UNSET)
+        page_url = src_dict.get("page_url")
 
-        page_url_hash = d.pop("page_url_hash", UNSET)
+        page_url_hash = src_dict.get("page_url_hash")
 
-        project_id = d.pop("project_id", UNSET)
+        project_id = src_dict.get("project_id")
 
-        s3_path = d.pop("s3_path", UNSET)
+        s3_path = src_dict.get("s3_path")
 
-        _crawl_status = d.pop("crawl_status", UNSET)
+        _crawl_status = src_dict.get("crawl_status")
         crawl_status: Union[Unset, PageCrawlStatus]
         if isinstance(_crawl_status, Unset):
             crawl_status = UNSET
         else:
             crawl_status = PageCrawlStatus(_crawl_status)
 
-        _index_status = d.pop("index_status", UNSET)
+        _index_status = src_dict.get("index_status")
         index_status: Union[Unset, PageIndexStatus]
         if isinstance(_index_status, Unset):
             index_status = UNSET
         else:
             index_status = PageIndexStatus(_index_status)
 
-        is_file = d.pop("is_file", UNSET)
+        is_file = src_dict.get("is_file")
 
-        is_file_kept = d.pop("is_file_kept", UNSET)
+        is_file_kept = src_dict.get("is_file_kept")
 
-        _filename = d.pop("filename", UNSET)
-        filename: Union[Unset, None, File]
-        if _filename is None:
-            filename = None
-        elif isinstance(_filename, Unset):
-            filename = UNSET
-        else:
-            filename = File(payload=BytesIO(_filename))
+        filename = src_dict.get("filename")
 
-        filesize = d.pop("filesize", UNSET)
+        filesize = src_dict.get("filesize")
 
-        _created_at = d.pop("created_at", UNSET)
+        _created_at = src_dict.get("created_at")
         created_at: Union[Unset, datetime.datetime]
         if isinstance(_created_at, Unset):
             created_at = UNSET
         else:
             created_at = isoparse(_created_at)
 
-        _updated_at = d.pop("updated_at", UNSET)
+        _updated_at = src_dict.get("updated_at")
         updated_at: Union[Unset, datetime.datetime]
         if isinstance(_updated_at, Unset):
             updated_at = UNSET
         else:
             updated_at = isoparse(_updated_at)
 
-        _deleted_at = d.pop("deleted_at", UNSET)
-        deleted_at: Union[Unset, datetime.datetime]
-        if isinstance(_deleted_at, Unset):
+        _deleted_at = src_dict.get("deleted_at")
+        deleted_at: Union[Unset, None, datetime.datetime]
+        if _deleted_at is None:
+            deleted_at = None
+        elif isinstance(_deleted_at, Unset):
             deleted_at = UNSET
         else:
             deleted_at = isoparse(_deleted_at)
@@ -205,7 +195,7 @@ class Page:
             deleted_at=deleted_at,
         )
 
-        page.additional_properties = d
+        page.additional_properties = src_dict
         return page
 
     @property

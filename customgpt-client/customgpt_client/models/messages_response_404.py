@@ -52,17 +52,16 @@ class MessagesResponse404:
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         from ..models.messages_response_404_data import MessagesResponse404Data
 
-        d = src_dict.copy()
-        _status = d.pop("status", UNSET)
+        _status = src_dict.get("status")
         status: Union[Unset, MessagesResponse404Status]
         if isinstance(_status, Unset):
             status = UNSET
         else:
             status = MessagesResponse404Status(_status)
 
-        url = d.pop("url", UNSET)
+        url = src_dict.get("url")
 
-        _data = d.pop("data", UNSET)
+        _data = src_dict.get("data")
         data: Union[Unset, MessagesResponse404Data]
         if isinstance(_data, Unset):
             data = UNSET
@@ -75,7 +74,7 @@ class MessagesResponse404:
             data=data,
         )
 
-        messages_response_404.additional_properties = d
+        messages_response_404.additional_properties = src_dict
         return messages_response_404
 
     @property

@@ -54,17 +54,16 @@ class GetOpenGraphDataForCitationResponse404:
             GetOpenGraphDataForCitationResponse404Data,
         )
 
-        d = src_dict.copy()
-        _status = d.pop("status", UNSET)
+        _status = src_dict.get("status")
         status: Union[Unset, GetOpenGraphDataForCitationResponse404Status]
         if isinstance(_status, Unset):
             status = UNSET
         else:
             status = GetOpenGraphDataForCitationResponse404Status(_status)
 
-        url = d.pop("url", UNSET)
+        url = src_dict.get("url")
 
-        _data = d.pop("data", UNSET)
+        _data = src_dict.get("data")
         data: Union[Unset, GetOpenGraphDataForCitationResponse404Data]
         if isinstance(_data, Unset):
             data = UNSET
@@ -77,7 +76,7 @@ class GetOpenGraphDataForCitationResponse404:
             data=data,
         )
 
-        get_open_graph_data_for_citation_response_404.additional_properties = d
+        get_open_graph_data_for_citation_response_404.additional_properties = src_dict
         return get_open_graph_data_for_citation_response_404
 
     @property

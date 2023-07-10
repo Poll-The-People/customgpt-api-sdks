@@ -43,15 +43,14 @@ class DeleteProjectResponse404Data:
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        d = src_dict.copy()
-        _code = d.pop("code", UNSET)
+        _code = src_dict.get("code")
         code: Union[Unset, DeleteProjectResponse404DataCode]
         if isinstance(_code, Unset):
             code = UNSET
         else:
             code = DeleteProjectResponse404DataCode(_code)
 
-        _message = d.pop("message", UNSET)
+        _message = src_dict.get("message")
         message: Union[Unset, DeleteProjectResponse404DataMessage]
         if isinstance(_message, Unset):
             message = UNSET
@@ -63,7 +62,7 @@ class DeleteProjectResponse404Data:
             message=message,
         )
 
-        delete_project_response_404_data.additional_properties = d
+        delete_project_response_404_data.additional_properties = src_dict
         return delete_project_response_404_data
 
     @property

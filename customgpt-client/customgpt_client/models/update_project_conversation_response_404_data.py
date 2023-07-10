@@ -45,15 +45,14 @@ class UpdateProjectConversationResponse404Data:
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        d = src_dict.copy()
-        _code = d.pop("code", UNSET)
+        _code = src_dict.get("code")
         code: Union[Unset, UpdateProjectConversationResponse404DataCode]
         if isinstance(_code, Unset):
             code = UNSET
         else:
             code = UpdateProjectConversationResponse404DataCode(_code)
 
-        _message = d.pop("message", UNSET)
+        _message = src_dict.get("message")
         message: Union[Unset, UpdateProjectConversationResponse404DataMessage]
         if isinstance(_message, Unset):
             message = UNSET
@@ -65,7 +64,7 @@ class UpdateProjectConversationResponse404Data:
             message=message,
         )
 
-        update_project_conversation_response_404_data.additional_properties = d
+        update_project_conversation_response_404_data.additional_properties = src_dict
         return update_project_conversation_response_404_data
 
     @property

@@ -20,6 +20,7 @@ class ProjectSettings:
         response_source (Union[Unset, ProjectSettingsResponseSource]): The response source Example:
             https://example.com/response_source.json.
         chatbot_msg_lang (Union[Unset, str]): The chatbot message language Example: en.
+        chatbot_color (Union[Unset, str]): The chatbot color in hex format Example: #000000.
     """
 
     chatbot_avatar: Union[Unset, str] = UNSET
@@ -28,6 +29,7 @@ class ProjectSettings:
     example_questions: Union[Unset, List[str]] = UNSET
     response_source: Union[Unset, ProjectSettingsResponseSource] = UNSET
     chatbot_msg_lang: Union[Unset, str] = UNSET
+    chatbot_color: Union[Unset, str] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
@@ -43,6 +45,7 @@ class ProjectSettings:
             response_source = self.response_source.value
 
         chatbot_msg_lang = self.chatbot_msg_lang
+        chatbot_color = self.chatbot_color
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
@@ -60,28 +63,31 @@ class ProjectSettings:
             field_dict["response_source"] = response_source
         if chatbot_msg_lang is not UNSET:
             field_dict["chatbot_msg_lang"] = chatbot_msg_lang
+        if chatbot_color is not UNSET:
+            field_dict["chatbot_color"] = chatbot_color
 
         return field_dict
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        d = src_dict.copy()
-        chatbot_avatar = d.pop("chatbot_avatar", UNSET)
+        chatbot_avatar = src_dict.get("chatbot_avatar")
 
-        chatbot_background = d.pop("chatbot_background", UNSET)
+        chatbot_background = src_dict.get("chatbot_background")
 
-        default_prompt = d.pop("default_prompt", UNSET)
+        default_prompt = src_dict.get("default_prompt")
 
-        example_questions = cast(List[str], d.pop("example_questions", UNSET))
+        example_questions = cast(List[str], src_dict.get("example_questions"))
 
-        _response_source = d.pop("response_source", UNSET)
+        _response_source = src_dict.get("response_source")
         response_source: Union[Unset, ProjectSettingsResponseSource]
         if isinstance(_response_source, Unset):
             response_source = UNSET
         else:
             response_source = ProjectSettingsResponseSource(_response_source)
 
-        chatbot_msg_lang = d.pop("chatbot_msg_lang", UNSET)
+        chatbot_msg_lang = src_dict.get("chatbot_msg_lang")
+
+        chatbot_color = src_dict.get("chatbot_color")
 
         project_settings = cls(
             chatbot_avatar=chatbot_avatar,
@@ -90,9 +96,10 @@ class ProjectSettings:
             example_questions=example_questions,
             response_source=response_source,
             chatbot_msg_lang=chatbot_msg_lang,
+            chatbot_color=chatbot_color,
         )
 
-        project_settings.additional_properties = d
+        project_settings.additional_properties = src_dict
         return project_settings
 
     @property

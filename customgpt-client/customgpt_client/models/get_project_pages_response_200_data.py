@@ -48,15 +48,14 @@ class GetProjectPagesResponse200Data:
         from ..models.get_project_pages_response_200_data_pages import GetProjectPagesResponse200DataPages
         from ..models.get_project_pages_response_200_data_project import GetProjectPagesResponse200DataProject
 
-        d = src_dict.copy()
-        _project = d.pop("project", UNSET)
+        _project = src_dict.get("project")
         project: Union[Unset, GetProjectPagesResponse200DataProject]
         if isinstance(_project, Unset):
             project = UNSET
         else:
             project = GetProjectPagesResponse200DataProject.from_dict(_project)
 
-        _pages = d.pop("pages", UNSET)
+        _pages = src_dict.get("pages")
         pages: Union[Unset, GetProjectPagesResponse200DataPages]
         if isinstance(_pages, Unset):
             pages = UNSET
@@ -68,7 +67,7 @@ class GetProjectPagesResponse200Data:
             pages=pages,
         )
 
-        get_project_pages_response_200_data.additional_properties = d
+        get_project_pages_response_200_data.additional_properties = src_dict
         return get_project_pages_response_200_data
 
     @property

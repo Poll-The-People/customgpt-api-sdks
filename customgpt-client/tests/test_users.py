@@ -1,11 +1,11 @@
 import pytest
 
 from customgpt_client import CustomGPT
+from tests.credentials import credentials
 
 
-def test_users():
-    CustomGPT.base_url = "https://dev.customgpt.ai"
-    CustomGPT.api_key = ""
+def test_sync_users():
+    CustomGPT.base_url, CustomGPT.api_key = credentials()
     CustomGPT.timeout = 10000
     response = CustomGPT.Project.create(
         project_name="test", sitemap_path="https://adorosario.github.io/small-sitemap.xml"
@@ -21,9 +21,8 @@ def test_users():
 
 
 @pytest.mark.asyncio
-async def test_users():
-    CustomGPT.base_url = "https://dev.customgpt.ai"
-    CustomGPT.api_key = ""
+async def test_async_users():
+    CustomGPT.base_url, CustomGPT.api_key = credentials()
     CustomGPT.timeout = 10000
     response = await CustomGPT.Project.acreate(
         project_name="test", sitemap_path="https://adorosario.github.io/small-sitemap.xml"

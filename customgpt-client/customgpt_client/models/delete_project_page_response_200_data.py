@@ -30,14 +30,13 @@ class DeleteProjectPageResponse200Data:
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        d = src_dict.copy()
-        deleted = d.pop("deleted", UNSET)
+        deleted = src_dict.get("deleted")
 
         delete_project_page_response_200_data = cls(
             deleted=deleted,
         )
 
-        delete_project_page_response_200_data.additional_properties = d
+        delete_project_page_response_200_data.additional_properties = src_dict
         return delete_project_page_response_200_data
 
     @property

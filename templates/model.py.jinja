@@ -144,12 +144,11 @@ return field_dict
     {% for lazy_import in model.lazy_imports %}
         {{ lazy_import }}
     {% endfor %}
-        d = src_dict.copy()
 {% for property in model.required_properties + model.optional_properties %}
     {% if property.required %}
-        {% set property_source = 'd.pop("' + property.name + '")' %}
+        {% set property_source = 'src_dict.get("' + property.name + '")' %}
     {% else %}
-        {% set property_source = 'd.pop("' + property.name + '", UNSET)' %}
+        {% set property_source = 'src_dict.get("' + property.name + '")' %}
     {% endif %}
     {% import "property_templates/" + property.template as prop_template %}
     {% if prop_template.construct %}
@@ -179,13 +178,13 @@ return field_dict
     {% endif %}
     {% if prop_template and prop_template.construct %}
         additional_properties = {}
-        for prop_name, prop_dict in d.items():
+        for prop_name, prop_dict in src_dict.items():
             {{ prop_template.construct(model.additional_properties, "prop_dict") | indent(12) }}
             additional_properties[prop_name] = {{ model.additional_properties.python_name }}
 
         {{ module_name }}.additional_properties = additional_properties
     {% else %}
-        {{ module_name }}.additional_properties = d
+        {{ module_name }}.additional_properties = src_dict
     {% endif %}
 {% endif %}
         return {{ module_name }}

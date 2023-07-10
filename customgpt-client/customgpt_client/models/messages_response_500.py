@@ -52,17 +52,16 @@ class MessagesResponse500:
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         from ..models.messages_response_500_data import MessagesResponse500Data
 
-        d = src_dict.copy()
-        _status = d.pop("status", UNSET)
+        _status = src_dict.get("status")
         status: Union[Unset, MessagesResponse500Status]
         if isinstance(_status, Unset):
             status = UNSET
         else:
             status = MessagesResponse500Status(_status)
 
-        url = d.pop("url", UNSET)
+        url = src_dict.get("url")
 
-        _data = d.pop("data", UNSET)
+        _data = src_dict.get("data")
         data: Union[Unset, MessagesResponse500Data]
         if isinstance(_data, Unset):
             data = UNSET
@@ -75,7 +74,7 @@ class MessagesResponse500:
             data=data,
         )
 
-        messages_response_500.additional_properties = d
+        messages_response_500.additional_properties = src_dict
         return messages_response_500
 
     @property

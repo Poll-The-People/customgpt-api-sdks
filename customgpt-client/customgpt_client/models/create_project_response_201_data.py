@@ -115,32 +115,31 @@ class CreateProjectResponse201Data:
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        d = src_dict.copy()
-        id = d.pop("id", UNSET)
+        id = src_dict.get("id")
 
-        project_name = d.pop("project_name", UNSET)
+        project_name = src_dict.get("project_name")
 
-        sitemap_path = d.pop("sitemap_path", UNSET)
+        sitemap_path = src_dict.get("sitemap_path")
 
-        is_chat_active = d.pop("is_chat_active", UNSET)
+        is_chat_active = src_dict.get("is_chat_active")
 
-        user_id = d.pop("user_id", UNSET)
+        user_id = src_dict.get("user_id")
 
-        _created_at = d.pop("created_at", UNSET)
+        _created_at = src_dict.get("created_at")
         created_at: Union[Unset, datetime.datetime]
         if isinstance(_created_at, Unset):
             created_at = UNSET
         else:
             created_at = isoparse(_created_at)
 
-        _updated_at = d.pop("updated_at", UNSET)
+        _updated_at = src_dict.get("updated_at")
         updated_at: Union[Unset, datetime.datetime]
         if isinstance(_updated_at, Unset):
             updated_at = UNSET
         else:
             updated_at = isoparse(_updated_at)
 
-        _deleted_at = d.pop("deleted_at", UNSET)
+        _deleted_at = src_dict.get("deleted_at")
         deleted_at: Union[Unset, None, datetime.datetime]
         if _deleted_at is None:
             deleted_at = None
@@ -149,22 +148,22 @@ class CreateProjectResponse201Data:
         else:
             deleted_at = isoparse(_deleted_at)
 
-        _type = d.pop("type", UNSET)
+        _type = src_dict.get("type")
         type: Union[Unset, CreateProjectResponse201DataType]
         if isinstance(_type, Unset):
             type = UNSET
         else:
             type = CreateProjectResponse201DataType(_type)
 
-        is_shared = d.pop("is_shared", UNSET)
+        is_shared = src_dict.get("is_shared")
 
-        shareable_slug = d.pop("shareable_slug", UNSET)
+        shareable_slug = src_dict.get("shareable_slug")
 
-        shareable_link = d.pop("shareable_link", UNSET)
+        shareable_link = src_dict.get("shareable_link")
 
-        embed_code = d.pop("embed_code", UNSET)
+        embed_code = src_dict.get("embed_code")
 
-        live_chat_code = d.pop("live_chat_code", UNSET)
+        live_chat_code = src_dict.get("live_chat_code")
 
         create_project_response_201_data = cls(
             id=id,
@@ -183,7 +182,7 @@ class CreateProjectResponse201Data:
             live_chat_code=live_chat_code,
         )
 
-        create_project_response_201_data.additional_properties = d
+        create_project_response_201_data.additional_properties = src_dict
         return create_project_response_201_data
 
     @property

@@ -30,14 +30,13 @@ class CreateProjectConversationJsonBody:
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        d = src_dict.copy()
-        name = d.pop("name", UNSET)
+        name = src_dict.get("name")
 
         create_project_conversation_json_body = cls(
             name=name,
         )
 
-        create_project_conversation_json_body.additional_properties = d
+        create_project_conversation_json_body.additional_properties = src_dict
         return create_project_conversation_json_body
 
     @property

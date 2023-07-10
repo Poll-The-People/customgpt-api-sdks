@@ -11,7 +11,6 @@ T = TypeVar("T", bound="ProjectPlugin")
 class ProjectPlugin:
     """
     Attributes:
-        id (Union[Unset, int]): Plugin ID Example: 1.
         model_name (Union[Unset, str]): Model Name Example: IndoorPlants.
         human_name (Union[Unset, str]): Name For Human Example: The Indoor Plants Channel.
         keywords (Union[Unset, str]): Keywords For Model Example: Indoor plants, Gardening, Trusted information..
@@ -21,7 +20,6 @@ class ProjectPlugin:
         is_active (Union[Unset, bool]): Whether the project plugin is active or not Example: True.
     """
 
-    id: Union[Unset, int] = UNSET
     model_name: Union[Unset, str] = UNSET
     human_name: Union[Unset, str] = UNSET
     keywords: Union[Unset, str] = UNSET
@@ -31,7 +29,6 @@ class ProjectPlugin:
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        id = self.id
         model_name = self.model_name
         human_name = self.human_name
         keywords = self.keywords
@@ -42,8 +39,6 @@ class ProjectPlugin:
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
-        if id is not UNSET:
-            field_dict["id"] = id
         if model_name is not UNSET:
             field_dict["model_name"] = model_name
         if human_name is not UNSET:
@@ -61,23 +56,19 @@ class ProjectPlugin:
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        d = src_dict.copy()
-        id = d.pop("id", UNSET)
+        model_name = src_dict.get("model_name")
 
-        model_name = d.pop("model_name", UNSET)
+        human_name = src_dict.get("human_name")
 
-        human_name = d.pop("human_name", UNSET)
+        keywords = src_dict.get("keywords")
 
-        keywords = d.pop("keywords", UNSET)
+        description = src_dict.get("description")
 
-        description = d.pop("description", UNSET)
+        logo = src_dict.get("logo")
 
-        logo = d.pop("logo", UNSET)
-
-        is_active = d.pop("is_active", UNSET)
+        is_active = src_dict.get("is_active")
 
         project_plugin = cls(
-            id=id,
             model_name=model_name,
             human_name=human_name,
             keywords=keywords,
@@ -86,7 +77,7 @@ class ProjectPlugin:
             is_active=is_active,
         )
 
-        project_plugin.additional_properties = d
+        project_plugin.additional_properties = src_dict
         return project_plugin
 
     @property

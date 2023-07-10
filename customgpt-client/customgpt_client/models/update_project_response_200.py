@@ -47,15 +47,14 @@ class UpdateProjectResponse200:
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         from ..models.update_project_response_200_data import UpdateProjectResponse200Data
 
-        d = src_dict.copy()
-        _status = d.pop("status", UNSET)
+        _status = src_dict.get("status")
         status: Union[Unset, UpdateProjectResponse200Status]
         if isinstance(_status, Unset):
             status = UNSET
         else:
             status = UpdateProjectResponse200Status(_status)
 
-        _data = d.pop("data", UNSET)
+        _data = src_dict.get("data")
         data: Union[Unset, UpdateProjectResponse200Data]
         if isinstance(_data, Unset):
             data = UNSET
@@ -67,7 +66,7 @@ class UpdateProjectResponse200:
             data=data,
         )
 
-        update_project_response_200.additional_properties = d
+        update_project_response_200.additional_properties = src_dict
         return update_project_response_200
 
     @property

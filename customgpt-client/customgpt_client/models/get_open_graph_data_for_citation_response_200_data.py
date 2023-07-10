@@ -72,24 +72,23 @@ class GetOpenGraphDataForCitationResponse200Data:
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        d = src_dict.copy()
-        page_url = d.pop("page_url", UNSET)
+        page_url = src_dict.get("page_url")
 
-        title = d.pop("title", UNSET)
+        title = src_dict.get("title")
 
-        description = d.pop("description", UNSET)
+        description = src_dict.get("description")
 
-        image = d.pop("image", UNSET)
+        image = src_dict.get("image")
 
-        image_width = d.pop("image_width", UNSET)
+        image_width = src_dict.get("image_width")
 
-        image_height = d.pop("image_height", UNSET)
+        image_height = src_dict.get("image_height")
 
-        url = d.pop("url", UNSET)
+        url = src_dict.get("url")
 
-        favicon = d.pop("favicon", UNSET)
+        favicon = src_dict.get("favicon")
 
-        site_name = d.pop("site_name", UNSET)
+        site_name = src_dict.get("site_name")
 
         get_open_graph_data_for_citation_response_200_data = cls(
             page_url=page_url,
@@ -103,7 +102,7 @@ class GetOpenGraphDataForCitationResponse200Data:
             site_name=site_name,
         )
 
-        get_open_graph_data_for_citation_response_200_data.additional_properties = d
+        get_open_graph_data_for_citation_response_200_data.additional_properties = src_dict
         return get_open_graph_data_for_citation_response_200_data
 
     @property

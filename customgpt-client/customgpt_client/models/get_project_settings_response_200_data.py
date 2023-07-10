@@ -67,23 +67,22 @@ class GetProjectSettingsResponse200Data:
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        d = src_dict.copy()
-        chatbot_avatar = d.pop("chatbot_avatar", UNSET)
+        chatbot_avatar = src_dict.get("chatbot_avatar")
 
-        chatbot_background = d.pop("chatbot_background", UNSET)
+        chatbot_background = src_dict.get("chatbot_background")
 
-        default_prompt = d.pop("default_prompt", UNSET)
+        default_prompt = src_dict.get("default_prompt")
 
-        example_questions = cast(List[str], d.pop("example_questions", UNSET))
+        example_questions = cast(List[str], src_dict.get("example_questions"))
 
-        _response_source = d.pop("response_source", UNSET)
+        _response_source = src_dict.get("response_source")
         response_source: Union[Unset, GetProjectSettingsResponse200DataResponseSource]
         if isinstance(_response_source, Unset):
             response_source = UNSET
         else:
             response_source = GetProjectSettingsResponse200DataResponseSource(_response_source)
 
-        chatbot_msg_lang = d.pop("chatbot_msg_lang", UNSET)
+        chatbot_msg_lang = src_dict.get("chatbot_msg_lang")
 
         get_project_settings_response_200_data = cls(
             chatbot_avatar=chatbot_avatar,
@@ -94,7 +93,7 @@ class GetProjectSettingsResponse200Data:
             chatbot_msg_lang=chatbot_msg_lang,
         )
 
-        get_project_settings_response_200_data.additional_properties = d
+        get_project_settings_response_200_data.additional_properties = src_dict
         return get_project_settings_response_200_data
 
     @property

@@ -52,17 +52,16 @@ class CreateProjectConversationResponse401:
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         from ..models.create_project_conversation_response_401_data import CreateProjectConversationResponse401Data
 
-        d = src_dict.copy()
-        _status = d.pop("status", UNSET)
+        _status = src_dict.get("status")
         status: Union[Unset, CreateProjectConversationResponse401Status]
         if isinstance(_status, Unset):
             status = UNSET
         else:
             status = CreateProjectConversationResponse401Status(_status)
 
-        url = d.pop("url", UNSET)
+        url = src_dict.get("url")
 
-        _data = d.pop("data", UNSET)
+        _data = src_dict.get("data")
         data: Union[Unset, CreateProjectConversationResponse401Data]
         if isinstance(_data, Unset):
             data = UNSET
@@ -75,7 +74,7 @@ class CreateProjectConversationResponse401:
             data=data,
         )
 
-        create_project_conversation_response_401.additional_properties = d
+        create_project_conversation_response_401.additional_properties = src_dict
         return create_project_conversation_response_401
 
     @property

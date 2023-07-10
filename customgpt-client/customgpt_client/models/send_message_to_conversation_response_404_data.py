@@ -45,15 +45,14 @@ class SendMessageToConversationResponse404Data:
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        d = src_dict.copy()
-        _code = d.pop("code", UNSET)
+        _code = src_dict.get("code")
         code: Union[Unset, SendMessageToConversationResponse404DataCode]
         if isinstance(_code, Unset):
             code = UNSET
         else:
             code = SendMessageToConversationResponse404DataCode(_code)
 
-        _message = d.pop("message", UNSET)
+        _message = src_dict.get("message")
         message: Union[Unset, SendMessageToConversationResponse404DataMessage]
         if isinstance(_message, Unset):
             message = UNSET
@@ -65,7 +64,7 @@ class SendMessageToConversationResponse404Data:
             message=message,
         )
 
-        send_message_to_conversation_response_404_data.additional_properties = d
+        send_message_to_conversation_response_404_data.additional_properties = src_dict
         return send_message_to_conversation_response_404_data
 
     @property

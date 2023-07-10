@@ -1,11 +1,12 @@
 from http import HTTPStatus
 from typing import Any, Dict, List, Optional, Union, cast
 import inspect
-import httpx
-import re
+import requests
 import json
+import re
 from ...types import Response, UNSET
 from ... import errors
+from sseclient import SSEClient
 
 {% for relative in endpoint.relative_imports %}
 {{ relative }}
@@ -37,6 +38,10 @@ def _get_kwargs(
     {{ json_body(endpoint) | indent(4) }}
 
     {{ multipart_body(endpoint) | indent(4) }}
+    {% if 'stream' in endpoint.query_parameters.keys()  %}
+    if stream:
+        headers['Accept'] = 'text/event-stream'
+    {% endif %}
 
     return {
         "method": "{{ endpoint.method }}",
@@ -44,7 +49,7 @@ def _get_kwargs(
         "headers": headers,
         "cookies": cookies,
         "timeout": client.get_timeout(),
-        "follow_redirects": client.follow_redirects,
+        "allow_redirects": client.follow_redirects,
         {% if endpoint.form_body %}
         "data": form_data.to_dict(),
         {% elif endpoint.multipart_body %}
@@ -55,15 +60,18 @@ def _get_kwargs(
         {% if endpoint.query_parameters %}
         "params": params,
         {% endif %}
+        {% if 'stream' in endpoint.query_parameters.keys()  %}
+        "stream": stream
+        {% endif %}
     }
 
 
-def _parse_response(*, client: {}, response: httpx.Response) -> Optional[{{ return_string }}]:
+def _parse_response(*, client: {}, response: None) -> Optional[{{ return_string }}]:
     {% for response in endpoint.responses %}
     if response.status_code == HTTPStatus.{{ response.status_code.name }}:
         {% if parsed_responses %}{% import "property_templates/" + response.prop.template as prop_template %}
         {% if prop_template.construct %}
-        {{ prop_template.construct(response.prop, response.source) | indent(8) }}
+        {{ prop_template.construct(response.prop, 'json.loads(response.text)') | indent(8)}}
         {% else %}
         {{ response.prop.python_name }} = cast({{ response.prop.get_type_string() }}, {{ response.source }})
         {% endif %}
@@ -78,14 +86,8 @@ def _parse_response(*, client: {}, response: httpx.Response) -> Optional[{{ retu
         return None
 
 
-def _build_response(*, client: {}, response: httpx.Response, content: Optional[bytes] = None) -> Response[{{ return_string }}]:
-    {% if 'stream' in endpoint.query_parameters.keys() %} 
-    caller_frame = inspect.currentframe().f_back
-    caller_method_name = caller_frame.f_code.co_name
-    parse = _parse_response(client=client, response=response) if not caller_method_name in ['stream_detailed', 'astream_detailed'] else None
-    {% else %}
+def _build_response(*, client: {}, response: None, content: Optional[bytes] = None) -> Response[{{ return_string }}]:
     parse = _parse_response(client=client, response=response)
-    {% endif %}
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content if content is None else content,
@@ -93,72 +95,30 @@ def _build_response(*, client: {}, response: httpx.Response, content: Optional[b
         parsed=parse,
     )
 
-{% if 'stream' in endpoint.query_parameters.keys() %}
-def stream_detailed(
-    {{ arguments(endpoint) | indent(4) }}
-) -> Response[{{ return_string }}]:
-    {{ docstring(endpoint, return_string, is_detailed=true) | indent(4) }}
-
-    kwargs = _get_kwargs(
-        {{ kwargs(endpoint) }}
-    )
-
-    response = httpx.request(**kwargs)
-    with httpx.stream(**kwargs) as response:
-        response_text = ""
-        for chunk in response.iter_text():
-            response_text += chunk
-
-        json_objects = re.findall(r"\{.*?\}", response_text)
-        for json_str in json_objects:
-            json_data = json.loads(json_str)
-            yield _build_response(client=client, response=response, content=json_data)
-
-async def astream_detailed({{ arguments(endpoint) | indent(4) }}):
-    kwargs = _get_kwargs(
-        {{ kwargs(endpoint) }}
-    )
-    async with httpx.AsyncClient() as client:
-        async with client.stream(**kwargs) as response:
-            response_text = ""
-            async for chunk in response.aiter_text():
-                response_text += chunk
-
-            json_objects = re.findall(r"\{.*?\}", response_text)
-            for json_str in json_objects:
-                json_data = json.loads(json_str)
-                yield _build_response(client=client, response=response, content=json_data)
-
-{% endif %}
-
 def sync_detailed(
     {{ arguments(endpoint) | indent(4) }}
 ):
-    {% if 'stream' in endpoint.query_parameters.keys() %}
+    {{ docstring(endpoint, return_string, is_detailed=true) | indent(4) }}
+    {% if 'stream' in endpoint.query_parameters.keys()  %}
+    kwargs = _get_kwargs(
+        {{ kwargs(endpoint) }}
+    )
+
+    response = requests.request(
+        **kwargs,
+    )
+
     if stream:
-        yield from stream_detailed({{ kwargs(endpoint) }})
+        return SSEClient(response)
     else:
-        {{ docstring(endpoint, return_string, is_detailed=true) | indent(4) }}
-
-        kwargs = _get_kwargs(
-            {{ kwargs(endpoint) }}
-        )
-
-        response = httpx.request(
-            verify=client.verify_ssl,
-            **kwargs,
-        )
-
         return _build_response(client=client, response=response)
     {% else %}
-    {{ docstring(endpoint, return_string, is_detailed=true) | indent(4) }}
 
     kwargs = _get_kwargs(
         {{ kwargs(endpoint) }}
     )
 
-    response = httpx.request(
-        verify=client.verify_ssl,
+    response = requests.request(
         **kwargs,
     )
 
@@ -179,36 +139,32 @@ def sync(
 async def asyncio_detailed(
     {{ arguments(endpoint) | indent(4) }}
 ) -> Response[{{ return_string }}]:
-    {% if 'stream' in endpoint.query_parameters.keys() %}
+    {% if 'stream' in endpoint.query_parameters.keys()  %}
+    kwargs = _get_kwargs(
+        {{ kwargs(endpoint) }}
+    )
+
+    response = requests.request(
+        **kwargs,
+    )
+
     if stream:
-        return astream_detailed({{ kwargs(endpoint) }})
+        return SSEClient(response)
     else:
-        {{ docstring(endpoint, return_string, is_detailed=true) | indent(4) }}
-
-        kwargs = _get_kwargs(
-            {{ kwargs(endpoint) }}
-        )
-
-        async with httpx.AsyncClient(verify=client.verify_ssl) as _client:
-            response = await _client.request(
-                **kwargs
-            )
-
         return _build_response(client=client, response=response)
     {% else %}
-    {{ docstring(endpoint, return_string, is_detailed=true) | indent(4) }}
 
     kwargs = _get_kwargs(
         {{ kwargs(endpoint) }}
     )
 
-    async with httpx.AsyncClient(verify=client.verify_ssl) as _client:
-        response = await _client.request(
-            **kwargs
-        )
+    response = requests.request(
+        **kwargs,
+    )
 
     return _build_response(client=client, response=response)
     {% endif %}
+
 {% if parsed_responses %}
 async def asyncio(
     {{ arguments(endpoint) | indent(4) }}

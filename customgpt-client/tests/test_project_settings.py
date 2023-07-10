@@ -1,11 +1,12 @@
 import pytest
 
 from customgpt_client import CustomGPT
+from tests.credentials import credentials
 
 
-def test_project_settings():
-    CustomGPT.base_url = "https://dev.customgpt.ai"
-    CustomGPT.api_key = ""
+def test_sync_project_settings():
+    CustomGPT.base_url, CustomGPT.api_key = credentials()
+
     CustomGPT.timeout = 10000
     response = CustomGPT.Project.create(
         project_name="test", sitemap_path="https://adorosario.github.io/small-sitemap.xml"
@@ -16,7 +17,7 @@ def test_project_settings():
         project_id=project_id,
         default_prompt="Hello World",
         example_questions=["Who are you?"],
-        response_source="test",
+        response_source="default",
         chatbot_msg_lang="ur",
     )
     assert response.status_code == 200
@@ -25,9 +26,9 @@ def test_project_settings():
 
 
 @pytest.mark.asyncio
-async def test_project_settings():
-    CustomGPT.base_url = "https://dev.customgpt.ai"
-    CustomGPT.api_key = ""
+async def test_async_project_settings():
+    CustomGPT.base_url, CustomGPT.api_key = credentials()
+
     CustomGPT.timeout = 10000
     response = await CustomGPT.Project.acreate(
         project_name="test", sitemap_path="https://adorosario.github.io/small-sitemap.xml"
@@ -35,7 +36,7 @@ async def test_project_settings():
     response_create = response.parsed
     project_id = response_create.data.id
     response = await CustomGPT.ProjectSettings.aupdate(
-        project_id=project_id, default_prompt="Hello World", example_questions=["Who are you?"], chatbot_msg_lang="ur"
+        project_id=project_id, default_prompt="Hello World", example_questions=["Who are you?"], chatbot_msg_lang="ur", response_source="default"
     )
     assert response.status_code == 200
     response = await CustomGPT.ProjectSettings.aget(project_id=project_id)

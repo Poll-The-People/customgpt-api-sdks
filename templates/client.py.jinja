@@ -16,6 +16,17 @@ from customgpt_client.models import {{endpoint.multipart_body.class_info.name}}
 {% endfor %}
 {% endfor %}
 
+def set_client():
+    api_key = CustomGPT.api_key
+    base_url = CustomGPT.base_url if hasattr(CustomGPT, 'base_url') else "https://app.customgpt.ai"
+    timeout = CustomGPT.timeout if hasattr(CustomGPT, 'timeout') else 100.0
+    return CustomGPT(api_key=api_key, base_url=base_url, timeout=timeout)
+def pluck_data(fields, kwargs):
+    json = {}
+    for field in fields:
+        if field in kwargs:
+            json[field] = kwargs.pop(field)
+    return json
 
 @attr.s(auto_attribs=True)
 class CustomGPT:
@@ -83,51 +94,30 @@ class CustomGPT:
     class {{class_name}}:
         {% for endpoint in collection.endpoints %}
         def {{ endpoint.name.split('_')[0] }}(*args: Any, **kwargs: Any):
-            api_key = CustomGPT.api_key
-            base_url = CustomGPT.base_url if hasattr(CustomGPT, 'base_url') else "https://app.customgpt.ai"
-            timeout = CustomGPT.timeout if hasattr(CustomGPT, 'timeout') else 100.0
-            client = CustomGPT(api_key=api_key, base_url=base_url, timeout=timeout)
+            client = set_client()
             {% if endpoint.json_body %}
-            json = {}
-            {% for property in endpoint.json_body.data.properties.keys() %}
-            if '{{property}}' in kwargs:
-                field = kwargs.pop('{{property}}')
-                json['{{property}}'] = field
-            {% endfor %}
+            fields = {{endpoint.json_body.data.properties.keys() | list}}
+            json = pluck_data(fields, kwargs)
             kwargs['json_body'] = {{endpoint.json_body.class_info.name}}(**json)
             {% endif %}
             {% if endpoint.multipart_body %}
-            json = {}
-            {% for property in endpoint.multipart_body.data.properties.keys() %}
-            if '{{property}}' in kwargs:
-                field = kwargs.pop('{{property}}')
-                json['{{property}}'] = field
-            {% endfor %}
+            fields = {{endpoint.multipart_body.data.properties.keys()| list}}
+            json = pluck_data(fields, kwargs)
             kwargs['multipart_data'] = {{endpoint.multipart_body.class_info.name}}(**json)
             {% endif %}
      
             return {{endpoint.name}}.sync_detailed(client=client, *args, **kwargs)
+
         def a{{ endpoint.name.split('_')[0]}}(*args: Any, **kwargs: Any):
-            api_key = CustomGPT.api_key
-            base_url = CustomGPT.base_url if hasattr(CustomGPT, 'base_url') else "https://app.customgpt.ai"
-            timeout = CustomGPT.timeout if hasattr(CustomGPT, 'timeout') else 100.0
-            client = CustomGPT(api_key=api_key, base_url=base_url, timeout=timeout)
+            client = set_client()
             {% if endpoint.json_body %}
-            json = {}
-            {% for property in endpoint.json_body.data.properties.keys() %}
-            if '{{property}}' in kwargs:
-                field = kwargs.pop('{{property}}')
-                json['{{property}}'] = field
-            {% endfor %}
+            fields = {{endpoint.json_body.data.properties.keys()| list}}
+            json = pluck_data(fields, kwargs)
             kwargs['json_body'] = {{endpoint.json_body.class_info.name}}(**json)
             {% endif %}
             {% if endpoint.multipart_body %}
-            json = {}
-            {% for property in endpoint.multipart_body.data.properties.keys() %}
-            if '{{property}}' in kwargs:
-                field = kwargs.pop('{{property}}')
-                json['{{property}}'] = field
-            {% endfor %}
+            fields = {{endpoint.multipart_body.data.properties.keys()| list}}
+            json = pluck_data(fields, kwargs)
             kwargs['multipart_data'] = {{endpoint.multipart_body.class_info.name}}(**json)
             {% endif %}
      

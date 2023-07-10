@@ -41,8 +41,13 @@ params: Dict[str, Any] = {}
 {{ prop_template.transform(property, property.python_name, destination) }}
     {% endif %}
     {%- if not property.json_is_dict %}
-params["{{ property.name }}"] = {{ destination }}
+    {% if property.name == 'stream'%}
+params["{{ property.name }}"] = 1 if stream else 0
     {% else %}
+params["{{ property.name }}"] = {{ destination }}
+    {% endif %}
+    {% else %}
+    }
 {{ guarded_statement(property, destination, "params.update(" + destination + ")") }}
     {% endif %}
 

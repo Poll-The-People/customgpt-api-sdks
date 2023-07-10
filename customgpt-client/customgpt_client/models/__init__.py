@@ -19,6 +19,23 @@ from .create_project_conversation_response_500_data import CreateProjectConversa
 from .create_project_conversation_response_500_data_code import CreateProjectConversationResponse500DataCode
 from .create_project_conversation_response_500_status import CreateProjectConversationResponse500Status
 from .create_project_multipart_data import CreateProjectMultipartData
+from .create_project_plugin_json_body import CreateProjectPluginJsonBody
+from .create_project_plugin_response_201 import CreateProjectPluginResponse201
+from .create_project_plugin_response_201_data import CreateProjectPluginResponse201Data
+from .create_project_plugin_response_201_status import CreateProjectPluginResponse201Status
+from .create_project_plugin_response_401 import CreateProjectPluginResponse401
+from .create_project_plugin_response_401_data import CreateProjectPluginResponse401Data
+from .create_project_plugin_response_401_data_code import CreateProjectPluginResponse401DataCode
+from .create_project_plugin_response_401_status import CreateProjectPluginResponse401Status
+from .create_project_plugin_response_404 import CreateProjectPluginResponse404
+from .create_project_plugin_response_404_data import CreateProjectPluginResponse404Data
+from .create_project_plugin_response_404_data_code import CreateProjectPluginResponse404DataCode
+from .create_project_plugin_response_404_data_message import CreateProjectPluginResponse404DataMessage
+from .create_project_plugin_response_404_status import CreateProjectPluginResponse404Status
+from .create_project_plugin_response_500 import CreateProjectPluginResponse500
+from .create_project_plugin_response_500_data import CreateProjectPluginResponse500Data
+from .create_project_plugin_response_500_data_code import CreateProjectPluginResponse500DataCode
+from .create_project_plugin_response_500_status import CreateProjectPluginResponse500Status
 from .create_project_response_201 import CreateProjectResponse201
 from .create_project_response_201_data import CreateProjectResponse201Data
 from .create_project_response_201_data_type import CreateProjectResponse201DataType
@@ -36,6 +53,37 @@ from .create_project_response_500 import CreateProjectResponse500
 from .create_project_response_500_data import CreateProjectResponse500Data
 from .create_project_response_500_data_code import CreateProjectResponse500DataCode
 from .create_project_response_500_status import CreateProjectResponse500Status
+from .create_project_source_multipart_data import CreateProjectSourceMultipartData
+from .create_project_source_response_201 import CreateProjectSourceResponse201
+from .create_project_source_response_201_data import CreateProjectSourceResponse201Data
+from .create_project_source_response_201_data_pages_item import CreateProjectSourceResponse201DataPagesItem
+from .create_project_source_response_201_data_pages_item_crawl_status import (
+    CreateProjectSourceResponse201DataPagesItemCrawlStatus,
+)
+from .create_project_source_response_201_data_pages_item_index_status import (
+    CreateProjectSourceResponse201DataPagesItemIndexStatus,
+)
+from .create_project_source_response_201_data_settings import CreateProjectSourceResponse201DataSettings
+from .create_project_source_response_201_data_type import CreateProjectSourceResponse201DataType
+from .create_project_source_response_201_status import CreateProjectSourceResponse201Status
+from .create_project_source_response_400 import CreateProjectSourceResponse400
+from .create_project_source_response_400_data import CreateProjectSourceResponse400Data
+from .create_project_source_response_400_data_code import CreateProjectSourceResponse400DataCode
+from .create_project_source_response_400_data_message import CreateProjectSourceResponse400DataMessage
+from .create_project_source_response_400_status import CreateProjectSourceResponse400Status
+from .create_project_source_response_401 import CreateProjectSourceResponse401
+from .create_project_source_response_401_data import CreateProjectSourceResponse401Data
+from .create_project_source_response_401_data_code import CreateProjectSourceResponse401DataCode
+from .create_project_source_response_401_status import CreateProjectSourceResponse401Status
+from .create_project_source_response_404 import CreateProjectSourceResponse404
+from .create_project_source_response_404_data import CreateProjectSourceResponse404Data
+from .create_project_source_response_404_data_code import CreateProjectSourceResponse404DataCode
+from .create_project_source_response_404_data_message import CreateProjectSourceResponse404DataMessage
+from .create_project_source_response_404_status import CreateProjectSourceResponse404Status
+from .create_project_source_response_500 import CreateProjectSourceResponse500
+from .create_project_source_response_500_data import CreateProjectSourceResponse500Data
+from .create_project_source_response_500_data_code import CreateProjectSourceResponse500DataCode
+from .create_project_source_response_500_status import CreateProjectSourceResponse500Status
 from .delete_project_conversation_response_200 import DeleteProjectConversationResponse200
 from .delete_project_conversation_response_200_data import DeleteProjectConversationResponse200Data
 from .delete_project_conversation_response_200_status import DeleteProjectConversationResponse200Status
@@ -84,6 +132,22 @@ from .delete_project_response_500 import DeleteProjectResponse500
 from .delete_project_response_500_data import DeleteProjectResponse500Data
 from .delete_project_response_500_data_code import DeleteProjectResponse500DataCode
 from .delete_project_response_500_status import DeleteProjectResponse500Status
+from .delete_project_source_response_200 import DeleteProjectSourceResponse200
+from .delete_project_source_response_200_data import DeleteProjectSourceResponse200Data
+from .delete_project_source_response_200_status import DeleteProjectSourceResponse200Status
+from .delete_project_source_response_401 import DeleteProjectSourceResponse401
+from .delete_project_source_response_401_data import DeleteProjectSourceResponse401Data
+from .delete_project_source_response_401_data_code import DeleteProjectSourceResponse401DataCode
+from .delete_project_source_response_401_status import DeleteProjectSourceResponse401Status
+from .delete_project_source_response_404 import DeleteProjectSourceResponse404
+from .delete_project_source_response_404_data import DeleteProjectSourceResponse404Data
+from .delete_project_source_response_404_data_code import DeleteProjectSourceResponse404DataCode
+from .delete_project_source_response_404_data_message import DeleteProjectSourceResponse404DataMessage
+from .delete_project_source_response_404_status import DeleteProjectSourceResponse404Status
+from .delete_project_source_response_500 import DeleteProjectSourceResponse500
+from .delete_project_source_response_500_data import DeleteProjectSourceResponse500Data
+from .delete_project_source_response_500_data_code import DeleteProjectSourceResponse500DataCode
+from .delete_project_source_response_500_status import DeleteProjectSourceResponse500Status
 from .get_open_graph_data_for_citation_response_200 import GetOpenGraphDataForCitationResponse200
 from .get_open_graph_data_for_citation_response_200_data import GetOpenGraphDataForCitationResponse200Data
 from .get_open_graph_data_for_citation_response_200_status import GetOpenGraphDataForCitationResponse200Status
@@ -102,7 +166,6 @@ from .get_project_conversations_order import GetProjectConversationsOrder
 from .get_project_conversations_response_200 import GetProjectConversationsResponse200
 from .get_project_conversations_response_200_data import GetProjectConversationsResponse200Data
 from .get_project_conversations_response_200_data_data_item import GetProjectConversationsResponse200DataDataItem
-from .get_project_conversations_response_200_data_links import GetProjectConversationsResponse200DataLinks
 from .get_project_conversations_response_200_status import GetProjectConversationsResponse200Status
 from .get_project_conversations_response_401 import GetProjectConversationsResponse401
 from .get_project_conversations_response_401_data import GetProjectConversationsResponse401Data
@@ -128,7 +191,6 @@ from .get_project_pages_response_200_data_pages_data_item_crawl_status import (
 from .get_project_pages_response_200_data_pages_data_item_index_status import (
     GetProjectPagesResponse200DataPagesDataItemIndexStatus,
 )
-from .get_project_pages_response_200_data_pages_links import GetProjectPagesResponse200DataPagesLinks
 from .get_project_pages_response_200_data_project import GetProjectPagesResponse200DataProject
 from .get_project_pages_response_200_data_project_type import GetProjectPagesResponse200DataProjectType
 from .get_project_pages_response_200_status import GetProjectPagesResponse200Status
@@ -145,6 +207,22 @@ from .get_project_pages_response_500 import GetProjectPagesResponse500
 from .get_project_pages_response_500_data import GetProjectPagesResponse500Data
 from .get_project_pages_response_500_data_code import GetProjectPagesResponse500DataCode
 from .get_project_pages_response_500_status import GetProjectPagesResponse500Status
+from .get_project_plugins_response_200 import GetProjectPluginsResponse200
+from .get_project_plugins_response_200_data import GetProjectPluginsResponse200Data
+from .get_project_plugins_response_200_status import GetProjectPluginsResponse200Status
+from .get_project_plugins_response_401 import GetProjectPluginsResponse401
+from .get_project_plugins_response_401_data import GetProjectPluginsResponse401Data
+from .get_project_plugins_response_401_data_code import GetProjectPluginsResponse401DataCode
+from .get_project_plugins_response_401_status import GetProjectPluginsResponse401Status
+from .get_project_plugins_response_404 import GetProjectPluginsResponse404
+from .get_project_plugins_response_404_data import GetProjectPluginsResponse404Data
+from .get_project_plugins_response_404_data_code import GetProjectPluginsResponse404DataCode
+from .get_project_plugins_response_404_data_message import GetProjectPluginsResponse404DataMessage
+from .get_project_plugins_response_404_status import GetProjectPluginsResponse404Status
+from .get_project_plugins_response_500 import GetProjectPluginsResponse500
+from .get_project_plugins_response_500_data import GetProjectPluginsResponse500Data
+from .get_project_plugins_response_500_data_code import GetProjectPluginsResponse500DataCode
+from .get_project_plugins_response_500_status import GetProjectPluginsResponse500Status
 from .get_project_response_200 import GetProjectResponse200
 from .get_project_response_200_data import GetProjectResponse200Data
 from .get_project_response_200_data_type import GetProjectResponse200DataType
@@ -190,12 +268,51 @@ from .get_user_profile_response_500 import GetUserProfileResponse500
 from .get_user_profile_response_500_data import GetUserProfileResponse500Data
 from .get_user_profile_response_500_data_code import GetUserProfileResponse500DataCode
 from .get_user_profile_response_500_status import GetUserProfileResponse500Status
+from .list_project_sources_response_200 import ListProjectSourcesResponse200
+from .list_project_sources_response_200_data import ListProjectSourcesResponse200Data
+from .list_project_sources_response_200_data_sitemaps_item import ListProjectSourcesResponse200DataSitemapsItem
+from .list_project_sources_response_200_data_sitemaps_item_pages_item import (
+    ListProjectSourcesResponse200DataSitemapsItemPagesItem,
+)
+from .list_project_sources_response_200_data_sitemaps_item_pages_item_crawl_status import (
+    ListProjectSourcesResponse200DataSitemapsItemPagesItemCrawlStatus,
+)
+from .list_project_sources_response_200_data_sitemaps_item_pages_item_index_status import (
+    ListProjectSourcesResponse200DataSitemapsItemPagesItemIndexStatus,
+)
+from .list_project_sources_response_200_data_sitemaps_item_settings import (
+    ListProjectSourcesResponse200DataSitemapsItemSettings,
+)
+from .list_project_sources_response_200_data_sitemaps_item_type import ListProjectSourcesResponse200DataSitemapsItemType
+from .list_project_sources_response_200_data_uploads import ListProjectSourcesResponse200DataUploads
+from .list_project_sources_response_200_data_uploads_pages_item import ListProjectSourcesResponse200DataUploadsPagesItem
+from .list_project_sources_response_200_data_uploads_pages_item_crawl_status import (
+    ListProjectSourcesResponse200DataUploadsPagesItemCrawlStatus,
+)
+from .list_project_sources_response_200_data_uploads_pages_item_index_status import (
+    ListProjectSourcesResponse200DataUploadsPagesItemIndexStatus,
+)
+from .list_project_sources_response_200_data_uploads_settings import ListProjectSourcesResponse200DataUploadsSettings
+from .list_project_sources_response_200_data_uploads_type import ListProjectSourcesResponse200DataUploadsType
+from .list_project_sources_response_200_status import ListProjectSourcesResponse200Status
+from .list_project_sources_response_401 import ListProjectSourcesResponse401
+from .list_project_sources_response_401_data import ListProjectSourcesResponse401Data
+from .list_project_sources_response_401_data_code import ListProjectSourcesResponse401DataCode
+from .list_project_sources_response_401_status import ListProjectSourcesResponse401Status
+from .list_project_sources_response_404 import ListProjectSourcesResponse404
+from .list_project_sources_response_404_data import ListProjectSourcesResponse404Data
+from .list_project_sources_response_404_data_code import ListProjectSourcesResponse404DataCode
+from .list_project_sources_response_404_data_message import ListProjectSourcesResponse404DataMessage
+from .list_project_sources_response_404_status import ListProjectSourcesResponse404Status
+from .list_project_sources_response_500 import ListProjectSourcesResponse500
+from .list_project_sources_response_500_data import ListProjectSourcesResponse500Data
+from .list_project_sources_response_500_data_code import ListProjectSourcesResponse500DataCode
+from .list_project_sources_response_500_status import ListProjectSourcesResponse500Status
 from .list_projects_order import ListProjectsOrder
 from .list_projects_response_200 import ListProjectsResponse200
 from .list_projects_response_200_data import ListProjectsResponse200Data
 from .list_projects_response_200_data_data_item import ListProjectsResponse200DataDataItem
 from .list_projects_response_200_data_data_item_type import ListProjectsResponse200DataDataItemType
-from .list_projects_response_200_data_links import ListProjectsResponse200DataLinks
 from .list_projects_response_200_status import ListProjectsResponse200Status
 from .list_projects_response_401 import ListProjectsResponse401
 from .list_projects_response_401_data import ListProjectsResponse401Data
@@ -207,10 +324,10 @@ from .list_projects_response_500_data_code import ListProjectsResponse500DataCod
 from .list_projects_response_500_status import ListProjectsResponse500Status
 from .messages_order import MessagesOrder
 from .messages_response_200 import MessagesResponse200
-from .messages_response_200_conversation import MessagesResponse200Conversation
-from .messages_response_200_messages import MessagesResponse200Messages
-from .messages_response_200_messages_data_item import MessagesResponse200MessagesDataItem
-from .messages_response_200_messages_links import MessagesResponse200MessagesLinks
+from .messages_response_200_data import MessagesResponse200Data
+from .messages_response_200_data_conversation import MessagesResponse200DataConversation
+from .messages_response_200_data_messages import MessagesResponse200DataMessages
+from .messages_response_200_data_messages_data_item import MessagesResponse200DataMessagesDataItem
 from .messages_response_200_status import MessagesResponse200Status
 from .messages_response_401 import MessagesResponse401
 from .messages_response_401_data import MessagesResponse401Data
@@ -246,6 +363,9 @@ from .project import Project
 from .project_plugin import ProjectPlugin
 from .project_settings import ProjectSettings
 from .project_settings_response_source import ProjectSettingsResponseSource
+from .project_source import ProjectSource
+from .project_source_settings import ProjectSourceSettings
+from .project_source_type import ProjectSourceType
 from .project_type import ProjectType
 from .prompt_history import PromptHistory
 from .send_message_to_conversation_json_body import SendMessageToConversationJsonBody
@@ -299,6 +419,23 @@ from .update_project_conversation_response_500_data import UpdateProjectConversa
 from .update_project_conversation_response_500_data_code import UpdateProjectConversationResponse500DataCode
 from .update_project_conversation_response_500_status import UpdateProjectConversationResponse500Status
 from .update_project_multipart_data import UpdateProjectMultipartData
+from .update_project_plugin_json_body import UpdateProjectPluginJsonBody
+from .update_project_plugin_response_200 import UpdateProjectPluginResponse200
+from .update_project_plugin_response_200_data import UpdateProjectPluginResponse200Data
+from .update_project_plugin_response_200_status import UpdateProjectPluginResponse200Status
+from .update_project_plugin_response_401 import UpdateProjectPluginResponse401
+from .update_project_plugin_response_401_data import UpdateProjectPluginResponse401Data
+from .update_project_plugin_response_401_data_code import UpdateProjectPluginResponse401DataCode
+from .update_project_plugin_response_401_status import UpdateProjectPluginResponse401Status
+from .update_project_plugin_response_404 import UpdateProjectPluginResponse404
+from .update_project_plugin_response_404_data import UpdateProjectPluginResponse404Data
+from .update_project_plugin_response_404_data_code import UpdateProjectPluginResponse404DataCode
+from .update_project_plugin_response_404_data_message import UpdateProjectPluginResponse404DataMessage
+from .update_project_plugin_response_404_status import UpdateProjectPluginResponse404Status
+from .update_project_plugin_response_500 import UpdateProjectPluginResponse500
+from .update_project_plugin_response_500_data import UpdateProjectPluginResponse500Data
+from .update_project_plugin_response_500_data_code import UpdateProjectPluginResponse500DataCode
+from .update_project_plugin_response_500_status import UpdateProjectPluginResponse500Status
 from .update_project_response_200 import UpdateProjectResponse200
 from .update_project_response_200_data import UpdateProjectResponse200Data
 from .update_project_response_200_data_type import UpdateProjectResponse200DataType
@@ -367,6 +504,23 @@ __all__ = (
     "CreateProjectConversationResponse500DataCode",
     "CreateProjectConversationResponse500Status",
     "CreateProjectMultipartData",
+    "CreateProjectPluginJsonBody",
+    "CreateProjectPluginResponse201",
+    "CreateProjectPluginResponse201Data",
+    "CreateProjectPluginResponse201Status",
+    "CreateProjectPluginResponse401",
+    "CreateProjectPluginResponse401Data",
+    "CreateProjectPluginResponse401DataCode",
+    "CreateProjectPluginResponse401Status",
+    "CreateProjectPluginResponse404",
+    "CreateProjectPluginResponse404Data",
+    "CreateProjectPluginResponse404DataCode",
+    "CreateProjectPluginResponse404DataMessage",
+    "CreateProjectPluginResponse404Status",
+    "CreateProjectPluginResponse500",
+    "CreateProjectPluginResponse500Data",
+    "CreateProjectPluginResponse500DataCode",
+    "CreateProjectPluginResponse500Status",
     "CreateProjectResponse201",
     "CreateProjectResponse201Data",
     "CreateProjectResponse201DataType",
@@ -384,6 +538,33 @@ __all__ = (
     "CreateProjectResponse500Data",
     "CreateProjectResponse500DataCode",
     "CreateProjectResponse500Status",
+    "CreateProjectSourceMultipartData",
+    "CreateProjectSourceResponse201",
+    "CreateProjectSourceResponse201Data",
+    "CreateProjectSourceResponse201DataPagesItem",
+    "CreateProjectSourceResponse201DataPagesItemCrawlStatus",
+    "CreateProjectSourceResponse201DataPagesItemIndexStatus",
+    "CreateProjectSourceResponse201DataSettings",
+    "CreateProjectSourceResponse201DataType",
+    "CreateProjectSourceResponse201Status",
+    "CreateProjectSourceResponse400",
+    "CreateProjectSourceResponse400Data",
+    "CreateProjectSourceResponse400DataCode",
+    "CreateProjectSourceResponse400DataMessage",
+    "CreateProjectSourceResponse400Status",
+    "CreateProjectSourceResponse401",
+    "CreateProjectSourceResponse401Data",
+    "CreateProjectSourceResponse401DataCode",
+    "CreateProjectSourceResponse401Status",
+    "CreateProjectSourceResponse404",
+    "CreateProjectSourceResponse404Data",
+    "CreateProjectSourceResponse404DataCode",
+    "CreateProjectSourceResponse404DataMessage",
+    "CreateProjectSourceResponse404Status",
+    "CreateProjectSourceResponse500",
+    "CreateProjectSourceResponse500Data",
+    "CreateProjectSourceResponse500DataCode",
+    "CreateProjectSourceResponse500Status",
     "DeleteProjectConversationResponse200",
     "DeleteProjectConversationResponse200Data",
     "DeleteProjectConversationResponse200Status",
@@ -432,6 +613,22 @@ __all__ = (
     "DeleteProjectResponse500Data",
     "DeleteProjectResponse500DataCode",
     "DeleteProjectResponse500Status",
+    "DeleteProjectSourceResponse200",
+    "DeleteProjectSourceResponse200Data",
+    "DeleteProjectSourceResponse200Status",
+    "DeleteProjectSourceResponse401",
+    "DeleteProjectSourceResponse401Data",
+    "DeleteProjectSourceResponse401DataCode",
+    "DeleteProjectSourceResponse401Status",
+    "DeleteProjectSourceResponse404",
+    "DeleteProjectSourceResponse404Data",
+    "DeleteProjectSourceResponse404DataCode",
+    "DeleteProjectSourceResponse404DataMessage",
+    "DeleteProjectSourceResponse404Status",
+    "DeleteProjectSourceResponse500",
+    "DeleteProjectSourceResponse500Data",
+    "DeleteProjectSourceResponse500DataCode",
+    "DeleteProjectSourceResponse500Status",
     "GetOpenGraphDataForCitationResponse200",
     "GetOpenGraphDataForCitationResponse200Data",
     "GetOpenGraphDataForCitationResponse200Status",
@@ -448,7 +645,6 @@ __all__ = (
     "GetProjectConversationsResponse200",
     "GetProjectConversationsResponse200Data",
     "GetProjectConversationsResponse200DataDataItem",
-    "GetProjectConversationsResponse200DataLinks",
     "GetProjectConversationsResponse200Status",
     "GetProjectConversationsResponse401",
     "GetProjectConversationsResponse401Data",
@@ -470,7 +666,6 @@ __all__ = (
     "GetProjectPagesResponse200DataPagesDataItem",
     "GetProjectPagesResponse200DataPagesDataItemCrawlStatus",
     "GetProjectPagesResponse200DataPagesDataItemIndexStatus",
-    "GetProjectPagesResponse200DataPagesLinks",
     "GetProjectPagesResponse200DataProject",
     "GetProjectPagesResponse200DataProjectType",
     "GetProjectPagesResponse200Status",
@@ -487,6 +682,22 @@ __all__ = (
     "GetProjectPagesResponse500Data",
     "GetProjectPagesResponse500DataCode",
     "GetProjectPagesResponse500Status",
+    "GetProjectPluginsResponse200",
+    "GetProjectPluginsResponse200Data",
+    "GetProjectPluginsResponse200Status",
+    "GetProjectPluginsResponse401",
+    "GetProjectPluginsResponse401Data",
+    "GetProjectPluginsResponse401DataCode",
+    "GetProjectPluginsResponse401Status",
+    "GetProjectPluginsResponse404",
+    "GetProjectPluginsResponse404Data",
+    "GetProjectPluginsResponse404DataCode",
+    "GetProjectPluginsResponse404DataMessage",
+    "GetProjectPluginsResponse404Status",
+    "GetProjectPluginsResponse500",
+    "GetProjectPluginsResponse500Data",
+    "GetProjectPluginsResponse500DataCode",
+    "GetProjectPluginsResponse500Status",
     "GetProjectResponse200",
     "GetProjectResponse200Data",
     "GetProjectResponse200DataType",
@@ -533,11 +744,38 @@ __all__ = (
     "GetUserProfileResponse500DataCode",
     "GetUserProfileResponse500Status",
     "ListProjectsOrder",
+    "ListProjectSourcesResponse200",
+    "ListProjectSourcesResponse200Data",
+    "ListProjectSourcesResponse200DataSitemapsItem",
+    "ListProjectSourcesResponse200DataSitemapsItemPagesItem",
+    "ListProjectSourcesResponse200DataSitemapsItemPagesItemCrawlStatus",
+    "ListProjectSourcesResponse200DataSitemapsItemPagesItemIndexStatus",
+    "ListProjectSourcesResponse200DataSitemapsItemSettings",
+    "ListProjectSourcesResponse200DataSitemapsItemType",
+    "ListProjectSourcesResponse200DataUploads",
+    "ListProjectSourcesResponse200DataUploadsPagesItem",
+    "ListProjectSourcesResponse200DataUploadsPagesItemCrawlStatus",
+    "ListProjectSourcesResponse200DataUploadsPagesItemIndexStatus",
+    "ListProjectSourcesResponse200DataUploadsSettings",
+    "ListProjectSourcesResponse200DataUploadsType",
+    "ListProjectSourcesResponse200Status",
+    "ListProjectSourcesResponse401",
+    "ListProjectSourcesResponse401Data",
+    "ListProjectSourcesResponse401DataCode",
+    "ListProjectSourcesResponse401Status",
+    "ListProjectSourcesResponse404",
+    "ListProjectSourcesResponse404Data",
+    "ListProjectSourcesResponse404DataCode",
+    "ListProjectSourcesResponse404DataMessage",
+    "ListProjectSourcesResponse404Status",
+    "ListProjectSourcesResponse500",
+    "ListProjectSourcesResponse500Data",
+    "ListProjectSourcesResponse500DataCode",
+    "ListProjectSourcesResponse500Status",
     "ListProjectsResponse200",
     "ListProjectsResponse200Data",
     "ListProjectsResponse200DataDataItem",
     "ListProjectsResponse200DataDataItemType",
-    "ListProjectsResponse200DataLinks",
     "ListProjectsResponse200Status",
     "ListProjectsResponse401",
     "ListProjectsResponse401Data",
@@ -549,10 +787,10 @@ __all__ = (
     "ListProjectsResponse500Status",
     "MessagesOrder",
     "MessagesResponse200",
-    "MessagesResponse200Conversation",
-    "MessagesResponse200Messages",
-    "MessagesResponse200MessagesDataItem",
-    "MessagesResponse200MessagesLinks",
+    "MessagesResponse200Data",
+    "MessagesResponse200DataConversation",
+    "MessagesResponse200DataMessages",
+    "MessagesResponse200DataMessagesDataItem",
     "MessagesResponse200Status",
     "MessagesResponse401",
     "MessagesResponse401Data",
@@ -588,6 +826,9 @@ __all__ = (
     "ProjectPlugin",
     "ProjectSettings",
     "ProjectSettingsResponseSource",
+    "ProjectSource",
+    "ProjectSourceSettings",
+    "ProjectSourceType",
     "ProjectType",
     "PromptHistory",
     "SendMessageToConversationJsonBody",
@@ -641,6 +882,23 @@ __all__ = (
     "UpdateProjectConversationResponse500DataCode",
     "UpdateProjectConversationResponse500Status",
     "UpdateProjectMultipartData",
+    "UpdateProjectPluginJsonBody",
+    "UpdateProjectPluginResponse200",
+    "UpdateProjectPluginResponse200Data",
+    "UpdateProjectPluginResponse200Status",
+    "UpdateProjectPluginResponse401",
+    "UpdateProjectPluginResponse401Data",
+    "UpdateProjectPluginResponse401DataCode",
+    "UpdateProjectPluginResponse401Status",
+    "UpdateProjectPluginResponse404",
+    "UpdateProjectPluginResponse404Data",
+    "UpdateProjectPluginResponse404DataCode",
+    "UpdateProjectPluginResponse404DataMessage",
+    "UpdateProjectPluginResponse404Status",
+    "UpdateProjectPluginResponse500",
+    "UpdateProjectPluginResponse500Data",
+    "UpdateProjectPluginResponse500DataCode",
+    "UpdateProjectPluginResponse500Status",
     "UpdateProjectResponse200",
     "UpdateProjectResponse200Data",
     "UpdateProjectResponse200DataType",

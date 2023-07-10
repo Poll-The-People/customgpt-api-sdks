@@ -55,18 +55,17 @@ class StatsProjectResponse200Data:
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        d = src_dict.copy()
-        pages_found = d.pop("pages_found", UNSET)
+        pages_found = src_dict.get("pages_found")
 
-        pages_crawled = d.pop("pages_crawled", UNSET)
+        pages_crawled = src_dict.get("pages_crawled")
 
-        pages_indexed = d.pop("pages_indexed", UNSET)
+        pages_indexed = src_dict.get("pages_indexed")
 
-        crawl_credits_used = d.pop("crawl_credits_used", UNSET)
+        crawl_credits_used = src_dict.get("crawl_credits_used")
 
-        query_credits_used = d.pop("query_credits_used", UNSET)
+        query_credits_used = src_dict.get("query_credits_used")
 
-        index_credits_used = d.pop("index_credits_used", UNSET)
+        index_credits_used = src_dict.get("index_credits_used")
 
         stats_project_response_200_data = cls(
             pages_found=pages_found,
@@ -77,7 +76,7 @@ class StatsProjectResponse200Data:
             index_credits_used=index_credits_used,
         )
 
-        stats_project_response_200_data.additional_properties = d
+        stats_project_response_200_data.additional_properties = src_dict
         return stats_project_response_200_data
 
     @property

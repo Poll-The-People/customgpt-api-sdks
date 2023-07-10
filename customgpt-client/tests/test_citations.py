@@ -3,11 +3,12 @@ import time
 import pytest
 
 from customgpt_client import CustomGPT
+from tests.credentials import credentials
 
 
-def test_citations():
-    CustomGPT.base_url = "https://dev.customgpt.ai"
-    CustomGPT.api_key = ""
+def test_sync_citations():
+    CustomGPT.base_url, CustomGPT.api_key = credentials()
+
     CustomGPT.timeout = 10000
     response = CustomGPT.Project.create(
         project_name="test", sitemap_path="https://adorosario.github.io/small-sitemap.xml"
@@ -40,9 +41,9 @@ def test_citations():
 
 
 @pytest.mark.asyncio
-async def test_citations():
-    CustomGPT.base_url = "https://dev.customgpt.ai"
-    CustomGPT.api_key = ""
+async def test_async_citations():
+    CustomGPT.base_url, CustomGPT.api_key = credentials()
+
     CustomGPT.timeout = 10000
     response = await CustomGPT.Project.acreate(
         project_name="test", sitemap_path="https://adorosario.github.io/small-sitemap.xml"
@@ -65,7 +66,7 @@ async def test_citations():
         time.sleep(5)
 
     assert json_project.data.is_chat_active == 1
-    response = await CustomGPT.Conversation.asend(
+    response = CustomGPT.Conversation.send(
         project_id=project_id, session_id=session_id, prompt="Who is Tom? I need a short answer in 10 words."
     )
     citation_id = response.parsed.data.citations[0]

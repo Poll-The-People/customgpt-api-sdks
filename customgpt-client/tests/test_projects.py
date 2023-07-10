@@ -1,16 +1,17 @@
 import pytest
 
 from customgpt_client import CustomGPT
+from tests.credentials import credentials
 
 
-def test_projects():
-    CustomGPT.base_url = "https://dev.customgpt.ai"
-    CustomGPT.api_key = ""
-    CustomGPT.timeout = 10000
+def test_sync_projects():
+    CustomGPT.base_url, CustomGPT.api_key = credentials()
+
     response = CustomGPT.Project.create(
         project_name="test", sitemap_path="https://adorosario.github.io/small-sitemap.xml"
     )
     response_create = response.parsed
+    print(response.content)
     assert response_create.data.project_name == "test"
     assert response.status_code == 201
 
@@ -33,7 +34,6 @@ def test_projects():
     response = CustomGPT.Project.stats(project_id=response_create.data.id)
     response_stats = response.parsed
     assert response.status_code == 200
-    print(response_stats.to_dict())
     assert set(list(response_stats.data.to_dict().keys())) == set(
         [
             "pages_found",
@@ -43,6 +43,7 @@ def test_projects():
             "query_credits_used",
             "total_queries",
             "total_words_indexed",
+            "index_credits_used",
         ]
     )
     response = CustomGPT.Project.list()
@@ -54,10 +55,9 @@ def test_projects():
 
 
 @pytest.mark.asyncio
-async def test_projects():
-    CustomGPT.base_url = "https://dev.customgpt.ai"
-    CustomGPT.api_key = ""
-    CustomGPT.timeout = 10000
+async def test_async_projects():
+    CustomGPT.base_url, CustomGPT.api_key = credentials()
+
     response = await CustomGPT.Project.acreate(
         project_name="test", sitemap_path="https://adorosario.github.io/small-sitemap.xml"
     )
@@ -94,6 +94,7 @@ async def test_projects():
             "query_credits_used",
             "total_queries",
             "total_words_indexed",
+            "index_credits_used",
         ]
     )
     response = await CustomGPT.Project.alist()

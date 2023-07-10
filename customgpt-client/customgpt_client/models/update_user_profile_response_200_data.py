@@ -63,23 +63,22 @@ class UpdateUserProfileResponse200Data:
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        d = src_dict.copy()
-        _created_at = d.pop("created_at", UNSET)
+        _created_at = src_dict.get("created_at")
         created_at: Union[Unset, datetime.datetime]
         if isinstance(_created_at, Unset):
             created_at = UNSET
         else:
             created_at = isoparse(_created_at)
 
-        email = d.pop("email", UNSET)
+        email = src_dict.get("email")
 
-        id = d.pop("id", UNSET)
+        id = src_dict.get("id")
 
-        name = d.pop("name", UNSET)
+        name = src_dict.get("name")
 
-        profile_photo_url = d.pop("profile_photo_url", UNSET)
+        profile_photo_url = src_dict.get("profile_photo_url")
 
-        _updated_at = d.pop("updated_at", UNSET)
+        _updated_at = src_dict.get("updated_at")
         updated_at: Union[Unset, datetime.datetime]
         if isinstance(_updated_at, Unset):
             updated_at = UNSET
@@ -95,7 +94,7 @@ class UpdateUserProfileResponse200Data:
             updated_at=updated_at,
         )
 
-        update_user_profile_response_200_data.additional_properties = d
+        update_user_profile_response_200_data.additional_properties = src_dict
         return update_user_profile_response_200_data
 
     @property

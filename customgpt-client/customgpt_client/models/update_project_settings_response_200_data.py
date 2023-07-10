@@ -30,14 +30,13 @@ class UpdateProjectSettingsResponse200Data:
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        d = src_dict.copy()
-        updated = d.pop("updated", UNSET)
+        updated = src_dict.get("updated")
 
         update_project_settings_response_200_data = cls(
             updated=updated,
         )
 
-        update_project_settings_response_200_data.additional_properties = d
+        update_project_settings_response_200_data.additional_properties = src_dict
         return update_project_settings_response_200_data
 
     @property

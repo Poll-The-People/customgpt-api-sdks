@@ -1,11 +1,11 @@
 import pytest
 
 from customgpt_client import CustomGPT
+from tests.credentials import credentials
 
 
-def test_pages():
-    CustomGPT.base_url = "https://dev.customgpt.ai"
-    CustomGPT.api_key = ""
+def test_sync_pages():
+    CustomGPT.base_url, CustomGPT.api_key = credentials()
     CustomGPT.timeout = 10000
     response = CustomGPT.Project.create(
         project_name="test", sitemap_path="https://adorosario.github.io/small-sitemap.xml"
@@ -15,7 +15,6 @@ def test_pages():
     response = CustomGPT.Page.get(project_id=project_id)
     assert response.status_code == 200
     response_page = response.parsed
-    print(response_page.data.pages.data)
     page_id = response_page.data.pages.data[0].id
     assert response.status_code == 200
     response = CustomGPT.Page.delete(project_id=project_id, page_id=page_id)
@@ -23,9 +22,9 @@ def test_pages():
 
 
 @pytest.mark.asyncio
-async def test_pages():
-    CustomGPT.base_url = "https://dev.customgpt.ai"
-    CustomGPT.api_key = ""
+async def test_async_pages():
+    CustomGPT.base_url, CustomGPT.api_key = credentials()
+
     CustomGPT.timeout = 10000
     response = await CustomGPT.Project.acreate(
         project_name="test", sitemap_path="https://adorosario.github.io/small-sitemap.xml"

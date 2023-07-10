@@ -52,17 +52,16 @@ class UpdateUserProfileResponse401:
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         from ..models.update_user_profile_response_401_data import UpdateUserProfileResponse401Data
 
-        d = src_dict.copy()
-        _status = d.pop("status", UNSET)
+        _status = src_dict.get("status")
         status: Union[Unset, UpdateUserProfileResponse401Status]
         if isinstance(_status, Unset):
             status = UNSET
         else:
             status = UpdateUserProfileResponse401Status(_status)
 
-        url = d.pop("url", UNSET)
+        url = src_dict.get("url")
 
-        _data = d.pop("data", UNSET)
+        _data = src_dict.get("data")
         data: Union[Unset, UpdateUserProfileResponse401Data]
         if isinstance(_data, Unset):
             data = UNSET
@@ -75,7 +74,7 @@ class UpdateUserProfileResponse401:
             data=data,
         )
 
-        update_user_profile_response_401.additional_properties = d
+        update_user_profile_response_401.additional_properties = src_dict
         return update_user_profile_response_401
 
     @property

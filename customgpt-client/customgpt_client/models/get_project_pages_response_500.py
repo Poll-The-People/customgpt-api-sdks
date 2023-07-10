@@ -52,17 +52,16 @@ class GetProjectPagesResponse500:
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         from ..models.get_project_pages_response_500_data import GetProjectPagesResponse500Data
 
-        d = src_dict.copy()
-        _status = d.pop("status", UNSET)
+        _status = src_dict.get("status")
         status: Union[Unset, GetProjectPagesResponse500Status]
         if isinstance(_status, Unset):
             status = UNSET
         else:
             status = GetProjectPagesResponse500Status(_status)
 
-        url = d.pop("url", UNSET)
+        url = src_dict.get("url")
 
-        _data = d.pop("data", UNSET)
+        _data = src_dict.get("data")
         data: Union[Unset, GetProjectPagesResponse500Data]
         if isinstance(_data, Unset):
             data = UNSET
@@ -75,7 +74,7 @@ class GetProjectPagesResponse500:
             data=data,
         )
 
-        get_project_pages_response_500.additional_properties = d
+        get_project_pages_response_500.additional_properties = src_dict
         return get_project_pages_response_500
 
     @property

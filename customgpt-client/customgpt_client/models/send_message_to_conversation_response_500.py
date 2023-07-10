@@ -52,17 +52,16 @@ class SendMessageToConversationResponse500:
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         from ..models.send_message_to_conversation_response_500_data import SendMessageToConversationResponse500Data
 
-        d = src_dict.copy()
-        _status = d.pop("status", UNSET)
+        _status = src_dict.get("status")
         status: Union[Unset, SendMessageToConversationResponse500Status]
         if isinstance(_status, Unset):
             status = UNSET
         else:
             status = SendMessageToConversationResponse500Status(_status)
 
-        url = d.pop("url", UNSET)
+        url = src_dict.get("url")
 
-        _data = d.pop("data", UNSET)
+        _data = src_dict.get("data")
         data: Union[Unset, SendMessageToConversationResponse500Data]
         if isinstance(_data, Unset):
             data = UNSET
@@ -75,7 +74,7 @@ class SendMessageToConversationResponse500:
             data=data,
         )
 
-        send_message_to_conversation_response_500.additional_properties = d
+        send_message_to_conversation_response_500.additional_properties = src_dict
         return send_message_to_conversation_response_500
 
     @property

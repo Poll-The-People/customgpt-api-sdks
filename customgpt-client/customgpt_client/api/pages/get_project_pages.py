@@ -1,7 +1,8 @@
+import json
 from http import HTTPStatus
 from typing import Any, Dict, Optional, Union
 
-import httpx
+import requests
 
 from ... import errors
 from ...models.get_project_pages_order import GetProjectPagesOrder
@@ -44,32 +45,32 @@ def _get_kwargs(
         "headers": headers,
         "cookies": cookies,
         "timeout": client.get_timeout(),
-        "follow_redirects": client.follow_redirects,
+        "allow_redirects": client.follow_redirects,
         "params": params,
     }
 
 
 def _parse_response(
-    *, client: {}, response: httpx.Response
+    *, client: {}, response: None
 ) -> Optional[
     Union[
         GetProjectPagesResponse200, GetProjectPagesResponse401, GetProjectPagesResponse404, GetProjectPagesResponse500
     ]
 ]:
     if response.status_code == HTTPStatus.OK:
-        response_200 = GetProjectPagesResponse200.from_dict(response.json())
+        response_200 = GetProjectPagesResponse200.from_dict(json.loads(response.text))
 
         return response_200
     if response.status_code == HTTPStatus.UNAUTHORIZED:
-        response_401 = GetProjectPagesResponse401.from_dict(response.json())
+        response_401 = GetProjectPagesResponse401.from_dict(json.loads(response.text))
 
         return response_401
     if response.status_code == HTTPStatus.NOT_FOUND:
-        response_404 = GetProjectPagesResponse404.from_dict(response.json())
+        response_404 = GetProjectPagesResponse404.from_dict(json.loads(response.text))
 
         return response_404
     if response.status_code == HTTPStatus.INTERNAL_SERVER_ERROR:
-        response_500 = GetProjectPagesResponse500.from_dict(response.json())
+        response_500 = GetProjectPagesResponse500.from_dict(json.loads(response.text))
 
         return response_500
     if client.raise_on_unexpected_status:
@@ -79,7 +80,7 @@ def _parse_response(
 
 
 def _build_response(
-    *, client: {}, response: httpx.Response, content: Optional[bytes] = None
+    *, client: {}, response: None, content: Optional[bytes] = None
 ) -> Response[
     Union[
         GetProjectPagesResponse200, GetProjectPagesResponse401, GetProjectPagesResponse404, GetProjectPagesResponse500
@@ -128,8 +129,7 @@ def sync_detailed(
         order=order,
     )
 
-    response = httpx.request(
-        verify=client.verify_ssl,
+    response = requests.request(
         **kwargs,
     )
 
@@ -187,24 +187,6 @@ async def asyncio_detailed(
         GetProjectPagesResponse200, GetProjectPagesResponse401, GetProjectPagesResponse404, GetProjectPagesResponse500
     ]
 ]:
-    """List all pages that belong to a project.
-
-     Get a list of all pages that belong to a project.
-
-    Args:
-        project_id (int):  Example: 1.
-        page (Union[Unset, None, int]):  Default: 1.
-        duration (Union[Unset, None, int]):  Default: 90.
-        order (Union[Unset, None, GetProjectPagesOrder]):  Default: GetProjectPagesOrder.DESC.
-
-    Raises:
-        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
-        httpx.TimeoutException: If the request takes longer than Client.timeout.
-
-    Returns:
-        Response[Union[GetProjectPagesResponse200, GetProjectPagesResponse401, GetProjectPagesResponse404, GetProjectPagesResponse500]]
-    """
-
     kwargs = _get_kwargs(
         project_id=project_id,
         client=client,
@@ -213,8 +195,9 @@ async def asyncio_detailed(
         order=order,
     )
 
-    async with httpx.AsyncClient(verify=client.verify_ssl) as _client:
-        response = await _client.request(**kwargs)
+    response = requests.request(
+        **kwargs,
+    )
 
     return _build_response(client=client, response=response)
 

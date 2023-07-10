@@ -6,7 +6,6 @@ from ..types import UNSET, Unset
 
 if TYPE_CHECKING:
     from ..models.list_projects_response_200_data_data_item import ListProjectsResponse200DataDataItem
-    from ..models.list_projects_response_200_data_links import ListProjectsResponse200DataLinks
 
 
 T = TypeVar("T", bound="ListProjectsResponse200Data")
@@ -22,7 +21,6 @@ class ListProjectsResponse200Data:
         from_ (Union[Unset, int]): The first item number of the current page Example: 1.
         last_page (Union[Unset, int]): The last page number Example: 1.
         last_page_url (Union[Unset, str]): The last page url Example: https://app.customgpt.ai/api/v1/users?page=1.
-        links (Union[Unset, ListProjectsResponse200DataLinks]):
         next_page_url (Union[Unset, str]): The next page url Example: https://app.customgpt.ai/api/v1/users?page=1.
         path (Union[Unset, str]): The current page url Example: https://app.customgpt.ai/api/v1/users?page=1.
         per_page (Union[Unset, int]): The number of items per page Example: 10.
@@ -37,7 +35,6 @@ class ListProjectsResponse200Data:
     from_: Union[Unset, int] = UNSET
     last_page: Union[Unset, int] = UNSET
     last_page_url: Union[Unset, str] = UNSET
-    links: Union[Unset, "ListProjectsResponse200DataLinks"] = UNSET
     next_page_url: Union[Unset, str] = UNSET
     path: Union[Unset, str] = UNSET
     per_page: Union[Unset, int] = UNSET
@@ -60,10 +57,6 @@ class ListProjectsResponse200Data:
         from_ = self.from_
         last_page = self.last_page
         last_page_url = self.last_page_url
-        links: Union[Unset, Dict[str, Any]] = UNSET
-        if not isinstance(self.links, Unset):
-            links = self.links.to_dict()
-
         next_page_url = self.next_page_url
         path = self.path
         per_page = self.per_page
@@ -87,8 +80,6 @@ class ListProjectsResponse200Data:
             field_dict["last_page"] = last_page
         if last_page_url is not UNSET:
             field_dict["last_page_url"] = last_page_url
-        if links is not UNSET:
-            field_dict["links"] = links
         if next_page_url is not UNSET:
             field_dict["next_page_url"] = next_page_url
         if path is not UNSET:
@@ -107,44 +98,35 @@ class ListProjectsResponse200Data:
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         from ..models.list_projects_response_200_data_data_item import ListProjectsResponse200DataDataItem
-        from ..models.list_projects_response_200_data_links import ListProjectsResponse200DataLinks
 
-        d = src_dict.copy()
-        current_page = d.pop("current_page", UNSET)
+        current_page = src_dict.get("current_page")
 
         data = []
-        _data = d.pop("data", UNSET)
+        _data = src_dict.get("data")
         for data_item_data in _data or []:
             data_item = ListProjectsResponse200DataDataItem.from_dict(data_item_data)
 
             data.append(data_item)
 
-        first_page_url = d.pop("first_page_url", UNSET)
+        first_page_url = src_dict.get("first_page_url")
 
-        from_ = d.pop("from", UNSET)
+        from_ = src_dict.get("from")
 
-        last_page = d.pop("last_page", UNSET)
+        last_page = src_dict.get("last_page")
 
-        last_page_url = d.pop("last_page_url", UNSET)
+        last_page_url = src_dict.get("last_page_url")
 
-        _links = d.pop("links", UNSET)
-        links: Union[Unset, ListProjectsResponse200DataLinks]
-        if isinstance(_links, Unset):
-            links = UNSET
-        else:
-            links = ListProjectsResponse200DataLinks.from_dict(_links)
+        next_page_url = src_dict.get("next_page_url")
 
-        next_page_url = d.pop("next_page_url", UNSET)
+        path = src_dict.get("path")
 
-        path = d.pop("path", UNSET)
+        per_page = src_dict.get("per_page")
 
-        per_page = d.pop("per_page", UNSET)
+        prev_page_url = src_dict.get("prev_page_url")
 
-        prev_page_url = d.pop("prev_page_url", UNSET)
+        to = src_dict.get("to")
 
-        to = d.pop("to", UNSET)
-
-        total = d.pop("total", UNSET)
+        total = src_dict.get("total")
 
         list_projects_response_200_data = cls(
             current_page=current_page,
@@ -153,7 +135,6 @@ class ListProjectsResponse200Data:
             from_=from_,
             last_page=last_page,
             last_page_url=last_page_url,
-            links=links,
             next_page_url=next_page_url,
             path=path,
             per_page=per_page,
@@ -162,7 +143,7 @@ class ListProjectsResponse200Data:
             total=total,
         )
 
-        list_projects_response_200_data.additional_properties = d
+        list_projects_response_200_data.additional_properties = src_dict
         return list_projects_response_200_data
 
     @property

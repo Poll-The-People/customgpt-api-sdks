@@ -1,7 +1,8 @@
+import json
 from http import HTTPStatus
 from typing import Any, Dict, Optional, Union
 
-import httpx
+import requests
 
 from ... import errors
 from ...models.delete_project_response_200 import DeleteProjectResponse200
@@ -27,29 +28,29 @@ def _get_kwargs(
         "headers": headers,
         "cookies": cookies,
         "timeout": client.get_timeout(),
-        "follow_redirects": client.follow_redirects,
+        "allow_redirects": client.follow_redirects,
     }
 
 
 def _parse_response(
-    *, client: {}, response: httpx.Response
+    *, client: {}, response: None
 ) -> Optional[
     Union[DeleteProjectResponse200, DeleteProjectResponse401, DeleteProjectResponse404, DeleteProjectResponse500]
 ]:
     if response.status_code == HTTPStatus.OK:
-        response_200 = DeleteProjectResponse200.from_dict(response.json())
+        response_200 = DeleteProjectResponse200.from_dict(json.loads(response.text))
 
         return response_200
     if response.status_code == HTTPStatus.UNAUTHORIZED:
-        response_401 = DeleteProjectResponse401.from_dict(response.json())
+        response_401 = DeleteProjectResponse401.from_dict(json.loads(response.text))
 
         return response_401
     if response.status_code == HTTPStatus.NOT_FOUND:
-        response_404 = DeleteProjectResponse404.from_dict(response.json())
+        response_404 = DeleteProjectResponse404.from_dict(json.loads(response.text))
 
         return response_404
     if response.status_code == HTTPStatus.INTERNAL_SERVER_ERROR:
-        response_500 = DeleteProjectResponse500.from_dict(response.json())
+        response_500 = DeleteProjectResponse500.from_dict(json.loads(response.text))
 
         return response_500
     if client.raise_on_unexpected_status:
@@ -59,7 +60,7 @@ def _parse_response(
 
 
 def _build_response(
-    *, client: {}, response: httpx.Response, content: Optional[bytes] = None
+    *, client: {}, response: None, content: Optional[bytes] = None
 ) -> Response[
     Union[DeleteProjectResponse200, DeleteProjectResponse401, DeleteProjectResponse404, DeleteProjectResponse500]
 ]:
@@ -97,8 +98,7 @@ def sync_detailed(
         client=client,
     )
 
-    response = httpx.request(
-        verify=client.verify_ssl,
+    response = requests.request(
         **kwargs,
     )
 
@@ -140,28 +140,14 @@ async def asyncio_detailed(
 ) -> Response[
     Union[DeleteProjectResponse200, DeleteProjectResponse401, DeleteProjectResponse404, DeleteProjectResponse500]
 ]:
-    """Delete a certain project.
-
-     Delete an existing project by project ID.
-
-    Args:
-        project_id (int):
-
-    Raises:
-        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
-        httpx.TimeoutException: If the request takes longer than Client.timeout.
-
-    Returns:
-        Response[Union[DeleteProjectResponse200, DeleteProjectResponse401, DeleteProjectResponse404, DeleteProjectResponse500]]
-    """
-
     kwargs = _get_kwargs(
         project_id=project_id,
         client=client,
     )
 
-    async with httpx.AsyncClient(verify=client.verify_ssl) as _client:
-        response = await _client.request(**kwargs)
+    response = requests.request(
+        **kwargs,
+    )
 
     return _build_response(client=client, response=response)
 

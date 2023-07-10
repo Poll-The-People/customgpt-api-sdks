@@ -79,32 +79,31 @@ class PromptHistory:
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        d = src_dict.copy()
-        id = d.pop("id", UNSET)
+        id = src_dict.get("id")
 
-        user_id = d.pop("user_id", UNSET)
+        user_id = src_dict.get("user_id")
 
-        user_query = d.pop("user_query", UNSET)
+        user_query = src_dict.get("user_query")
 
-        openai_response = d.pop("openai_response", UNSET)
+        openai_response = src_dict.get("openai_response")
 
-        _created_at = d.pop("created_at", UNSET)
+        _created_at = src_dict.get("created_at")
         created_at: Union[Unset, datetime.datetime]
         if isinstance(_created_at, Unset):
             created_at = UNSET
         else:
             created_at = isoparse(_created_at)
 
-        _updated_at = d.pop("updated_at", UNSET)
+        _updated_at = src_dict.get("updated_at")
         updated_at: Union[Unset, datetime.datetime]
         if isinstance(_updated_at, Unset):
             updated_at = UNSET
         else:
             updated_at = isoparse(_updated_at)
 
-        conversation_id = d.pop("conversation_id", UNSET)
+        conversation_id = src_dict.get("conversation_id")
 
-        citations = cast(List[int], d.pop("citations", UNSET))
+        citations = cast(List[int], src_dict.get("citations"))
 
         prompt_history = cls(
             id=id,
@@ -117,7 +116,7 @@ class PromptHistory:
             citations=citations,
         )
 
-        prompt_history.additional_properties = d
+        prompt_history.additional_properties = src_dict
         return prompt_history
 
     @property

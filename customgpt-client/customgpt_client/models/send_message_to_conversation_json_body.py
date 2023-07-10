@@ -30,14 +30,13 @@ class SendMessageToConversationJsonBody:
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        d = src_dict.copy()
-        prompt = d.pop("prompt", UNSET)
+        prompt = src_dict.get("prompt")
 
         send_message_to_conversation_json_body = cls(
             prompt=prompt,
         )
 
-        send_message_to_conversation_json_body.additional_properties = d
+        send_message_to_conversation_json_body.additional_properties = src_dict
         return send_message_to_conversation_json_body
 
     @property

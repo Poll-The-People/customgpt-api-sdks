@@ -58,22 +58,21 @@ class UpdateUserProfileMultipartData:
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        d = src_dict.copy()
-        _profile_photo = d.pop("profile_photo", UNSET)
+        _profile_photo = src_dict.get("profile_photo")
         profile_photo: Union[Unset, File]
         if isinstance(_profile_photo, Unset):
             profile_photo = UNSET
         else:
             profile_photo = File(payload=BytesIO(_profile_photo))
 
-        name = d.pop("name", UNSET)
+        name = src_dict.get("name")
 
         update_user_profile_multipart_data = cls(
             profile_photo=profile_photo,
             name=name,
         )
 
-        update_user_profile_multipart_data.additional_properties = d
+        update_user_profile_multipart_data.additional_properties = src_dict
         return update_user_profile_multipart_data
 
     @property

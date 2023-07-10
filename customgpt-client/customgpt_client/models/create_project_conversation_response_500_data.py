@@ -39,22 +39,21 @@ class CreateProjectConversationResponse500Data:
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        d = src_dict.copy()
-        _code = d.pop("code", UNSET)
+        _code = src_dict.get("code")
         code: Union[Unset, CreateProjectConversationResponse500DataCode]
         if isinstance(_code, Unset):
             code = UNSET
         else:
             code = CreateProjectConversationResponse500DataCode(_code)
 
-        message = d.pop("message", UNSET)
+        message = src_dict.get("message")
 
         create_project_conversation_response_500_data = cls(
             code=code,
             message=message,
         )
 
-        create_project_conversation_response_500_data.additional_properties = d
+        create_project_conversation_response_500_data.additional_properties = src_dict
         return create_project_conversation_response_500_data
 
     @property

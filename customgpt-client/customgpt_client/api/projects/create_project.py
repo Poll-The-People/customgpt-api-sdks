@@ -1,7 +1,8 @@
+import json
 from http import HTTPStatus
 from typing import Any, Dict, Optional, Union
 
-import httpx
+import requests
 
 from ... import errors
 from ...models.create_project_multipart_data import CreateProjectMultipartData
@@ -30,30 +31,30 @@ def _get_kwargs(
         "headers": headers,
         "cookies": cookies,
         "timeout": client.get_timeout(),
-        "follow_redirects": client.follow_redirects,
+        "allow_redirects": client.follow_redirects,
         "files": multipart_multipart_data,
     }
 
 
 def _parse_response(
-    *, client: {}, response: httpx.Response
+    *, client: {}, response: None
 ) -> Optional[
     Union[CreateProjectResponse201, CreateProjectResponse400, CreateProjectResponse401, CreateProjectResponse500]
 ]:
     if response.status_code == HTTPStatus.CREATED:
-        response_201 = CreateProjectResponse201.from_dict(response.json())
+        response_201 = CreateProjectResponse201.from_dict(json.loads(response.text))
 
         return response_201
     if response.status_code == HTTPStatus.BAD_REQUEST:
-        response_400 = CreateProjectResponse400.from_dict(response.json())
+        response_400 = CreateProjectResponse400.from_dict(json.loads(response.text))
 
         return response_400
     if response.status_code == HTTPStatus.UNAUTHORIZED:
-        response_401 = CreateProjectResponse401.from_dict(response.json())
+        response_401 = CreateProjectResponse401.from_dict(json.loads(response.text))
 
         return response_401
     if response.status_code == HTTPStatus.INTERNAL_SERVER_ERROR:
-        response_500 = CreateProjectResponse500.from_dict(response.json())
+        response_500 = CreateProjectResponse500.from_dict(json.loads(response.text))
 
         return response_500
     if client.raise_on_unexpected_status:
@@ -63,7 +64,7 @@ def _parse_response(
 
 
 def _build_response(
-    *, client: {}, response: httpx.Response, content: Optional[bytes] = None
+    *, client: {}, response: None, content: Optional[bytes] = None
 ) -> Response[
     Union[CreateProjectResponse201, CreateProjectResponse400, CreateProjectResponse401, CreateProjectResponse500]
 ]:
@@ -101,8 +102,7 @@ def sync_detailed(
         multipart_data=multipart_data,
     )
 
-    response = httpx.request(
-        verify=client.verify_ssl,
+    response = requests.request(
         **kwargs,
     )
 
@@ -144,28 +144,14 @@ async def asyncio_detailed(
 ) -> Response[
     Union[CreateProjectResponse201, CreateProjectResponse400, CreateProjectResponse401, CreateProjectResponse500]
 ]:
-    """Create a new project.
-
-     Create a new project from either sitemap or uploaded file.
-
-    Args:
-        multipart_data (CreateProjectMultipartData):
-
-    Raises:
-        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
-        httpx.TimeoutException: If the request takes longer than Client.timeout.
-
-    Returns:
-        Response[Union[CreateProjectResponse201, CreateProjectResponse400, CreateProjectResponse401, CreateProjectResponse500]]
-    """
-
     kwargs = _get_kwargs(
         client=client,
         multipart_data=multipart_data,
     )
 
-    async with httpx.AsyncClient(verify=client.verify_ssl) as _client:
-        response = await _client.request(**kwargs)
+    response = requests.request(
+        **kwargs,
+    )
 
     return _build_response(client=client, response=response)
 

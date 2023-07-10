@@ -94,16 +94,15 @@ class UpdateProjectMultipartData:
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        d = src_dict.copy()
-        project_name = d.pop("project_name", UNSET)
+        project_name = src_dict.get("project_name")
 
-        is_shared = d.pop("is_shared", UNSET)
+        is_shared = src_dict.get("is_shared")
 
-        sitemap_path = d.pop("sitemap_path", UNSET)
+        sitemap_path = src_dict.get("sitemap_path")
 
-        file_data_retension = d.pop("file_data_retension", UNSET)
+        file_data_retension = src_dict.get("file_data_retension")
 
-        _file = d.pop("file", UNSET)
+        _file = src_dict.get("file")
         file: Union[Unset, File]
         if isinstance(_file, Unset):
             file = UNSET
@@ -118,7 +117,7 @@ class UpdateProjectMultipartData:
             file=file,
         )
 
-        update_project_multipart_data.additional_properties = d
+        update_project_multipart_data.additional_properties = src_dict
         return update_project_multipart_data
 
     @property

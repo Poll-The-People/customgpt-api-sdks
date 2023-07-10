@@ -76,37 +76,36 @@ class Conversation:
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        d = src_dict.copy()
-        _created_at = d.pop("created_at", UNSET)
+        _created_at = src_dict.get("created_at")
         created_at: Union[Unset, datetime.datetime]
         if isinstance(_created_at, Unset):
             created_at = UNSET
         else:
             created_at = isoparse(_created_at)
 
-        _updated_at = d.pop("updated_at", UNSET)
+        _updated_at = src_dict.get("updated_at")
         updated_at: Union[Unset, datetime.datetime]
         if isinstance(_updated_at, Unset):
             updated_at = UNSET
         else:
             updated_at = isoparse(_updated_at)
 
-        _deleted_at = d.pop("deleted_at", UNSET)
+        _deleted_at = src_dict.get("deleted_at")
         deleted_at: Union[Unset, datetime.datetime]
         if isinstance(_deleted_at, Unset):
             deleted_at = UNSET
         else:
             deleted_at = isoparse(_deleted_at)
 
-        id = d.pop("id", UNSET)
+        id = src_dict.get("id")
 
-        name = d.pop("name", UNSET)
+        name = src_dict.get("name")
 
-        project_id = d.pop("project_id", UNSET)
+        project_id = src_dict.get("project_id")
 
-        created_by = d.pop("created_by", UNSET)
+        created_by = src_dict.get("created_by")
 
-        session_id = d.pop("session_id", UNSET)
+        session_id = src_dict.get("session_id")
 
         conversation = cls(
             created_at=created_at,
@@ -119,7 +118,7 @@ class Conversation:
             session_id=session_id,
         )
 
-        conversation.additional_properties = d
+        conversation.additional_properties = src_dict
         return conversation
 
     @property
