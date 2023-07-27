@@ -3096,9 +3096,9 @@
                                                 "response_source": {
                                                     "description": "The response source",
                                                     "enum": [
-                                                        "Default",
-                                                        "My Content",
-                                                        "My Content + ChatGPT"
+                                                        "default",
+                                                        "own_content",
+                                                        "openai_content"
                                                     ],
                                                     "type": "string",
                                                     "example": "https://example.com/response_source.json"
@@ -8849,8 +8849,8 @@
                         "description": "The response source",
                         "enum": [
                             "default",
-                            "My Content",
-                            "My Content + ChatGPT"
+                            "own_content",
+                            "openai_content"
                         ],
                         "type": "string",
                         "example": "https://example.com/response_source.json"
@@ -10424,8 +10424,8 @@
                                             "description": "The response source",
                                             "enum": [
                                                 "default",
-                                                "My Content",
-                                                "My Content + ChatGPT"
+                                                "own_content",
+                                                "openai_content"
                                             ],
                                             "type": "string",
                                             "example": "https://example.com/response_source.json"
