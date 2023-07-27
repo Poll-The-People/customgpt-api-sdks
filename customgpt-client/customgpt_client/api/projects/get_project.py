@@ -6,6 +6,7 @@ import requests
 
 from ... import errors
 from ...models.get_project_response_200 import GetProjectResponse200
+from ...models.get_project_response_400 import GetProjectResponse400
 from ...models.get_project_response_401 import GetProjectResponse401
 from ...models.get_project_response_404 import GetProjectResponse404
 from ...models.get_project_response_500 import GetProjectResponse500
@@ -44,11 +45,23 @@ def _get_kwargs(
 
 def _parse_response(
     *, client: {}, response: None
-) -> Optional[Union[GetProjectResponse200, GetProjectResponse401, GetProjectResponse404, GetProjectResponse500]]:
+) -> Optional[
+    Union[
+        GetProjectResponse200,
+        GetProjectResponse400,
+        GetProjectResponse401,
+        GetProjectResponse404,
+        GetProjectResponse500,
+    ]
+]:
     if response.status_code == HTTPStatus.OK:
         response_200 = GetProjectResponse200.from_dict(json.loads(response.text))
 
         return response_200
+    if response.status_code == HTTPStatus.BAD_REQUEST:
+        response_400 = GetProjectResponse400.from_dict(json.loads(response.text))
+
+        return response_400
     if response.status_code == HTTPStatus.UNAUTHORIZED:
         response_401 = GetProjectResponse401.from_dict(json.loads(response.text))
 
@@ -69,7 +82,15 @@ def _parse_response(
 
 def _build_response(
     *, client: {}, response: None, content: Optional[bytes] = None
-) -> Response[Union[GetProjectResponse200, GetProjectResponse401, GetProjectResponse404, GetProjectResponse500]]:
+) -> Response[
+    Union[
+        GetProjectResponse200,
+        GetProjectResponse400,
+        GetProjectResponse401,
+        GetProjectResponse404,
+        GetProjectResponse500,
+    ]
+]:
     parse = _parse_response(client=client, response=response)
     return Response(
         status_code=HTTPStatus(response.status_code),
@@ -88,7 +109,8 @@ def sync_detailed(
 ):
     """Show a certain project.
 
-     View a specific project by project ID.
+     Retrieve details of a project based on its unique project ID. This endpoint allows you to fetch
+    specific information about a project.
 
     Args:
         project_id (int):  Example: 1.
@@ -100,7 +122,7 @@ def sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Union[GetProjectResponse200, GetProjectResponse401, GetProjectResponse404, GetProjectResponse500]]
+        Response[Union[GetProjectResponse200, GetProjectResponse400, GetProjectResponse401, GetProjectResponse404, GetProjectResponse500]]
     """
 
     kwargs = _get_kwargs(
@@ -123,10 +145,19 @@ def sync(
     client: {},
     width: Union[Unset, None, str] = "100%",
     height: Union[Unset, None, str] = "auto",
-) -> Optional[Union[GetProjectResponse200, GetProjectResponse401, GetProjectResponse404, GetProjectResponse500]]:
+) -> Optional[
+    Union[
+        GetProjectResponse200,
+        GetProjectResponse400,
+        GetProjectResponse401,
+        GetProjectResponse404,
+        GetProjectResponse500,
+    ]
+]:
     """Show a certain project.
 
-     View a specific project by project ID.
+     Retrieve details of a project based on its unique project ID. This endpoint allows you to fetch
+    specific information about a project.
 
     Args:
         project_id (int):  Example: 1.
@@ -138,7 +169,7 @@ def sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Union[GetProjectResponse200, GetProjectResponse401, GetProjectResponse404, GetProjectResponse500]
+        Union[GetProjectResponse200, GetProjectResponse400, GetProjectResponse401, GetProjectResponse404, GetProjectResponse500]
     """
 
     return sync_detailed(
@@ -155,7 +186,15 @@ async def asyncio_detailed(
     client: {},
     width: Union[Unset, None, str] = "100%",
     height: Union[Unset, None, str] = "auto",
-) -> Response[Union[GetProjectResponse200, GetProjectResponse401, GetProjectResponse404, GetProjectResponse500]]:
+) -> Response[
+    Union[
+        GetProjectResponse200,
+        GetProjectResponse400,
+        GetProjectResponse401,
+        GetProjectResponse404,
+        GetProjectResponse500,
+    ]
+]:
     kwargs = _get_kwargs(
         project_id=project_id,
         client=client,
@@ -176,10 +215,19 @@ async def asyncio(
     client: {},
     width: Union[Unset, None, str] = "100%",
     height: Union[Unset, None, str] = "auto",
-) -> Optional[Union[GetProjectResponse200, GetProjectResponse401, GetProjectResponse404, GetProjectResponse500]]:
+) -> Optional[
+    Union[
+        GetProjectResponse200,
+        GetProjectResponse400,
+        GetProjectResponse401,
+        GetProjectResponse404,
+        GetProjectResponse500,
+    ]
+]:
     """Show a certain project.
 
-     View a specific project by project ID.
+     Retrieve details of a project based on its unique project ID. This endpoint allows you to fetch
+    specific information about a project.
 
     Args:
         project_id (int):  Example: 1.
@@ -191,7 +239,7 @@ async def asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Union[GetProjectResponse200, GetProjectResponse401, GetProjectResponse404, GetProjectResponse500]
+        Union[GetProjectResponse200, GetProjectResponse400, GetProjectResponse401, GetProjectResponse404, GetProjectResponse500]
     """
 
     return (

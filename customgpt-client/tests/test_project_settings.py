@@ -36,7 +36,11 @@ async def test_async_project_settings():
     response_create = response.parsed
     project_id = response_create.data.id
     response = await CustomGPT.ProjectSettings.aupdate(
-        project_id=project_id, default_prompt="Hello World", example_questions=["Who are you?"], chatbot_msg_lang="ur", response_source="default"
+        project_id=project_id,
+        default_prompt="Hello World",
+        example_questions=["Who are you?"],
+        chatbot_msg_lang="ur",
+        response_source="default",
     )
     assert response.status_code == 200
     response = await CustomGPT.ProjectSettings.aget(project_id=project_id)

@@ -1,10 +1,14 @@
 import datetime
-from typing import Any, Dict, List, Type, TypeVar, Union, cast
+from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar, Union, cast
 
 import attr
 from dateutil.parser import isoparse
 
 from ..types import UNSET, Unset
+
+if TYPE_CHECKING:
+    from ..models.prompt_history_metadata import PromptHistoryMetadata
+
 
 T = TypeVar("T", bound="PromptHistory")
 
@@ -24,6 +28,8 @@ class PromptHistory:
             2021-01-01 00:00:00.
         conversation_id (Union[Unset, int]): The unique identifier of the conversation. Example: 1.
         citations (Union[Unset, List[int]]): The citations for the prompt history. Example: [1, 2, 3].
+        metadata (Union[Unset, PromptHistoryMetadata]):  Example: {'user_ip': '127.0.0.1', 'user_agent': 'Mozilla/5.0
+            (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko)'}.
     """
 
     id: Union[Unset, int] = UNSET
@@ -34,6 +40,7 @@ class PromptHistory:
     updated_at: Union[Unset, datetime.datetime] = UNSET
     conversation_id: Union[Unset, int] = UNSET
     citations: Union[Unset, List[int]] = UNSET
+    metadata: Union[Unset, "PromptHistoryMetadata"] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
@@ -53,6 +60,10 @@ class PromptHistory:
         citations: Union[Unset, List[int]] = UNSET
         if not isinstance(self.citations, Unset):
             citations = self.citations
+
+        metadata: Union[Unset, Dict[str, Any]] = UNSET
+        if not isinstance(self.metadata, Unset):
+            metadata = self.metadata.to_dict()
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
@@ -74,11 +85,15 @@ class PromptHistory:
         if citations is not UNSET:
             for index, field_value in enumerate(citations):
                 field_dict[f"citations[]{index}"] = field_value
+        if metadata is not UNSET:
+            field_dict["metadata"] = metadata
 
         return field_dict
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+        from ..models.prompt_history_metadata import PromptHistoryMetadata
+
         id = src_dict.get("id")
 
         user_id = src_dict.get("user_id")
@@ -105,6 +120,13 @@ class PromptHistory:
 
         citations = cast(List[int], src_dict.get("citations"))
 
+        _metadata = src_dict.get("metadata")
+        metadata: Union[Unset, PromptHistoryMetadata]
+        if isinstance(_metadata, Unset):
+            metadata = UNSET
+        else:
+            metadata = PromptHistoryMetadata.from_dict(_metadata)
+
         prompt_history = cls(
             id=id,
             user_id=user_id,
@@ -114,6 +136,7 @@ class PromptHistory:
             updated_at=updated_at,
             conversation_id=conversation_id,
             citations=citations,
+            metadata=metadata,
         )
 
         prompt_history.additional_properties = src_dict

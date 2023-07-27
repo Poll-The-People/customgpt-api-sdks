@@ -15,10 +15,13 @@ def test_sync_pages():
     response = CustomGPT.Page.get(project_id=project_id)
     assert response.status_code == 200
     response_page = response.parsed
-    page_id = response_page.data.pages.data[0].id
-    assert response.status_code == 200
-    response = CustomGPT.Page.delete(project_id=project_id, page_id=page_id)
-    assert response.status_code == 200
+    if len(response_page.data.pages.data) > 0:
+        page_id = response_page.data.pages.data[0].id
+        response = CustomGPT.Page.reindex(project_id=project_id, page_id=page_id)
+        assert response.parsed.data.updated
+        assert response.status_code == 200
+        response = CustomGPT.Page.delete(project_id=project_id, page_id=page_id)
+        assert response.status_code == 200
 
 
 @pytest.mark.asyncio
@@ -35,6 +38,8 @@ async def test_async_pages():
     response_page = response.parsed
     if len(response_page.data.pages.data) > 0:
         page_id = response_page.data.pages.data[0].id
+        response = CustomGPT.Page.reindex(project_id=project_id, page_id=page_id)
+        assert response.parsed.data.updated
         assert response.status_code == 200
         response = await CustomGPT.Page.adelete(project_id=project_id, page_id=page_id)
         assert response.status_code == 200

@@ -6,6 +6,7 @@ import requests
 
 from ... import errors
 from ...models.stats_project_response_200 import StatsProjectResponse200
+from ...models.stats_project_response_400 import StatsProjectResponse400
 from ...models.stats_project_response_401 import StatsProjectResponse401
 from ...models.stats_project_response_404 import StatsProjectResponse404
 from ...models.stats_project_response_500 import StatsProjectResponse500
@@ -35,12 +36,22 @@ def _get_kwargs(
 def _parse_response(
     *, client: {}, response: None
 ) -> Optional[
-    Union[StatsProjectResponse200, StatsProjectResponse401, StatsProjectResponse404, StatsProjectResponse500]
+    Union[
+        StatsProjectResponse200,
+        StatsProjectResponse400,
+        StatsProjectResponse401,
+        StatsProjectResponse404,
+        StatsProjectResponse500,
+    ]
 ]:
     if response.status_code == HTTPStatus.OK:
         response_200 = StatsProjectResponse200.from_dict(json.loads(response.text))
 
         return response_200
+    if response.status_code == HTTPStatus.BAD_REQUEST:
+        response_400 = StatsProjectResponse400.from_dict(json.loads(response.text))
+
+        return response_400
     if response.status_code == HTTPStatus.UNAUTHORIZED:
         response_401 = StatsProjectResponse401.from_dict(json.loads(response.text))
 
@@ -62,7 +73,13 @@ def _parse_response(
 def _build_response(
     *, client: {}, response: None, content: Optional[bytes] = None
 ) -> Response[
-    Union[StatsProjectResponse200, StatsProjectResponse401, StatsProjectResponse404, StatsProjectResponse500]
+    Union[
+        StatsProjectResponse200,
+        StatsProjectResponse400,
+        StatsProjectResponse401,
+        StatsProjectResponse404,
+        StatsProjectResponse500,
+    ]
 ]:
     parse = _parse_response(client=client, response=response)
     return Response(
@@ -80,7 +97,11 @@ def sync_detailed(
 ):
     """Get the stats for a certain project.
 
-     Get the stats for a project by `projectId`.
+     Retrieve statistical data for a project using its unique projectId. This endpoint provides extensive
+    statistics about the project's performance, activity, or other relevant metrics.
+    Here is an example to a specific object stats: [API](https://github.com/Poll-The-People/customgpt-
+    cookbook/blob/main/examples/Get_Project_Stats.ipynb) [SDK](https://github.com/Poll-The-
+    People/customgpt-cookbook/blob/main/examples/SDK_Get_Project_Stats.ipynb).
 
     Args:
         project_id (int):
@@ -90,7 +111,7 @@ def sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Union[StatsProjectResponse200, StatsProjectResponse401, StatsProjectResponse404, StatsProjectResponse500]]
+        Response[Union[StatsProjectResponse200, StatsProjectResponse400, StatsProjectResponse401, StatsProjectResponse404, StatsProjectResponse500]]
     """
 
     kwargs = _get_kwargs(
@@ -110,11 +131,21 @@ def sync(
     *,
     client: {},
 ) -> Optional[
-    Union[StatsProjectResponse200, StatsProjectResponse401, StatsProjectResponse404, StatsProjectResponse500]
+    Union[
+        StatsProjectResponse200,
+        StatsProjectResponse400,
+        StatsProjectResponse401,
+        StatsProjectResponse404,
+        StatsProjectResponse500,
+    ]
 ]:
     """Get the stats for a certain project.
 
-     Get the stats for a project by `projectId`.
+     Retrieve statistical data for a project using its unique projectId. This endpoint provides extensive
+    statistics about the project's performance, activity, or other relevant metrics.
+    Here is an example to a specific object stats: [API](https://github.com/Poll-The-People/customgpt-
+    cookbook/blob/main/examples/Get_Project_Stats.ipynb) [SDK](https://github.com/Poll-The-
+    People/customgpt-cookbook/blob/main/examples/SDK_Get_Project_Stats.ipynb).
 
     Args:
         project_id (int):
@@ -124,7 +155,7 @@ def sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Union[StatsProjectResponse200, StatsProjectResponse401, StatsProjectResponse404, StatsProjectResponse500]
+        Union[StatsProjectResponse200, StatsProjectResponse400, StatsProjectResponse401, StatsProjectResponse404, StatsProjectResponse500]
     """
 
     return sync_detailed(
@@ -138,7 +169,13 @@ async def asyncio_detailed(
     *,
     client: {},
 ) -> Response[
-    Union[StatsProjectResponse200, StatsProjectResponse401, StatsProjectResponse404, StatsProjectResponse500]
+    Union[
+        StatsProjectResponse200,
+        StatsProjectResponse400,
+        StatsProjectResponse401,
+        StatsProjectResponse404,
+        StatsProjectResponse500,
+    ]
 ]:
     kwargs = _get_kwargs(
         project_id=project_id,
@@ -157,11 +194,21 @@ async def asyncio(
     *,
     client: {},
 ) -> Optional[
-    Union[StatsProjectResponse200, StatsProjectResponse401, StatsProjectResponse404, StatsProjectResponse500]
+    Union[
+        StatsProjectResponse200,
+        StatsProjectResponse400,
+        StatsProjectResponse401,
+        StatsProjectResponse404,
+        StatsProjectResponse500,
+    ]
 ]:
     """Get the stats for a certain project.
 
-     Get the stats for a project by `projectId`.
+     Retrieve statistical data for a project using its unique projectId. This endpoint provides extensive
+    statistics about the project's performance, activity, or other relevant metrics.
+    Here is an example to a specific object stats: [API](https://github.com/Poll-The-People/customgpt-
+    cookbook/blob/main/examples/Get_Project_Stats.ipynb) [SDK](https://github.com/Poll-The-
+    People/customgpt-cookbook/blob/main/examples/SDK_Get_Project_Stats.ipynb).
 
     Args:
         project_id (int):
@@ -171,7 +218,7 @@ async def asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Union[StatsProjectResponse200, StatsProjectResponse401, StatsProjectResponse404, StatsProjectResponse500]
+        Union[StatsProjectResponse200, StatsProjectResponse400, StatsProjectResponse401, StatsProjectResponse404, StatsProjectResponse500]
     """
 
     return (

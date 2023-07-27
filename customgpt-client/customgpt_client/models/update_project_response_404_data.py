@@ -14,7 +14,7 @@ class UpdateProjectResponse404Data:
     """
     Attributes:
         code (Union[Unset, UpdateProjectResponse404DataCode]): The error status code Example: 404.
-        message (Union[Unset, UpdateProjectResponse404DataMessage]): The error message Example: Page with id 1 not
+        message (Union[Unset, UpdateProjectResponse404DataMessage]): The error message Example: Project with id 1 not
             found.
     """
 

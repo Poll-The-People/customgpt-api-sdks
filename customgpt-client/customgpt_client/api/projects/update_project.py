@@ -7,6 +7,7 @@ import requests
 from ... import errors
 from ...models.update_project_multipart_data import UpdateProjectMultipartData
 from ...models.update_project_response_200 import UpdateProjectResponse200
+from ...models.update_project_response_400 import UpdateProjectResponse400
 from ...models.update_project_response_401 import UpdateProjectResponse401
 from ...models.update_project_response_404 import UpdateProjectResponse404
 from ...models.update_project_response_500 import UpdateProjectResponse500
@@ -40,12 +41,22 @@ def _get_kwargs(
 def _parse_response(
     *, client: {}, response: None
 ) -> Optional[
-    Union[UpdateProjectResponse200, UpdateProjectResponse401, UpdateProjectResponse404, UpdateProjectResponse500]
+    Union[
+        UpdateProjectResponse200,
+        UpdateProjectResponse400,
+        UpdateProjectResponse401,
+        UpdateProjectResponse404,
+        UpdateProjectResponse500,
+    ]
 ]:
     if response.status_code == HTTPStatus.OK:
         response_200 = UpdateProjectResponse200.from_dict(json.loads(response.text))
 
         return response_200
+    if response.status_code == HTTPStatus.BAD_REQUEST:
+        response_400 = UpdateProjectResponse400.from_dict(json.loads(response.text))
+
+        return response_400
     if response.status_code == HTTPStatus.UNAUTHORIZED:
         response_401 = UpdateProjectResponse401.from_dict(json.loads(response.text))
 
@@ -67,7 +78,13 @@ def _parse_response(
 def _build_response(
     *, client: {}, response: None, content: Optional[bytes] = None
 ) -> Response[
-    Union[UpdateProjectResponse200, UpdateProjectResponse401, UpdateProjectResponse404, UpdateProjectResponse500]
+    Union[
+        UpdateProjectResponse200,
+        UpdateProjectResponse400,
+        UpdateProjectResponse401,
+        UpdateProjectResponse404,
+        UpdateProjectResponse500,
+    ]
 ]:
     parse = _parse_response(client=client, response=response)
     return Response(
@@ -84,7 +101,14 @@ def sync_detailed(
     client: {},
     multipart_data: UpdateProjectMultipartData,
 ):
-    """Update a certain project
+    """Update a certain project.
+
+     Update a project with specific details based on its unique projectId. This endpoint allows you to
+    modify and revise the information associated with a particular project
+    Here is an example to a update a specific object: [API](https://github.com/Poll-The-
+    People/customgpt-cookbook/blob/main/examples/Update%20a%20project%20name.ipynb)
+    [SDK](https://github.com/Poll-The-People/customgpt-
+    cookbook/blob/main/examples/SDK_Update_a_project_name.ipynb).
 
     Args:
         project_id (int):
@@ -95,7 +119,7 @@ def sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Union[UpdateProjectResponse200, UpdateProjectResponse401, UpdateProjectResponse404, UpdateProjectResponse500]]
+        Response[Union[UpdateProjectResponse200, UpdateProjectResponse400, UpdateProjectResponse401, UpdateProjectResponse404, UpdateProjectResponse500]]
     """
 
     kwargs = _get_kwargs(
@@ -117,9 +141,22 @@ def sync(
     client: {},
     multipart_data: UpdateProjectMultipartData,
 ) -> Optional[
-    Union[UpdateProjectResponse200, UpdateProjectResponse401, UpdateProjectResponse404, UpdateProjectResponse500]
+    Union[
+        UpdateProjectResponse200,
+        UpdateProjectResponse400,
+        UpdateProjectResponse401,
+        UpdateProjectResponse404,
+        UpdateProjectResponse500,
+    ]
 ]:
-    """Update a certain project
+    """Update a certain project.
+
+     Update a project with specific details based on its unique projectId. This endpoint allows you to
+    modify and revise the information associated with a particular project
+    Here is an example to a update a specific object: [API](https://github.com/Poll-The-
+    People/customgpt-cookbook/blob/main/examples/Update%20a%20project%20name.ipynb)
+    [SDK](https://github.com/Poll-The-People/customgpt-
+    cookbook/blob/main/examples/SDK_Update_a_project_name.ipynb).
 
     Args:
         project_id (int):
@@ -130,7 +167,7 @@ def sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Union[UpdateProjectResponse200, UpdateProjectResponse401, UpdateProjectResponse404, UpdateProjectResponse500]
+        Union[UpdateProjectResponse200, UpdateProjectResponse400, UpdateProjectResponse401, UpdateProjectResponse404, UpdateProjectResponse500]
     """
 
     return sync_detailed(
@@ -146,7 +183,13 @@ async def asyncio_detailed(
     client: {},
     multipart_data: UpdateProjectMultipartData,
 ) -> Response[
-    Union[UpdateProjectResponse200, UpdateProjectResponse401, UpdateProjectResponse404, UpdateProjectResponse500]
+    Union[
+        UpdateProjectResponse200,
+        UpdateProjectResponse400,
+        UpdateProjectResponse401,
+        UpdateProjectResponse404,
+        UpdateProjectResponse500,
+    ]
 ]:
     kwargs = _get_kwargs(
         project_id=project_id,
@@ -167,9 +210,22 @@ async def asyncio(
     client: {},
     multipart_data: UpdateProjectMultipartData,
 ) -> Optional[
-    Union[UpdateProjectResponse200, UpdateProjectResponse401, UpdateProjectResponse404, UpdateProjectResponse500]
+    Union[
+        UpdateProjectResponse200,
+        UpdateProjectResponse400,
+        UpdateProjectResponse401,
+        UpdateProjectResponse404,
+        UpdateProjectResponse500,
+    ]
 ]:
-    """Update a certain project
+    """Update a certain project.
+
+     Update a project with specific details based on its unique projectId. This endpoint allows you to
+    modify and revise the information associated with a particular project
+    Here is an example to a update a specific object: [API](https://github.com/Poll-The-
+    People/customgpt-cookbook/blob/main/examples/Update%20a%20project%20name.ipynb)
+    [SDK](https://github.com/Poll-The-People/customgpt-
+    cookbook/blob/main/examples/SDK_Update_a_project_name.ipynb).
 
     Args:
         project_id (int):
@@ -180,7 +236,7 @@ async def asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Union[UpdateProjectResponse200, UpdateProjectResponse401, UpdateProjectResponse404, UpdateProjectResponse500]
+        Union[UpdateProjectResponse200, UpdateProjectResponse400, UpdateProjectResponse401, UpdateProjectResponse404, UpdateProjectResponse500]
     """
 
     return (

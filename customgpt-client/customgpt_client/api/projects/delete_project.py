@@ -6,6 +6,7 @@ import requests
 
 from ... import errors
 from ...models.delete_project_response_200 import DeleteProjectResponse200
+from ...models.delete_project_response_400 import DeleteProjectResponse400
 from ...models.delete_project_response_401 import DeleteProjectResponse401
 from ...models.delete_project_response_404 import DeleteProjectResponse404
 from ...models.delete_project_response_500 import DeleteProjectResponse500
@@ -35,12 +36,22 @@ def _get_kwargs(
 def _parse_response(
     *, client: {}, response: None
 ) -> Optional[
-    Union[DeleteProjectResponse200, DeleteProjectResponse401, DeleteProjectResponse404, DeleteProjectResponse500]
+    Union[
+        DeleteProjectResponse200,
+        DeleteProjectResponse400,
+        DeleteProjectResponse401,
+        DeleteProjectResponse404,
+        DeleteProjectResponse500,
+    ]
 ]:
     if response.status_code == HTTPStatus.OK:
         response_200 = DeleteProjectResponse200.from_dict(json.loads(response.text))
 
         return response_200
+    if response.status_code == HTTPStatus.BAD_REQUEST:
+        response_400 = DeleteProjectResponse400.from_dict(json.loads(response.text))
+
+        return response_400
     if response.status_code == HTTPStatus.UNAUTHORIZED:
         response_401 = DeleteProjectResponse401.from_dict(json.loads(response.text))
 
@@ -62,7 +73,13 @@ def _parse_response(
 def _build_response(
     *, client: {}, response: None, content: Optional[bytes] = None
 ) -> Response[
-    Union[DeleteProjectResponse200, DeleteProjectResponse401, DeleteProjectResponse404, DeleteProjectResponse500]
+    Union[
+        DeleteProjectResponse200,
+        DeleteProjectResponse400,
+        DeleteProjectResponse401,
+        DeleteProjectResponse404,
+        DeleteProjectResponse500,
+    ]
 ]:
     parse = _parse_response(client=client, response=response)
     return Response(
@@ -80,7 +97,11 @@ def sync_detailed(
 ):
     """Delete a certain project.
 
-     Delete an existing project by project ID.
+     Delete a project by its unique project ID. This endpoint allows you to remove an existing project
+    from the system based on its ID.
+    Here is an example to delete a project: [API](https://github.com/Poll-The-People/customgpt-
+    cookbook/blob/main/examples/Delete_a_project.ipynb) [SDK](https://github.com/Poll-The-
+    People/customgpt-cookbook/blob/main/examples/SDK_Delete_a_project.ipynb).
 
     Args:
         project_id (int):
@@ -90,7 +111,7 @@ def sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Union[DeleteProjectResponse200, DeleteProjectResponse401, DeleteProjectResponse404, DeleteProjectResponse500]]
+        Response[Union[DeleteProjectResponse200, DeleteProjectResponse400, DeleteProjectResponse401, DeleteProjectResponse404, DeleteProjectResponse500]]
     """
 
     kwargs = _get_kwargs(
@@ -110,11 +131,21 @@ def sync(
     *,
     client: {},
 ) -> Optional[
-    Union[DeleteProjectResponse200, DeleteProjectResponse401, DeleteProjectResponse404, DeleteProjectResponse500]
+    Union[
+        DeleteProjectResponse200,
+        DeleteProjectResponse400,
+        DeleteProjectResponse401,
+        DeleteProjectResponse404,
+        DeleteProjectResponse500,
+    ]
 ]:
     """Delete a certain project.
 
-     Delete an existing project by project ID.
+     Delete a project by its unique project ID. This endpoint allows you to remove an existing project
+    from the system based on its ID.
+    Here is an example to delete a project: [API](https://github.com/Poll-The-People/customgpt-
+    cookbook/blob/main/examples/Delete_a_project.ipynb) [SDK](https://github.com/Poll-The-
+    People/customgpt-cookbook/blob/main/examples/SDK_Delete_a_project.ipynb).
 
     Args:
         project_id (int):
@@ -124,7 +155,7 @@ def sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Union[DeleteProjectResponse200, DeleteProjectResponse401, DeleteProjectResponse404, DeleteProjectResponse500]
+        Union[DeleteProjectResponse200, DeleteProjectResponse400, DeleteProjectResponse401, DeleteProjectResponse404, DeleteProjectResponse500]
     """
 
     return sync_detailed(
@@ -138,7 +169,13 @@ async def asyncio_detailed(
     *,
     client: {},
 ) -> Response[
-    Union[DeleteProjectResponse200, DeleteProjectResponse401, DeleteProjectResponse404, DeleteProjectResponse500]
+    Union[
+        DeleteProjectResponse200,
+        DeleteProjectResponse400,
+        DeleteProjectResponse401,
+        DeleteProjectResponse404,
+        DeleteProjectResponse500,
+    ]
 ]:
     kwargs = _get_kwargs(
         project_id=project_id,
@@ -157,11 +194,21 @@ async def asyncio(
     *,
     client: {},
 ) -> Optional[
-    Union[DeleteProjectResponse200, DeleteProjectResponse401, DeleteProjectResponse404, DeleteProjectResponse500]
+    Union[
+        DeleteProjectResponse200,
+        DeleteProjectResponse400,
+        DeleteProjectResponse401,
+        DeleteProjectResponse404,
+        DeleteProjectResponse500,
+    ]
 ]:
     """Delete a certain project.
 
-     Delete an existing project by project ID.
+     Delete a project by its unique project ID. This endpoint allows you to remove an existing project
+    from the system based on its ID.
+    Here is an example to delete a project: [API](https://github.com/Poll-The-People/customgpt-
+    cookbook/blob/main/examples/Delete_a_project.ipynb) [SDK](https://github.com/Poll-The-
+    People/customgpt-cookbook/blob/main/examples/SDK_Delete_a_project.ipynb).
 
     Args:
         project_id (int):
@@ -171,7 +218,7 @@ async def asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Union[DeleteProjectResponse200, DeleteProjectResponse401, DeleteProjectResponse404, DeleteProjectResponse500]
+        Union[DeleteProjectResponse200, DeleteProjectResponse400, DeleteProjectResponse401, DeleteProjectResponse404, DeleteProjectResponse500]
     """
 
     return (

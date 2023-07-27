@@ -3,18 +3,18 @@ from typing import Any, Dict, Union
 
 import attr
 
-from customgpt_client.api.citations import get_open_graph_data_for_citation
+from customgpt_client.api.citations import get_citation
 from customgpt_client.api.conversations import (
-    create_project_conversation,
-    delete_project_conversation,
-    get_project_conversations,
-    messages,
-    send_message_to_conversation,
-    update_project_conversation,
+    create_conversation,
+    delete_conversation,
+    get_conversations,
+    messages_conversation,
+    send_message,
+    update_conversation,
 )
-from customgpt_client.api.pages import delete_project_page, get_project_pages, preview
-from customgpt_client.api.project_plugins import create_project_plugin, get_project_plugins, update_project_plugin
-from customgpt_client.api.project_settings import get_project_settings, update_project_settings
+from customgpt_client.api.pages import delete_page, get_pages, preview_citation, reindex_page
+from customgpt_client.api.project_plugins import create_plugin, get_plugin, update_plugin
+from customgpt_client.api.project_settings import get_settings, update_settings
 from customgpt_client.api.projects import (
     create_project,
     delete_project,
@@ -23,19 +23,19 @@ from customgpt_client.api.projects import (
     stats_project,
     update_project,
 )
-from customgpt_client.api.sources import create_project_source, delete_project_source, list_project_sources
-from customgpt_client.api.users import get_user_profile, update_user_profile
+from customgpt_client.api.sources import create_source, delete_source, list_sources
+from customgpt_client.api.users import get_user, update_user
 from customgpt_client.models import (
-    CreateProjectConversationJsonBody,
+    CreateConversationJsonBody,
+    CreatePluginJsonBody,
     CreateProjectMultipartData,
-    CreateProjectPluginJsonBody,
-    CreateProjectSourceMultipartData,
-    SendMessageToConversationJsonBody,
-    UpdateProjectConversationJsonBody,
+    CreateSourceMultipartData,
+    SendMessageJsonBody,
+    UpdateConversationJsonBody,
+    UpdatePluginJsonBody,
     UpdateProjectMultipartData,
-    UpdateProjectPluginJsonBody,
-    UpdateProjectSettingsMultipartData,
-    UpdateUserProfileMultipartData,
+    UpdateSettingsMultipartData,
+    UpdateUserMultipartData,
 )
 
 
@@ -181,43 +181,53 @@ class CustomGPT:
         def get(*args: Any, **kwargs: Any):
             client = set_client()
 
-            return get_project_pages.sync_detailed(client=client, *args, **kwargs)
+            return get_pages.sync_detailed(client=client, *args, **kwargs)
 
         def aget(*args: Any, **kwargs: Any):
             client = set_client()
 
-            return get_project_pages.asyncio_detailed(client=client, *args, **kwargs)
+            return get_pages.asyncio_detailed(client=client, *args, **kwargs)
 
         def delete(*args: Any, **kwargs: Any):
             client = set_client()
 
-            return delete_project_page.sync_detailed(client=client, *args, **kwargs)
+            return delete_page.sync_detailed(client=client, *args, **kwargs)
 
         def adelete(*args: Any, **kwargs: Any):
             client = set_client()
 
-            return delete_project_page.asyncio_detailed(client=client, *args, **kwargs)
+            return delete_page.asyncio_detailed(client=client, *args, **kwargs)
+
+        def reindex(*args: Any, **kwargs: Any):
+            client = set_client()
+
+            return reindex_page.sync_detailed(client=client, *args, **kwargs)
+
+        def areindex(*args: Any, **kwargs: Any):
+            client = set_client()
+
+            return reindex_page.asyncio_detailed(client=client, *args, **kwargs)
 
         def preview(*args: Any, **kwargs: Any):
             client = set_client()
 
-            return preview.sync_detailed(client=client, *args, **kwargs)
+            return preview_citation.sync_detailed(client=client, *args, **kwargs)
 
         def apreview(*args: Any, **kwargs: Any):
             client = set_client()
 
-            return preview.asyncio_detailed(client=client, *args, **kwargs)
+            return preview_citation.asyncio_detailed(client=client, *args, **kwargs)
 
     class ProjectSettings:
         def get(*args: Any, **kwargs: Any):
             client = set_client()
 
-            return get_project_settings.sync_detailed(client=client, *args, **kwargs)
+            return get_settings.sync_detailed(client=client, *args, **kwargs)
 
         def aget(*args: Any, **kwargs: Any):
             client = set_client()
 
-            return get_project_settings.asyncio_detailed(client=client, *args, **kwargs)
+            return get_settings.asyncio_detailed(client=client, *args, **kwargs)
 
         def update(*args: Any, **kwargs: Any):
             client = set_client()
@@ -228,11 +238,13 @@ class CustomGPT:
                 "example_questions",
                 "response_source",
                 "chatbot_msg_lang",
+                "chatbot_color",
+                "persona_instructions",
             ]
             json = pluck_data(fields, kwargs)
-            kwargs["multipart_data"] = UpdateProjectSettingsMultipartData(**json)
+            kwargs["multipart_data"] = UpdateSettingsMultipartData(**json)
 
-            return update_project_settings.sync_detailed(client=client, *args, **kwargs)
+            return update_settings.sync_detailed(client=client, *args, **kwargs)
 
         def aupdate(*args: Any, **kwargs: Any):
             client = set_client()
@@ -243,205 +255,207 @@ class CustomGPT:
                 "example_questions",
                 "response_source",
                 "chatbot_msg_lang",
+                "chatbot_color",
+                "persona_instructions",
             ]
             json = pluck_data(fields, kwargs)
-            kwargs["multipart_data"] = UpdateProjectSettingsMultipartData(**json)
+            kwargs["multipart_data"] = UpdateSettingsMultipartData(**json)
 
-            return update_project_settings.asyncio_detailed(client=client, *args, **kwargs)
+            return update_settings.asyncio_detailed(client=client, *args, **kwargs)
 
     class ProjectPlugins:
         def get(*args: Any, **kwargs: Any):
             client = set_client()
 
-            return get_project_plugins.sync_detailed(client=client, *args, **kwargs)
+            return get_plugin.sync_detailed(client=client, *args, **kwargs)
 
         def aget(*args: Any, **kwargs: Any):
             client = set_client()
 
-            return get_project_plugins.asyncio_detailed(client=client, *args, **kwargs)
+            return get_plugin.asyncio_detailed(client=client, *args, **kwargs)
 
         def update(*args: Any, **kwargs: Any):
             client = set_client()
             fields = ["model_name", "human_name", "keywords", "description", "is_active"]
             json = pluck_data(fields, kwargs)
-            kwargs["json_body"] = UpdateProjectPluginJsonBody(**json)
+            kwargs["json_body"] = UpdatePluginJsonBody(**json)
 
-            return update_project_plugin.sync_detailed(client=client, *args, **kwargs)
+            return update_plugin.sync_detailed(client=client, *args, **kwargs)
 
         def aupdate(*args: Any, **kwargs: Any):
             client = set_client()
             fields = ["model_name", "human_name", "keywords", "description", "is_active"]
             json = pluck_data(fields, kwargs)
-            kwargs["json_body"] = UpdateProjectPluginJsonBody(**json)
+            kwargs["json_body"] = UpdatePluginJsonBody(**json)
 
-            return update_project_plugin.asyncio_detailed(client=client, *args, **kwargs)
+            return update_plugin.asyncio_detailed(client=client, *args, **kwargs)
 
         def create(*args: Any, **kwargs: Any):
             client = set_client()
             fields = ["model_name", "human_name", "keywords", "description", "is_active"]
             json = pluck_data(fields, kwargs)
-            kwargs["json_body"] = CreateProjectPluginJsonBody(**json)
+            kwargs["json_body"] = CreatePluginJsonBody(**json)
 
-            return create_project_plugin.sync_detailed(client=client, *args, **kwargs)
+            return create_plugin.sync_detailed(client=client, *args, **kwargs)
 
         def acreate(*args: Any, **kwargs: Any):
             client = set_client()
             fields = ["model_name", "human_name", "keywords", "description", "is_active"]
             json = pluck_data(fields, kwargs)
-            kwargs["json_body"] = CreateProjectPluginJsonBody(**json)
+            kwargs["json_body"] = CreatePluginJsonBody(**json)
 
-            return create_project_plugin.asyncio_detailed(client=client, *args, **kwargs)
+            return create_plugin.asyncio_detailed(client=client, *args, **kwargs)
 
     class Conversation:
         def get(*args: Any, **kwargs: Any):
             client = set_client()
 
-            return get_project_conversations.sync_detailed(client=client, *args, **kwargs)
+            return get_conversations.sync_detailed(client=client, *args, **kwargs)
 
         def aget(*args: Any, **kwargs: Any):
             client = set_client()
 
-            return get_project_conversations.asyncio_detailed(client=client, *args, **kwargs)
+            return get_conversations.asyncio_detailed(client=client, *args, **kwargs)
 
         def create(*args: Any, **kwargs: Any):
             client = set_client()
             fields = ["name"]
             json = pluck_data(fields, kwargs)
-            kwargs["json_body"] = CreateProjectConversationJsonBody(**json)
+            kwargs["json_body"] = CreateConversationJsonBody(**json)
 
-            return create_project_conversation.sync_detailed(client=client, *args, **kwargs)
+            return create_conversation.sync_detailed(client=client, *args, **kwargs)
 
         def acreate(*args: Any, **kwargs: Any):
             client = set_client()
             fields = ["name"]
             json = pluck_data(fields, kwargs)
-            kwargs["json_body"] = CreateProjectConversationJsonBody(**json)
+            kwargs["json_body"] = CreateConversationJsonBody(**json)
 
-            return create_project_conversation.asyncio_detailed(client=client, *args, **kwargs)
+            return create_conversation.asyncio_detailed(client=client, *args, **kwargs)
 
         def update(*args: Any, **kwargs: Any):
             client = set_client()
             fields = ["name"]
             json = pluck_data(fields, kwargs)
-            kwargs["json_body"] = UpdateProjectConversationJsonBody(**json)
+            kwargs["json_body"] = UpdateConversationJsonBody(**json)
 
-            return update_project_conversation.sync_detailed(client=client, *args, **kwargs)
+            return update_conversation.sync_detailed(client=client, *args, **kwargs)
 
         def aupdate(*args: Any, **kwargs: Any):
             client = set_client()
             fields = ["name"]
             json = pluck_data(fields, kwargs)
-            kwargs["json_body"] = UpdateProjectConversationJsonBody(**json)
+            kwargs["json_body"] = UpdateConversationJsonBody(**json)
 
-            return update_project_conversation.asyncio_detailed(client=client, *args, **kwargs)
+            return update_conversation.asyncio_detailed(client=client, *args, **kwargs)
 
         def delete(*args: Any, **kwargs: Any):
             client = set_client()
 
-            return delete_project_conversation.sync_detailed(client=client, *args, **kwargs)
+            return delete_conversation.sync_detailed(client=client, *args, **kwargs)
 
         def adelete(*args: Any, **kwargs: Any):
             client = set_client()
 
-            return delete_project_conversation.asyncio_detailed(client=client, *args, **kwargs)
+            return delete_conversation.asyncio_detailed(client=client, *args, **kwargs)
 
         def messages(*args: Any, **kwargs: Any):
             client = set_client()
 
-            return messages.sync_detailed(client=client, *args, **kwargs)
+            return messages_conversation.sync_detailed(client=client, *args, **kwargs)
 
         def amessages(*args: Any, **kwargs: Any):
             client = set_client()
 
-            return messages.asyncio_detailed(client=client, *args, **kwargs)
+            return messages_conversation.asyncio_detailed(client=client, *args, **kwargs)
 
         def send(*args: Any, **kwargs: Any):
             client = set_client()
             fields = ["prompt"]
             json = pluck_data(fields, kwargs)
-            kwargs["json_body"] = SendMessageToConversationJsonBody(**json)
+            kwargs["json_body"] = SendMessageJsonBody(**json)
 
-            return send_message_to_conversation.sync_detailed(client=client, *args, **kwargs)
+            return send_message.sync_detailed(client=client, *args, **kwargs)
 
         def asend(*args: Any, **kwargs: Any):
             client = set_client()
             fields = ["prompt"]
             json = pluck_data(fields, kwargs)
-            kwargs["json_body"] = SendMessageToConversationJsonBody(**json)
+            kwargs["json_body"] = SendMessageJsonBody(**json)
 
-            return send_message_to_conversation.asyncio_detailed(client=client, *args, **kwargs)
+            return send_message.asyncio_detailed(client=client, *args, **kwargs)
 
     class Citation:
         def get(*args: Any, **kwargs: Any):
             client = set_client()
 
-            return get_open_graph_data_for_citation.sync_detailed(client=client, *args, **kwargs)
+            return get_citation.sync_detailed(client=client, *args, **kwargs)
 
         def aget(*args: Any, **kwargs: Any):
             client = set_client()
 
-            return get_open_graph_data_for_citation.asyncio_detailed(client=client, *args, **kwargs)
+            return get_citation.asyncio_detailed(client=client, *args, **kwargs)
 
     class Source:
         def list(*args: Any, **kwargs: Any):
             client = set_client()
 
-            return list_project_sources.sync_detailed(client=client, *args, **kwargs)
+            return list_sources.sync_detailed(client=client, *args, **kwargs)
 
         def alist(*args: Any, **kwargs: Any):
             client = set_client()
 
-            return list_project_sources.asyncio_detailed(client=client, *args, **kwargs)
+            return list_sources.asyncio_detailed(client=client, *args, **kwargs)
 
         def create(*args: Any, **kwargs: Any):
             client = set_client()
             fields = ["sitemap_path", "file_data_retension", "file"]
             json = pluck_data(fields, kwargs)
-            kwargs["multipart_data"] = CreateProjectSourceMultipartData(**json)
+            kwargs["multipart_data"] = CreateSourceMultipartData(**json)
 
-            return create_project_source.sync_detailed(client=client, *args, **kwargs)
+            return create_source.sync_detailed(client=client, *args, **kwargs)
 
         def acreate(*args: Any, **kwargs: Any):
             client = set_client()
             fields = ["sitemap_path", "file_data_retension", "file"]
             json = pluck_data(fields, kwargs)
-            kwargs["multipart_data"] = CreateProjectSourceMultipartData(**json)
+            kwargs["multipart_data"] = CreateSourceMultipartData(**json)
 
-            return create_project_source.asyncio_detailed(client=client, *args, **kwargs)
+            return create_source.asyncio_detailed(client=client, *args, **kwargs)
 
         def delete(*args: Any, **kwargs: Any):
             client = set_client()
 
-            return delete_project_source.sync_detailed(client=client, *args, **kwargs)
+            return delete_source.sync_detailed(client=client, *args, **kwargs)
 
         def adelete(*args: Any, **kwargs: Any):
             client = set_client()
 
-            return delete_project_source.asyncio_detailed(client=client, *args, **kwargs)
+            return delete_source.asyncio_detailed(client=client, *args, **kwargs)
 
     class User:
         def get(*args: Any, **kwargs: Any):
             client = set_client()
 
-            return get_user_profile.sync_detailed(client=client, *args, **kwargs)
+            return get_user.sync_detailed(client=client, *args, **kwargs)
 
         def aget(*args: Any, **kwargs: Any):
             client = set_client()
 
-            return get_user_profile.asyncio_detailed(client=client, *args, **kwargs)
+            return get_user.asyncio_detailed(client=client, *args, **kwargs)
 
         def update(*args: Any, **kwargs: Any):
             client = set_client()
             fields = ["profile_photo", "name"]
             json = pluck_data(fields, kwargs)
-            kwargs["multipart_data"] = UpdateUserProfileMultipartData(**json)
+            kwargs["multipart_data"] = UpdateUserMultipartData(**json)
 
-            return update_user_profile.sync_detailed(client=client, *args, **kwargs)
+            return update_user.sync_detailed(client=client, *args, **kwargs)
 
         def aupdate(*args: Any, **kwargs: Any):
             client = set_client()
             fields = ["profile_photo", "name"]
             json = pluck_data(fields, kwargs)
-            kwargs["multipart_data"] = UpdateUserProfileMultipartData(**json)
+            kwargs["multipart_data"] = UpdateUserMultipartData(**json)
 
-            return update_user_profile.asyncio_detailed(client=client, *args, **kwargs)
+            return update_user.asyncio_detailed(client=client, *args, **kwargs)

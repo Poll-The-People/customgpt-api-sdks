@@ -16,7 +16,7 @@ def _get_kwargs(
     *,
     client: {},
     page: Union[Unset, None, int] = 1,
-    duration: Union[Unset, None, int] = 90,
+    duration: Union[Unset, None, int] = UNSET,
     order: Union[Unset, None, ListProjectsOrder] = ListProjectsOrder.DESC,
     width: Union[Unset, None, str] = "100%",
     height: Union[Unset, None, str] = "auto",
@@ -91,18 +91,25 @@ def sync_detailed(
     *,
     client: {},
     page: Union[Unset, None, int] = 1,
-    duration: Union[Unset, None, int] = 90,
+    duration: Union[Unset, None, int] = UNSET,
     order: Union[Unset, None, ListProjectsOrder] = ListProjectsOrder.DESC,
     width: Union[Unset, None, str] = "100%",
     height: Union[Unset, None, str] = "auto",
 ):
     """List all projects.
 
-     Get a list of all projects that belong to the user.
+     Returns a list of your projects. The projects are returned sorted by creation date, with the most
+    recent projects appearing first. It is a paginated API and you can use the page parameter to fetch
+    the next page of projects. The default page size is 10.
+
+    Here is an example to list projects: using [API](https://github.com/Poll-The-People/customgpt-
+    cookbook/blob/main/examples/List_all_projects_for_an_account_with_pagination.ipynb) and using our
+    python [SDK](https://github.com/Poll-The-People/customgpt-
+    cookbook/blob/main/examples/SDK_List_all_projects_using_pagination.ipynb).
 
     Args:
-        page (Union[Unset, None, int]):  Default: 1.
-        duration (Union[Unset, None, int]):  Default: 90.
+        page (Union[Unset, None, int]):  Default: 1. Example: 1.
+        duration (Union[Unset, None, int]):
         order (Union[Unset, None, ListProjectsOrder]):  Default: ListProjectsOrder.DESC.
         width (Union[Unset, None, str]):  Default: '100%'. Example: 50rem.
         height (Union[Unset, None, str]):  Default: 'auto'. Example: 50rem.
@@ -135,18 +142,25 @@ def sync(
     *,
     client: {},
     page: Union[Unset, None, int] = 1,
-    duration: Union[Unset, None, int] = 90,
+    duration: Union[Unset, None, int] = UNSET,
     order: Union[Unset, None, ListProjectsOrder] = ListProjectsOrder.DESC,
     width: Union[Unset, None, str] = "100%",
     height: Union[Unset, None, str] = "auto",
 ) -> Optional[Union[ListProjectsResponse200, ListProjectsResponse401, ListProjectsResponse500]]:
     """List all projects.
 
-     Get a list of all projects that belong to the user.
+     Returns a list of your projects. The projects are returned sorted by creation date, with the most
+    recent projects appearing first. It is a paginated API and you can use the page parameter to fetch
+    the next page of projects. The default page size is 10.
+
+    Here is an example to list projects: using [API](https://github.com/Poll-The-People/customgpt-
+    cookbook/blob/main/examples/List_all_projects_for_an_account_with_pagination.ipynb) and using our
+    python [SDK](https://github.com/Poll-The-People/customgpt-
+    cookbook/blob/main/examples/SDK_List_all_projects_using_pagination.ipynb).
 
     Args:
-        page (Union[Unset, None, int]):  Default: 1.
-        duration (Union[Unset, None, int]):  Default: 90.
+        page (Union[Unset, None, int]):  Default: 1. Example: 1.
+        duration (Union[Unset, None, int]):
         order (Union[Unset, None, ListProjectsOrder]):  Default: ListProjectsOrder.DESC.
         width (Union[Unset, None, str]):  Default: '100%'. Example: 50rem.
         height (Union[Unset, None, str]):  Default: 'auto'. Example: 50rem.
@@ -173,7 +187,7 @@ async def asyncio_detailed(
     *,
     client: {},
     page: Union[Unset, None, int] = 1,
-    duration: Union[Unset, None, int] = 90,
+    duration: Union[Unset, None, int] = UNSET,
     order: Union[Unset, None, ListProjectsOrder] = ListProjectsOrder.DESC,
     width: Union[Unset, None, str] = "100%",
     height: Union[Unset, None, str] = "auto",
@@ -198,18 +212,25 @@ async def asyncio(
     *,
     client: {},
     page: Union[Unset, None, int] = 1,
-    duration: Union[Unset, None, int] = 90,
+    duration: Union[Unset, None, int] = UNSET,
     order: Union[Unset, None, ListProjectsOrder] = ListProjectsOrder.DESC,
     width: Union[Unset, None, str] = "100%",
     height: Union[Unset, None, str] = "auto",
 ) -> Optional[Union[ListProjectsResponse200, ListProjectsResponse401, ListProjectsResponse500]]:
     """List all projects.
 
-     Get a list of all projects that belong to the user.
+     Returns a list of your projects. The projects are returned sorted by creation date, with the most
+    recent projects appearing first. It is a paginated API and you can use the page parameter to fetch
+    the next page of projects. The default page size is 10.
+
+    Here is an example to list projects: using [API](https://github.com/Poll-The-People/customgpt-
+    cookbook/blob/main/examples/List_all_projects_for_an_account_with_pagination.ipynb) and using our
+    python [SDK](https://github.com/Poll-The-People/customgpt-
+    cookbook/blob/main/examples/SDK_List_all_projects_using_pagination.ipynb).
 
     Args:
-        page (Union[Unset, None, int]):  Default: 1.
-        duration (Union[Unset, None, int]):  Default: 90.
+        page (Union[Unset, None, int]):  Default: 1. Example: 1.
+        duration (Union[Unset, None, int]):
         order (Union[Unset, None, ListProjectsOrder]):  Default: ListProjectsOrder.DESC.
         width (Union[Unset, None, str]):  Default: '100%'. Example: 50rem.
         height (Union[Unset, None, str]):  Default: 'auto'. Example: 50rem.

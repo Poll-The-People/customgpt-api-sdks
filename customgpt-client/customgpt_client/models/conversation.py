@@ -15,7 +15,8 @@ class Conversation:
     Attributes:
         created_at (Union[Unset, datetime.datetime]): When was this conversation created? Example: 2023-04-30 16:43:53.
         updated_at (Union[Unset, datetime.datetime]): When was this conversation updated? Example: 2023-04-30 16:43:53.
-        deleted_at (Union[Unset, datetime.datetime]): When was this conversation deleted? Example: 2023-04-30 16:43:53.
+        deleted_at (Union[Unset, None, datetime.datetime]): When was this conversation deleted? Example: 2023-04-30
+            16:43:53.
         id (Union[Unset, int]): Conversation ID Example: 1.
         name (Union[Unset, str]): Conversation name Example: Conversation 1.
         project_id (Union[Unset, str]): Project ID for this conversation Example: 1.
@@ -25,7 +26,7 @@ class Conversation:
 
     created_at: Union[Unset, datetime.datetime] = UNSET
     updated_at: Union[Unset, datetime.datetime] = UNSET
-    deleted_at: Union[Unset, datetime.datetime] = UNSET
+    deleted_at: Union[Unset, None, datetime.datetime] = UNSET
     id: Union[Unset, int] = UNSET
     name: Union[Unset, str] = UNSET
     project_id: Union[Unset, str] = UNSET
@@ -42,9 +43,9 @@ class Conversation:
         if not isinstance(self.updated_at, Unset):
             updated_at = self.updated_at.isoformat()
 
-        deleted_at: Union[Unset, str] = UNSET
+        deleted_at: Union[Unset, None, str] = UNSET
         if not isinstance(self.deleted_at, Unset):
-            deleted_at = self.deleted_at.isoformat()
+            deleted_at = self.deleted_at.isoformat() if self.deleted_at else None
 
         id = self.id
         name = self.name
@@ -91,8 +92,10 @@ class Conversation:
             updated_at = isoparse(_updated_at)
 
         _deleted_at = src_dict.get("deleted_at")
-        deleted_at: Union[Unset, datetime.datetime]
-        if isinstance(_deleted_at, Unset):
+        deleted_at: Union[Unset, None, datetime.datetime]
+        if _deleted_at is None:
+            deleted_at = None
+        elif isinstance(_deleted_at, Unset):
             deleted_at = UNSET
         else:
             deleted_at = isoparse(_deleted_at)

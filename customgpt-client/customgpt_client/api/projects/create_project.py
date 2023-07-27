@@ -84,7 +84,16 @@ def sync_detailed(
 ):
     """Create a new project.
 
-     Create a new project from either sitemap or uploaded file.
+     Create a new project by importing data either from a sitemap or an uploaded file. This endpoint
+    enables you to initiate the creation of a new project by supplying the necessary project data that
+    will be used as the context. You can choose to import the project structure and content from a
+    sitemap url or upload a specific file format that contains the context can be any text, audio or
+    video format. The system will process the provided data and generate a new project based on the
+    imported or uploaded information.
+    Here is an example to create a bot using a sitemap: [API](https://github.com/Poll-The-
+    People/customgpt-cookbook/blob/main/examples/Create_Bot_By_Sitemap.ipynb)
+    [SDK](https://github.com/Poll-The-People/customgpt-
+    cookbook/blob/main/examples/SDK_Create_Bot_By_Sitemap.ipynb).
 
     Args:
         multipart_data (CreateProjectMultipartData):
@@ -118,7 +127,16 @@ def sync(
 ]:
     """Create a new project.
 
-     Create a new project from either sitemap or uploaded file.
+     Create a new project by importing data either from a sitemap or an uploaded file. This endpoint
+    enables you to initiate the creation of a new project by supplying the necessary project data that
+    will be used as the context. You can choose to import the project structure and content from a
+    sitemap url or upload a specific file format that contains the context can be any text, audio or
+    video format. The system will process the provided data and generate a new project based on the
+    imported or uploaded information.
+    Here is an example to create a bot using a sitemap: [API](https://github.com/Poll-The-
+    People/customgpt-cookbook/blob/main/examples/Create_Bot_By_Sitemap.ipynb)
+    [SDK](https://github.com/Poll-The-People/customgpt-
+    cookbook/blob/main/examples/SDK_Create_Bot_By_Sitemap.ipynb).
 
     Args:
         multipart_data (CreateProjectMultipartData):
@@ -165,7 +183,16 @@ async def asyncio(
 ]:
     """Create a new project.
 
-     Create a new project from either sitemap or uploaded file.
+     Create a new project by importing data either from a sitemap or an uploaded file. This endpoint
+    enables you to initiate the creation of a new project by supplying the necessary project data that
+    will be used as the context. You can choose to import the project structure and content from a
+    sitemap url or upload a specific file format that contains the context can be any text, audio or
+    video format. The system will process the provided data and generate a new project based on the
+    imported or uploaded information.
+    Here is an example to create a bot using a sitemap: [API](https://github.com/Poll-The-
+    People/customgpt-cookbook/blob/main/examples/Create_Bot_By_Sitemap.ipynb)
+    [SDK](https://github.com/Poll-The-People/customgpt-
+    cookbook/blob/main/examples/SDK_Create_Bot_By_Sitemap.ipynb).
 
     Args:
         multipart_data (CreateProjectMultipartData):

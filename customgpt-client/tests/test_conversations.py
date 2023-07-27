@@ -1,7 +1,8 @@
-import pytest
 import time
+import pytest
 from customgpt_client import CustomGPT
 from tests.credentials import credentials
+
 
 def test_sync_conversations():
     CustomGPT.base_url, CustomGPT.api_key = credentials()
