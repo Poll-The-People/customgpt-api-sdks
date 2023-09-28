@@ -11,12 +11,11 @@ def test_sync_projects():
         project_name="test", sitemap_path="https://adorosario.github.io/small-sitemap.xml"
     )
     response_create = response.parsed
-    print(response.content)
     assert response_create.data.project_name == "test"
     assert response.status_code == 201
 
     response = CustomGPT.Project.update(
-        project_id=response_create.data.id,
+        project_id=response.parsed.data.id,
         project_name="test2",
         sitemap_path="https://adorosario.github.io/small-sitemap.xml",
     )
@@ -52,6 +51,17 @@ def test_sync_projects():
     # Delete the project
     response = CustomGPT.Project.delete(project_id=response_create.data.id)
     assert response.status_code == 200
+
+
+def test_error_projects():
+    CustomGPT.base_url, CustomGPT.api_key = credentials()
+
+    response = CustomGPT.Project.update(
+        project_id=12334,
+        project_name="test2",
+        sitemap_path="https://adorosario.github.io/small-sitemap.xml",
+    )
+    assert response.status_code == 403
 
 
 @pytest.mark.asyncio

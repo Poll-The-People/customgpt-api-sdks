@@ -20,6 +20,15 @@ def test_sync_users():
     assert response_json.data.name == "Hamza 2"
 
 
+def test_error_users():
+    CustomGPT.base_url, CustomGPT.api_key = credentials()
+    CustomGPT.api_key = ""
+    response = CustomGPT.Project.create(
+        project_name="test", sitemap_path="https://adorosario.github.io/small-sitemap.xml"
+    )
+    assert response.status_code == 401
+
+
 @pytest.mark.asyncio
 async def test_async_users():
     CustomGPT.base_url, CustomGPT.api_key = credentials()

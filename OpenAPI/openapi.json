@@ -3029,6 +3029,558 @@
                 ]
             }
         },
+        "\/api\/v1\/projects\/{projectId}\/pages\/{pageId}\/metadata": {
+            "get": {
+                "operationId": "get_page_metadata",
+                "tags": [
+                    "Page Metadata"
+                ],
+                "summary": "Get the Metadata for a certain page.",
+                "description": "Retrieve the Metadata for a page based on its unique identifier. This endpoint allows you to fetch the metadata associated with a specific page.",
+                "parameters": [
+                    {
+                        "name": "projectId",
+                        "in": "path",
+                        "description": "The unique identifier of the project.",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "pageId",
+                        "in": "path",
+                        "description": "The unique identifier of the page.",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Get the Page metadata data for a citation",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "description": "The status of the response",
+                                            "enum": [
+                                                "error",
+                                                "success"
+                                            ],
+                                            "type": "string",
+                                            "example": "success"
+                                        },
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "url": {
+                                                    "description": "The URL of the page",
+                                                    "type": "string",
+                                                    "example": "https:\/\/www.example.com"
+                                                },
+                                                "title": {
+                                                    "description": "The title of the page",
+                                                    "type": "string",
+                                                    "example": "Example Domain"
+                                                },
+                                                "description": {
+                                                    "description": "The description of the page",
+                                                    "type": "string",
+                                                    "example": "This domain is for use in illustrative examples in documents. You may use this domain in literature without prior coordination or asking for permission."
+                                                },
+                                                "image": {
+                                                    "description": "The image of the page",
+                                                    "type": "string",
+                                                    "example": "https:\/\/www.example.com\/image.png"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Create page metadata failed",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "description": "The status of the response",
+                                            "enum": [
+                                                "error",
+                                                "success"
+                                            ],
+                                            "type": "string",
+                                            "example": "error"
+                                        },
+                                        "url": {
+                                            "description": "The URL of the request",
+                                            "type": "string",
+                                            "example": "https:\/\/app.customgpt.ai\/api\/v1\/projects\/1"
+                                        },
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "code": {
+                                                    "description": "The error status code",
+                                                    "enum": [
+                                                        400,
+                                                        401,
+                                                        403,
+                                                        404,
+                                                        500,
+                                                        503
+                                                    ],
+                                                    "type": "integer",
+                                                    "example": 400
+                                                },
+                                                "message": {
+                                                    "description": "The error message",
+                                                    "type": "string",
+                                                    "example": "Something went wrong."
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }   
+                    },
+                    "401": {
+                        "description": "API Token is either missing or invalid",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "description": "The status of the response",
+                                            "enum": [
+                                                "error",
+                                                "success"
+                                            ],
+                                            "type": "string",
+                                            "example": "error"
+                                        },
+                                        "url": {
+                                            "description": "The URL of the request",
+                                            "type": "string",
+                                            "example": "https://app.customgpt.ai/api/v1/projects/1"
+                                        },
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "code": {
+                                                    "description": "The error status code",
+                                                    "enum": [
+                                                        400,
+                                                        401,
+                                                        403,
+                                                        404,
+                                                        500,
+                                                        503
+                                                    ],
+                                                    "type": "integer",
+                                                    "example": 401
+                                                },
+                                                "message": {
+                                                    "type": "string",
+                                                    "example": "API Token is either missing or invalid"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Page not found",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "description": "The status of the response",
+                                            "enum": [
+                                                "error",
+                                                "success"
+                                            ],
+                                            "type": "string",
+                                            "example": "error"
+                                        },
+                                        "url": {
+                                            "description": "The URL of the request",
+                                            "type": "string",
+                                            "example": "https:\/\/app.customgpt.ai\/api\/v1\/projects\/1"
+                                        },
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "code": {
+                                                    "description": "The error status code",
+                                                    "enum": [
+                                                        400,
+                                                        401,
+                                                        403,
+                                                        404,
+                                                        500,
+                                                        503
+                                                    ],
+                                                    "type": "integer",
+                                                    "example": 404
+                                                },
+                                                "message": {
+                                                    "description": "The error message",
+                                                    "enum": [
+                                                        "Page id is required",
+                                                        "Page with id {pageId} not found"
+                                                    ],
+                                                    "type": "string",
+                                                    "example": "Page with id 1 not found"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "BearerToken": []
+                    }
+                ]
+            },
+            "put": {
+                "operationId": "update_page_metadata",
+                "tags": [
+                    "Page Metadata"
+                ],
+                "summary": "Update metadata for a certain page.",
+                "description": "Update the metadata for a specific page identified by its unique pageId. This endpoint allows you to update the associated metadata of the page.",
+                "parameters": [
+                    {
+                        "name": "projectId",
+                        "in": "path",
+                        "description": "The id of a project in which page is stored.",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "pageId",
+                        "in": "path",
+                        "description": "The id of a page in which metadata will be updated.",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Update a page metadata",
+                    "content": {
+                        "application\/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "title": {
+                                        "description": "The title of the page used in citations",
+                                        "type": "string",
+                                        "maxLength": 60,
+                                        "nullable": true,
+                                        "example": "Title"
+                                    },
+                                    "url": {
+                                        "description": "The url of the page used in citations",
+                                        "type": "string",
+                                        "maxLength": 2000,
+                                        "nullable": true,
+                                        "example": "https:\/\/example.com\/"
+                                    },
+                                    "description": {
+                                        "description": "The description of the page used in citations",
+                                        "type": "string",
+                                        "maxLength": 500,
+                                        "nullable": true,
+                                        "example": "One to two sentences."
+                                    },
+                                    "image": {
+                                        "description": "The url of the image used in citations",
+                                        "type": "string",
+                                        "maxLength": 2000,
+                                        "nullable": true,
+                                        "example": "https:\/\/example.com\/image.png"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Get the Page metadata data for a citation",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "description": "The status of the response",
+                                            "enum": [
+                                                "error",
+                                                "success"
+                                            ],
+                                            "type": "string",
+                                            "example": "success"
+                                        },
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "url": {
+                                                    "description": "The URL of the page",
+                                                    "type": "string",
+                                                    "example": "https:\/\/www.example.com"
+                                                },
+                                                "title": {
+                                                    "description": "The title of the page",
+                                                    "type": "string",
+                                                    "example": "Example Domain"
+                                                },
+                                                "description": {
+                                                    "description": "The description of the page",
+                                                    "type": "string",
+                                                    "example": "This domain is for use in illustrative examples in documents. You may use this domain in literature without prior coordination or asking for permission."
+                                                },
+                                                "image": {
+                                                    "description": "The image of the page",
+                                                    "type": "string",
+                                                    "example": "https:\/\/www.example.com\/image.png"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Argument",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "description": "The status of the response",
+                                            "enum": [
+                                                "error",
+                                                "success"
+                                            ],
+                                            "type": "string",
+                                            "example": "error"
+                                        },
+                                        "url": {
+                                            "description": "The URL of the request",
+                                            "type": "string",
+                                            "example": "https://app.customgpt.ai/api/v1/projects/1"
+                                        },
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "code": {
+                                                    "description": "The error status code",
+                                                    "enum": [
+                                                        400,
+                                                        401,
+                                                        403,
+                                                        404,
+                                                        500,
+                                                        503
+                                                    ],
+                                                    "type": "integer",
+                                                    "example": 400
+                                                },
+                                                "message": {
+                                                    "description": "The error message",
+                                                    "type": "string",
+                                                    "example": "Project id must be integer"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "API Token is either missing or invalid",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "description": "The status of the response",
+                                            "enum": [
+                                                "error",
+                                                "success"
+                                            ],
+                                            "type": "string",
+                                            "example": "error"
+                                        },
+                                        "url": {
+                                            "description": "The URL of the request",
+                                            "type": "string",
+                                            "example": "https://app.customgpt.ai/api/v1/projects/1"
+                                        },
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "code": {
+                                                    "description": "The error status code",
+                                                    "enum": [
+                                                        400,
+                                                        401,
+                                                        403,
+                                                        404,
+                                                        500,
+                                                        503
+                                                    ],
+                                                    "type": "integer",
+                                                    "example": 401
+                                                },
+                                                "message": {
+                                                    "type": "string",
+                                                    "example": "API Token is either missing or invalid"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Page not found",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "description": "The status of the response",
+                                            "enum": [
+                                                "error",
+                                                "success"
+                                            ],
+                                            "type": "string",
+                                            "example": "error"
+                                        },
+                                        "url": {
+                                            "description": "The URL of the request",
+                                            "type": "string",
+                                            "example": "https:\/\/app.customgpt.ai\/api\/v1\/projects\/1"
+                                        },
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "code": {
+                                                    "description": "The error status code",
+                                                    "enum": [
+                                                        400,
+                                                        401,
+                                                        403,
+                                                        404,
+                                                        500,
+                                                        503
+                                                    ],
+                                                    "type": "integer",
+                                                    "example": 404
+                                                },
+                                                "message": {
+                                                    "description": "The error message",
+                                                    "enum": [
+                                                        "Page id is required",
+                                                        "Page with id {pageId} not found"
+                                                    ],
+                                                    "type": "string",
+                                                    "example": "Page with id 1 not found"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "description": "The status of the response",
+                                            "enum": [
+                                                "error",
+                                                "success"
+                                            ],
+                                            "type": "string",
+                                            "example": "error"
+                                        },
+                                        "url": {
+                                            "description": "The URL of the request",
+                                            "type": "string",
+                                            "example": "https://app.customgpt.ai/api/v1/projects/1"
+                                        },
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "code": {
+                                                    "description": "The error status code",
+                                                    "enum": [
+                                                        400,
+                                                        401,
+                                                        403,
+                                                        404,
+                                                        500,
+                                                        503
+                                                    ],
+                                                    "type": "integer",
+                                                    "example": 500
+                                                },
+                                                "message": {
+                                                    "type": "string",
+                                                    "example": "Internal Server Error"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "BearerToken": []
+                    }
+                ]
+            }
+        },
         "/api/v1/projects/{projectId}/settings": {
             "get": {
                 "operationId": "get_settings",
@@ -3068,56 +3620,124 @@
                                         "data": {
                                             "type": "object",
                                             "properties": {
-                                                "chatbot_avatar": {
-                                                    "description": "The chatbot avatar",
+                                                "chat_bot_avatar": {
+                                                    "description": "This is the avatar that is shown in the bot response. You can make it a profile picture or your company logo.",
+                                                    "format": "binary",
                                                     "type": "string",
-                                                    "example": "https://example.com/chatbot_avatar.png"
+                                                    "example": "avatar.png"
                                                 },
-                                                "chatbot_background": {
-                                                    "description": "The chatbot background",
+                                                "chat_bot_bg": {
+                                                    "description": "This is the background image shown in the bot conversations widget. You can change it to a company logo or background image.",
+                                                    "format": "binary",
                                                     "type": "string",
-                                                    "example": "https://example.com/chatbot_background.png"
+                                                    "example": "bg.png"
                                                 },
                                                 "default_prompt": {
-                                                    "description": "The default prompt",
+                                                    "description": "This is the default prompt shown to the user. You can customize this for your company or client.",
                                                     "type": "string",
+                                                    "maxLength": 255,
                                                     "example": "How can I help you?"
                                                 },
                                                 "example_questions": {
-                                                    "description": "The example questions",
+                                                    "description": "These are example questions shown to guide the bot users. You can create customized questions to suit your company or client needs.",
                                                     "type": "array",
                                                     "items": {
-                                                        "type": "string"
-                                                    },
-                                                    "example": [
-                                                        "How do I get started?"
-                                                    ]
+                                                        "type": "string",
+                                                        "example": "How can I help you?"
+                                                    }
                                                 },
                                                 "response_source": {
-                                                    "description": "The response source",
-                                                    "enum": [
-                                                        "default",
-                                                        "own_content",
-                                                        "openai_content"
-                                                    ],
+                                                    "description": "By default, we ask ChatGPT to use only your content in its response (recommended). If you wish ChatGPT to improvise and use its own knowledgebase as well, you can select \"My Content + ChatGPT\"",
                                                     "type": "string",
-                                                    "example": "https://example.com/response_source.json"
+                                                    "maxLength": 255,
+                                                    "example": "own_content"
                                                 },
                                                 "chatbot_msg_lang": {
-                                                    "description": "The chatbot message language",
+                                                    "description": "By default, the chatbot messages like 'Ask Me Anything' are in English. You can customize this to your preferred language. Please note: This setting does not control what language ChatGPT responds in. That is controlled by the user's question. So a user asking in Portuguese, will most likely get a response from ChatGPT in Portuguese.",
                                                     "type": "string",
+                                                    "maxLength": 255,
                                                     "example": "en"
                                                 },
                                                 "chatbot_color": {
-                                                    "description": "The chatbot color in hex format",
+                                                    "description": "Color of the chatbot in hex format",
                                                     "type": "string",
+                                                    "maxLength": 9,
                                                     "example": "#000000"
                                                 },
                                                 "persona_instructions": {
-                                                    "description": "Role instructions for persona or null if persona must be delete",
+                                                    "description": "[Advanced Users] Customize your chatbot behavior by adjusting the system parameter to control its personality traits  and role.",
                                                     "type": "string",
                                                     "nullable": true,
                                                     "example": "You are a custom chatbot assistant called CustomGPT, a friendly lawyer who answers questions based on the given context."
+                                                },
+                                                "citations_answer_source_label_msg": {
+                                                    "description": "This is the message shown to indicate where the response came from. You can customize this message based on your business or language.",
+                                                    "type": "string",
+                                                    "nullable": true,
+                                                    "example": "Where did this answer come from?"
+                                                },
+                                                "citations_sources_label_msg": {
+                                                    "description": "This is the message shown for the Sources label.  You can customize this message based on your business or language.",
+                                                    "type": "string",
+                                                    "nullable": true,
+                                                    "example": "Sources"
+                                                },
+                                                "hang_in_there_msg": {
+                                                    "description": "This is the message shown when the bot is thinking and waiting to answer. You can customize this message based on your tone, personality or language.",
+                                                    "type": "string",
+                                                    "nullable": true,
+                                                    "example": "Hang in there! I'm thinking.."
+                                                },
+                                                "chatbot_siesta_msg": {
+                                                    "description": "This is the message shown when the bot has encountered a problem or error. You can customize this message based on your tone, personality or language.",
+                                                    "type": "string",
+                                                    "nullable": true,
+                                                    "example": "Oops! The chat bot is taking a siesta. This usually happens when OpenAI is down! Please try again later."
+                                                },
+                                                "is_loading_indicator_enabled": {
+                                                    "description": "Show animated loading indicator while waiting for a response from the chatbot",
+                                                    "default": true,
+                                                    "type": "boolean",
+                                                    "nullable": true,
+                                                    "example": true
+                                                },
+                                                "enable_citations": {
+                                                    "description": "Each chatbot response shows an option for the user to see the sources\/citations from your content from which the response was generated.",
+                                                    "default": true,
+                                                    "type": "boolean",
+                                                    "nullable": true,
+                                                    "example": true
+                                                },
+                                                "citations_view_type": {
+                                                    "description": "Control how citations are shown. By default, the user can initiate to see the citations. You can choose to have it \"Auto Shown\" or \"Auto Hide\"",
+                                                    "enum": [
+                                                        "user",
+                                                        "show",
+                                                        "hide"
+                                                    ],
+                                                    "default": "user",
+                                                    "type": "string",
+                                                    "nullable": true,
+                                                    "example": "user"
+                                                },
+                                                "no_answer_message": {
+                                                    "description": "This is the message shown when the bot cannot answer. You can customize it to a message asking the user to contact customer support or leave their email \/ phone.",
+                                                    "type": "string",
+                                                    "nullable": true,
+                                                    "example": "Sorry, I don't have an answer for that."
+                                                },
+                                                "ending_message": {
+                                                    "description": "You can instruct ChatGPT to end every response with some text like asking \"Please email us for further support\" (Not recommended for most use cases)",
+                                                    "type": "string",
+                                                    "nullable": true,
+                                                    "example": "Please email us for further support"
+                                                },
+                                                "remove_branding": {
+                                                    "description": "Controls what branding is shown at the bottom of the chatbot.",
+                                                    "default": false,
+                                                    "type": "boolean",
+                                                    "nullable": true,
+                                                    "example": false
                                                 }
                                             }
                                         }
@@ -3356,25 +3976,25 @@
                             "schema": {
                                 "properties": {
                                     "chat_bot_avatar": {
-                                        "description": "Chatbot avatar",
+                                        "description": "This is the avatar that is shown in the bot response. You can make it a profile picture or your company logo.",
                                         "format": "binary",
                                         "type": "string",
                                         "example": "avatar.png"
                                     },
                                     "chat_bot_bg": {
-                                        "description": "Chatbot background",
+                                        "description": "This is the background image shown in the bot conversations widget. You can change it to a company logo or background image.",
                                         "format": "binary",
                                         "type": "string",
                                         "example": "bg.png"
                                     },
                                     "default_prompt": {
-                                        "description": "Default prompt",
+                                        "description": "This is the default prompt shown to the user. You can customize this for your company or client.",
                                         "type": "string",
                                         "maxLength": 255,
                                         "example": "How can I help you?"
                                     },
                                     "example_questions": {
-                                        "description": "Example questions",
+                                        "description": "These are example questions shown to guide the bot users. You can create customized questions to suit your company or client needs.",
                                         "type": "array",
                                         "items": {
                                             "type": "string",
@@ -3382,28 +4002,97 @@
                                         }
                                     },
                                     "response_source": {
-                                        "description": "Response source",
+                                        "description": "By default, we ask ChatGPT to use only your content in its response (recommended). If you wish ChatGPT to improvise and use its own knowledgebase as well, you can select \"My Content + ChatGPT\"",
                                         "type": "string",
                                         "maxLength": 255,
-                                        "example": "https://example.com"
+                                        "example": "own_content"
                                     },
                                     "chatbot_msg_lang": {
-                                        "description": "Chatbot message language",
+                                        "description": "By default, the chatbot messages like 'Ask Me Anything' are in English. You can customize this to your preferred language. Please note: This setting does not control what language ChatGPT responds in. That is controlled by the user's question. So a user asking in Portuguese, will most likely get a response from ChatGPT in Portuguese.",
                                         "type": "string",
                                         "maxLength": 255,
                                         "example": "en"
                                     },
                                     "chatbot_color": {
-                                        "description": "Chatbot color in hex format",
+                                        "description": "Color of the chatbot in hex format",
                                         "type": "string",
                                         "maxLength": 9,
                                         "example": "#000000"
                                     },
                                     "persona_instructions": {
-                                        "description": "Role instructions for persona or null if persona must be delete",
+                                        "description": "[Advanced Users] Customize your chatbot behavior by adjusting the system parameter to control its personality traits  and role.",
                                         "type": "string",
                                         "nullable": true,
                                         "example": "You are a custom chatbot assistant called CustomGPT, a friendly lawyer who answers questions based on the given context."
+                                    },
+                                    "citations_answer_source_label_msg": {
+                                        "description": "This is the message shown to indicate where the response came from. You can customize this message based on your business or language.",
+                                        "type": "string",
+                                        "nullable": true,
+                                        "example": "Where did this answer come from?"
+                                    },
+                                    "citations_sources_label_msg": {
+                                        "description": "This is the message shown for the Sources label.  You can customize this message based on your business or language.",
+                                        "type": "string",
+                                        "nullable": true,
+                                        "example": "Sources"
+                                    },
+                                    "hang_in_there_msg": {
+                                        "description": "This is the message shown when the bot is thinking and waiting to answer. You can customize this message based on your tone, personality or language.",
+                                        "type": "string",
+                                        "nullable": true,
+                                        "example": "Hang in there! I'm thinking.."
+                                    },
+                                    "chatbot_siesta_msg": {
+                                        "description": "This is the message shown when the bot has encountered a problem or error. You can customize this message based on your tone, personality or language.",
+                                        "type": "string",
+                                        "nullable": true,
+                                        "example": "Oops! The chat bot is taking a siesta. This usually happens when OpenAI is down! Please try again later."
+                                    },
+                                    "is_loading_indicator_enabled": {
+                                        "description": "Show animated loading indicator while waiting for a response from the chatbot",
+                                        "default": true,
+                                        "type": "boolean",
+                                        "nullable": true,
+                                        "example": true
+                                    },
+                                    "enable_citations": {
+                                        "description": "Each chatbot response shows an option for the user to see the sources\/citations from your content from which the response was generated.",
+                                        "default": true,
+                                        "type": "boolean",
+                                        "nullable": true,
+                                        "example": true
+                                    },
+                                    "citations_view_type": {
+                                        "description": "Control how citations are shown. By default, the user can initiate to see the citations. You can choose to have it \"Auto Shown\" or \"Auto Hide\"",
+                                        "enum": [
+                                            "user",
+                                            "show",
+                                            "hide"
+                                        ],
+                                        "default": "user",
+                                        "type": "string",
+                                        "nullable": true,
+                                        "example": "user"
+                                    },
+                                    "no_answer_message": {
+                                        "description": "This is the message shown when the bot cannot answer. You can customize it to a message asking the user to contact customer support or leave their email \/ phone.",
+                                        "type": "string",
+                                        "nullable": true,
+                                        "example": "Sorry, I don't have an answer for that."
+                                    },
+                                    "ending_message": {
+                                        "description": "You can instruct ChatGPT to end every response with some text like asking \"Please email us for further support\" (Not recommended for most use cases)",
+                                        "type": "string",
+                                        "nullable": true,
+                                        "example": "Please email us for further support"
+                                    },
+                                    "remove_branding": {
+                                        "description": "Controls what branding is shown at the bottom of the chatbot.",
+                                        "default": false,
+                                        "type": "boolean",
+                                        "nullable": true,
+                                        "example": false
                                     }
                                 }
                             }
@@ -6025,12 +6714,25 @@
                                                                             "user_agent": {
                                                                                 "description": "The user agent of the user.",
                                                                                 "type": "string",
-                                                                                "example": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko)"
+                                                                                "example": "Mozilla\/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit\/537.36 (KHTML, like Gecko)"
+                                                                            },
+                                                                            "external_id": {
+                                                                                "description": "The external ID of the prompt history.",
+                                                                                "type": "string",
+                                                                                "maxLength": 128,
+                                                                                "example": "ext_id_1234567890"
+                                                                            },
+                                                                            "request_source": {
+                                                                                "description": "The source of the request.",
+                                                                                "type": "string",
+                                                                                "example": "web"
                                                                             }
                                                                         },
                                                                         "example": {
                                                                             "user_ip": "127.0.0.1",
-                                                                            "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko)"
+                                                                            "user_agent": "Mozilla\/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit\/537.36 (KHTML, like Gecko)",
+                                                                            "external_id": "ext_id_1234567890",
+                                                                            "request_source": "web"
                                                                         }
                                                                     }
                                                                 }
@@ -6360,6 +7062,12 @@
                                         "description": "Prompt to send to OpenAI",
                                         "type": "string",
                                         "example": "Write me hello world program in C"
+                                    },
+                                    "custom_persona": {
+                                        "description": "Custom persona to use for the conversation",
+                                        "type": "string",
+                                        "nullable": true,
+                                        "example": "You are a custom chatbot assistant called *bot name*, a friendly *bot role* who works for *organization* and answers questions based on the given context. Be as helpful as possible. Always prioritize the customer. Escalate complex issues. Stay on topic. Use appropriate language, Acknowledge limitations."
                                     }
                                 }
                             }
@@ -6447,12 +7155,25 @@
                                                         "user_agent": {
                                                             "description": "The user agent of the user.",
                                                             "type": "string",
-                                                            "example": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko)"
+                                                            "example": "Mozilla\/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit\/537.36 (KHTML, like Gecko)"
+                                                        },
+                                                        "external_id": {
+                                                            "description": "The external ID of the prompt history.",
+                                                            "type": "string",
+                                                            "maxLength": 128,
+                                                            "example": "ext_id_1234567890"
+                                                        },
+                                                        "request_source": {
+                                                            "description": "The source of the request.",
+                                                            "type": "string",
+                                                            "example": "web"
                                                         }
                                                     },
                                                     "example": {
                                                         "user_ip": "127.0.0.1",
-                                                        "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko)"
+                                                        "user_agent": "Mozilla\/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit\/537.36 (KHTML, like Gecko)",
+                                                        "external_id": "ext_id_1234567890",
+                                                        "request_source": "web"
                                                     }
                                                 }
                                             }
@@ -8821,22 +9542,22 @@
                 "type": "object",
                 "properties": {
                     "chatbot_avatar": {
-                        "description": "The chatbot avatar",
+                        "description": "This is the avatar that is shown in the bot response. You can make it a profile picture or your company logo.",
                         "type": "string",
-                        "example": "https://example.com/chatbot_avatar.png"
+                        "example": "https:\/\/example.com\/chatbot_avatar.png"
                     },
                     "chatbot_background": {
-                        "description": "The chatbot background",
+                        "description": "This is the background image shown in the bot conversations widget. You can change it to a company logo or background image.",
                         "type": "string",
-                        "example": "https://example.com/chatbot_background.png"
+                        "example": "https:\/\/example.com\/chatbot_background.png"
                     },
                     "default_prompt": {
-                        "description": "The default prompt",
+                        "description": "This is the default prompt shown to the user. You can customize this for your company or client.",
                         "type": "string",
                         "example": "How can I help you?"
                     },
                     "example_questions": {
-                        "description": "The example questions",
+                        "description": "These are example questions shown to guide the bot users. You can create customized questions to suit your company or client needs.",
                         "type": "array",
                         "items": {
                             "type": "string"
@@ -8846,79 +9567,161 @@
                         ]
                     },
                     "response_source": {
-                        "description": "The response source",
+                        "description": "By default, we ask ChatGPT to use only your content in its response (recommended). If you wish ChatGPT to improvise and use its own knowledgebase as well, you can select \"My Content + ChatGPT\"",
                         "enum": [
                             "default",
                             "own_content",
                             "openai_content"
                         ],
                         "type": "string",
-                        "example": "https://example.com/response_source.json"
+                        "example": "own_content"
                     },
                     "chatbot_msg_lang": {
-                        "description": "The chatbot message language",
+                        "description": "By default, the chatbot messages like 'Ask Me Anything' are in English. You can customize this to your preferred language. Please note: This setting does not control what language ChatGPT responds in. That is controlled by the user's question. So a user asking in Portuguese, will most likely get a response from ChatGPT in Portuguese.",
                         "type": "string",
                         "example": "en"
                     },
                     "chatbot_color": {
-                        "description": "The chatbot color in hex format",
+                        "description": "Color of the chatbot in hex format",
                         "type": "string",
                         "example": "#000000"
                     },
                     "persona_instructions": {
-                        "description": "Role instructions for persona or null if persona must be delete",
+                        "description": "[Advanced Users] Customize your chatbot behavior by adjusting the system parameter to control its personality traits  and role.",
                         "type": "string",
                         "nullable": true,
                         "example": "You are a custom chatbot assistant called CustomGPT, a friendly lawyer who answers questions based on the given context."
+                    },
+                    "citations_answer_source_label_msg": {
+                        "description": "This is the message shown to indicate where the response came from. You can customize this message based on your business or language.",
+                        "type": "string",
+                        "nullable": true,
+                        "example": "Where did this answer come from?"
+                    },
+                    "citations_sources_label_msg": {
+                        "description": "This is the message shown for the Sources label.  You can customize this message based on your business or language.",
+                        "type": "string",
+                        "nullable": true,
+                        "example": "Sources"
+                    },
+                    "hang_in_there_msg": {
+                        "description": "This is the message shown when the bot is thinking and waiting to answer. You can customize this message based on your tone, personality or language.",
+                        "type": "string",
+                        "nullable": true,
+                        "example": "Hang in there! I'm thinking.."
+                    },
+                    "chatbot_siesta_msg": {
+                        "description": "This is the message shown when the bot has encountered a problem or error. You can customize this message based on your tone, personality or language.",
+                        "type": "string",
+                        "nullable": true,
+                        "example": "Oops! The chat bot is taking a siesta. This usually happens when OpenAI is down! Please try again later."
+                    },
+                    "is_loading_indicator_enabled": {
+                        "description": "Show animated loading indicator while waiting for a response from the chatbot",
+                        "default": true,
+                        "type": "boolean",
+                        "nullable": true,
+                        "example": true
+                    },
+                    "enable_citations": {
+                        "description": "Each chatbot response shows an option for the user to see the sources\/citations from your content from which the response was generated.",
+                        "default": true,
+                        "type": "boolean",
+                        "nullable": true,
+                        "example": true
+                    },
+                    "citations_view_type": {
+                        "description": "Control how citations are shown. By default, the user can initiate to see the citations. You can choose to have it \"Auto Shown\" or \"Auto Hide\"",
+                        "enum": [
+                            "user",
+                            "show",
+                            "hide"
+                        ],
+                        "default": "user",
+                        "type": "string",
+                        "nullable": true,
+                        "example": "user"
+                    },
+                    "no_answer_message": {
+                        "description": "This is the message shown when the bot cannot answer. You can customize it to a message asking the user to contact customer support or leave their email \/ phone.",
+                        "type": "string",
+                        "nullable": true,
+                        "example": "Sorry, I don't have an answer for that."
+                    },
+                    "ending_message": {
+                        "description": "You can instruct ChatGPT to end every response with some text like asking \"Please email us for further support\" (Not recommended for most use cases)",
+                        "type": "string",
+                        "nullable": true,
+                        "example": "Please email us for further support"
+                    },
+                    "remove_branding": {
+                        "description": "Controls what branding is shown at the bottom of the chatbot.",
+                        "default": false,
+                        "type": "boolean",
+                        "nullable": true,
+                        "example": false
                     }
                 }
             },
             "OpenGraphCache": {
                 "type": "object",
                 "properties": {
-                    "page_url": {
-                        "description": "The URL of the page",
-                        "type": "string",
-                        "example": "https://www.example.com"
+                    "id": {
+                        "description": "The unique identifier of the citation",
+                        "type": "integer",
+                        "example": 1
                     },
                     "title": {
                         "description": "The title of the page",
                         "type": "string",
                         "example": "Example Domain"
                     },
+                    "page_url": {
+                        "description": "The URL of the page",
+                        "type": "string",
+                        "nullable": true,
+                        "example": "https:\/\/www.example.com"
+                    },
                     "description": {
                         "description": "The description of the page",
                         "type": "string",
+                        "nullable": true,
                         "example": "This domain is for use in illustrative examples in documents. You may use this domain in literature without prior coordination or asking for permission."
                     },
                     "image": {
                         "description": "The image of the page",
                         "type": "string",
-                        "example": "https://www.example.com/image.png"
+                        "nullable": true,
+                        "example": "https:\/\/www.example.com\/image.png"
                     },
                     "image_width": {
                         "description": "The width of the image of the page",
                         "type": "integer",
+                        "nullable": true,
                         "example": 1200
                     },
                     "image_height": {
                         "description": "The height of the image of the page",
                         "type": "integer",
+                        "nullable": true,
                         "example": 630
                     },
                     "url": {
                         "description": "The URL of the page",
                         "type": "string",
-                        "example": "https://www.example.com"
+                        "nullable": true,
+                        "example": "https:\/\/www.example.com"
                     },
                     "favicon": {
                         "description": "The favicon of the page",
                         "type": "string",
-                        "example": "https://www.example.com/favicon.ico"
+                        "nullable": true,
+                        "example": "https:\/\/www.example.com\/favicon.ico"
                     },
                     "site_name": {
                         "description": "The site name of the page",
                         "type": "string",
+                        "nullable": true,
                         "example": "Example Domain"
                     }
                 }
@@ -8934,7 +9737,7 @@
                     "page_url": {
                         "description": "URL of the page or file",
                         "type": "string",
-                        "example": "https://example.com"
+                        "example": "https:\/\/example.com"
                     },
                     "page_url_hash": {
                         "description": "Hash of the URL of the page or file",
@@ -8951,7 +9754,7 @@
                         "description": "This is the path where the page is stored in S3.\\nNote: This is omitted in the response if the page is not a file",
                         "type": "string",
                         "nullable": true,
-                        "example": "project-1/page-1/file.pdf"
+                        "example": "project-1\/page-1\/file.pdf"
                     },
                     "crawl_status": {
                         "description": "Crawl status of the page",
@@ -8959,7 +9762,7 @@
                             "ok",
                             "queued",
                             "failed",
-                            "n/a",
+                            "n\/a",
                             "limited"
                         ],
                         "default": "queued",
@@ -8972,7 +9775,7 @@
                             "ok",
                             "queued",
                             "failed",
-                            "n/a",
+                            "n\/a",
                             "limited"
                         ],
                         "default": "queued",
@@ -9019,8 +9822,7 @@
                         "description": "Date and time when the page was deleted",
                         "format": "date-time",
                         "type": "string",
-                        "example": "2021-01-01 00:00:00",
-                        "nullable": true
+                        "example": "2021-01-01 00:00:00"
                     }
                 }
             },
@@ -9040,7 +9842,7 @@
                     "sitemap_path": {
                         "description": "Project sitemap",
                         "type": "string",
-                        "example": "https://www.example.com/sitemap.xml"
+                        "example": "https:\/\/www.example.com\/sitemap.xml"
                     },
                     "is_chat_active": {
                         "description": "Whether the chat bot is active or not",
@@ -9146,7 +9948,7 @@
                         "description": "User profile photo URL",
                         "format": "url",
                         "type": "string",
-                        "example": "https://app.customgpt.ai/user/1/profile_photo_url"
+                        "example": "https:\/\/app.customgpt.ai\/user\/1\/profile_photo_url"
                     },
                     "updated_at": {
                         "description": "When was this user updated?",
@@ -9182,7 +9984,7 @@
                     "logo": {
                         "description": "Project plugin logo",
                         "type": "string",
-                        "example": "https://app.customgpt.ai/logo.svg"
+                        "example": "https:\/\/app.customgpt.ai\/logo.svg"
                     },
                     "is_active": {
                         "description": "Whether the project plugin is active or not",
@@ -9246,7 +10048,7 @@
                             "sitemap_path": {
                                 "description": "The project source sitemap path",
                                 "type": "string",
-                                "example": "https://example.com/sitemap.xml"
+                                "example": "https:\/\/example.com\/sitemap.xml"
                             }
                         }
                     },
@@ -9254,105 +10056,7 @@
                         "description": "The project source pages",
                         "type": "array",
                         "items": {
-                            "type": "object",
-                            "properties": {
-                                "id": {
-                                    "description": "Page ID",
-                                    "type": "integer",
-                                    "example": 1
-                                },
-                                "page_url": {
-                                    "description": "URL of the page or file",
-                                    "type": "string",
-                                    "example": "https://example.com"
-                                },
-                                "page_url_hash": {
-                                    "description": "Hash of the URL of the page or file",
-                                    "format": "md5",
-                                    "type": "string",
-                                    "example": "d41d8cd98f00b204e9800998ecf8427e"
-                                },
-                                "project_id": {
-                                    "description": "Project ID",
-                                    "type": "integer",
-                                    "example": 1
-                                },
-                                "s3_path": {
-                                    "description": "This is the path where the page is stored in S3.\\nNote: This is omitted in the response if the page is not a file",
-                                    "type": "string",
-                                    "nullable": true,
-                                    "example": "project-1/page-1/file.pdf"
-                                },
-                                "crawl_status": {
-                                    "description": "Crawl status of the page",
-                                    "enum": [
-                                        "ok",
-                                        "queued",
-                                        "failed",
-                                        "n/a",
-                                        "limited"
-                                    ],
-                                    "default": "queued",
-                                    "type": "string",
-                                    "example": "queued"
-                                },
-                                "index_status": {
-                                    "description": "Index status of the page",
-                                    "enum": [
-                                        "ok",
-                                        "queued",
-                                        "failed",
-                                        "n/a",
-                                        "limited"
-                                    ],
-                                    "default": "queued",
-                                    "type": "string",
-                                    "example": "queued"
-                                },
-                                "is_file": {
-                                    "description": "Whether the page is a file or not",
-                                    "default": false,
-                                    "type": "boolean",
-                                    "example": true
-                                },
-                                "is_file_kept": {
-                                    "description": "Whether the file is kept after processing or not.\\nNote: This is omitted in the response if the page is not a file",
-                                    "default": true,
-                                    "type": "boolean",
-                                    "example": true
-                                },
-                                "filename": {
-                                    "description": "Filename of the page.\\nNote: This is omitted in the response if the page is not a file",
-                                    "type": "string",
-                                    "nullable": true,
-                                    "example": "file.pdf"
-                                },
-                                "filesize": {
-                                    "description": "Filesize of the page.\\nNote: This is omitted in the response if the page is not a file",
-                                    "type": "integer",
-                                    "nullable": true,
-                                    "example": 100
-                                },
-                                "created_at": {
-                                    "description": "Date and time when the page was created",
-                                    "format": "date-time",
-                                    "type": "string",
-                                    "example": "2021-01-01 00:00:00"
-                                },
-                                "updated_at": {
-                                    "description": "Date and time when the page was updated",
-                                    "format": "date-time",
-                                    "type": "string",
-                                    "example": "2021-01-01 00:00:00"
-                                },
-                                "deleted_at": {
-                                    "description": "Date and time when the page was deleted",
-                                    "format": "date-time",
-                                    "type": "string",
-                                    "example": "2021-01-01 00:00:00",
-                                    "nullable": true
-                                }
-                            }
+                            "$ref": "#\/components\/schemas\/Page"
                         },
                         "nullable": true
                     }
@@ -9422,13 +10126,51 @@
                             "user_agent": {
                                 "description": "The user agent of the user.",
                                 "type": "string",
-                                "example": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko)"
+                                "example": "Mozilla\/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit\/537.36 (KHTML, like Gecko)"
+                            },
+                            "external_id": {
+                                "description": "The external ID of the prompt history.",
+                                "type": "string",
+                                "maxLength": 128,
+                                "example": "ext_id_1234567890"
+                            },
+                            "request_source": {
+                                "description": "The source of the request.",
+                                "type": "string",
+                                "example": "web"
                             }
                         },
                         "example": {
                             "user_ip": "127.0.0.1",
-                            "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko)"
+                            "user_agent": "Mozilla\/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit\/537.36 (KHTML, like Gecko)",
+                            "external_id": "ext_id_1234567890",
+                            "request_source": "web"
                         }
+                    }
+                }
+            },
+            "PageMetadata": {
+                "type": "object",
+                "properties": {
+                    "url": {
+                        "description": "The URL of the page",
+                        "type": "string",
+                        "example": "https:\/\/www.example.com"
+                    },
+                    "title": {
+                        "description": "The title of the page",
+                        "type": "string",
+                        "example": "Example Domain"
+                    },
+                    "description": {
+                        "description": "The description of the page",
+                        "type": "string",
+                        "example": "This domain is for use in illustrative examples in documents. You may use this domain in literature without prior coordination or asking for permission."
+                    },
+                    "image": {
+                        "description": "The image of the page",
+                        "type": "string",
+                        "example": "https:\/\/www.example.com\/image.png"
                     }
                 }
             },
@@ -9451,8 +10193,7 @@
                         "description": "When was this conversation deleted?",
                         "format": "date-time",
                         "type": "string",
-                        "example": "2023-04-30 16:43:53",
-                        "nullable": true
+                        "example": "2023-04-30 16:43:53"
                     },
                     "id": {
                         "description": "Conversation ID",
@@ -9484,10 +10225,10 @@
             }
         },
         "responses": {
-            "FlaskServiceErrorResponse": {
-                "description": "Service unavailable",
+             "UpdatePageMetadataErrorResponse": {
+                "description": "Update page metadata failed",
                 "content": {
-                    "application/json": {
+                    "application\/json": {
                         "schema": {
                             "type": "object",
                             "properties": {
@@ -9503,7 +10244,7 @@
                                 "url": {
                                     "description": "The URL of the request",
                                     "type": "string",
-                                    "example": "https://app.customgpt.ai/api/v1/projects/1"
+                                    "example": "https:\/\/app.customgpt.ai\/api\/v1\/projects\/1"
                                 },
                                 "data": {
                                     "type": "object",
@@ -9523,11 +10264,55 @@
                                         },
                                         "message": {
                                             "description": "The error message",
+                                            "type": "string",
+                                            "example": "Image must be valid url."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "FlaskServiceErrorResponse": {
+                "description": "Service unavailable",
+                "content": {
+                    "application\/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "status": {
+                                    "description": "The status of the response",
+                                    "enum": [
+                                        "error",
+                                        "success"
+                                    ],
+                                    "type": "string",
+                                    "example": "error"
+                                },
+                                "url": {
+                                    "description": "The URL of the request",
+                                    "type": "string",
+                                    "example": "https:\/\/app.customgpt.ai\/api\/v1\/projects\/1"
+                                },
+                                "data": {
+                                    "type": "object",
+                                    "properties": {
+                                        "code": {
+                                            "description": "The error status code",
                                             "enum": [
-                                                "Sitemap URL is empty",
-                                                "Our system could not validate your sitemap",
-                                                "Our system could not detect any pages in your sitemap"
+                                                400,
+                                                401,
+                                                403,
+                                                404,
+                                                500,
+                                                503
                                             ],
+                                            "type": "integer",
+                                            "example": 400
+                                        },
+                                        "message": {
+                                            "description": "The error message",
                                             "type": "string",
                                             "example": "Sitemap URL is empty"
                                         }
@@ -9582,6 +10367,55 @@
                                             ],
                                             "type": "string",
                                             "example": "Page with id 1 cannot be reindexed"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "CreatePageMetadataErrorResponse": {
+                "description": "Create page metadata failed",
+                "content": {
+                    "application\/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "status": {
+                                    "description": "The status of the response",
+                                    "enum": [
+                                        "error",
+                                        "success"
+                                    ],
+                                    "type": "string",
+                                    "example": "error"
+                                },
+                                "url": {
+                                    "description": "The URL of the request",
+                                    "type": "string",
+                                    "example": "https:\/\/app.customgpt.ai\/api\/v1\/projects\/1"
+                                },
+                                "data": {
+                                    "type": "object",
+                                    "properties": {
+                                        "code": {
+                                            "description": "The error status code",
+                                            "enum": [
+                                                400,
+                                                401,
+                                                403,
+                                                404,
+                                                500,
+                                                503
+                                            ],
+                                            "type": "integer",
+                                            "example": 400
+                                        },
+                                        "message": {
+                                            "description": "The error message",
+                                            "type": "string",
+                                            "example": "Something went wrong."
                                         }
                                     }
                                 }
@@ -11125,6 +11959,55 @@
                     }
                 }
             },
+            "SendMessageResourceExhaustedErrorResponse": {
+                "description": "Resource Exhausted when sending a message to a conversation",
+                "content": {
+                    "application\/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "status": {
+                                    "description": "The status of the response",
+                                    "enum": [
+                                        "error",
+                                        "success"
+                                    ],
+                                    "type": "string",
+                                    "example": "error"
+                                },
+                                "url": {
+                                    "description": "The URL of the request",
+                                    "type": "string",
+                                    "example": "https:\/\/app.customgpt.ai\/api\/v1\/projects\/1"
+                                },
+                                "data": {
+                                    "type": "object",
+                                    "properties": {
+                                        "code": {
+                                            "description": "The error status code",
+                                            "enum": [
+                                                400,
+                                                401,
+                                                403,
+                                                404,
+                                                500,
+                                                503
+                                            ],
+                                            "type": "integer",
+                                            "example": 429
+                                        },
+                                        "message": {
+                                            "description": "The error message",
+                                            "type": "string",
+                                            "example": "You have exhausted your current query credits. Please contact hello@customgpt.ai for further assistance."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
             "UpdateProjectSettingsResponse": {
                 "description": "Project settings have been updated",
                 "content": {
@@ -11588,7 +12471,7 @@
             "PageNotFoundErrorResponse": {
                 "description": "Page not found",
                 "content": {
-                    "application/json": {
+                    "application\/json": {
                         "schema": {
                             "type": "object",
                             "properties": {
@@ -11604,7 +12487,7 @@
                                 "url": {
                                     "description": "The URL of the request",
                                     "type": "string",
-                                    "example": "https://app.customgpt.ai/api/v1/projects/1"
+                                    "example": "https:\/\/app.customgpt.ai\/api\/v1\/projects\/1"
                                 },
                                 "data": {
                                     "type": "object",

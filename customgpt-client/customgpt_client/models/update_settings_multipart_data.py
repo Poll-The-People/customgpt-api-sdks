@@ -3,6 +3,7 @@ from typing import Any, Dict, List, Tuple, Type, TypeVar, Union, cast
 
 import attr
 
+from ..models.update_settings_multipart_data_citations_view_type import UpdateSettingsMultipartDataCitationsViewType
 from ..types import UNSET, File, FileJsonType, Unset
 
 T = TypeVar("T", bound="UpdateSettingsMultipartData")
@@ -12,16 +13,50 @@ T = TypeVar("T", bound="UpdateSettingsMultipartData")
 class UpdateSettingsMultipartData:
     """
     Attributes:
-        chat_bot_avatar (Union[Unset, File]): Chatbot avatar Example: avatar.png.
-        chat_bot_bg (Union[Unset, File]): Chatbot background Example: bg.png.
-        default_prompt (Union[Unset, str]): Default prompt Example: How can I help you?.
-        example_questions (Union[Unset, List[str]]): Example questions
-        response_source (Union[Unset, str]): Response source Example: https://example.com.
-        chatbot_msg_lang (Union[Unset, str]): Chatbot message language Example: en.
-        chatbot_color (Union[Unset, str]): Chatbot color in hex format Example: #000000.
-        persona_instructions (Union[Unset, None, str]): Role instructions for persona or null if persona must be delete
-            Example: You are a custom chatbot assistant called CustomGPT, a friendly lawyer who answers questions based on
-            the given context..
+        chat_bot_avatar (Union[Unset, File]): This is the avatar that is shown in the bot response. You can make it a
+            profile picture or your company logo. Example: avatar.png.
+        chat_bot_bg (Union[Unset, File]): This is the background image shown in the bot conversations widget. You can
+            change it to a company logo or background image. Example: bg.png.
+        default_prompt (Union[Unset, str]): This is the default prompt shown to the user. You can customize this for
+            your company or client. Example: How can I help you?.
+        example_questions (Union[Unset, List[str]]): These are example questions shown to guide the bot users. You can
+            create customized questions to suit your company or client needs.
+        response_source (Union[Unset, str]): By default, we ask ChatGPT to use only your content in its response
+            (recommended). If you wish ChatGPT to improvise and use its own knowledgebase as well, you can select "My
+            Content + ChatGPT" Example: own_content.
+        chatbot_msg_lang (Union[Unset, str]): By default, the chatbot messages like 'Ask Me Anything' are in English.
+            You can customize this to your preferred language. Please note: This setting does not control what language
+            ChatGPT responds in. That is controlled by the user's question. So a user asking in Portuguese, will most likely
+            get a response from ChatGPT in Portuguese. Example: en.
+        chatbot_color (Union[Unset, str]): Color of the chatbot in hex format Example: #000000.
+        persona_instructions (Union[Unset, None, str]): [Advanced Users] Customize your chatbot behavior by adjusting
+            the system parameter to control its personality traits  and role. Example: You are a custom chatbot assistant
+            called CustomGPT, a friendly lawyer who answers questions based on the given context..
+        citations_answer_source_label_msg (Union[Unset, None, str]): This is the message shown to indicate where the
+            response came from. You can customize this message based on your business or language. Example: Where did this
+            answer come from?.
+        citations_sources_label_msg (Union[Unset, None, str]): This is the message shown for the Sources label.  You can
+            customize this message based on your business or language. Example: Sources.
+        hang_in_there_msg (Union[Unset, None, str]): This is the message shown when the bot is thinking and waiting to
+            answer. You can customize this message based on your tone, personality or language. Example: Hang in there! I'm
+            thinking...
+        chatbot_siesta_msg (Union[Unset, None, str]): This is the message shown when the bot has encountered a problem
+            or error. You can customize this message based on your tone, personality or language. Example: Oops! The chat
+            bot is taking a siesta. This usually happens when OpenAI is down! Please try again later..
+        is_loading_indicator_enabled (Union[Unset, None, bool]): Show animated loading indicator while waiting for a
+            response from the chatbot Default: True. Example: True.
+        enable_citations (Union[Unset, None, bool]): Each chatbot response shows an option for the user to see the
+            sources/citations from your content from which the response was generated. Default: True. Example: True.
+        citations_view_type (Union[Unset, None, UpdateSettingsMultipartDataCitationsViewType]): Control how citations
+            are shown. By default, the user can initiate to see the citations. You can choose to have it "Auto Shown" or
+            "Auto Hide" Default: UpdateSettingsMultipartDataCitationsViewType.USER. Example: user.
+        no_answer_message (Union[Unset, None, str]): This is the message shown when the bot cannot answer. You can
+            customize it to a message asking the user to contact customer support or leave their email / phone. Example:
+            Sorry, I don't have an answer for that..
+        ending_message (Union[Unset, None, str]): You can instruct ChatGPT to end every response with some text like
+            asking "Please email us for further support" (Not recommended for most use cases) Example: Please email us for
+            further support.
+        remove_branding (Union[Unset, None, bool]): Controls what branding is shown at the bottom of the chatbot.
     """
 
     chat_bot_avatar: Union[Unset, File] = UNSET
@@ -32,6 +67,18 @@ class UpdateSettingsMultipartData:
     chatbot_msg_lang: Union[Unset, str] = UNSET
     chatbot_color: Union[Unset, str] = UNSET
     persona_instructions: Union[Unset, None, str] = UNSET
+    citations_answer_source_label_msg: Union[Unset, None, str] = UNSET
+    citations_sources_label_msg: Union[Unset, None, str] = UNSET
+    hang_in_there_msg: Union[Unset, None, str] = UNSET
+    chatbot_siesta_msg: Union[Unset, None, str] = UNSET
+    is_loading_indicator_enabled: Union[Unset, None, bool] = True
+    enable_citations: Union[Unset, None, bool] = True
+    citations_view_type: Union[
+        Unset, None, UpdateSettingsMultipartDataCitationsViewType
+    ] = UpdateSettingsMultipartDataCitationsViewType.USER
+    no_answer_message: Union[Unset, None, str] = UNSET
+    ending_message: Union[Unset, None, str] = UNSET
+    remove_branding: Union[Unset, None, bool] = False
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
@@ -52,6 +99,19 @@ class UpdateSettingsMultipartData:
         chatbot_msg_lang = self.chatbot_msg_lang
         chatbot_color = self.chatbot_color
         persona_instructions = self.persona_instructions
+        citations_answer_source_label_msg = self.citations_answer_source_label_msg
+        citations_sources_label_msg = self.citations_sources_label_msg
+        hang_in_there_msg = self.hang_in_there_msg
+        chatbot_siesta_msg = self.chatbot_siesta_msg
+        is_loading_indicator_enabled = self.is_loading_indicator_enabled
+        enable_citations = self.enable_citations
+        citations_view_type: Union[Unset, None, str] = UNSET
+        if not isinstance(self.citations_view_type, Unset):
+            citations_view_type = self.citations_view_type.value if self.citations_view_type else None
+
+        no_answer_message = self.no_answer_message
+        ending_message = self.ending_message
+        remove_branding = self.remove_branding
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
@@ -64,7 +124,7 @@ class UpdateSettingsMultipartData:
             field_dict["default_prompt"] = default_prompt
         if example_questions is not UNSET:
             for index, field_value in enumerate(example_questions):
-                field_dict[f"example_questions[]{index}"] = field_value
+                field_dict[f"example_questions[]"] = field_value
         if response_source is not UNSET:
             field_dict["response_source"] = response_source
         if chatbot_msg_lang is not UNSET:
@@ -73,6 +133,26 @@ class UpdateSettingsMultipartData:
             field_dict["chatbot_color"] = chatbot_color
         if persona_instructions is not UNSET:
             field_dict["persona_instructions"] = persona_instructions
+        if citations_answer_source_label_msg is not UNSET:
+            field_dict["citations_answer_source_label_msg"] = citations_answer_source_label_msg
+        if citations_sources_label_msg is not UNSET:
+            field_dict["citations_sources_label_msg"] = citations_sources_label_msg
+        if hang_in_there_msg is not UNSET:
+            field_dict["hang_in_there_msg"] = hang_in_there_msg
+        if chatbot_siesta_msg is not UNSET:
+            field_dict["chatbot_siesta_msg"] = chatbot_siesta_msg
+        if is_loading_indicator_enabled is not UNSET:
+            field_dict["is_loading_indicator_enabled"] = is_loading_indicator_enabled
+        if enable_citations is not UNSET:
+            field_dict["enable_citations"] = enable_citations
+        if citations_view_type is not UNSET:
+            field_dict["citations_view_type"] = citations_view_type
+        if no_answer_message is not UNSET:
+            field_dict["no_answer_message"] = no_answer_message
+        if ending_message is not UNSET:
+            field_dict["ending_message"] = ending_message
+        if remove_branding is not UNSET:
+            field_dict["remove_branding"] = remove_branding
 
         return field_dict
 
@@ -118,6 +198,57 @@ class UpdateSettingsMultipartData:
             if isinstance(self.persona_instructions, Unset)
             else (None, str(self.persona_instructions).encode(), "text/plain")
         )
+        citations_answer_source_label_msg = (
+            self.citations_answer_source_label_msg
+            if isinstance(self.citations_answer_source_label_msg, Unset)
+            else (None, str(self.citations_answer_source_label_msg).encode(), "text/plain")
+        )
+        citations_sources_label_msg = (
+            self.citations_sources_label_msg
+            if isinstance(self.citations_sources_label_msg, Unset)
+            else (None, str(self.citations_sources_label_msg).encode(), "text/plain")
+        )
+        hang_in_there_msg = (
+            self.hang_in_there_msg
+            if isinstance(self.hang_in_there_msg, Unset)
+            else (None, str(self.hang_in_there_msg).encode(), "text/plain")
+        )
+        chatbot_siesta_msg = (
+            self.chatbot_siesta_msg
+            if isinstance(self.chatbot_siesta_msg, Unset)
+            else (None, str(self.chatbot_siesta_msg).encode(), "text/plain")
+        )
+        is_loading_indicator_enabled = (
+            self.is_loading_indicator_enabled
+            if isinstance(self.is_loading_indicator_enabled, Unset)
+            else (None, str(self.is_loading_indicator_enabled).lower().encode(), "text/plain")
+        )
+        enable_citations = (
+            self.enable_citations
+            if isinstance(self.enable_citations, Unset)
+            else (None, str(self.enable_citations).lower().encode(), "text/plain")
+        )
+        citations_view_type: Union[Unset, Tuple[None, bytes, str]] = UNSET
+        if not isinstance(self.citations_view_type, Unset):
+            citations_view_type = (
+                (None, str(self.citations_view_type.value).encode(), "text/plain") if self.citations_view_type else None
+            )
+
+        no_answer_message = (
+            self.no_answer_message
+            if isinstance(self.no_answer_message, Unset)
+            else (None, str(self.no_answer_message).encode(), "text/plain")
+        )
+        ending_message = (
+            self.ending_message
+            if isinstance(self.ending_message, Unset)
+            else (None, str(self.ending_message).encode(), "text/plain")
+        )
+        remove_branding = (
+            self.remove_branding
+            if isinstance(self.remove_branding, Unset)
+            else (None, str(self.remove_branding).lower().encode(), "text/plain")
+        )
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(
@@ -132,7 +263,7 @@ class UpdateSettingsMultipartData:
             field_dict["default_prompt"] = default_prompt
         if example_questions is not UNSET:
             for index, field_value in enumerate(example_questions):
-                field_dict[f"example_questions[]{index}"] = field_value
+                field_dict[f"example_questions[]"] = field_value
         if response_source is not UNSET:
             field_dict["response_source"] = response_source
         if chatbot_msg_lang is not UNSET:
@@ -141,6 +272,26 @@ class UpdateSettingsMultipartData:
             field_dict["chatbot_color"] = chatbot_color
         if persona_instructions is not UNSET:
             field_dict["persona_instructions"] = persona_instructions
+        if citations_answer_source_label_msg is not UNSET:
+            field_dict["citations_answer_source_label_msg"] = citations_answer_source_label_msg
+        if citations_sources_label_msg is not UNSET:
+            field_dict["citations_sources_label_msg"] = citations_sources_label_msg
+        if hang_in_there_msg is not UNSET:
+            field_dict["hang_in_there_msg"] = hang_in_there_msg
+        if chatbot_siesta_msg is not UNSET:
+            field_dict["chatbot_siesta_msg"] = chatbot_siesta_msg
+        if is_loading_indicator_enabled is not UNSET:
+            field_dict["is_loading_indicator_enabled"] = is_loading_indicator_enabled
+        if enable_citations is not UNSET:
+            field_dict["enable_citations"] = enable_citations
+        if citations_view_type is not UNSET:
+            field_dict["citations_view_type"] = citations_view_type
+        if no_answer_message is not UNSET:
+            field_dict["no_answer_message"] = no_answer_message
+        if ending_message is not UNSET:
+            field_dict["ending_message"] = ending_message
+        if remove_branding is not UNSET:
+            field_dict["remove_branding"] = remove_branding
 
         return field_dict
 
@@ -172,6 +323,33 @@ class UpdateSettingsMultipartData:
 
         persona_instructions = src_dict.get("persona_instructions")
 
+        citations_answer_source_label_msg = src_dict.get("citations_answer_source_label_msg")
+
+        citations_sources_label_msg = src_dict.get("citations_sources_label_msg")
+
+        hang_in_there_msg = src_dict.get("hang_in_there_msg")
+
+        chatbot_siesta_msg = src_dict.get("chatbot_siesta_msg")
+
+        is_loading_indicator_enabled = src_dict.get("is_loading_indicator_enabled")
+
+        enable_citations = src_dict.get("enable_citations")
+
+        _citations_view_type = src_dict.get("citations_view_type")
+        citations_view_type: Union[Unset, None, UpdateSettingsMultipartDataCitationsViewType]
+        if _citations_view_type is None:
+            citations_view_type = None
+        elif isinstance(_citations_view_type, Unset):
+            citations_view_type = UNSET
+        else:
+            citations_view_type = UpdateSettingsMultipartDataCitationsViewType(_citations_view_type)
+
+        no_answer_message = src_dict.get("no_answer_message")
+
+        ending_message = src_dict.get("ending_message")
+
+        remove_branding = src_dict.get("remove_branding")
+
         update_settings_multipart_data = cls(
             chat_bot_avatar=chat_bot_avatar,
             chat_bot_bg=chat_bot_bg,
@@ -181,6 +359,16 @@ class UpdateSettingsMultipartData:
             chatbot_msg_lang=chatbot_msg_lang,
             chatbot_color=chatbot_color,
             persona_instructions=persona_instructions,
+            citations_answer_source_label_msg=citations_answer_source_label_msg,
+            citations_sources_label_msg=citations_sources_label_msg,
+            hang_in_there_msg=hang_in_there_msg,
+            chatbot_siesta_msg=chatbot_siesta_msg,
+            is_loading_indicator_enabled=is_loading_indicator_enabled,
+            enable_citations=enable_citations,
+            citations_view_type=citations_view_type,
+            no_answer_message=no_answer_message,
+            ending_message=ending_message,
+            remove_branding=remove_branding,
         )
 
         update_settings_multipart_data.additional_properties = src_dict

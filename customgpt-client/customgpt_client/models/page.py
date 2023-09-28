@@ -37,7 +37,7 @@ class Page:
             00:00:00.
         updated_at (Union[Unset, datetime.datetime]): Date and time when the page was updated Example: 2021-01-01
             00:00:00.
-        deleted_at (Union[Unset, None, datetime.datetime]): Date and time when the page was deleted Example: 2021-01-01
+        deleted_at (Union[Unset, datetime.datetime]): Date and time when the page was deleted Example: 2021-01-01
             00:00:00.
     """
 
@@ -54,7 +54,7 @@ class Page:
     filesize: Union[Unset, None, int] = UNSET
     created_at: Union[Unset, datetime.datetime] = UNSET
     updated_at: Union[Unset, datetime.datetime] = UNSET
-    deleted_at: Union[Unset, None, datetime.datetime] = UNSET
+    deleted_at: Union[Unset, datetime.datetime] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
@@ -83,9 +83,9 @@ class Page:
         if not isinstance(self.updated_at, Unset):
             updated_at = self.updated_at.isoformat()
 
-        deleted_at: Union[Unset, None, str] = UNSET
+        deleted_at: Union[Unset, str] = UNSET
         if not isinstance(self.deleted_at, Unset):
-            deleted_at = self.deleted_at.isoformat() if self.deleted_at else None
+            deleted_at = self.deleted_at.isoformat()
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
@@ -170,10 +170,8 @@ class Page:
             updated_at = isoparse(_updated_at)
 
         _deleted_at = src_dict.get("deleted_at")
-        deleted_at: Union[Unset, None, datetime.datetime]
-        if _deleted_at is None:
-            deleted_at = None
-        elif isinstance(_deleted_at, Unset):
+        deleted_at: Union[Unset, datetime.datetime]
+        if isinstance(_deleted_at, Unset):
             deleted_at = UNSET
         else:
             deleted_at = isoparse(_deleted_at)

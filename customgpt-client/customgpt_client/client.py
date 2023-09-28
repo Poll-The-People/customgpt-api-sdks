@@ -12,6 +12,7 @@ from customgpt_client.api.conversations import (
     send_message,
     update_conversation,
 )
+from customgpt_client.api.page_metadata import get_page_metadata, update_page_metadata
 from customgpt_client.api.pages import delete_page, get_pages, preview_citation, reindex_page
 from customgpt_client.api.project_plugins import create_plugin, get_plugin, update_plugin
 from customgpt_client.api.project_settings import get_settings, update_settings
@@ -32,6 +33,7 @@ from customgpt_client.models import (
     CreateSourceMultipartData,
     SendMessageJsonBody,
     UpdateConversationJsonBody,
+    UpdatePageMetadataJsonBody,
     UpdatePluginJsonBody,
     UpdateProjectMultipartData,
     UpdateSettingsMultipartData,
@@ -218,6 +220,33 @@ class CustomGPT:
 
             return preview_citation.asyncio_detailed(client=client, *args, **kwargs)
 
+    class PageMetadata:
+        def get(*args: Any, **kwargs: Any):
+            client = set_client()
+
+            return get_page_metadata.sync_detailed(client=client, *args, **kwargs)
+
+        def aget(*args: Any, **kwargs: Any):
+            client = set_client()
+
+            return get_page_metadata.asyncio_detailed(client=client, *args, **kwargs)
+
+        def update(*args: Any, **kwargs: Any):
+            client = set_client()
+            fields = ["title", "url", "description", "image"]
+            json = pluck_data(fields, kwargs)
+            kwargs["json_body"] = UpdatePageMetadataJsonBody(**json)
+
+            return update_page_metadata.sync_detailed(client=client, *args, **kwargs)
+
+        def aupdate(*args: Any, **kwargs: Any):
+            client = set_client()
+            fields = ["title", "url", "description", "image"]
+            json = pluck_data(fields, kwargs)
+            kwargs["json_body"] = UpdatePageMetadataJsonBody(**json)
+
+            return update_page_metadata.asyncio_detailed(client=client, *args, **kwargs)
+
     class ProjectSettings:
         def get(*args: Any, **kwargs: Any):
             client = set_client()
@@ -240,6 +269,16 @@ class CustomGPT:
                 "chatbot_msg_lang",
                 "chatbot_color",
                 "persona_instructions",
+                "citations_answer_source_label_msg",
+                "citations_sources_label_msg",
+                "hang_in_there_msg",
+                "chatbot_siesta_msg",
+                "is_loading_indicator_enabled",
+                "enable_citations",
+                "citations_view_type",
+                "no_answer_message",
+                "ending_message",
+                "remove_branding",
             ]
             json = pluck_data(fields, kwargs)
             kwargs["multipart_data"] = UpdateSettingsMultipartData(**json)
@@ -257,6 +296,16 @@ class CustomGPT:
                 "chatbot_msg_lang",
                 "chatbot_color",
                 "persona_instructions",
+                "citations_answer_source_label_msg",
+                "citations_sources_label_msg",
+                "hang_in_there_msg",
+                "chatbot_siesta_msg",
+                "is_loading_indicator_enabled",
+                "enable_citations",
+                "citations_view_type",
+                "no_answer_message",
+                "ending_message",
+                "remove_branding",
             ]
             json = pluck_data(fields, kwargs)
             kwargs["multipart_data"] = UpdateSettingsMultipartData(**json)
@@ -371,7 +420,7 @@ class CustomGPT:
 
         def send(*args: Any, **kwargs: Any):
             client = set_client()
-            fields = ["prompt"]
+            fields = ["prompt", "custom_persona"]
             json = pluck_data(fields, kwargs)
             kwargs["json_body"] = SendMessageJsonBody(**json)
 
@@ -379,7 +428,7 @@ class CustomGPT:
 
         def asend(*args: Any, **kwargs: Any):
             client = set_client()
-            fields = ["prompt"]
+            fields = ["prompt", "custom_persona"]
             json = pluck_data(fields, kwargs)
             kwargs["json_body"] = SendMessageJsonBody(**json)
 

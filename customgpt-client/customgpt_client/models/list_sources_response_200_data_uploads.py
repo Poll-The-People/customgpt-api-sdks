@@ -79,7 +79,7 @@ class ListSourcesResponse200DataUploads:
             field_dict["settings"] = settings
         if pages is not UNSET:
             for index, field_value in enumerate(pages):
-                field_dict[f"pages[]{index}"] = field_value
+                field_dict[f"pages[]"] = field_value
 
         return field_dict
 
