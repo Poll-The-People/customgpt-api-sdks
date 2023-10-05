@@ -335,14 +335,7 @@ class UpdateSettingsMultipartData:
 
         enable_citations = src_dict.get("enable_citations")
 
-        _citations_view_type = src_dict.get("citations_view_type")
-        citations_view_type: Union[Unset, None, UpdateSettingsMultipartDataCitationsViewType]
-        if _citations_view_type is None:
-            citations_view_type = None
-        elif isinstance(_citations_view_type, Unset):
-            citations_view_type = UNSET
-        else:
-            citations_view_type = UpdateSettingsMultipartDataCitationsViewType(_citations_view_type)
+        citations_view_type = src_dict.get("citations_view_type")
 
         no_answer_message = src_dict.get("no_answer_message")
 

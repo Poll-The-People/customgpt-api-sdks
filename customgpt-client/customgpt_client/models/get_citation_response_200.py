@@ -47,12 +47,7 @@ class GetCitationResponse200:
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         from ..models.get_citation_response_200_data import GetCitationResponse200Data
 
-        _status = src_dict.get("status")
-        status: Union[Unset, GetCitationResponse200Status]
-        if isinstance(_status, Unset):
-            status = UNSET
-        else:
-            status = GetCitationResponse200Status(_status)
+        status = src_dict.get("status")
 
         _data = src_dict.get("data")
         data: Union[Unset, GetCitationResponse200Data]

@@ -42,19 +42,9 @@ class GetPagesResponse404Data:
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        _code = src_dict.get("code")
-        code: Union[Unset, GetPagesResponse404DataCode]
-        if isinstance(_code, Unset):
-            code = UNSET
-        else:
-            code = GetPagesResponse404DataCode(_code)
+        code = src_dict.get("code")
 
-        _message = src_dict.get("message")
-        message: Union[Unset, GetPagesResponse404DataMessage]
-        if isinstance(_message, Unset):
-            message = UNSET
-        else:
-            message = GetPagesResponse404DataMessage(_message)
+        message = src_dict.get("message")
 
         get_pages_response_404_data = cls(
             code=code,

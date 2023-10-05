@@ -52,12 +52,7 @@ class GetPluginResponse404:
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         from ..models.get_plugin_response_404_data import GetPluginResponse404Data
 
-        _status = src_dict.get("status")
-        status: Union[Unset, GetPluginResponse404Status]
-        if isinstance(_status, Unset):
-            status = UNSET
-        else:
-            status = GetPluginResponse404Status(_status)
+        status = src_dict.get("status")
 
         url = src_dict.get("url")
 

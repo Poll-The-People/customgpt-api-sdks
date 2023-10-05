@@ -52,12 +52,7 @@ class GetUserResponse401:
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         from ..models.get_user_response_401_data import GetUserResponse401Data
 
-        _status = src_dict.get("status")
-        status: Union[Unset, GetUserResponse401Status]
-        if isinstance(_status, Unset):
-            status = UNSET
-        else:
-            status = GetUserResponse401Status(_status)
+        status = src_dict.get("status")
 
         url = src_dict.get("url")
 

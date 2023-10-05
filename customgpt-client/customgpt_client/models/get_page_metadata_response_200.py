@@ -47,12 +47,7 @@ class GetPageMetadataResponse200:
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         from ..models.get_page_metadata_response_200_data import GetPageMetadataResponse200Data
 
-        _status = src_dict.get("status")
-        status: Union[Unset, GetPageMetadataResponse200Status]
-        if isinstance(_status, Unset):
-            status = UNSET
-        else:
-            status = GetPageMetadataResponse200Status(_status)
+        status = src_dict.get("status")
 
         _data = src_dict.get("data")
         data: Union[Unset, GetPageMetadataResponse200Data]

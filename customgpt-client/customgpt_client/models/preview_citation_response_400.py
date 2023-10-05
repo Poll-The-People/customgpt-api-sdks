@@ -52,12 +52,7 @@ class PreviewCitationResponse400:
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         from ..models.preview_citation_response_400_data import PreviewCitationResponse400Data
 
-        _status = src_dict.get("status")
-        status: Union[Unset, PreviewCitationResponse400Status]
-        if isinstance(_status, Unset):
-            status = UNSET
-        else:
-            status = PreviewCitationResponse400Status(_status)
+        status = src_dict.get("status")
 
         url = src_dict.get("url")
 

@@ -147,12 +147,7 @@ class Project:
         else:
             deleted_at = isoparse(_deleted_at)
 
-        _type = src_dict.get("type")
-        type: Union[Unset, ProjectType]
-        if isinstance(_type, Unset):
-            type = UNSET
-        else:
-            type = ProjectType(_type)
+        type = src_dict.get("type")
 
         is_shared = src_dict.get("is_shared")
 

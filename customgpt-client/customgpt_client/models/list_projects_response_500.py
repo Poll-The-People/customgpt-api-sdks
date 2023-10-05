@@ -52,12 +52,7 @@ class ListProjectsResponse500:
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         from ..models.list_projects_response_500_data import ListProjectsResponse500Data
 
-        _status = src_dict.get("status")
-        status: Union[Unset, ListProjectsResponse500Status]
-        if isinstance(_status, Unset):
-            status = UNSET
-        else:
-            status = ListProjectsResponse500Status(_status)
+        status = src_dict.get("status")
 
         url = src_dict.get("url")
 

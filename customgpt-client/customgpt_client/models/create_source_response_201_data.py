@@ -104,12 +104,7 @@ class CreateSourceResponse201Data:
         else:
             updated_at = isoparse(_updated_at)
 
-        _type = src_dict.get("type")
-        type: Union[Unset, CreateSourceResponse201DataType]
-        if isinstance(_type, Unset):
-            type = UNSET
-        else:
-            type = CreateSourceResponse201DataType(_type)
+        type = src_dict.get("type")
 
         _settings = src_dict.get("settings")
         settings: Union[Unset, CreateSourceResponse201DataSettings]

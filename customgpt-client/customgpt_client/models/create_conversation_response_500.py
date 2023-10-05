@@ -52,12 +52,7 @@ class CreateConversationResponse500:
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         from ..models.create_conversation_response_500_data import CreateConversationResponse500Data
 
-        _status = src_dict.get("status")
-        status: Union[Unset, CreateConversationResponse500Status]
-        if isinstance(_status, Unset):
-            status = UNSET
-        else:
-            status = CreateConversationResponse500Status(_status)
+        status = src_dict.get("status")
 
         url = src_dict.get("url")
 

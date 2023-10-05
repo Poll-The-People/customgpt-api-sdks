@@ -47,12 +47,7 @@ class MessagesConversationResponse200:
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         from ..models.messages_conversation_response_200_data import MessagesConversationResponse200Data
 
-        _status = src_dict.get("status")
-        status: Union[Unset, MessagesConversationResponse200Status]
-        if isinstance(_status, Unset):
-            status = UNSET
-        else:
-            status = MessagesConversationResponse200Status(_status)
+        status = src_dict.get("status")
 
         _data = src_dict.get("data")
         data: Union[Unset, MessagesConversationResponse200Data]

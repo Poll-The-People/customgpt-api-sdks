@@ -39,12 +39,7 @@ class GetProjectResponse500Data:
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        _code = src_dict.get("code")
-        code: Union[Unset, GetProjectResponse500DataCode]
-        if isinstance(_code, Unset):
-            code = UNSET
-        else:
-            code = GetProjectResponse500DataCode(_code)
+        code = src_dict.get("code")
 
         message = src_dict.get("message")
 

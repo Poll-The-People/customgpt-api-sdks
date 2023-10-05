@@ -148,12 +148,7 @@ class GetPagesResponse200DataProject:
         else:
             deleted_at = isoparse(_deleted_at)
 
-        _type = src_dict.get("type")
-        type: Union[Unset, GetPagesResponse200DataProjectType]
-        if isinstance(_type, Unset):
-            type = UNSET
-        else:
-            type = GetPagesResponse200DataProjectType(_type)
+        type = src_dict.get("type")
 
         is_shared = src_dict.get("is_shared")
 

@@ -47,12 +47,7 @@ class CreateSourceResponse201:
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         from ..models.create_source_response_201_data import CreateSourceResponse201Data
 
-        _status = src_dict.get("status")
-        status: Union[Unset, CreateSourceResponse201Status]
-        if isinstance(_status, Unset):
-            status = UNSET
-        else:
-            status = CreateSourceResponse201Status(_status)
+        status = src_dict.get("status")
 
         _data = src_dict.get("data")
         data: Union[Unset, CreateSourceResponse201Data]

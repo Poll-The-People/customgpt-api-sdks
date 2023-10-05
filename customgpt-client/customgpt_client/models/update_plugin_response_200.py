@@ -47,12 +47,7 @@ class UpdatePluginResponse200:
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         from ..models.update_plugin_response_200_data import UpdatePluginResponse200Data
 
-        _status = src_dict.get("status")
-        status: Union[Unset, UpdatePluginResponse200Status]
-        if isinstance(_status, Unset):
-            status = UNSET
-        else:
-            status = UpdatePluginResponse200Status(_status)
+        status = src_dict.get("status")
 
         _data = src_dict.get("data")
         data: Union[Unset, UpdatePluginResponse200Data]

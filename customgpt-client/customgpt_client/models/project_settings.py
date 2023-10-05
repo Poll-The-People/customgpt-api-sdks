@@ -161,12 +161,7 @@ class ProjectSettings:
 
         example_questions = cast(List[str], src_dict.get("example_questions"))
 
-        _response_source = src_dict.get("response_source")
-        response_source: Union[Unset, ProjectSettingsResponseSource]
-        if isinstance(_response_source, Unset):
-            response_source = UNSET
-        else:
-            response_source = ProjectSettingsResponseSource(_response_source)
+        response_source = src_dict.get("response_source")
 
         chatbot_msg_lang = src_dict.get("chatbot_msg_lang")
 
@@ -186,14 +181,7 @@ class ProjectSettings:
 
         enable_citations = src_dict.get("enable_citations")
 
-        _citations_view_type = src_dict.get("citations_view_type")
-        citations_view_type: Union[Unset, None, ProjectSettingsCitationsViewType]
-        if _citations_view_type is None:
-            citations_view_type = None
-        elif isinstance(_citations_view_type, Unset):
-            citations_view_type = UNSET
-        else:
-            citations_view_type = ProjectSettingsCitationsViewType(_citations_view_type)
+        citations_view_type = src_dict.get("citations_view_type")
 
         no_answer_message = src_dict.get("no_answer_message")
 

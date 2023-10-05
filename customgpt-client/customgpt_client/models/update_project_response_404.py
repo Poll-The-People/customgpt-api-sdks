@@ -52,12 +52,7 @@ class UpdateProjectResponse404:
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         from ..models.update_project_response_404_data import UpdateProjectResponse404Data
 
-        _status = src_dict.get("status")
-        status: Union[Unset, UpdateProjectResponse404Status]
-        if isinstance(_status, Unset):
-            status = UNSET
-        else:
-            status = UpdateProjectResponse404Status(_status)
+        status = src_dict.get("status")
 
         url = src_dict.get("url")
 

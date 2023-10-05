@@ -47,12 +47,7 @@ class DeleteConversationResponse200:
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         from ..models.delete_conversation_response_200_data import DeleteConversationResponse200Data
 
-        _status = src_dict.get("status")
-        status: Union[Unset, DeleteConversationResponse200Status]
-        if isinstance(_status, Unset):
-            status = UNSET
-        else:
-            status = DeleteConversationResponse200Status(_status)
+        status = src_dict.get("status")
 
         _data = src_dict.get("data")
         data: Union[Unset, DeleteConversationResponse200Data]

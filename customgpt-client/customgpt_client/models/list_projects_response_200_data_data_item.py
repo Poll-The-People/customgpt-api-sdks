@@ -148,12 +148,7 @@ class ListProjectsResponse200DataDataItem:
         else:
             deleted_at = isoparse(_deleted_at)
 
-        _type = src_dict.get("type")
-        type: Union[Unset, ListProjectsResponse200DataDataItemType]
-        if isinstance(_type, Unset):
-            type = UNSET
-        else:
-            type = ListProjectsResponse200DataDataItemType(_type)
+        type = src_dict.get("type")
 
         is_shared = src_dict.get("is_shared")
 

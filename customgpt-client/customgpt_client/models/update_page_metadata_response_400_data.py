@@ -39,12 +39,7 @@ class UpdatePageMetadataResponse400Data:
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        _code = src_dict.get("code")
-        code: Union[Unset, UpdatePageMetadataResponse400DataCode]
-        if isinstance(_code, Unset):
-            code = UNSET
-        else:
-            code = UpdatePageMetadataResponse400DataCode(_code)
+        code = src_dict.get("code")
 
         message = src_dict.get("message")
 

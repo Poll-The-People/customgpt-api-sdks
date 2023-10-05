@@ -43,19 +43,9 @@ class CreateProjectResponse400Data:
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        _code = src_dict.get("code")
-        code: Union[Unset, CreateProjectResponse400DataCode]
-        if isinstance(_code, Unset):
-            code = UNSET
-        else:
-            code = CreateProjectResponse400DataCode(_code)
+        code = src_dict.get("code")
 
-        _message = src_dict.get("message")
-        message: Union[Unset, CreateProjectResponse400DataMessage]
-        if isinstance(_message, Unset):
-            message = UNSET
-        else:
-            message = CreateProjectResponse400DataMessage(_message)
+        message = src_dict.get("message")
 
         create_project_response_400_data = cls(
             code=code,

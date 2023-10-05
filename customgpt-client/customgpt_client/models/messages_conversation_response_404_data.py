@@ -43,19 +43,9 @@ class MessagesConversationResponse404Data:
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        _code = src_dict.get("code")
-        code: Union[Unset, MessagesConversationResponse404DataCode]
-        if isinstance(_code, Unset):
-            code = UNSET
-        else:
-            code = MessagesConversationResponse404DataCode(_code)
+        code = src_dict.get("code")
 
-        _message = src_dict.get("message")
-        message: Union[Unset, MessagesConversationResponse404DataMessage]
-        if isinstance(_message, Unset):
-            message = UNSET
-        else:
-            message = MessagesConversationResponse404DataMessage(_message)
+        message = src_dict.get("message")
 
         messages_conversation_response_404_data = cls(
             code=code,

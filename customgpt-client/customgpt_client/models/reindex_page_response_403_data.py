@@ -43,19 +43,9 @@ class ReindexPageResponse403Data:
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        _code = src_dict.get("code")
-        code: Union[Unset, ReindexPageResponse403DataCode]
-        if isinstance(_code, Unset):
-            code = UNSET
-        else:
-            code = ReindexPageResponse403DataCode(_code)
+        code = src_dict.get("code")
 
-        _message = src_dict.get("message")
-        message: Union[Unset, ReindexPageResponse403DataMessage]
-        if isinstance(_message, Unset):
-            message = UNSET
-        else:
-            message = ReindexPageResponse403DataMessage(_message)
+        message = src_dict.get("message")
 
         reindex_page_response_403_data = cls(
             code=code,

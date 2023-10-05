@@ -141,19 +141,9 @@ class ListSourcesResponse200DataSitemapsItemPagesItem:
 
         s3_path = src_dict.get("s3_path")
 
-        _crawl_status = src_dict.get("crawl_status")
-        crawl_status: Union[Unset, ListSourcesResponse200DataSitemapsItemPagesItemCrawlStatus]
-        if isinstance(_crawl_status, Unset):
-            crawl_status = UNSET
-        else:
-            crawl_status = ListSourcesResponse200DataSitemapsItemPagesItemCrawlStatus(_crawl_status)
+        crawl_status = src_dict.get("crawl_status")
 
-        _index_status = src_dict.get("index_status")
-        index_status: Union[Unset, ListSourcesResponse200DataSitemapsItemPagesItemIndexStatus]
-        if isinstance(_index_status, Unset):
-            index_status = UNSET
-        else:
-            index_status = ListSourcesResponse200DataSitemapsItemPagesItemIndexStatus(_index_status)
+        index_status = src_dict.get("index_status")
 
         is_file = src_dict.get("is_file")
 

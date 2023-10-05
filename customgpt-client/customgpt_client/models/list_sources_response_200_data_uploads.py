@@ -106,12 +106,7 @@ class ListSourcesResponse200DataUploads:
         else:
             updated_at = isoparse(_updated_at)
 
-        _type = src_dict.get("type")
-        type: Union[Unset, ListSourcesResponse200DataUploadsType]
-        if isinstance(_type, Unset):
-            type = UNSET
-        else:
-            type = ListSourcesResponse200DataUploadsType(_type)
+        type = src_dict.get("type")
 
         _settings = src_dict.get("settings")
         settings: Union[Unset, ListSourcesResponse200DataUploadsSettings]

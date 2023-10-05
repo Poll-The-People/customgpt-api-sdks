@@ -43,19 +43,9 @@ class PreviewCitationResponse404Data:
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        _code = src_dict.get("code")
-        code: Union[Unset, PreviewCitationResponse404DataCode]
-        if isinstance(_code, Unset):
-            code = UNSET
-        else:
-            code = PreviewCitationResponse404DataCode(_code)
+        code = src_dict.get("code")
 
-        _message = src_dict.get("message")
-        message: Union[Unset, PreviewCitationResponse404DataMessage]
-        if isinstance(_message, Unset):
-            message = UNSET
-        else:
-            message = PreviewCitationResponse404DataMessage(_message)
+        message = src_dict.get("message")
 
         preview_citation_response_404_data = cls(
             code=code,

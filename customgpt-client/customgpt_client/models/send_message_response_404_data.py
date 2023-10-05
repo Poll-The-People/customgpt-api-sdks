@@ -43,19 +43,9 @@ class SendMessageResponse404Data:
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        _code = src_dict.get("code")
-        code: Union[Unset, SendMessageResponse404DataCode]
-        if isinstance(_code, Unset):
-            code = UNSET
-        else:
-            code = SendMessageResponse404DataCode(_code)
+        code = src_dict.get("code")
 
-        _message = src_dict.get("message")
-        message: Union[Unset, SendMessageResponse404DataMessage]
-        if isinstance(_message, Unset):
-            message = UNSET
-        else:
-            message = SendMessageResponse404DataMessage(_message)
+        message = src_dict.get("message")
 
         send_message_response_404_data = cls(
             code=code,

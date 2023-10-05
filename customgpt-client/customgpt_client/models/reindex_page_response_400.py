@@ -52,12 +52,7 @@ class ReindexPageResponse400:
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         from ..models.reindex_page_response_400_data import ReindexPageResponse400Data
 
-        _status = src_dict.get("status")
-        status: Union[Unset, ReindexPageResponse400Status]
-        if isinstance(_status, Unset):
-            status = UNSET
-        else:
-            status = ReindexPageResponse400Status(_status)
+        status = src_dict.get("status")
 
         url = src_dict.get("url")
 
