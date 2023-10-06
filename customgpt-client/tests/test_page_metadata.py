@@ -21,7 +21,7 @@ def test_sync_page_metadata():
         assert metadata.status_code == 200
         title = metadata.parsed.data.title
         update_metadata = CustomGPT.PageMetadata.update(project_id=project_id, page_id=page_id, title="test")
-        assert metadata.status_code == 200
+        assert update_metadata.status_code == 200
         assert update_metadata.parsed.data.title != title
         response = CustomGPT.Page.delete(project_id=project_id, page_id=page_id)
         assert response.status_code == 200
@@ -36,18 +36,16 @@ async def test_async_page_metadata():
     )
     response_create = response.parsed
     project_id = response_create.data["id"]
-    project_id = 1170
     response = await CustomGPT.Page.aget(project_id=project_id)
     assert response.status_code == 200
     response_page = response.parsed
     if len(response_page.data.pages.data) > 0:
         page_id = response_page.data.pages.data[0].id
-        print(page_id)
         metadata = await CustomGPT.PageMetadata.aget(project_id=project_id, page_id=page_id)
         assert metadata.status_code == 200
         title = metadata.parsed.data.title
         update_metadata = await CustomGPT.PageMetadata.aupdate(project_id=project_id, page_id=page_id, title="test")
-        assert metadata.status_code == 200
+        assert update_metadata.status_code == 200
         assert update_metadata.parsed.data.title != title
         response = await CustomGPT.Page.adelete(project_id=project_id, page_id=page_id)
         assert response.status_code == 200
