@@ -4,7 +4,6 @@ from typing import Any, Dict, List, Type, TypeVar, Union
 import attr
 from dateutil.parser import isoparse
 
-from ..models.project_type import ProjectType
 from ..types import UNSET, Unset
 
 T = TypeVar("T", bound="Project")
@@ -42,7 +41,7 @@ class Project:
     created_at: Union[Unset, datetime.datetime] = isoparse("2023-05-08 13:06:55")
     updated_at: Union[Unset, datetime.datetime] = isoparse("2023-05-08 13:06:55")
     deleted_at: Union[Unset, None, datetime.datetime] = UNSET
-    type: Union[Unset, ProjectType] = ProjectType.SITEMAP
+    type: Union[Unset, str] = Unset
     is_shared: Union[Unset, bool] = False
     shareable_slug: Union[Unset, None, str] = UNSET
     shareable_link: Union[Unset, None, str] = UNSET

@@ -2,8 +2,6 @@ from typing import Any, Dict, List, Type, TypeVar, Union
 
 import attr
 
-from ..models.delete_project_response_404_data_code import DeleteProjectResponse404DataCode
-from ..models.delete_project_response_404_data_message import DeleteProjectResponse404DataMessage
 from ..types import UNSET, Unset
 
 T = TypeVar("T", bound="DeleteProjectResponse404Data")
@@ -18,8 +16,8 @@ class DeleteProjectResponse404Data:
             found.
     """
 
-    code: Union[Unset, DeleteProjectResponse404DataCode] = UNSET
-    message: Union[Unset, DeleteProjectResponse404DataMessage] = UNSET
+    code: Union[Unset, str] = Unset
+    message: Union[Unset, str] = Unset
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:

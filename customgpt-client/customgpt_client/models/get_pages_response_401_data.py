@@ -2,7 +2,6 @@ from typing import Any, Dict, List, Type, TypeVar, Union
 
 import attr
 
-from ..models.get_pages_response_401_data_code import GetPagesResponse401DataCode
 from ..types import UNSET, Unset
 
 T = TypeVar("T", bound="GetPagesResponse401Data")
@@ -16,7 +15,7 @@ class GetPagesResponse401Data:
         message (Union[Unset, str]):  Example: API Token is either missing or invalid.
     """
 
-    code: Union[Unset, GetPagesResponse401DataCode] = UNSET
+    code: Union[Unset, str] = Unset
     message: Union[Unset, str] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 

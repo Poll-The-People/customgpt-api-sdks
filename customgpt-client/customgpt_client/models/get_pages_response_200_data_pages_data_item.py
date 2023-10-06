@@ -4,12 +4,6 @@ from typing import Any, Dict, List, Type, TypeVar, Union
 import attr
 from dateutil.parser import isoparse
 
-from ..models.get_pages_response_200_data_pages_data_item_crawl_status import (
-    GetPagesResponse200DataPagesDataItemCrawlStatus,
-)
-from ..models.get_pages_response_200_data_pages_data_item_index_status import (
-    GetPagesResponse200DataPagesDataItemIndexStatus,
-)
 from ..types import UNSET, Unset
 
 T = TypeVar("T", bound="GetPagesResponse200DataPagesDataItem")
@@ -50,12 +44,8 @@ class GetPagesResponse200DataPagesDataItem:
     page_url_hash: Union[Unset, str] = UNSET
     project_id: Union[Unset, int] = UNSET
     s3_path: Union[Unset, None, str] = UNSET
-    crawl_status: Union[
-        Unset, GetPagesResponse200DataPagesDataItemCrawlStatus
-    ] = GetPagesResponse200DataPagesDataItemCrawlStatus.QUEUED
-    index_status: Union[
-        Unset, GetPagesResponse200DataPagesDataItemIndexStatus
-    ] = GetPagesResponse200DataPagesDataItemIndexStatus.QUEUED
+    crawl_status: Union[Unset, str] = Unset
+    index_status: Union[Unset, str] = Unset
     is_file: Union[Unset, bool] = False
     is_file_kept: Union[Unset, bool] = True
     filename: Union[Unset, None, str] = UNSET

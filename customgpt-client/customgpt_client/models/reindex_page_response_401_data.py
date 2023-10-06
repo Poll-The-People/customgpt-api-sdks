@@ -2,7 +2,6 @@ from typing import Any, Dict, List, Type, TypeVar, Union
 
 import attr
 
-from ..models.reindex_page_response_401_data_code import ReindexPageResponse401DataCode
 from ..types import UNSET, Unset
 
 T = TypeVar("T", bound="ReindexPageResponse401Data")
@@ -16,7 +15,7 @@ class ReindexPageResponse401Data:
         message (Union[Unset, str]):  Example: API Token is either missing or invalid.
     """
 
-    code: Union[Unset, ReindexPageResponse401DataCode] = UNSET
+    code: Union[Unset, str] = Unset
     message: Union[Unset, str] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 

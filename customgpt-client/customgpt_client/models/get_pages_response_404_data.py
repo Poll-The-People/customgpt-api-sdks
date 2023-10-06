@@ -2,8 +2,6 @@ from typing import Any, Dict, List, Type, TypeVar, Union
 
 import attr
 
-from ..models.get_pages_response_404_data_code import GetPagesResponse404DataCode
-from ..models.get_pages_response_404_data_message import GetPagesResponse404DataMessage
 from ..types import UNSET, Unset
 
 T = TypeVar("T", bound="GetPagesResponse404Data")
@@ -17,8 +15,8 @@ class GetPagesResponse404Data:
         message (Union[Unset, GetPagesResponse404DataMessage]): The error message Example: Project with id 1 not found.
     """
 
-    code: Union[Unset, GetPagesResponse404DataCode] = UNSET
-    message: Union[Unset, GetPagesResponse404DataMessage] = UNSET
+    code: Union[Unset, str] = Unset
+    message: Union[Unset, str] = Unset
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:

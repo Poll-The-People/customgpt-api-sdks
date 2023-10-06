@@ -2,7 +2,6 @@ from typing import Any, Dict, List, Type, TypeVar, Union
 
 import attr
 
-from ..models.send_message_response_500_data_code import SendMessageResponse500DataCode
 from ..types import UNSET, Unset
 
 T = TypeVar("T", bound="SendMessageResponse500Data")
@@ -16,7 +15,7 @@ class SendMessageResponse500Data:
         message (Union[Unset, str]):  Example: Internal Server Error.
     """
 
-    code: Union[Unset, SendMessageResponse500DataCode] = UNSET
+    code: Union[Unset, str] = Unset
     message: Union[Unset, str] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 

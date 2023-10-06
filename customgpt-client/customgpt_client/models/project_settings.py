@@ -2,8 +2,6 @@ from typing import Any, Dict, List, Type, TypeVar, Union, cast
 
 import attr
 
-from ..models.project_settings_citations_view_type import ProjectSettingsCitationsViewType
-from ..models.project_settings_response_source import ProjectSettingsResponseSource
 from ..types import UNSET, Unset
 
 T = TypeVar("T", bound="ProjectSettings")
@@ -63,7 +61,7 @@ class ProjectSettings:
     chatbot_background: Union[Unset, str] = UNSET
     default_prompt: Union[Unset, str] = UNSET
     example_questions: Union[Unset, List[str]] = UNSET
-    response_source: Union[Unset, ProjectSettingsResponseSource] = UNSET
+    response_source: Union[Unset, str] = Unset
     chatbot_msg_lang: Union[Unset, str] = UNSET
     chatbot_color: Union[Unset, str] = UNSET
     persona_instructions: Union[Unset, None, str] = UNSET
@@ -73,7 +71,7 @@ class ProjectSettings:
     chatbot_siesta_msg: Union[Unset, None, str] = UNSET
     is_loading_indicator_enabled: Union[Unset, None, bool] = True
     enable_citations: Union[Unset, None, bool] = True
-    citations_view_type: Union[Unset, None, ProjectSettingsCitationsViewType] = ProjectSettingsCitationsViewType.USER
+    citations_view_type: Union[Unset, str] = Unset
     no_answer_message: Union[Unset, None, str] = UNSET
     ending_message: Union[Unset, None, str] = UNSET
     remove_branding: Union[Unset, None, bool] = False

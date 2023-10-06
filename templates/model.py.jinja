@@ -63,12 +63,21 @@ class {{ class_name }}:
 
     {% for property in model.required_properties + model.optional_properties %}
     {% if property.default is none and property.required %}
+    {% if property.__class__.__name__ == 'EnumProperty' %}
+    {{property.name}}: Union[Unset, str] = Unset
+    {% else %}
     {{ property.to_string() }}
     {% endif %}
+    {% endif %}
     {% endfor %}
+
     {% for property in model.required_properties + model.optional_properties %}
     {% if property.default is not none or not property.required %}
+    {% if property.__class__.__name__ == 'EnumProperty' %}
+    {{property.name}}: Union[Unset, str] = Unset
+    {% else %}
     {{ property.to_string() }}
+    {% endif %}
     {% endif %}
     {% endfor %}
     {% if model.additional_properties %}
@@ -81,7 +90,7 @@ class {{ class_name }}:
 {% if prop_template.transform %}
 {{ prop_template.transform(property, "self." + property.python_name, property.python_name, multipart=multipart) }}
 {% elif multipart %}
-{% if property.__class__.__name__ == 'BooleanProperty' %}
+{% if property.__class__.__name__ == BooleanProperty %}
 {{ property.python_name }} = self.{{ property.python_name }} if isinstance(self.{{ property.python_name }}, Unset) else (None, str(self.{{ property.python_name }}).lower().encode(), "text/plain")
 {% else %}
 {{ property.python_name }} = self.{{ property.python_name }} if isinstance(self.{{ property.python_name }}, Unset) else (None, str(self.{{ property.python_name }}).encode(), "text/plain")

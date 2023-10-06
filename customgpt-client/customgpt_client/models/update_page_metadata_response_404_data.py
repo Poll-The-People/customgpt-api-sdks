@@ -2,8 +2,6 @@ from typing import Any, Dict, List, Type, TypeVar, Union
 
 import attr
 
-from ..models.update_page_metadata_response_404_data_code import UpdatePageMetadataResponse404DataCode
-from ..models.update_page_metadata_response_404_data_message import UpdatePageMetadataResponse404DataMessage
 from ..types import UNSET, Unset
 
 T = TypeVar("T", bound="UpdatePageMetadataResponse404Data")
@@ -18,8 +16,8 @@ class UpdatePageMetadataResponse404Data:
             found.
     """
 
-    code: Union[Unset, UpdatePageMetadataResponse404DataCode] = UNSET
-    message: Union[Unset, UpdatePageMetadataResponse404DataMessage] = UNSET
+    code: Union[Unset, str] = Unset
+    message: Union[Unset, str] = Unset
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:

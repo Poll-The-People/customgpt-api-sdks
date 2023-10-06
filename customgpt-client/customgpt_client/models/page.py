@@ -4,8 +4,6 @@ from typing import Any, Dict, List, Type, TypeVar, Union
 import attr
 from dateutil.parser import isoparse
 
-from ..models.page_crawl_status import PageCrawlStatus
-from ..models.page_index_status import PageIndexStatus
 from ..types import UNSET, Unset
 
 T = TypeVar("T", bound="Page")
@@ -46,8 +44,8 @@ class Page:
     page_url_hash: Union[Unset, str] = UNSET
     project_id: Union[Unset, int] = UNSET
     s3_path: Union[Unset, None, str] = UNSET
-    crawl_status: Union[Unset, PageCrawlStatus] = PageCrawlStatus.QUEUED
-    index_status: Union[Unset, PageIndexStatus] = PageIndexStatus.QUEUED
+    crawl_status: Union[Unset, str] = Unset
+    index_status: Union[Unset, str] = Unset
     is_file: Union[Unset, bool] = False
     is_file_kept: Union[Unset, bool] = True
     filename: Union[Unset, None, str] = UNSET

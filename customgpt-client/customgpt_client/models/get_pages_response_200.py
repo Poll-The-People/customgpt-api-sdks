@@ -2,7 +2,6 @@ from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar, Union
 
 import attr
 
-from ..models.get_pages_response_200_status import GetPagesResponse200Status
 from ..types import UNSET, Unset
 
 if TYPE_CHECKING:
@@ -20,7 +19,7 @@ class GetPagesResponse200:
         data (Union[Unset, GetPagesResponse200Data]):
     """
 
-    status: Union[Unset, GetPagesResponse200Status] = UNSET
+    status: Union[Unset, str] = Unset
     data: Union[Unset, "GetPagesResponse200Data"] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 

@@ -3,7 +3,6 @@ from typing import Any, Dict, List, Tuple, Type, TypeVar, Union, cast
 
 import attr
 
-from ..models.update_settings_multipart_data_citations_view_type import UpdateSettingsMultipartDataCitationsViewType
 from ..types import UNSET, File, FileJsonType, Unset
 
 T = TypeVar("T", bound="UpdateSettingsMultipartData")
@@ -73,9 +72,7 @@ class UpdateSettingsMultipartData:
     chatbot_siesta_msg: Union[Unset, None, str] = UNSET
     is_loading_indicator_enabled: Union[Unset, None, bool] = True
     enable_citations: Union[Unset, None, bool] = True
-    citations_view_type: Union[
-        Unset, None, UpdateSettingsMultipartDataCitationsViewType
-    ] = UpdateSettingsMultipartDataCitationsViewType.USER
+    citations_view_type: Union[Unset, str] = Unset
     no_answer_message: Union[Unset, None, str] = UNSET
     ending_message: Union[Unset, None, str] = UNSET
     remove_branding: Union[Unset, None, bool] = False
@@ -221,12 +218,12 @@ class UpdateSettingsMultipartData:
         is_loading_indicator_enabled = (
             self.is_loading_indicator_enabled
             if isinstance(self.is_loading_indicator_enabled, Unset)
-            else (None, str(self.is_loading_indicator_enabled).lower().encode(), "text/plain")
+            else (None, str(self.is_loading_indicator_enabled).encode(), "text/plain")
         )
         enable_citations = (
             self.enable_citations
             if isinstance(self.enable_citations, Unset)
-            else (None, str(self.enable_citations).lower().encode(), "text/plain")
+            else (None, str(self.enable_citations).encode(), "text/plain")
         )
         citations_view_type: Union[Unset, Tuple[None, bytes, str]] = UNSET
         if not isinstance(self.citations_view_type, Unset):
@@ -247,7 +244,7 @@ class UpdateSettingsMultipartData:
         remove_branding = (
             self.remove_branding
             if isinstance(self.remove_branding, Unset)
-            else (None, str(self.remove_branding).lower().encode(), "text/plain")
+            else (None, str(self.remove_branding).encode(), "text/plain")
         )
 
         field_dict: Dict[str, Any] = {}

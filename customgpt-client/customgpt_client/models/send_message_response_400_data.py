@@ -2,7 +2,6 @@ from typing import Any, Dict, List, Type, TypeVar, Union
 
 import attr
 
-from ..models.send_message_response_400_data_code import SendMessageResponse400DataCode
 from ..types import UNSET, Unset
 
 T = TypeVar("T", bound="SendMessageResponse400Data")
@@ -16,7 +15,7 @@ class SendMessageResponse400Data:
         message (Union[Unset, str]): The error message Example: Project id must be integer.
     """
 
-    code: Union[Unset, SendMessageResponse400DataCode] = UNSET
+    code: Union[Unset, str] = Unset
     message: Union[Unset, str] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 

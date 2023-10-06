@@ -2,7 +2,6 @@ from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar, Union
 
 import attr
 
-from ..models.reindex_page_response_403_status import ReindexPageResponse403Status
 from ..types import UNSET, Unset
 
 if TYPE_CHECKING:
@@ -21,7 +20,7 @@ class ReindexPageResponse403:
         data (Union[Unset, ReindexPageResponse403Data]):
     """
 
-    status: Union[Unset, ReindexPageResponse403Status] = UNSET
+    status: Union[Unset, str] = Unset
     url: Union[Unset, str] = UNSET
     data: Union[Unset, "ReindexPageResponse403Data"] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)

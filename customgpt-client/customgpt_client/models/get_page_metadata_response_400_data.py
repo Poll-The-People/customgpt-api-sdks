@@ -2,7 +2,6 @@ from typing import Any, Dict, List, Type, TypeVar, Union
 
 import attr
 
-from ..models.get_page_metadata_response_400_data_code import GetPageMetadataResponse400DataCode
 from ..types import UNSET, Unset
 
 T = TypeVar("T", bound="GetPageMetadataResponse400Data")
@@ -16,7 +15,7 @@ class GetPageMetadataResponse400Data:
         message (Union[Unset, str]): The error message Example: Something went wrong..
     """
 
-    code: Union[Unset, GetPageMetadataResponse400DataCode] = UNSET
+    code: Union[Unset, str] = Unset
     message: Union[Unset, str] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 

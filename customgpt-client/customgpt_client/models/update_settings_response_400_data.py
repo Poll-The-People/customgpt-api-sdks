@@ -2,8 +2,6 @@ from typing import Any, Dict, List, Type, TypeVar, Union
 
 import attr
 
-from ..models.update_settings_response_400_data_code import UpdateSettingsResponse400DataCode
-from ..models.update_settings_response_400_data_message import UpdateSettingsResponse400DataMessage
 from ..types import UNSET, Unset
 
 T = TypeVar("T", bound="UpdateSettingsResponse400Data")
@@ -18,8 +16,8 @@ class UpdateSettingsResponse400Data:
             image file for avatar.
     """
 
-    code: Union[Unset, UpdateSettingsResponse400DataCode] = UNSET
-    message: Union[Unset, UpdateSettingsResponse400DataMessage] = UNSET
+    code: Union[Unset, str] = Unset
+    message: Union[Unset, str] = Unset
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:

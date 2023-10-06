@@ -4,7 +4,6 @@ from typing import Any, Dict, List, Type, TypeVar, Union
 import attr
 from dateutil.parser import isoparse
 
-from ..models.create_project_response_201_data_type import CreateProjectResponse201DataType
 from ..types import UNSET, Unset
 
 T = TypeVar("T", bound="CreateProjectResponse201Data")
@@ -43,7 +42,7 @@ class CreateProjectResponse201Data:
     created_at: Union[Unset, datetime.datetime] = isoparse("2023-05-08 13:06:55")
     updated_at: Union[Unset, datetime.datetime] = isoparse("2023-05-08 13:06:55")
     deleted_at: Union[Unset, None, datetime.datetime] = UNSET
-    type: Union[Unset, CreateProjectResponse201DataType] = CreateProjectResponse201DataType.SITEMAP
+    type: Union[Unset, str] = Unset
     is_shared: Union[Unset, bool] = False
     shareable_slug: Union[Unset, None, str] = UNSET
     shareable_link: Union[Unset, None, str] = UNSET

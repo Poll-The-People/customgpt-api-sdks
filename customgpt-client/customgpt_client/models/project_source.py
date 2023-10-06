@@ -4,7 +4,6 @@ from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar, Union
 import attr
 from dateutil.parser import isoparse
 
-from ..models.project_source_type import ProjectSourceType
 from ..types import UNSET, Unset
 
 if TYPE_CHECKING:
@@ -30,7 +29,7 @@ class ProjectSource:
     id: Union[Unset, int] = UNSET
     created_at: Union[Unset, datetime.datetime] = UNSET
     updated_at: Union[Unset, datetime.datetime] = UNSET
-    type: Union[Unset, ProjectSourceType] = UNSET
+    type: Union[Unset, str] = Unset
     settings: Union[Unset, "ProjectSourceSettings"] = UNSET
     pages: Union[Unset, None, List["Page"]] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)

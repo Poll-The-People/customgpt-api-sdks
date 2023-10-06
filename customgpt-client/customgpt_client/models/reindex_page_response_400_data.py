@@ -2,7 +2,6 @@ from typing import Any, Dict, List, Type, TypeVar, Union
 
 import attr
 
-from ..models.reindex_page_response_400_data_code import ReindexPageResponse400DataCode
 from ..types import UNSET, Unset
 
 T = TypeVar("T", bound="ReindexPageResponse400Data")
@@ -16,7 +15,7 @@ class ReindexPageResponse400Data:
         message (Union[Unset, str]): The error message Example: Project id must be integer.
     """
 
-    code: Union[Unset, ReindexPageResponse400DataCode] = UNSET
+    code: Union[Unset, str] = Unset
     message: Union[Unset, str] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 

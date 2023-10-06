@@ -4,7 +4,6 @@ from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar, Union
 import attr
 from dateutil.parser import isoparse
 
-from ..models.create_source_response_201_data_type import CreateSourceResponse201DataType
 from ..types import UNSET, Unset
 
 if TYPE_CHECKING:
@@ -30,7 +29,7 @@ class CreateSourceResponse201Data:
     id: Union[Unset, int] = UNSET
     created_at: Union[Unset, datetime.datetime] = UNSET
     updated_at: Union[Unset, datetime.datetime] = UNSET
-    type: Union[Unset, CreateSourceResponse201DataType] = UNSET
+    type: Union[Unset, str] = Unset
     settings: Union[Unset, "CreateSourceResponse201DataSettings"] = UNSET
     pages: Union[Unset, None, List["CreateSourceResponse201DataPagesItem"]] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)

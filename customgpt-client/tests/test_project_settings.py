@@ -1,6 +1,8 @@
+import pytest
+
 from customgpt_client import CustomGPT
 from tests.credentials import credentials
-import pytest
+
 
 def test_sync_project_settings():
     CustomGPT.base_url, CustomGPT.api_key = credentials()
@@ -22,12 +24,13 @@ def test_sync_project_settings():
         chatbot_msg_lang="ur",
         persona_instructions="You Are test chatbot created from a pytest",
         is_loading_indicator_enabled=False,
-        enable_citations=False
+        enable_citations=False,
     )
     assert response_update.status_code == 200
     response = CustomGPT.ProjectSettings.get(project_id=project_id)
     assert response.status_code == 200
     assert default_prompt != response.parsed.data.default_prompt
+
 
 @pytest.mark.asyncio
 async def test_async_project_settings():
@@ -50,7 +53,7 @@ async def test_async_project_settings():
         chatbot_msg_lang="ur",
         persona_instructions="You Are test chatbot created from a pytest",
         is_loading_indicator_enabled=False,
-        enable_citations=False
+        enable_citations=False,
     )
     assert response_update.status_code == 200
     response = await CustomGPT.ProjectSettings.aget(project_id=project_id)

@@ -58,9 +58,7 @@ class UpdateProjectMultipartData:
             else (None, str(self.project_name).encode(), "text/plain")
         )
         is_shared = (
-            self.is_shared
-            if isinstance(self.is_shared, Unset)
-            else (None, str(self.is_shared).lower().encode(), "text/plain")
+            self.is_shared if isinstance(self.is_shared, Unset) else (None, str(self.is_shared).encode(), "text/plain")
         )
         sitemap_path = (
             self.sitemap_path
@@ -70,7 +68,7 @@ class UpdateProjectMultipartData:
         file_data_retension = (
             self.file_data_retension
             if isinstance(self.file_data_retension, Unset)
-            else (None, str(self.file_data_retension).lower().encode(), "text/plain")
+            else (None, str(self.file_data_retension).encode(), "text/plain")
         )
         file: Union[Unset, FileJsonType] = UNSET
         if not isinstance(self.file, Unset):

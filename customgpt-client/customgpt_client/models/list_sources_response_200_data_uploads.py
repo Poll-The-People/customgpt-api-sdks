@@ -4,7 +4,6 @@ from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar, Union
 import attr
 from dateutil.parser import isoparse
 
-from ..models.list_sources_response_200_data_uploads_type import ListSourcesResponse200DataUploadsType
 from ..types import UNSET, Unset
 
 if TYPE_CHECKING:
@@ -30,7 +29,7 @@ class ListSourcesResponse200DataUploads:
     id: Union[Unset, int] = UNSET
     created_at: Union[Unset, datetime.datetime] = UNSET
     updated_at: Union[Unset, datetime.datetime] = UNSET
-    type: Union[Unset, ListSourcesResponse200DataUploadsType] = UNSET
+    type: Union[Unset, str] = Unset
     settings: Union[Unset, "ListSourcesResponse200DataUploadsSettings"] = UNSET
     pages: Union[Unset, None, List["ListSourcesResponse200DataUploadsPagesItem"]] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)

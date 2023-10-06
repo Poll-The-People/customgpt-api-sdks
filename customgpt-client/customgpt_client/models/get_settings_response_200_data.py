@@ -3,7 +3,6 @@ from typing import Any, Dict, List, Type, TypeVar, Union, cast
 
 import attr
 
-from ..models.get_settings_response_200_data_citations_view_type import GetSettingsResponse200DataCitationsViewType
 from ..types import UNSET, File, FileJsonType, Unset
 
 T = TypeVar("T", bound="GetSettingsResponse200Data")
@@ -73,9 +72,7 @@ class GetSettingsResponse200Data:
     chatbot_siesta_msg: Union[Unset, None, str] = UNSET
     is_loading_indicator_enabled: Union[Unset, None, bool] = True
     enable_citations: Union[Unset, None, bool] = True
-    citations_view_type: Union[
-        Unset, None, GetSettingsResponse200DataCitationsViewType
-    ] = GetSettingsResponse200DataCitationsViewType.USER
+    citations_view_type: Union[Unset, str] = Unset
     no_answer_message: Union[Unset, None, str] = UNSET
     ending_message: Union[Unset, None, str] = UNSET
     remove_branding: Union[Unset, None, bool] = False

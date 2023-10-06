@@ -4,7 +4,6 @@ from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar, Union
 import attr
 from dateutil.parser import isoparse
 
-from ..models.list_sources_response_200_data_sitemaps_item_type import ListSourcesResponse200DataSitemapsItemType
 from ..types import UNSET, Unset
 
 if TYPE_CHECKING:
@@ -34,7 +33,7 @@ class ListSourcesResponse200DataSitemapsItem:
     id: Union[Unset, int] = UNSET
     created_at: Union[Unset, datetime.datetime] = UNSET
     updated_at: Union[Unset, datetime.datetime] = UNSET
-    type: Union[Unset, ListSourcesResponse200DataSitemapsItemType] = UNSET
+    type: Union[Unset, str] = Unset
     settings: Union[Unset, "ListSourcesResponse200DataSitemapsItemSettings"] = UNSET
     pages: Union[Unset, None, List["ListSourcesResponse200DataSitemapsItemPagesItem"]] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
