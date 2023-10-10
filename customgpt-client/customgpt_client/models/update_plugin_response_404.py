@@ -2,7 +2,6 @@ from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar, Union
 
 import attr
 
-from ..models.update_plugin_response_404_status import UpdatePluginResponse404Status
 from ..types import UNSET, Unset
 
 if TYPE_CHECKING:
@@ -21,7 +20,7 @@ class UpdatePluginResponse404:
         data (Union[Unset, UpdatePluginResponse404Data]):
     """
 
-    status: Union[Unset, UpdatePluginResponse404Status] = UNSET
+    status: Union[Unset, str] = Unset
     url: Union[Unset, str] = UNSET
     data: Union[Unset, "UpdatePluginResponse404Data"] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
@@ -52,12 +51,7 @@ class UpdatePluginResponse404:
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         from ..models.update_plugin_response_404_data import UpdatePluginResponse404Data
 
-        _status = src_dict.get("status")
-        status: Union[Unset, UpdatePluginResponse404Status]
-        if isinstance(_status, Unset):
-            status = UNSET
-        else:
-            status = UpdatePluginResponse404Status(_status)
+        status = src_dict.get("status")
 
         url = src_dict.get("url")
 

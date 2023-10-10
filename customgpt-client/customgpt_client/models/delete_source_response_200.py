@@ -2,7 +2,6 @@ from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar, Union
 
 import attr
 
-from ..models.delete_source_response_200_status import DeleteSourceResponse200Status
 from ..types import UNSET, Unset
 
 if TYPE_CHECKING:
@@ -20,7 +19,7 @@ class DeleteSourceResponse200:
         data (Union[Unset, DeleteSourceResponse200Data]):
     """
 
-    status: Union[Unset, DeleteSourceResponse200Status] = UNSET
+    status: Union[Unset, str] = Unset
     data: Union[Unset, "DeleteSourceResponse200Data"] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
@@ -47,12 +46,7 @@ class DeleteSourceResponse200:
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         from ..models.delete_source_response_200_data import DeleteSourceResponse200Data
 
-        _status = src_dict.get("status")
-        status: Union[Unset, DeleteSourceResponse200Status]
-        if isinstance(_status, Unset):
-            status = UNSET
-        else:
-            status = DeleteSourceResponse200Status(_status)
+        status = src_dict.get("status")
 
         _data = src_dict.get("data")
         data: Union[Unset, DeleteSourceResponse200Data]

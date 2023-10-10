@@ -2,7 +2,6 @@ from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar, Union
 
 import attr
 
-from ..models.reindex_page_response_200_status import ReindexPageResponse200Status
 from ..types import UNSET, Unset
 
 if TYPE_CHECKING:
@@ -20,7 +19,7 @@ class ReindexPageResponse200:
         data (Union[Unset, ReindexPageResponse200Data]):
     """
 
-    status: Union[Unset, ReindexPageResponse200Status] = UNSET
+    status: Union[Unset, str] = Unset
     data: Union[Unset, "ReindexPageResponse200Data"] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
@@ -47,12 +46,7 @@ class ReindexPageResponse200:
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         from ..models.reindex_page_response_200_data import ReindexPageResponse200Data
 
-        _status = src_dict.get("status")
-        status: Union[Unset, ReindexPageResponse200Status]
-        if isinstance(_status, Unset):
-            status = UNSET
-        else:
-            status = ReindexPageResponse200Status(_status)
+        status = src_dict.get("status")
 
         _data = src_dict.get("data")
         data: Union[Unset, ReindexPageResponse200Data]

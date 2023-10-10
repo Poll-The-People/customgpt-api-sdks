@@ -2,7 +2,6 @@ from typing import Any, Dict, List, Type, TypeVar, Union
 
 import attr
 
-from ..models.create_plugin_response_401_data_code import CreatePluginResponse401DataCode
 from ..types import UNSET, Unset
 
 T = TypeVar("T", bound="CreatePluginResponse401Data")
@@ -16,7 +15,7 @@ class CreatePluginResponse401Data:
         message (Union[Unset, str]):  Example: API Token is either missing or invalid.
     """
 
-    code: Union[Unset, CreatePluginResponse401DataCode] = UNSET
+    code: Union[Unset, str] = Unset
     message: Union[Unset, str] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
@@ -39,12 +38,7 @@ class CreatePluginResponse401Data:
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        _code = src_dict.get("code")
-        code: Union[Unset, CreatePluginResponse401DataCode]
-        if isinstance(_code, Unset):
-            code = UNSET
-        else:
-            code = CreatePluginResponse401DataCode(_code)
+        code = src_dict.get("code")
 
         message = src_dict.get("message")
 

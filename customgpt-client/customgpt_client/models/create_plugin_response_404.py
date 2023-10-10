@@ -2,7 +2,6 @@ from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar, Union
 
 import attr
 
-from ..models.create_plugin_response_404_status import CreatePluginResponse404Status
 from ..types import UNSET, Unset
 
 if TYPE_CHECKING:
@@ -21,7 +20,7 @@ class CreatePluginResponse404:
         data (Union[Unset, CreatePluginResponse404Data]):
     """
 
-    status: Union[Unset, CreatePluginResponse404Status] = UNSET
+    status: Union[Unset, str] = Unset
     url: Union[Unset, str] = UNSET
     data: Union[Unset, "CreatePluginResponse404Data"] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
@@ -52,12 +51,7 @@ class CreatePluginResponse404:
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         from ..models.create_plugin_response_404_data import CreatePluginResponse404Data
 
-        _status = src_dict.get("status")
-        status: Union[Unset, CreatePluginResponse404Status]
-        if isinstance(_status, Unset):
-            status = UNSET
-        else:
-            status = CreatePluginResponse404Status(_status)
+        status = src_dict.get("status")
 
         url = src_dict.get("url")
 

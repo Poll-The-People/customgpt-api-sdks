@@ -42,7 +42,7 @@ class ListSourcesResponse200Data:
         field_dict.update({})
         if sitemaps is not UNSET:
             for index, field_value in enumerate(sitemaps):
-                field_dict[f"sitemaps[]{index}"] = field_value
+                field_dict[f"sitemaps[]"] = field_value
         if uploads is not UNSET:
             field_dict["uploads"] = uploads
 

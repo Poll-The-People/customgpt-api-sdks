@@ -207,6 +207,22 @@ from .get_conversations_response_500_data import GetConversationsResponse500Data
 from .get_conversations_response_500_data_code import GetConversationsResponse500DataCode
 from .get_conversations_response_500_status import GetConversationsResponse500Status
 from .get_conversations_user_filter import GetConversationsUserFilter
+from .get_page_metadata_response_200 import GetPageMetadataResponse200
+from .get_page_metadata_response_200_data import GetPageMetadataResponse200Data
+from .get_page_metadata_response_200_status import GetPageMetadataResponse200Status
+from .get_page_metadata_response_400 import GetPageMetadataResponse400
+from .get_page_metadata_response_400_data import GetPageMetadataResponse400Data
+from .get_page_metadata_response_400_data_code import GetPageMetadataResponse400DataCode
+from .get_page_metadata_response_400_status import GetPageMetadataResponse400Status
+from .get_page_metadata_response_401 import GetPageMetadataResponse401
+from .get_page_metadata_response_401_data import GetPageMetadataResponse401Data
+from .get_page_metadata_response_401_data_code import GetPageMetadataResponse401DataCode
+from .get_page_metadata_response_401_status import GetPageMetadataResponse401Status
+from .get_page_metadata_response_404 import GetPageMetadataResponse404
+from .get_page_metadata_response_404_data import GetPageMetadataResponse404Data
+from .get_page_metadata_response_404_data_code import GetPageMetadataResponse404DataCode
+from .get_page_metadata_response_404_data_message import GetPageMetadataResponse404DataMessage
+from .get_page_metadata_response_404_status import GetPageMetadataResponse404Status
 from .get_pages_order import GetPagesOrder
 from .get_pages_response_200 import GetPagesResponse200
 from .get_pages_response_200_data import GetPagesResponse200Data
@@ -277,7 +293,7 @@ from .get_project_response_500_data_code import GetProjectResponse500DataCode
 from .get_project_response_500_status import GetProjectResponse500Status
 from .get_settings_response_200 import GetSettingsResponse200
 from .get_settings_response_200_data import GetSettingsResponse200Data
-from .get_settings_response_200_data_response_source import GetSettingsResponse200DataResponseSource
+from .get_settings_response_200_data_citations_view_type import GetSettingsResponse200DataCitationsViewType
 from .get_settings_response_200_status import GetSettingsResponse200Status
 from .get_settings_response_400 import GetSettingsResponse400
 from .get_settings_response_400_data import GetSettingsResponse400Data
@@ -394,6 +410,7 @@ from .open_graph_cache import OpenGraphCache
 from .page import Page
 from .page_crawl_status import PageCrawlStatus
 from .page_index_status import PageIndexStatus
+from .page_metadata import PageMetadata
 from .preview_citation_response_400 import PreviewCitationResponse400
 from .preview_citation_response_400_data import PreviewCitationResponse400Data
 from .preview_citation_response_400_data_code import PreviewCitationResponse400DataCode
@@ -414,11 +431,9 @@ from .preview_citation_response_500_status import PreviewCitationResponse500Stat
 from .project import Project
 from .project_plugin import ProjectPlugin
 from .project_settings import ProjectSettings
+from .project_settings_citations_view_type import ProjectSettingsCitationsViewType
 from .project_settings_response_source import ProjectSettingsResponseSource
 from .project_source import ProjectSource
-from .project_source_pages_item import ProjectSourcePagesItem
-from .project_source_pages_item_crawl_status import ProjectSourcePagesItemCrawlStatus
-from .project_source_pages_item_index_status import ProjectSourcePagesItemIndexStatus
 from .project_source_settings import ProjectSourceSettings
 from .project_source_type import ProjectSourceType
 from .project_type import ProjectType
@@ -507,6 +522,27 @@ from .update_conversation_response_500 import UpdateConversationResponse500
 from .update_conversation_response_500_data import UpdateConversationResponse500Data
 from .update_conversation_response_500_data_code import UpdateConversationResponse500DataCode
 from .update_conversation_response_500_status import UpdateConversationResponse500Status
+from .update_page_metadata_json_body import UpdatePageMetadataJsonBody
+from .update_page_metadata_response_200 import UpdatePageMetadataResponse200
+from .update_page_metadata_response_200_data import UpdatePageMetadataResponse200Data
+from .update_page_metadata_response_200_status import UpdatePageMetadataResponse200Status
+from .update_page_metadata_response_400 import UpdatePageMetadataResponse400
+from .update_page_metadata_response_400_data import UpdatePageMetadataResponse400Data
+from .update_page_metadata_response_400_data_code import UpdatePageMetadataResponse400DataCode
+from .update_page_metadata_response_400_status import UpdatePageMetadataResponse400Status
+from .update_page_metadata_response_401 import UpdatePageMetadataResponse401
+from .update_page_metadata_response_401_data import UpdatePageMetadataResponse401Data
+from .update_page_metadata_response_401_data_code import UpdatePageMetadataResponse401DataCode
+from .update_page_metadata_response_401_status import UpdatePageMetadataResponse401Status
+from .update_page_metadata_response_404 import UpdatePageMetadataResponse404
+from .update_page_metadata_response_404_data import UpdatePageMetadataResponse404Data
+from .update_page_metadata_response_404_data_code import UpdatePageMetadataResponse404DataCode
+from .update_page_metadata_response_404_data_message import UpdatePageMetadataResponse404DataMessage
+from .update_page_metadata_response_404_status import UpdatePageMetadataResponse404Status
+from .update_page_metadata_response_500 import UpdatePageMetadataResponse500
+from .update_page_metadata_response_500_data import UpdatePageMetadataResponse500Data
+from .update_page_metadata_response_500_data_code import UpdatePageMetadataResponse500DataCode
+from .update_page_metadata_response_500_status import UpdatePageMetadataResponse500Status
 from .update_plugin_json_body import UpdatePluginJsonBody
 from .update_plugin_response_200 import UpdatePluginResponse200
 from .update_plugin_response_200_data import UpdatePluginResponse200Data
@@ -551,6 +587,7 @@ from .update_project_response_500_data import UpdateProjectResponse500Data
 from .update_project_response_500_data_code import UpdateProjectResponse500DataCode
 from .update_project_response_500_status import UpdateProjectResponse500Status
 from .update_settings_multipart_data import UpdateSettingsMultipartData
+from .update_settings_multipart_data_citations_view_type import UpdateSettingsMultipartDataCitationsViewType
 from .update_settings_response_200 import UpdateSettingsResponse200
 from .update_settings_response_200_data import UpdateSettingsResponse200Data
 from .update_settings_response_200_status import UpdateSettingsResponse200Status
@@ -789,6 +826,22 @@ __all__ = (
     "GetConversationsResponse500DataCode",
     "GetConversationsResponse500Status",
     "GetConversationsUserFilter",
+    "GetPageMetadataResponse200",
+    "GetPageMetadataResponse200Data",
+    "GetPageMetadataResponse200Status",
+    "GetPageMetadataResponse400",
+    "GetPageMetadataResponse400Data",
+    "GetPageMetadataResponse400DataCode",
+    "GetPageMetadataResponse400Status",
+    "GetPageMetadataResponse401",
+    "GetPageMetadataResponse401Data",
+    "GetPageMetadataResponse401DataCode",
+    "GetPageMetadataResponse401Status",
+    "GetPageMetadataResponse404",
+    "GetPageMetadataResponse404Data",
+    "GetPageMetadataResponse404DataCode",
+    "GetPageMetadataResponse404DataMessage",
+    "GetPageMetadataResponse404Status",
     "GetPagesOrder",
     "GetPagesResponse200",
     "GetPagesResponse200Data",
@@ -859,7 +912,7 @@ __all__ = (
     "GetProjectResponse500Status",
     "GetSettingsResponse200",
     "GetSettingsResponse200Data",
-    "GetSettingsResponse200DataResponseSource",
+    "GetSettingsResponse200DataCitationsViewType",
     "GetSettingsResponse200Status",
     "GetSettingsResponse400",
     "GetSettingsResponse400Data",
@@ -964,6 +1017,7 @@ __all__ = (
     "Page",
     "PageCrawlStatus",
     "PageIndexStatus",
+    "PageMetadata",
     "PreviewCitationResponse400",
     "PreviewCitationResponse400Data",
     "PreviewCitationResponse400DataCode",
@@ -984,11 +1038,9 @@ __all__ = (
     "Project",
     "ProjectPlugin",
     "ProjectSettings",
+    "ProjectSettingsCitationsViewType",
     "ProjectSettingsResponseSource",
     "ProjectSource",
-    "ProjectSourcePagesItem",
-    "ProjectSourcePagesItemCrawlStatus",
-    "ProjectSourcePagesItemIndexStatus",
     "ProjectSourceSettings",
     "ProjectSourceType",
     "ProjectType",
@@ -1077,6 +1129,27 @@ __all__ = (
     "UpdateConversationResponse500Data",
     "UpdateConversationResponse500DataCode",
     "UpdateConversationResponse500Status",
+    "UpdatePageMetadataJsonBody",
+    "UpdatePageMetadataResponse200",
+    "UpdatePageMetadataResponse200Data",
+    "UpdatePageMetadataResponse200Status",
+    "UpdatePageMetadataResponse400",
+    "UpdatePageMetadataResponse400Data",
+    "UpdatePageMetadataResponse400DataCode",
+    "UpdatePageMetadataResponse400Status",
+    "UpdatePageMetadataResponse401",
+    "UpdatePageMetadataResponse401Data",
+    "UpdatePageMetadataResponse401DataCode",
+    "UpdatePageMetadataResponse401Status",
+    "UpdatePageMetadataResponse404",
+    "UpdatePageMetadataResponse404Data",
+    "UpdatePageMetadataResponse404DataCode",
+    "UpdatePageMetadataResponse404DataMessage",
+    "UpdatePageMetadataResponse404Status",
+    "UpdatePageMetadataResponse500",
+    "UpdatePageMetadataResponse500Data",
+    "UpdatePageMetadataResponse500DataCode",
+    "UpdatePageMetadataResponse500Status",
     "UpdatePluginJsonBody",
     "UpdatePluginResponse200",
     "UpdatePluginResponse200Data",
@@ -1121,6 +1194,7 @@ __all__ = (
     "UpdateProjectResponse500DataCode",
     "UpdateProjectResponse500Status",
     "UpdateSettingsMultipartData",
+    "UpdateSettingsMultipartDataCitationsViewType",
     "UpdateSettingsResponse200",
     "UpdateSettingsResponse200Data",
     "UpdateSettingsResponse200Status",

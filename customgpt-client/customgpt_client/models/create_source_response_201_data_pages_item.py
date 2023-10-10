@@ -4,12 +4,6 @@ from typing import Any, Dict, List, Type, TypeVar, Union
 import attr
 from dateutil.parser import isoparse
 
-from ..models.create_source_response_201_data_pages_item_crawl_status import (
-    CreateSourceResponse201DataPagesItemCrawlStatus,
-)
-from ..models.create_source_response_201_data_pages_item_index_status import (
-    CreateSourceResponse201DataPagesItemIndexStatus,
-)
 from ..types import UNSET, Unset
 
 T = TypeVar("T", bound="CreateSourceResponse201DataPagesItem")
@@ -50,12 +44,8 @@ class CreateSourceResponse201DataPagesItem:
     page_url_hash: Union[Unset, str] = UNSET
     project_id: Union[Unset, int] = UNSET
     s3_path: Union[Unset, None, str] = UNSET
-    crawl_status: Union[
-        Unset, CreateSourceResponse201DataPagesItemCrawlStatus
-    ] = CreateSourceResponse201DataPagesItemCrawlStatus.QUEUED
-    index_status: Union[
-        Unset, CreateSourceResponse201DataPagesItemIndexStatus
-    ] = CreateSourceResponse201DataPagesItemIndexStatus.QUEUED
+    crawl_status: Union[Unset, str] = Unset
+    index_status: Union[Unset, str] = Unset
     is_file: Union[Unset, bool] = False
     is_file_kept: Union[Unset, bool] = True
     filename: Union[Unset, None, str] = UNSET
@@ -141,19 +131,9 @@ class CreateSourceResponse201DataPagesItem:
 
         s3_path = src_dict.get("s3_path")
 
-        _crawl_status = src_dict.get("crawl_status")
-        crawl_status: Union[Unset, CreateSourceResponse201DataPagesItemCrawlStatus]
-        if isinstance(_crawl_status, Unset):
-            crawl_status = UNSET
-        else:
-            crawl_status = CreateSourceResponse201DataPagesItemCrawlStatus(_crawl_status)
+        crawl_status = src_dict.get("crawl_status")
 
-        _index_status = src_dict.get("index_status")
-        index_status: Union[Unset, CreateSourceResponse201DataPagesItemIndexStatus]
-        if isinstance(_index_status, Unset):
-            index_status = UNSET
-        else:
-            index_status = CreateSourceResponse201DataPagesItemIndexStatus(_index_status)
+        index_status = src_dict.get("index_status")
 
         is_file = src_dict.get("is_file")
 

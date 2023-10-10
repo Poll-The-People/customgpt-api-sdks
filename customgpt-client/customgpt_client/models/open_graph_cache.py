@@ -11,33 +11,36 @@ T = TypeVar("T", bound="OpenGraphCache")
 class OpenGraphCache:
     """
     Attributes:
-        page_url (Union[Unset, str]): The URL of the page Example: https://www.example.com.
+        id (Union[Unset, int]): The unique identifier of the citation Example: 1.
         title (Union[Unset, str]): The title of the page Example: Example Domain.
-        description (Union[Unset, str]): The description of the page Example: This domain is for use in illustrative
-            examples in documents. You may use this domain in literature without prior coordination or asking for
-            permission..
-        image (Union[Unset, str]): The image of the page Example: https://www.example.com/image.png.
-        image_width (Union[Unset, int]): The width of the image of the page Example: 1200.
-        image_height (Union[Unset, int]): The height of the image of the page Example: 630.
-        url (Union[Unset, str]): The URL of the page Example: https://www.example.com.
-        favicon (Union[Unset, str]): The favicon of the page Example: https://www.example.com/favicon.ico.
-        site_name (Union[Unset, str]): The site name of the page Example: Example Domain.
+        page_url (Union[Unset, None, str]): The URL of the page Example: https://www.example.com.
+        description (Union[Unset, None, str]): The description of the page Example: This domain is for use in
+            illustrative examples in documents. You may use this domain in literature without prior coordination or asking
+            for permission..
+        image (Union[Unset, None, str]): The image of the page Example: https://www.example.com/image.png.
+        image_width (Union[Unset, None, int]): The width of the image of the page Example: 1200.
+        image_height (Union[Unset, None, int]): The height of the image of the page Example: 630.
+        url (Union[Unset, None, str]): The URL of the page Example: https://www.example.com.
+        favicon (Union[Unset, None, str]): The favicon of the page Example: https://www.example.com/favicon.ico.
+        site_name (Union[Unset, None, str]): The site name of the page Example: Example Domain.
     """
 
-    page_url: Union[Unset, str] = UNSET
+    id: Union[Unset, int] = UNSET
     title: Union[Unset, str] = UNSET
-    description: Union[Unset, str] = UNSET
-    image: Union[Unset, str] = UNSET
-    image_width: Union[Unset, int] = UNSET
-    image_height: Union[Unset, int] = UNSET
-    url: Union[Unset, str] = UNSET
-    favicon: Union[Unset, str] = UNSET
-    site_name: Union[Unset, str] = UNSET
+    page_url: Union[Unset, None, str] = UNSET
+    description: Union[Unset, None, str] = UNSET
+    image: Union[Unset, None, str] = UNSET
+    image_width: Union[Unset, None, int] = UNSET
+    image_height: Union[Unset, None, int] = UNSET
+    url: Union[Unset, None, str] = UNSET
+    favicon: Union[Unset, None, str] = UNSET
+    site_name: Union[Unset, None, str] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        page_url = self.page_url
+        id = self.id
         title = self.title
+        page_url = self.page_url
         description = self.description
         image = self.image
         image_width = self.image_width
@@ -49,10 +52,12 @@ class OpenGraphCache:
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
-        if page_url is not UNSET:
-            field_dict["page_url"] = page_url
+        if id is not UNSET:
+            field_dict["id"] = id
         if title is not UNSET:
             field_dict["title"] = title
+        if page_url is not UNSET:
+            field_dict["page_url"] = page_url
         if description is not UNSET:
             field_dict["description"] = description
         if image is not UNSET:
@@ -72,9 +77,11 @@ class OpenGraphCache:
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        page_url = src_dict.get("page_url")
+        id = src_dict.get("id")
 
         title = src_dict.get("title")
+
+        page_url = src_dict.get("page_url")
 
         description = src_dict.get("description")
 
@@ -91,8 +98,9 @@ class OpenGraphCache:
         site_name = src_dict.get("site_name")
 
         open_graph_cache = cls(
-            page_url=page_url,
+            id=id,
             title=title,
+            page_url=page_url,
             description=description,
             image=image,
             image_width=image_width,

@@ -2,8 +2,6 @@ from typing import Any, Dict, List, Type, TypeVar, Union
 
 import attr
 
-from ..models.create_project_response_400_data_code import CreateProjectResponse400DataCode
-from ..models.create_project_response_400_data_message import CreateProjectResponse400DataMessage
 from ..types import UNSET, Unset
 
 T = TypeVar("T", bound="CreateProjectResponse400Data")
@@ -18,8 +16,8 @@ class CreateProjectResponse400Data:
             empty.
     """
 
-    code: Union[Unset, CreateProjectResponse400DataCode] = UNSET
-    message: Union[Unset, CreateProjectResponse400DataMessage] = UNSET
+    code: Union[Unset, str] = Unset
+    message: Union[Unset, str] = Unset
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
@@ -43,19 +41,9 @@ class CreateProjectResponse400Data:
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        _code = src_dict.get("code")
-        code: Union[Unset, CreateProjectResponse400DataCode]
-        if isinstance(_code, Unset):
-            code = UNSET
-        else:
-            code = CreateProjectResponse400DataCode(_code)
+        code = src_dict.get("code")
 
-        _message = src_dict.get("message")
-        message: Union[Unset, CreateProjectResponse400DataMessage]
-        if isinstance(_message, Unset):
-            message = UNSET
-        else:
-            message = CreateProjectResponse400DataMessage(_message)
+        message = src_dict.get("message")
 
         create_project_response_400_data = cls(
             code=code,

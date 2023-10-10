@@ -2,8 +2,6 @@ from typing import Any, Dict, List, Type, TypeVar, Union
 
 import attr
 
-from ..models.create_source_response_400_data_code import CreateSourceResponse400DataCode
-from ..models.create_source_response_400_data_message import CreateSourceResponse400DataMessage
 from ..types import UNSET, Unset
 
 T = TypeVar("T", bound="CreateSourceResponse400Data")
@@ -17,8 +15,8 @@ class CreateSourceResponse400Data:
         message (Union[Unset, CreateSourceResponse400DataMessage]): The error message Example: Sitemap URL is empty.
     """
 
-    code: Union[Unset, CreateSourceResponse400DataCode] = UNSET
-    message: Union[Unset, CreateSourceResponse400DataMessage] = UNSET
+    code: Union[Unset, str] = Unset
+    message: Union[Unset, str] = Unset
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
@@ -42,19 +40,9 @@ class CreateSourceResponse400Data:
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        _code = src_dict.get("code")
-        code: Union[Unset, CreateSourceResponse400DataCode]
-        if isinstance(_code, Unset):
-            code = UNSET
-        else:
-            code = CreateSourceResponse400DataCode(_code)
+        code = src_dict.get("code")
 
-        _message = src_dict.get("message")
-        message: Union[Unset, CreateSourceResponse400DataMessage]
-        if isinstance(_message, Unset):
-            message = UNSET
-        else:
-            message = CreateSourceResponse400DataMessage(_message)
+        message = src_dict.get("message")
 
         create_source_response_400_data = cls(
             code=code,

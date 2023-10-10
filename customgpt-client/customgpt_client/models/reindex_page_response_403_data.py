@@ -2,8 +2,6 @@ from typing import Any, Dict, List, Type, TypeVar, Union
 
 import attr
 
-from ..models.reindex_page_response_403_data_code import ReindexPageResponse403DataCode
-from ..models.reindex_page_response_403_data_message import ReindexPageResponse403DataMessage
 from ..types import UNSET, Unset
 
 T = TypeVar("T", bound="ReindexPageResponse403Data")
@@ -18,8 +16,8 @@ class ReindexPageResponse403Data:
             reindexed.
     """
 
-    code: Union[Unset, ReindexPageResponse403DataCode] = UNSET
-    message: Union[Unset, ReindexPageResponse403DataMessage] = UNSET
+    code: Union[Unset, str] = Unset
+    message: Union[Unset, str] = Unset
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
@@ -43,19 +41,9 @@ class ReindexPageResponse403Data:
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        _code = src_dict.get("code")
-        code: Union[Unset, ReindexPageResponse403DataCode]
-        if isinstance(_code, Unset):
-            code = UNSET
-        else:
-            code = ReindexPageResponse403DataCode(_code)
+        code = src_dict.get("code")
 
-        _message = src_dict.get("message")
-        message: Union[Unset, ReindexPageResponse403DataMessage]
-        if isinstance(_message, Unset):
-            message = UNSET
-        else:
-            message = ReindexPageResponse403DataMessage(_message)
+        message = src_dict.get("message")
 
         reindex_page_response_403_data = cls(
             code=code,

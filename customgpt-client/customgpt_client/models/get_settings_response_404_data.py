@@ -2,8 +2,6 @@ from typing import Any, Dict, List, Type, TypeVar, Union
 
 import attr
 
-from ..models.get_settings_response_404_data_code import GetSettingsResponse404DataCode
-from ..models.get_settings_response_404_data_message import GetSettingsResponse404DataMessage
 from ..types import UNSET, Unset
 
 T = TypeVar("T", bound="GetSettingsResponse404Data")
@@ -18,8 +16,8 @@ class GetSettingsResponse404Data:
             found.
     """
 
-    code: Union[Unset, GetSettingsResponse404DataCode] = UNSET
-    message: Union[Unset, GetSettingsResponse404DataMessage] = UNSET
+    code: Union[Unset, str] = Unset
+    message: Union[Unset, str] = Unset
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
@@ -43,19 +41,9 @@ class GetSettingsResponse404Data:
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        _code = src_dict.get("code")
-        code: Union[Unset, GetSettingsResponse404DataCode]
-        if isinstance(_code, Unset):
-            code = UNSET
-        else:
-            code = GetSettingsResponse404DataCode(_code)
+        code = src_dict.get("code")
 
-        _message = src_dict.get("message")
-        message: Union[Unset, GetSettingsResponse404DataMessage]
-        if isinstance(_message, Unset):
-            message = UNSET
-        else:
-            message = GetSettingsResponse404DataMessage(_message)
+        message = src_dict.get("message")
 
         get_settings_response_404_data = cls(
             code=code,

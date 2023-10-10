@@ -2,8 +2,6 @@ from typing import Any, Dict, List, Type, TypeVar, Union
 
 import attr
 
-from ..models.create_plugin_response_404_data_code import CreatePluginResponse404DataCode
-from ..models.create_plugin_response_404_data_message import CreatePluginResponse404DataMessage
 from ..types import UNSET, Unset
 
 T = TypeVar("T", bound="CreatePluginResponse404Data")
@@ -18,8 +16,8 @@ class CreatePluginResponse404Data:
             found.
     """
 
-    code: Union[Unset, CreatePluginResponse404DataCode] = UNSET
-    message: Union[Unset, CreatePluginResponse404DataMessage] = UNSET
+    code: Union[Unset, str] = Unset
+    message: Union[Unset, str] = Unset
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
@@ -43,19 +41,9 @@ class CreatePluginResponse404Data:
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        _code = src_dict.get("code")
-        code: Union[Unset, CreatePluginResponse404DataCode]
-        if isinstance(_code, Unset):
-            code = UNSET
-        else:
-            code = CreatePluginResponse404DataCode(_code)
+        code = src_dict.get("code")
 
-        _message = src_dict.get("message")
-        message: Union[Unset, CreatePluginResponse404DataMessage]
-        if isinstance(_message, Unset):
-            message = UNSET
-        else:
-            message = CreatePluginResponse404DataMessage(_message)
+        message = src_dict.get("message")
 
         create_plugin_response_404_data = cls(
             code=code,

@@ -4,7 +4,6 @@ from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar, Union
 import attr
 from dateutil.parser import isoparse
 
-from ..models.list_sources_response_200_data_uploads_type import ListSourcesResponse200DataUploadsType
 from ..types import UNSET, Unset
 
 if TYPE_CHECKING:
@@ -30,7 +29,7 @@ class ListSourcesResponse200DataUploads:
     id: Union[Unset, int] = UNSET
     created_at: Union[Unset, datetime.datetime] = UNSET
     updated_at: Union[Unset, datetime.datetime] = UNSET
-    type: Union[Unset, ListSourcesResponse200DataUploadsType] = UNSET
+    type: Union[Unset, str] = Unset
     settings: Union[Unset, "ListSourcesResponse200DataUploadsSettings"] = UNSET
     pages: Union[Unset, None, List["ListSourcesResponse200DataUploadsPagesItem"]] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
@@ -79,7 +78,7 @@ class ListSourcesResponse200DataUploads:
             field_dict["settings"] = settings
         if pages is not UNSET:
             for index, field_value in enumerate(pages):
-                field_dict[f"pages[]{index}"] = field_value
+                field_dict[f"pages[]"] = field_value
 
         return field_dict
 
@@ -106,12 +105,7 @@ class ListSourcesResponse200DataUploads:
         else:
             updated_at = isoparse(_updated_at)
 
-        _type = src_dict.get("type")
-        type: Union[Unset, ListSourcesResponse200DataUploadsType]
-        if isinstance(_type, Unset):
-            type = UNSET
-        else:
-            type = ListSourcesResponse200DataUploadsType(_type)
+        type = src_dict.get("type")
 
         _settings = src_dict.get("settings")
         settings: Union[Unset, ListSourcesResponse200DataUploadsSettings]

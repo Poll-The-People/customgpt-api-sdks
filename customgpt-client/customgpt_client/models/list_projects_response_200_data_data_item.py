@@ -4,7 +4,6 @@ from typing import Any, Dict, List, Type, TypeVar, Union
 import attr
 from dateutil.parser import isoparse
 
-from ..models.list_projects_response_200_data_data_item_type import ListProjectsResponse200DataDataItemType
 from ..types import UNSET, Unset
 
 T = TypeVar("T", bound="ListProjectsResponse200DataDataItem")
@@ -43,7 +42,7 @@ class ListProjectsResponse200DataDataItem:
     created_at: Union[Unset, datetime.datetime] = isoparse("2023-05-08 13:06:55")
     updated_at: Union[Unset, datetime.datetime] = isoparse("2023-05-08 13:06:55")
     deleted_at: Union[Unset, None, datetime.datetime] = UNSET
-    type: Union[Unset, ListProjectsResponse200DataDataItemType] = ListProjectsResponse200DataDataItemType.SITEMAP
+    type: Union[Unset, str] = Unset
     is_shared: Union[Unset, bool] = False
     shareable_slug: Union[Unset, None, str] = UNSET
     shareable_link: Union[Unset, None, str] = UNSET
@@ -148,12 +147,7 @@ class ListProjectsResponse200DataDataItem:
         else:
             deleted_at = isoparse(_deleted_at)
 
-        _type = src_dict.get("type")
-        type: Union[Unset, ListProjectsResponse200DataDataItemType]
-        if isinstance(_type, Unset):
-            type = UNSET
-        else:
-            type = ListProjectsResponse200DataDataItemType(_type)
+        type = src_dict.get("type")
 
         is_shared = src_dict.get("is_shared")
 

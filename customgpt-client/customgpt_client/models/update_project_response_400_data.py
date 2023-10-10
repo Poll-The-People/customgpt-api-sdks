@@ -2,7 +2,6 @@ from typing import Any, Dict, List, Type, TypeVar, Union
 
 import attr
 
-from ..models.update_project_response_400_data_code import UpdateProjectResponse400DataCode
 from ..types import UNSET, Unset
 
 T = TypeVar("T", bound="UpdateProjectResponse400Data")
@@ -16,7 +15,7 @@ class UpdateProjectResponse400Data:
         message (Union[Unset, str]): The error message Example: Project id must be integer.
     """
 
-    code: Union[Unset, UpdateProjectResponse400DataCode] = UNSET
+    code: Union[Unset, str] = Unset
     message: Union[Unset, str] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
@@ -39,12 +38,7 @@ class UpdateProjectResponse400Data:
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        _code = src_dict.get("code")
-        code: Union[Unset, UpdateProjectResponse400DataCode]
-        if isinstance(_code, Unset):
-            code = UNSET
-        else:
-            code = UpdateProjectResponse400DataCode(_code)
+        code = src_dict.get("code")
 
         message = src_dict.get("message")
 

@@ -4,8 +4,6 @@ from typing import Any, Dict, List, Type, TypeVar, Union
 import attr
 from dateutil.parser import isoparse
 
-from ..models.page_crawl_status import PageCrawlStatus
-from ..models.page_index_status import PageIndexStatus
 from ..types import UNSET, Unset
 
 T = TypeVar("T", bound="Page")
@@ -37,7 +35,7 @@ class Page:
             00:00:00.
         updated_at (Union[Unset, datetime.datetime]): Date and time when the page was updated Example: 2021-01-01
             00:00:00.
-        deleted_at (Union[Unset, None, datetime.datetime]): Date and time when the page was deleted Example: 2021-01-01
+        deleted_at (Union[Unset, datetime.datetime]): Date and time when the page was deleted Example: 2021-01-01
             00:00:00.
     """
 
@@ -46,15 +44,15 @@ class Page:
     page_url_hash: Union[Unset, str] = UNSET
     project_id: Union[Unset, int] = UNSET
     s3_path: Union[Unset, None, str] = UNSET
-    crawl_status: Union[Unset, PageCrawlStatus] = PageCrawlStatus.QUEUED
-    index_status: Union[Unset, PageIndexStatus] = PageIndexStatus.QUEUED
+    crawl_status: Union[Unset, str] = Unset
+    index_status: Union[Unset, str] = Unset
     is_file: Union[Unset, bool] = False
     is_file_kept: Union[Unset, bool] = True
     filename: Union[Unset, None, str] = UNSET
     filesize: Union[Unset, None, int] = UNSET
     created_at: Union[Unset, datetime.datetime] = UNSET
     updated_at: Union[Unset, datetime.datetime] = UNSET
-    deleted_at: Union[Unset, None, datetime.datetime] = UNSET
+    deleted_at: Union[Unset, datetime.datetime] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
@@ -83,9 +81,9 @@ class Page:
         if not isinstance(self.updated_at, Unset):
             updated_at = self.updated_at.isoformat()
 
-        deleted_at: Union[Unset, None, str] = UNSET
+        deleted_at: Union[Unset, str] = UNSET
         if not isinstance(self.deleted_at, Unset):
-            deleted_at = self.deleted_at.isoformat() if self.deleted_at else None
+            deleted_at = self.deleted_at.isoformat()
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
@@ -133,19 +131,9 @@ class Page:
 
         s3_path = src_dict.get("s3_path")
 
-        _crawl_status = src_dict.get("crawl_status")
-        crawl_status: Union[Unset, PageCrawlStatus]
-        if isinstance(_crawl_status, Unset):
-            crawl_status = UNSET
-        else:
-            crawl_status = PageCrawlStatus(_crawl_status)
+        crawl_status = src_dict.get("crawl_status")
 
-        _index_status = src_dict.get("index_status")
-        index_status: Union[Unset, PageIndexStatus]
-        if isinstance(_index_status, Unset):
-            index_status = UNSET
-        else:
-            index_status = PageIndexStatus(_index_status)
+        index_status = src_dict.get("index_status")
 
         is_file = src_dict.get("is_file")
 
@@ -170,10 +158,8 @@ class Page:
             updated_at = isoparse(_updated_at)
 
         _deleted_at = src_dict.get("deleted_at")
-        deleted_at: Union[Unset, None, datetime.datetime]
-        if _deleted_at is None:
-            deleted_at = None
-        elif isinstance(_deleted_at, Unset):
+        deleted_at: Union[Unset, datetime.datetime]
+        if isinstance(_deleted_at, Unset):
             deleted_at = UNSET
         else:
             deleted_at = isoparse(_deleted_at)

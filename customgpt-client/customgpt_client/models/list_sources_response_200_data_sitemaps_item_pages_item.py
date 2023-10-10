@@ -4,12 +4,6 @@ from typing import Any, Dict, List, Type, TypeVar, Union
 import attr
 from dateutil.parser import isoparse
 
-from ..models.list_sources_response_200_data_sitemaps_item_pages_item_crawl_status import (
-    ListSourcesResponse200DataSitemapsItemPagesItemCrawlStatus,
-)
-from ..models.list_sources_response_200_data_sitemaps_item_pages_item_index_status import (
-    ListSourcesResponse200DataSitemapsItemPagesItemIndexStatus,
-)
 from ..types import UNSET, Unset
 
 T = TypeVar("T", bound="ListSourcesResponse200DataSitemapsItemPagesItem")
@@ -50,12 +44,8 @@ class ListSourcesResponse200DataSitemapsItemPagesItem:
     page_url_hash: Union[Unset, str] = UNSET
     project_id: Union[Unset, int] = UNSET
     s3_path: Union[Unset, None, str] = UNSET
-    crawl_status: Union[
-        Unset, ListSourcesResponse200DataSitemapsItemPagesItemCrawlStatus
-    ] = ListSourcesResponse200DataSitemapsItemPagesItemCrawlStatus.QUEUED
-    index_status: Union[
-        Unset, ListSourcesResponse200DataSitemapsItemPagesItemIndexStatus
-    ] = ListSourcesResponse200DataSitemapsItemPagesItemIndexStatus.QUEUED
+    crawl_status: Union[Unset, str] = Unset
+    index_status: Union[Unset, str] = Unset
     is_file: Union[Unset, bool] = False
     is_file_kept: Union[Unset, bool] = True
     filename: Union[Unset, None, str] = UNSET
@@ -141,19 +131,9 @@ class ListSourcesResponse200DataSitemapsItemPagesItem:
 
         s3_path = src_dict.get("s3_path")
 
-        _crawl_status = src_dict.get("crawl_status")
-        crawl_status: Union[Unset, ListSourcesResponse200DataSitemapsItemPagesItemCrawlStatus]
-        if isinstance(_crawl_status, Unset):
-            crawl_status = UNSET
-        else:
-            crawl_status = ListSourcesResponse200DataSitemapsItemPagesItemCrawlStatus(_crawl_status)
+        crawl_status = src_dict.get("crawl_status")
 
-        _index_status = src_dict.get("index_status")
-        index_status: Union[Unset, ListSourcesResponse200DataSitemapsItemPagesItemIndexStatus]
-        if isinstance(_index_status, Unset):
-            index_status = UNSET
-        else:
-            index_status = ListSourcesResponse200DataSitemapsItemPagesItemIndexStatus(_index_status)
+        index_status = src_dict.get("index_status")
 
         is_file = src_dict.get("is_file")
 

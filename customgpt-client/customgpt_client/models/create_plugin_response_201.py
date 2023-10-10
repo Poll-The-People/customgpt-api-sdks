@@ -2,7 +2,6 @@ from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar, Union
 
 import attr
 
-from ..models.create_plugin_response_201_status import CreatePluginResponse201Status
 from ..types import UNSET, Unset
 
 if TYPE_CHECKING:
@@ -20,7 +19,7 @@ class CreatePluginResponse201:
         data (Union[Unset, CreatePluginResponse201Data]):
     """
 
-    status: Union[Unset, CreatePluginResponse201Status] = UNSET
+    status: Union[Unset, str] = Unset
     data: Union[Unset, "CreatePluginResponse201Data"] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
@@ -47,12 +46,7 @@ class CreatePluginResponse201:
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         from ..models.create_plugin_response_201_data import CreatePluginResponse201Data
 
-        _status = src_dict.get("status")
-        status: Union[Unset, CreatePluginResponse201Status]
-        if isinstance(_status, Unset):
-            status = UNSET
-        else:
-            status = CreatePluginResponse201Status(_status)
+        status = src_dict.get("status")
 
         _data = src_dict.get("data")
         data: Union[Unset, CreatePluginResponse201Data]

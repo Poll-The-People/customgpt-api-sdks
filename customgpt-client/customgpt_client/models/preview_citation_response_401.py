@@ -2,7 +2,6 @@ from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar, Union
 
 import attr
 
-from ..models.preview_citation_response_401_status import PreviewCitationResponse401Status
 from ..types import UNSET, Unset
 
 if TYPE_CHECKING:
@@ -21,7 +20,7 @@ class PreviewCitationResponse401:
         data (Union[Unset, PreviewCitationResponse401Data]):
     """
 
-    status: Union[Unset, PreviewCitationResponse401Status] = UNSET
+    status: Union[Unset, str] = Unset
     url: Union[Unset, str] = UNSET
     data: Union[Unset, "PreviewCitationResponse401Data"] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
@@ -52,12 +51,7 @@ class PreviewCitationResponse401:
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         from ..models.preview_citation_response_401_data import PreviewCitationResponse401Data
 
-        _status = src_dict.get("status")
-        status: Union[Unset, PreviewCitationResponse401Status]
-        if isinstance(_status, Unset):
-            status = UNSET
-        else:
-            status = PreviewCitationResponse401Status(_status)
+        status = src_dict.get("status")
 
         url = src_dict.get("url")
 

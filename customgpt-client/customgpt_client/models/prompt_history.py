@@ -29,7 +29,8 @@ class PromptHistory:
         conversation_id (Union[Unset, int]): The unique identifier of the conversation. Example: 1.
         citations (Union[Unset, List[int]]): The citations for the prompt history. Example: [1, 2, 3].
         metadata (Union[Unset, PromptHistoryMetadata]):  Example: {'user_ip': '127.0.0.1', 'user_agent': 'Mozilla/5.0
-            (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko)'}.
+            (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko)', 'external_id': 'ext_id_1234567890',
+            'request_source': 'web'}.
     """
 
     id: Union[Unset, int] = UNSET
@@ -84,7 +85,7 @@ class PromptHistory:
             field_dict["conversation_id"] = conversation_id
         if citations is not UNSET:
             for index, field_value in enumerate(citations):
-                field_dict[f"citations[]{index}"] = field_value
+                field_dict[f"citations[]"] = field_value
         if metadata is not UNSET:
             field_dict["metadata"] = metadata
 

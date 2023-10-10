@@ -4,7 +4,6 @@ from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar, Union
 import attr
 from dateutil.parser import isoparse
 
-from ..models.create_source_response_201_data_type import CreateSourceResponse201DataType
 from ..types import UNSET, Unset
 
 if TYPE_CHECKING:
@@ -30,7 +29,7 @@ class CreateSourceResponse201Data:
     id: Union[Unset, int] = UNSET
     created_at: Union[Unset, datetime.datetime] = UNSET
     updated_at: Union[Unset, datetime.datetime] = UNSET
-    type: Union[Unset, CreateSourceResponse201DataType] = UNSET
+    type: Union[Unset, str] = Unset
     settings: Union[Unset, "CreateSourceResponse201DataSettings"] = UNSET
     pages: Union[Unset, None, List["CreateSourceResponse201DataPagesItem"]] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
@@ -79,7 +78,7 @@ class CreateSourceResponse201Data:
             field_dict["settings"] = settings
         if pages is not UNSET:
             for index, field_value in enumerate(pages):
-                field_dict[f"pages[]{index}"] = field_value
+                field_dict[f"pages[]"] = field_value
 
         return field_dict
 
@@ -104,12 +103,7 @@ class CreateSourceResponse201Data:
         else:
             updated_at = isoparse(_updated_at)
 
-        _type = src_dict.get("type")
-        type: Union[Unset, CreateSourceResponse201DataType]
-        if isinstance(_type, Unset):
-            type = UNSET
-        else:
-            type = CreateSourceResponse201DataType(_type)
+        type = src_dict.get("type")
 
         _settings = src_dict.get("settings")
         settings: Union[Unset, CreateSourceResponse201DataSettings]

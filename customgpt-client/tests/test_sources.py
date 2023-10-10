@@ -20,7 +20,6 @@ def test_sync_sources():
     response_create = response.parsed
     assert response_create.data.project_name == "test"
     assert response.status_code == 201
-    project_id = 863
     json_project = {}
     is_chat_active = 0
     while not is_chat_active:
@@ -68,7 +67,6 @@ async def test_async_sources():
     response_create = response.parsed
     assert response_create.data.project_name == "test"
     assert response.status_code == 201
-    project_id = 863
     json_project = {}
     is_chat_active = 0
     while not is_chat_active:

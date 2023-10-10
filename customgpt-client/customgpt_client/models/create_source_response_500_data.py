@@ -2,7 +2,6 @@ from typing import Any, Dict, List, Type, TypeVar, Union
 
 import attr
 
-from ..models.create_source_response_500_data_code import CreateSourceResponse500DataCode
 from ..types import UNSET, Unset
 
 T = TypeVar("T", bound="CreateSourceResponse500Data")
@@ -16,7 +15,7 @@ class CreateSourceResponse500Data:
         message (Union[Unset, str]):  Example: Internal Server Error.
     """
 
-    code: Union[Unset, CreateSourceResponse500DataCode] = UNSET
+    code: Union[Unset, str] = Unset
     message: Union[Unset, str] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
@@ -39,12 +38,7 @@ class CreateSourceResponse500Data:
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        _code = src_dict.get("code")
-        code: Union[Unset, CreateSourceResponse500DataCode]
-        if isinstance(_code, Unset):
-            code = UNSET
-        else:
-            code = CreateSourceResponse500DataCode(_code)
+        code = src_dict.get("code")
 
         message = src_dict.get("message")
 
