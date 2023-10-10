@@ -42,7 +42,7 @@ from customgpt_client.models import (
 
 
 def set_client():
-    api_key = CustomGPT.api_key
+    api_key = CustomGPT.api_key if hasattr(CustomGPT, "api_key") else ""
     base_url = CustomGPT.base_url if hasattr(CustomGPT, "base_url") else "https://app.customgpt.ai"
     timeout = CustomGPT.timeout if hasattr(CustomGPT, "timeout") else 100.0
     return CustomGPT(api_key=api_key, base_url=base_url, timeout=timeout)
