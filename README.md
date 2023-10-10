@@ -28,5 +28,7 @@ project_id = response.data.id
 
 ## Tests
 Fill your credentials in customgpt_client/tests/credentials.py in base_url and api_key
+```python
 def credentials():
     return (base_url, api_key)
+```
