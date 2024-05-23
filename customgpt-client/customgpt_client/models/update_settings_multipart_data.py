@@ -72,7 +72,7 @@ class UpdateSettingsMultipartData:
     chatbot_siesta_msg: Union[Unset, None, str] = UNSET
     is_loading_indicator_enabled: Union[Unset, None, bool] = True
     enable_citations: Union[Unset, None, bool] = True
-    citations_view_type: Union[Unset, str] = Unset
+    citations_view_type: Union[Unset, str] = "user"
     no_answer_message: Union[Unset, None, str] = UNSET
     ending_message: Union[Unset, None, str] = UNSET
     remove_branding: Union[Unset, None, bool] = False
@@ -104,7 +104,7 @@ class UpdateSettingsMultipartData:
         enable_citations = self.enable_citations
         citations_view_type: Union[Unset, None, str] = UNSET
         if not isinstance(self.citations_view_type, Unset):
-            citations_view_type = self.citations_view_type.value if self.citations_view_type else None
+            citations_view_type = self.citations_view_type if self.citations_view_type else None
 
         no_answer_message = self.no_answer_message
         ending_message = self.ending_message
@@ -218,17 +218,17 @@ class UpdateSettingsMultipartData:
         is_loading_indicator_enabled = (
             self.is_loading_indicator_enabled
             if isinstance(self.is_loading_indicator_enabled, Unset)
-            else (None, str(self.is_loading_indicator_enabled).encode(), "text/plain")
+            else (None, str(self.is_loading_indicator_enabled).lower().encode(), "text/plain")
         )
         enable_citations = (
             self.enable_citations
             if isinstance(self.enable_citations, Unset)
-            else (None, str(self.enable_citations).encode(), "text/plain")
+            else (None, str(self.enable_citations).lower().encode(), "text/plain")
         )
         citations_view_type: Union[Unset, Tuple[None, bytes, str]] = UNSET
         if not isinstance(self.citations_view_type, Unset):
             citations_view_type = (
-                (None, str(self.citations_view_type.value).encode(), "text/plain") if self.citations_view_type else None
+                (None, str(self.citations_view_type).encode(), "text/plain") if self.citations_view_type else None
             )
 
         no_answer_message = (
@@ -244,7 +244,7 @@ class UpdateSettingsMultipartData:
         remove_branding = (
             self.remove_branding
             if isinstance(self.remove_branding, Unset)
-            else (None, str(self.remove_branding).encode(), "text/plain")
+            else (None, str(self.remove_branding).lower().encode(), "text/plain")
         )
 
         field_dict: Dict[str, Any] = {}

@@ -61,7 +61,7 @@ class ProjectSettings:
     chatbot_background: Union[Unset, str] = UNSET
     default_prompt: Union[Unset, str] = UNSET
     example_questions: Union[Unset, List[str]] = UNSET
-    response_source: Union[Unset, str] = Unset
+    response_source: Union[Unset, str] = "own_content"
     chatbot_msg_lang: Union[Unset, str] = UNSET
     chatbot_color: Union[Unset, str] = UNSET
     persona_instructions: Union[Unset, None, str] = UNSET
@@ -71,7 +71,7 @@ class ProjectSettings:
     chatbot_siesta_msg: Union[Unset, None, str] = UNSET
     is_loading_indicator_enabled: Union[Unset, None, bool] = True
     enable_citations: Union[Unset, None, bool] = True
-    citations_view_type: Union[Unset, str] = Unset
+    citations_view_type: Union[Unset, str] = "user"
     no_answer_message: Union[Unset, None, str] = UNSET
     ending_message: Union[Unset, None, str] = UNSET
     remove_branding: Union[Unset, None, bool] = False
@@ -87,7 +87,7 @@ class ProjectSettings:
 
         response_source: Union[Unset, str] = UNSET
         if not isinstance(self.response_source, Unset):
-            response_source = self.response_source.value
+            response_source = self.response_source
 
         chatbot_msg_lang = self.chatbot_msg_lang
         chatbot_color = self.chatbot_color
@@ -100,7 +100,7 @@ class ProjectSettings:
         enable_citations = self.enable_citations
         citations_view_type: Union[Unset, None, str] = UNSET
         if not isinstance(self.citations_view_type, Unset):
-            citations_view_type = self.citations_view_type.value if self.citations_view_type else None
+            citations_view_type = self.citations_view_type if self.citations_view_type else None
 
         no_answer_message = self.no_answer_message
         ending_message = self.ending_message

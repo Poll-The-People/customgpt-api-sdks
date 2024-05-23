@@ -16,18 +16,18 @@ class UpdateSettingsResponse400Data:
             image file for avatar.
     """
 
-    code: Union[Unset, str] = Unset
-    message: Union[Unset, str] = Unset
+    code: Union[Unset, str] = "400"
+    message: Union[Unset, str] = "Please upload a valid image file for avatar"
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
         code: Union[Unset, int] = UNSET
         if not isinstance(self.code, Unset):
-            code = self.code.value
+            code = self.code
 
         message: Union[Unset, str] = UNSET
         if not isinstance(self.message, Unset):
-            message = self.message.value
+            message = self.message
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)

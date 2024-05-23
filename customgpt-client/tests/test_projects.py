@@ -8,7 +8,8 @@ def test_sync_projects():
     CustomGPT.base_url, CustomGPT.api_key = credentials()
 
     response = CustomGPT.Project.create(
-        project_name="test", sitemap_path="https://adorosario.github.io/small-sitemap.xml"
+        project_name="test",
+        sitemap_path="https://adorosario.github.io/small-sitemap.xml",
     )
     response_create = response.parsed
     assert response_create.data.project_name == "test"
@@ -69,7 +70,8 @@ async def test_async_projects():
     CustomGPT.base_url, CustomGPT.api_key = credentials()
 
     response = await CustomGPT.Project.acreate(
-        project_name="test", sitemap_path="https://adorosario.github.io/small-sitemap.xml"
+        project_name="test",
+        sitemap_path="https://adorosario.github.io/small-sitemap.xml",
     )
     response_create = response.parsed
     assert response_create.data.project_name == "test"

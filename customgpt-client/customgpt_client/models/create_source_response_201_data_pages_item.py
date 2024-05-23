@@ -44,8 +44,8 @@ class CreateSourceResponse201DataPagesItem:
     page_url_hash: Union[Unset, str] = UNSET
     project_id: Union[Unset, int] = UNSET
     s3_path: Union[Unset, None, str] = UNSET
-    crawl_status: Union[Unset, str] = Unset
-    index_status: Union[Unset, str] = Unset
+    crawl_status: Union[Unset, str] = "queued"
+    index_status: Union[Unset, str] = "queued"
     is_file: Union[Unset, bool] = False
     is_file_kept: Union[Unset, bool] = True
     filename: Union[Unset, None, str] = UNSET
@@ -63,11 +63,11 @@ class CreateSourceResponse201DataPagesItem:
         s3_path = self.s3_path
         crawl_status: Union[Unset, str] = UNSET
         if not isinstance(self.crawl_status, Unset):
-            crawl_status = self.crawl_status.value
+            crawl_status = self.crawl_status
 
         index_status: Union[Unset, str] = UNSET
         if not isinstance(self.index_status, Unset):
-            index_status = self.index_status.value
+            index_status = self.index_status
 
         is_file = self.is_file
         is_file_kept = self.is_file_kept

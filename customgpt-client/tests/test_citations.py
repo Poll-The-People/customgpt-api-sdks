@@ -11,11 +11,14 @@ def test_sync_citations():
 
     CustomGPT.timeout = 10000
     response = CustomGPT.Project.create(
-        project_name="test", sitemap_path="https://adorosario.github.io/small-sitemap.xml"
+        project_name="test",
+        sitemap_path="https://adorosario.github.io/small-sitemap.xml",
     )
     response_create = response.parsed
     project_id = response_create.data["id"]
-    response = CustomGPT.Conversation.create(project_id=project_id, name="test_converation")
+    response = CustomGPT.Conversation.create(
+        project_id=project_id, name="test_converation"
+    )
     response_create = response.parsed
     session_id = response_create.data["session_id"]
     assert response_create.data["name"] == "test_converation"
@@ -32,7 +35,9 @@ def test_sync_citations():
 
     assert json_project.data.is_chat_active == 1
     response = CustomGPT.Conversation.send(
-        project_id=project_id, session_id=session_id, prompt="Who is Tom? I need a short answer in 10 words."
+        project_id=project_id,
+        session_id=session_id,
+        prompt="Who is Tom? I need a short answer in 10 words.",
     )
     citation_id = response.parsed.data.citations[0]
 
@@ -46,11 +51,14 @@ async def test_async_citations():
 
     CustomGPT.timeout = 10000
     response = await CustomGPT.Project.acreate(
-        project_name="test", sitemap_path="https://adorosario.github.io/small-sitemap.xml"
+        project_name="test",
+        sitemap_path="https://adorosario.github.io/small-sitemap.xml",
     )
     response_create = response.parsed
     project_id = response_create.data.id
-    response = await CustomGPT.Conversation.acreate(project_id=project_id, name="test_converation")
+    response = await CustomGPT.Conversation.acreate(
+        project_id=project_id, name="test_converation"
+    )
     response_create = response.parsed
     session_id = response_create.data.session_id
     assert response_create.data.name == "test_converation"
@@ -67,9 +75,13 @@ async def test_async_citations():
 
     assert json_project.data.is_chat_active == 1
     response = CustomGPT.Conversation.send(
-        project_id=project_id, session_id=session_id, prompt="Who is Tom? I need a short answer in 10 words."
+        project_id=project_id,
+        session_id=session_id,
+        prompt="Who is Tom? I need a short answer in 10 words.",
     )
     citation_id = response.parsed.data.citations[0]
 
-    response = await CustomGPT.Citation.aget(project_id=project_id, citation_id=citation_id)
+    response = await CustomGPT.Citation.aget(
+        project_id=project_id, citation_id=citation_id
+    )
     assert response.status_code == 200

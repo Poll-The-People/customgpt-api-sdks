@@ -19,14 +19,14 @@ class GetProjectResponse200:
         data (Union[Unset, GetProjectResponse200Data]):
     """
 
-    status: Union[Unset, str] = Unset
+    status: Union[Unset, str] = "success"
     data: Union[Unset, "GetProjectResponse200Data"] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
         status: Union[Unset, str] = UNSET
         if not isinstance(self.status, Unset):
-            status = self.status.value
+            status = self.status
 
         data: Union[Unset, Dict[str, Any]] = UNSET
         if not isinstance(self.data, Unset):

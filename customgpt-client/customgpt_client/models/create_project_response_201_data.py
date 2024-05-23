@@ -42,7 +42,7 @@ class CreateProjectResponse201Data:
     created_at: Union[Unset, datetime.datetime] = isoparse("2023-05-08 13:06:55")
     updated_at: Union[Unset, datetime.datetime] = isoparse("2023-05-08 13:06:55")
     deleted_at: Union[Unset, None, datetime.datetime] = UNSET
-    type: Union[Unset, str] = Unset
+    type: Union[Unset, str] = "SITEMAP"
     is_shared: Union[Unset, bool] = False
     shareable_slug: Union[Unset, None, str] = UNSET
     shareable_link: Union[Unset, None, str] = UNSET
@@ -70,7 +70,7 @@ class CreateProjectResponse201Data:
 
         type: Union[Unset, str] = UNSET
         if not isinstance(self.type, Unset):
-            type = self.type.value
+            type = self.type
 
         is_shared = self.is_shared
         shareable_slug = self.shareable_slug

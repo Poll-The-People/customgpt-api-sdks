@@ -29,7 +29,7 @@ class CreateSourceResponse201Data:
     id: Union[Unset, int] = UNSET
     created_at: Union[Unset, datetime.datetime] = UNSET
     updated_at: Union[Unset, datetime.datetime] = UNSET
-    type: Union[Unset, str] = Unset
+    type: Union[Unset, str] = "sitemap"
     settings: Union[Unset, "CreateSourceResponse201DataSettings"] = UNSET
     pages: Union[Unset, None, List["CreateSourceResponse201DataPagesItem"]] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
@@ -46,7 +46,7 @@ class CreateSourceResponse201Data:
 
         type: Union[Unset, str] = UNSET
         if not isinstance(self.type, Unset):
-            type = self.type.value
+            type = self.type
 
         settings: Union[Unset, Dict[str, Any]] = UNSET
         if not isinstance(self.settings, Unset):
