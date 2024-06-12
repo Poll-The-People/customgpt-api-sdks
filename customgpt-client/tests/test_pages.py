@@ -40,7 +40,7 @@ async def test_async_pages():
     response_page = response.parsed
     if len(response_page.data.pages.data) > 0:
         page_id = response_page.data.pages.data[0].id
-        response = CustomGPT.Page.reindex(project_id=project_id, page_id=page_id)
+        response = await CustomGPT.Page.areindex(project_id=project_id, page_id=page_id)
         assert response.parsed.data.updated
         assert response.status_code == 200
         response = await CustomGPT.Page.adelete(project_id=project_id, page_id=page_id)
