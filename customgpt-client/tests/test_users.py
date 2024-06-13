@@ -8,7 +8,8 @@ def test_sync_users():
     CustomGPT.base_url, CustomGPT.api_key = credentials()
     CustomGPT.timeout = 10000
     response = CustomGPT.Project.create(
-        project_name="test", sitemap_path="https://adorosario.github.io/small-sitemap.xml"
+        project_name="test",
+        sitemap_path="https://adorosario.github.io/small-sitemap.xml",
     )
     response_create = response.parsed
     response_create.data.id
@@ -24,7 +25,8 @@ def test_error_users():
     CustomGPT.base_url, CustomGPT.api_key = credentials()
     CustomGPT.api_key = ""
     response = CustomGPT.Project.create(
-        project_name="test", sitemap_path="https://adorosario.github.io/small-sitemap.xml"
+        project_name="test",
+        sitemap_path="https://adorosario.github.io/small-sitemap.xml",
     )
     assert response.status_code == 401
 
@@ -34,7 +36,8 @@ async def test_async_users():
     CustomGPT.base_url, CustomGPT.api_key = credentials()
     CustomGPT.timeout = 10000
     response = await CustomGPT.Project.acreate(
-        project_name="test", sitemap_path="https://adorosario.github.io/small-sitemap.xml"
+        project_name="test",
+        sitemap_path="https://adorosario.github.io/small-sitemap.xml",
     )
     response_create = response.parsed
     response_create.data.id

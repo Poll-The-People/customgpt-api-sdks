@@ -33,13 +33,13 @@ def _get_kwargs(
 
     json_order: Union[Unset, None, str] = UNSET
     if not isinstance(order, Unset):
-        json_order = order.value if order else None
+        json_order = order if order else None
 
     params["order"] = json_order
 
     json_user_filter: Union[Unset, None, str] = UNSET
     if not isinstance(user_filter, Unset):
-        json_user_filter = user_filter.value if user_filter else None
+        json_user_filter = user_filter if user_filter else None
 
     params["userFilter"] = json_user_filter
 

@@ -15,14 +15,14 @@ class GetPluginResponse401Data:
         message (Union[Unset, str]):  Example: API Token is either missing or invalid.
     """
 
-    code: Union[Unset, str] = Unset
+    code: Union[Unset, str] = "401"
     message: Union[Unset, str] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
         code: Union[Unset, int] = UNSET
         if not isinstance(self.code, Unset):
-            code = self.code.value
+            code = self.code
 
         message = self.message
 

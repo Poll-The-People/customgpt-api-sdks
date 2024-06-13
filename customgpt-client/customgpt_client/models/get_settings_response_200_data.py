@@ -72,7 +72,7 @@ class GetSettingsResponse200Data:
     chatbot_siesta_msg: Union[Unset, None, str] = UNSET
     is_loading_indicator_enabled: Union[Unset, None, bool] = True
     enable_citations: Union[Unset, None, bool] = True
-    citations_view_type: Union[Unset, str] = Unset
+    citations_view_type: Union[Unset, str] = "user"
     no_answer_message: Union[Unset, None, str] = UNSET
     ending_message: Union[Unset, None, str] = UNSET
     remove_branding: Union[Unset, None, bool] = False
@@ -104,7 +104,7 @@ class GetSettingsResponse200Data:
         enable_citations = self.enable_citations
         citations_view_type: Union[Unset, None, str] = UNSET
         if not isinstance(self.citations_view_type, Unset):
-            citations_view_type = self.citations_view_type.value if self.citations_view_type else None
+            citations_view_type = self.citations_view_type if self.citations_view_type else None
 
         no_answer_message = self.no_answer_message
         ending_message = self.ending_message

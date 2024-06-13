@@ -20,7 +20,7 @@ class CreateConversationResponse404:
         data (Union[Unset, CreateConversationResponse404Data]):
     """
 
-    status: Union[Unset, str] = Unset
+    status: Union[Unset, str] = "error"
     url: Union[Unset, str] = UNSET
     data: Union[Unset, "CreateConversationResponse404Data"] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
@@ -28,7 +28,7 @@ class CreateConversationResponse404:
     def to_dict(self) -> Dict[str, Any]:
         status: Union[Unset, str] = UNSET
         if not isinstance(self.status, Unset):
-            status = self.status.value
+            status = self.status
 
         url = self.url
         data: Union[Unset, Dict[str, Any]] = UNSET

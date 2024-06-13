@@ -9,7 +9,8 @@ def test_sync_project_settings():
 
     CustomGPT.timeout = 10000
     response = CustomGPT.Project.create(
-        project_name="test", sitemap_path="https://adorosario.github.io/small-sitemap.xml"
+        project_name="test",
+        sitemap_path="https://adorosario.github.io/small-sitemap.xml",
     )
     response_create = response.parsed
     project_id = response_create.data.id
@@ -38,7 +39,8 @@ async def test_async_project_settings():
 
     CustomGPT.timeout = 10000
     response = await CustomGPT.Project.acreate(
-        project_name="test", sitemap_path="https://adorosario.github.io/small-sitemap.xml"
+        project_name="test",
+        sitemap_path="https://adorosario.github.io/small-sitemap.xml",
     )
     response_create = response.parsed
     project_id = response_create.data.id

@@ -60,7 +60,7 @@ class CreateProjectMultipartData:
         file_data_retension = (
             self.file_data_retension
             if isinstance(self.file_data_retension, Unset)
-            else (None, str(self.file_data_retension).encode(), "text/plain")
+            else (None, str(self.file_data_retension).lower().encode(), "text/plain")
         )
         file: Union[Unset, FileJsonType] = UNSET
         if not isinstance(self.file, Unset):

@@ -15,7 +15,8 @@ file_path = os.path.join(os.path.dirname(current_script_path), file_name)
 def test_sync_sources():
     CustomGPT.base_url, CustomGPT.api_key = credentials()
     response = CustomGPT.Project.create(
-        project_name="test", sitemap_path="https://adorosario.github.io/small-sitemap.xml"
+        project_name="test",
+        sitemap_path="https://adorosario.github.io/small-sitemap.xml",
     )
     response_create = response.parsed
     assert response_create.data.project_name == "test"
@@ -30,7 +31,9 @@ def test_sync_sources():
 
     # Add new sitemap to project using source api.
     new_sitemap_path = "https://adorosario.github.io/small-sitemap.xml"
-    create_source = CustomGPT.Source.create(project_id=project_id, sitemap_path=new_sitemap_path)
+    create_source = CustomGPT.Source.create(
+        project_id=project_id, sitemap_path=new_sitemap_path
+    )
     data = create_source.parsed.data
     assert data.type == "sitemap"
     assert create_source.status_code == 201
@@ -62,7 +65,8 @@ def test_sync_sources():
 async def test_async_sources():
     CustomGPT.base_url, CustomGPT.api_key = credentials()
     response = await CustomGPT.Project.acreate(
-        project_name="test", sitemap_path="https://adorosario.github.io/small-sitemap.xml"
+        project_name="test",
+        sitemap_path="https://adorosario.github.io/small-sitemap.xml",
     )
     response_create = response.parsed
     assert response_create.data.project_name == "test"
@@ -77,7 +81,9 @@ async def test_async_sources():
 
     # Add new sitemap to project using source api.
     new_sitemap_path = "https://adorosario.github.io/small-sitemap.xml"
-    create_source = await CustomGPT.Source.acreate(project_id=project_id, sitemap_path=new_sitemap_path)
+    create_source = await CustomGPT.Source.acreate(
+        project_id=project_id, sitemap_path=new_sitemap_path
+    )
     data = create_source.parsed.data
     assert data.type == "sitemap"
     assert create_source.status_code == 201
@@ -101,5 +107,7 @@ async def test_async_sources():
 
     # # Delete Source
     source_id = data.sitemaps[0].id
-    delete_source = await CustomGPT.Source.adelete(project_id=project_id, source_id=source_id)
+    delete_source = await CustomGPT.Source.adelete(
+        project_id=project_id, source_id=source_id
+    )
     assert delete_source.status_code == 200

@@ -12,7 +12,8 @@ from tests.credentials import credentials
 def test_sync_plugins():
     CustomGPT.base_url, CustomGPT.api_key = credentials()
     response = CustomGPT.Project.create(
-        project_name="test", sitemap_path="https://adorosario.github.io/small-sitemap.xml"
+        project_name="test",
+        sitemap_path="https://adorosario.github.io/small-sitemap.xml",
     )
     response_project = response.parsed
     assert response.status_code == 201
@@ -64,7 +65,8 @@ def test_sync_plugins():
 async def test_async_plugins():
     CustomGPT.base_url, CustomGPT.api_key = credentials()
     response = await CustomGPT.Project.acreate(
-        project_name="test", sitemap_path="https://adorosario.github.io/small-sitemap.xml"
+        project_name="test",
+        sitemap_path="https://adorosario.github.io/small-sitemap.xml",
     )
     response_project = response.parsed
     assert response.status_code == 201
