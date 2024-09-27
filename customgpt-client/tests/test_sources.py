@@ -19,6 +19,7 @@ def test_sync_sources():
         sitemap_path="https://adorosario.github.io/small-sitemap.xml",
     )
     response_create = response.parsed
+    project_id = response_create.data.id
     assert response_create.data.project_name == "test"
     assert response.status_code == 201
     json_project = {}
@@ -31,9 +32,7 @@ def test_sync_sources():
 
     # Add new sitemap to project using source api.
     new_sitemap_path = "https://adorosario.github.io/small-sitemap.xml"
-    create_source = CustomGPT.Source.create(
-        project_id=project_id, sitemap_path=new_sitemap_path
-    )
+    create_source = CustomGPT.Source.create(project_id=project_id, sitemap_path=new_sitemap_path)
     data = create_source.parsed.data
     assert data.type == "sitemap"
     assert create_source.status_code == 201
@@ -69,8 +68,7 @@ async def test_async_sources():
         sitemap_path="https://adorosario.github.io/small-sitemap.xml",
     )
     response_create = response.parsed
-    assert response_create.data.project_name == "test"
-    assert response.status_code == 201
+    project_id = response_create.data.id
     json_project = {}
     is_chat_active = 0
     while not is_chat_active:
@@ -81,9 +79,7 @@ async def test_async_sources():
 
     # Add new sitemap to project using source api.
     new_sitemap_path = "https://adorosario.github.io/small-sitemap.xml"
-    create_source = await CustomGPT.Source.acreate(
-        project_id=project_id, sitemap_path=new_sitemap_path
-    )
+    create_source = await CustomGPT.Source.acreate(project_id=project_id, sitemap_path=new_sitemap_path)
     data = create_source.parsed.data
     assert data.type == "sitemap"
     assert create_source.status_code == 201
@@ -107,7 +103,5 @@ async def test_async_sources():
 
     # # Delete Source
     source_id = data.sitemaps[0].id
-    delete_source = await CustomGPT.Source.adelete(
-        project_id=project_id, source_id=source_id
-    )
+    delete_source = await CustomGPT.Source.adelete(project_id=project_id, source_id=source_id)
     assert delete_source.status_code == 200

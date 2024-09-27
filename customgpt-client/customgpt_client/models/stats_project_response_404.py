@@ -20,7 +20,7 @@ class StatsProjectResponse404:
         data (Union[Unset, StatsProjectResponse404Data]):
     """
 
-    status: Union[Unset, str] = "error"
+    status: Union[Unset, str] = UNSET
     url: Union[Unset, str] = UNSET
     data: Union[Unset, "StatsProjectResponse404Data"] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)

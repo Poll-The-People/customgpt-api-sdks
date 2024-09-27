@@ -15,7 +15,7 @@ class MessagesConversationResponse400Data:
         message (Union[Unset, str]): The error message Example: Project id must be integer.
     """
 
-    code: Union[Unset, str] = "400"
+    code: Union[Unset, str] = UNSET
     message: Union[Unset, str] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 

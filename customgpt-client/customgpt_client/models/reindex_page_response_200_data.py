@@ -18,7 +18,7 @@ class ReindexPageResponse200Data:
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        updated = self.updated
+        updated = True if self.updated else False
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)

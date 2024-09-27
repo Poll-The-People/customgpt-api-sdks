@@ -6,6 +6,7 @@ import requests
 
 from ... import errors
 from ...models.get_conversations_order import GetConversationsOrder
+from ...models.get_conversations_order_by import GetConversationsOrderBy
 from ...models.get_conversations_response_200 import GetConversationsResponse200
 from ...models.get_conversations_response_400 import GetConversationsResponse400
 from ...models.get_conversations_response_401 import GetConversationsResponse401
@@ -21,7 +22,9 @@ def _get_kwargs(
     client: {},
     page: Union[Unset, None, int] = 1,
     order: Union[Unset, None, GetConversationsOrder] = GetConversationsOrder.DESC,
+    order_by: Union[Unset, None, GetConversationsOrderBy] = GetConversationsOrderBy.ID,
     user_filter: Union[Unset, None, GetConversationsUserFilter] = GetConversationsUserFilter.ALL,
+    name: Union[Unset, None, str] = UNSET,
 ) -> Dict[str, Any]:
     url = "{}/api/v1/projects/{projectId}/conversations".format(client.base_url, projectId=project_id)
 
@@ -37,11 +40,19 @@ def _get_kwargs(
 
     params["order"] = json_order
 
+    json_order_by: Union[Unset, None, str] = UNSET
+    if not isinstance(order_by, Unset):
+        json_order_by = order_by if order_by else None
+
+    params["orderBy"] = json_order_by
+
     json_user_filter: Union[Unset, None, str] = UNSET
     if not isinstance(user_filter, Unset):
         json_user_filter = user_filter if user_filter else None
 
     params["userFilter"] = json_user_filter
+
+    params["name"] = name
 
     params = {k: v for k, v in params.items() if v is not UNSET and v is not None}
 
@@ -56,9 +67,7 @@ def _get_kwargs(
     }
 
 
-def _parse_response(
-    *, client: {}, response: None
-) -> Optional[
+def _parse_response(*, client: {}, response: None) -> Optional[
     Union[
         GetConversationsResponse200,
         GetConversationsResponse400,
@@ -93,9 +102,7 @@ def _parse_response(
         return None
 
 
-def _build_response(
-    *, client: {}, response: None, content: Optional[bytes] = None
-) -> Response[
+def _build_response(*, client: {}, response: None, content: Optional[bytes] = None) -> Response[
     Union[
         GetConversationsResponse200,
         GetConversationsResponse400,
@@ -119,7 +126,9 @@ def sync_detailed(
     client: {},
     page: Union[Unset, None, int] = 1,
     order: Union[Unset, None, GetConversationsOrder] = GetConversationsOrder.DESC,
+    order_by: Union[Unset, None, GetConversationsOrderBy] = GetConversationsOrderBy.ID,
     user_filter: Union[Unset, None, GetConversationsUserFilter] = GetConversationsUserFilter.ALL,
+    name: Union[Unset, None, str] = UNSET,
 ):
     """List all conversations for a project.
 
@@ -131,8 +140,11 @@ def sync_detailed(
         page (Union[Unset, None, int]):  Default: 1.
         order (Union[Unset, None, GetConversationsOrder]):  Default: GetConversationsOrder.DESC.
             Example: desc.
+        order_by (Union[Unset, None, GetConversationsOrderBy]):  Default:
+            GetConversationsOrderBy.ID. Example: id.
         user_filter (Union[Unset, None, GetConversationsUserFilter]):  Default:
             GetConversationsUserFilter.ALL. Example: all.
+        name (Union[Unset, None, str]):  Example: Ask me anything.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -147,7 +159,9 @@ def sync_detailed(
         client=client,
         page=page,
         order=order,
+        order_by=order_by,
         user_filter=user_filter,
+        name=name,
     )
 
     response = requests.request(
@@ -163,7 +177,9 @@ def sync(
     client: {},
     page: Union[Unset, None, int] = 1,
     order: Union[Unset, None, GetConversationsOrder] = GetConversationsOrder.DESC,
+    order_by: Union[Unset, None, GetConversationsOrderBy] = GetConversationsOrderBy.ID,
     user_filter: Union[Unset, None, GetConversationsUserFilter] = GetConversationsUserFilter.ALL,
+    name: Union[Unset, None, str] = UNSET,
 ) -> Optional[
     Union[
         GetConversationsResponse200,
@@ -183,8 +199,11 @@ def sync(
         page (Union[Unset, None, int]):  Default: 1.
         order (Union[Unset, None, GetConversationsOrder]):  Default: GetConversationsOrder.DESC.
             Example: desc.
+        order_by (Union[Unset, None, GetConversationsOrderBy]):  Default:
+            GetConversationsOrderBy.ID. Example: id.
         user_filter (Union[Unset, None, GetConversationsUserFilter]):  Default:
             GetConversationsUserFilter.ALL. Example: all.
+        name (Union[Unset, None, str]):  Example: Ask me anything.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -199,7 +218,9 @@ def sync(
         client=client,
         page=page,
         order=order,
+        order_by=order_by,
         user_filter=user_filter,
+        name=name,
     ).parsed
 
 
@@ -209,7 +230,9 @@ async def asyncio_detailed(
     client: {},
     page: Union[Unset, None, int] = 1,
     order: Union[Unset, None, GetConversationsOrder] = GetConversationsOrder.DESC,
+    order_by: Union[Unset, None, GetConversationsOrderBy] = GetConversationsOrderBy.ID,
     user_filter: Union[Unset, None, GetConversationsUserFilter] = GetConversationsUserFilter.ALL,
+    name: Union[Unset, None, str] = UNSET,
 ) -> Response[
     Union[
         GetConversationsResponse200,
@@ -219,12 +242,15 @@ async def asyncio_detailed(
         GetConversationsResponse500,
     ]
 ]:
+
     kwargs = _get_kwargs(
         project_id=project_id,
         client=client,
         page=page,
         order=order,
+        order_by=order_by,
         user_filter=user_filter,
+        name=name,
     )
 
     response = requests.request(
@@ -240,7 +266,9 @@ async def asyncio(
     client: {},
     page: Union[Unset, None, int] = 1,
     order: Union[Unset, None, GetConversationsOrder] = GetConversationsOrder.DESC,
+    order_by: Union[Unset, None, GetConversationsOrderBy] = GetConversationsOrderBy.ID,
     user_filter: Union[Unset, None, GetConversationsUserFilter] = GetConversationsUserFilter.ALL,
+    name: Union[Unset, None, str] = UNSET,
 ) -> Optional[
     Union[
         GetConversationsResponse200,
@@ -260,8 +288,11 @@ async def asyncio(
         page (Union[Unset, None, int]):  Default: 1.
         order (Union[Unset, None, GetConversationsOrder]):  Default: GetConversationsOrder.DESC.
             Example: desc.
+        order_by (Union[Unset, None, GetConversationsOrderBy]):  Default:
+            GetConversationsOrderBy.ID. Example: id.
         user_filter (Union[Unset, None, GetConversationsUserFilter]):  Default:
             GetConversationsUserFilter.ALL. Example: all.
+        name (Union[Unset, None, str]):  Example: Ask me anything.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -277,6 +308,8 @@ async def asyncio(
             client=client,
             page=page,
             order=order,
+            order_by=order_by,
             user_filter=user_filter,
+            name=name,
         )
     ).parsed

@@ -20,7 +20,7 @@ class ReindexPageResponse403:
         data (Union[Unset, ReindexPageResponse403Data]):
     """
 
-    status: Union[Unset, str] = "error"
+    status: Union[Unset, str] = UNSET
     url: Union[Unset, str] = UNSET
     data: Union[Unset, "ReindexPageResponse403Data"] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)

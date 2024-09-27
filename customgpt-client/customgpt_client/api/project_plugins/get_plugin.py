@@ -147,6 +147,7 @@ async def asyncio_detailed(
 ) -> Response[
     Union[GetPluginResponse200, GetPluginResponse400, GetPluginResponse401, GetPluginResponse404, GetPluginResponse500]
 ]:
+
     kwargs = _get_kwargs(
         project_id=project_id,
         client=client,

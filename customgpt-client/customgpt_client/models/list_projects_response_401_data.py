@@ -15,7 +15,7 @@ class ListProjectsResponse401Data:
         message (Union[Unset, str]):  Example: API Token is either missing or invalid.
     """
 
-    code: Union[Unset, str] = "401"
+    code: Union[Unset, str] = UNSET
     message: Union[Unset, str] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 

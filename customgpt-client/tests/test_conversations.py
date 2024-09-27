@@ -1,14 +1,11 @@
 import time
-
 import pytest
-
 from customgpt_client import CustomGPT
 from tests.credentials import credentials
 
 
 def test_sync_conversations():
     CustomGPT.base_url, CustomGPT.api_key = credentials()
-
     CustomGPT.timeout = 10000
     response = CustomGPT.Project.create(
         project_name="test",
@@ -16,15 +13,13 @@ def test_sync_conversations():
     )
     response_create = response.parsed
     project_id = response_create.data.id
-    response = CustomGPT.Conversation.create(
-        project_id=project_id, name="test_converation"
-    )
+    response = CustomGPT.Conversation.create(project_id=project_id, name="test_converation")
     response_create = response.parsed
     session_id = response_create.data.session_id
     assert response_create.data.name == "test_converation"
     assert response.status_code == 201
 
-    # # wait for chat active
+    # wait for chat active
     is_chat_active = 0
     json_project = {}
     while not is_chat_active:
@@ -52,13 +47,11 @@ def test_sync_conversations():
     assert response.status_code == 200
 
     # Fetch Created project messages
-    response = CustomGPT.Conversation.messages(
-        project_id=project_id, session_id=session_id
-    )
+    response = CustomGPT.Conversation.messages(project_id=project_id, session_id=session_id)
     response_messages = response.parsed
     assert response.status_code == 200
     assert len(response_messages.data.messages.data) > 0
-    # send message to conversation stream true
+
     response = CustomGPT.Conversation.send(
         project_id=project_id,
         session_id=session_id,
@@ -79,9 +72,7 @@ def test_sync_conversations():
     assert response.status_code == 200
 
     # Delete the project
-    response = CustomGPT.Conversation.delete(
-        project_id=project_id, session_id=session_id
-    )
+    response = CustomGPT.Conversation.delete(project_id=project_id, session_id=session_id)
     assert response.status_code == 200
 
 
@@ -90,15 +81,13 @@ async def test_async_conversations():
     CustomGPT.base_url, CustomGPT.api_key = credentials()
 
     CustomGPT.timeout = 10000
-    response = await CustomGPT.Project.acreate(
+    response = CustomGPT.Project.create(
         project_name="test",
         sitemap_path="https://adorosario.github.io/small-sitemap.xml",
     )
     response_create = response.parsed
     project_id = response_create.data.id
-    response = await CustomGPT.Conversation.acreate(
-        project_id=project_id, name="test_converation"
-    )
+    response = await CustomGPT.Conversation.acreate(project_id=project_id, name="test_converation")
     response_create = response.parsed
     session_id = response_create.data.session_id
     assert response_create.data.name == "test_converation"
@@ -137,13 +126,9 @@ async def test_async_conversations():
     assert response.status_code == 200
 
     # Fetch Created project messages
-    response = await CustomGPT.Conversation.amessages(
-        project_id=project_id, session_id=session_id
-    )
+    response = await CustomGPT.Conversation.amessages(project_id=project_id, session_id=session_id)
     assert response.status_code == 200
 
     # Delete the project
-    response = await CustomGPT.Conversation.adelete(
-        project_id=project_id, session_id=session_id
-    )
+    response = await CustomGPT.Conversation.adelete(project_id=project_id, session_id=session_id)
     assert response.status_code == 200

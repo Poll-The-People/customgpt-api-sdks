@@ -16,8 +16,8 @@ class ReindexPageResponse403Data:
             reindexed.
     """
 
-    code: Union[Unset, str] = "400"
-    message: Union[Unset, str] = "Page with id 1 cannot be reindexed"
+    code: Union[Unset, str] = UNSET
+    message: Union[Unset, str] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:

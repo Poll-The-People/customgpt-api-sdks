@@ -16,8 +16,8 @@ class GetPluginResponse404Data:
             found.
     """
 
-    code: Union[Unset, str] = "404"
-    message: Union[Unset, str] = "Project plugin with id 1 not found"
+    code: Union[Unset, str] = UNSET
+    message: Union[Unset, str] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:

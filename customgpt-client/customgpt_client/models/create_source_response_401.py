@@ -20,7 +20,7 @@ class CreateSourceResponse401:
         data (Union[Unset, CreateSourceResponse401Data]):
     """
 
-    status: Union[Unset, str] = "error"
+    status: Union[Unset, str] = UNSET
     url: Union[Unset, str] = UNSET
     data: Union[Unset, "CreateSourceResponse401Data"] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)

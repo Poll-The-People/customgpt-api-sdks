@@ -20,7 +20,7 @@ class UpdateUserResponse401:
         data (Union[Unset, UpdateUserResponse401Data]):
     """
 
-    status: Union[Unset, str] = "error"
+    status: Union[Unset, str] = UNSET
     url: Union[Unset, str] = UNSET
     data: Union[Unset, "UpdateUserResponse401Data"] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)

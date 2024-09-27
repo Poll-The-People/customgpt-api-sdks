@@ -19,7 +19,7 @@ class ListProjectsResponse200:
         data (Union[Unset, ListProjectsResponse200Data]):
     """
 
-    status: Union[Unset, str] = "success"
+    status: Union[Unset, str] = UNSET
     data: Union[Unset, "ListProjectsResponse200Data"] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 

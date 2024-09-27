@@ -162,6 +162,7 @@ async def asyncio_detailed(
 ) -> Response[
     Union[CreateProjectResponse201, CreateProjectResponse400, CreateProjectResponse401, CreateProjectResponse500]
 ]:
+
     kwargs = _get_kwargs(
         client=client,
         multipart_data=multipart_data,

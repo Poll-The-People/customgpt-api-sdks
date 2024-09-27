@@ -12,12 +12,11 @@ class GetCitationResponse404Data:
     """
     Attributes:
         code (Union[Unset, GetCitationResponse404DataCode]): The error status code Example: 404.
-        message (Union[Unset, GetCitationResponse404DataMessage]): The error message Example: Project with id 1 not
-            found.
+        message (Union[Unset, GetCitationResponse404DataMessage]): The error message Example: Page with id 1 not found.
     """
 
-    code: Union[Unset, str] = "404"
-    message: Union[Unset, str] = "Project with id 1 not found"
+    code: Union[Unset, str] = UNSET
+    message: Union[Unset, str] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:

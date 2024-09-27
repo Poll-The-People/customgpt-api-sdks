@@ -1,3 +1,15 @@
-{% macro transform_header(property, source, destination) %}
-{{ destination }} = "true" if {{ source }} else "false"
+{% macro transform_header(source) %}
+"true" if {{ source }} else "false"
+{% endmacro %}
+
+{% macro transform(property, source, destination, multipart=multipart) %}
+{% if multipart %}
+{% if not property.required %}
+{{ destination }} = {{source}} if isinstance({{source}}, Unset) else (None, str({{source}}).lower().encode(), "text/plain")
+{% else %}
+{{ destination }} =  (None, str({{ source }}).lower().encode(), "text/plain")
+{% endif %}
+{% else %}
+{{ destination }} = True if {{ source }} else False
+{% endif %}
 {% endmacro %}

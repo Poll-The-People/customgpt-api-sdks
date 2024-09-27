@@ -1,0 +1,2 @@
+openapi-python-client==0.13.2
+pytest-asyncio

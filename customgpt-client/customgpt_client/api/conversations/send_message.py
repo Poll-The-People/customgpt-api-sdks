@@ -6,11 +6,13 @@ import requests
 from sseclient import SSEClient
 
 from ... import errors
+from ...models.send_message_cache_control import SendMessageCacheControl
 from ...models.send_message_json_body import SendMessageJsonBody
 from ...models.send_message_response_200 import SendMessageResponse200
 from ...models.send_message_response_400 import SendMessageResponse400
 from ...models.send_message_response_401 import SendMessageResponse401
 from ...models.send_message_response_404 import SendMessageResponse404
+from ...models.send_message_response_429 import SendMessageResponse429
 from ...models.send_message_response_500 import SendMessageResponse500
 from ...types import UNSET, Response, Unset
 
@@ -23,6 +25,8 @@ def _get_kwargs(
     json_body: SendMessageJsonBody,
     stream: Union[Unset, None, bool] = False,
     lang: Union[Unset, None, str] = "en",
+    external_id: Union[Unset, None, str] = UNSET,
+    cache_control: Union[Unset, None, SendMessageCacheControl] = UNSET,
 ) -> Dict[str, Any]:
     url = "{}/api/v1/projects/{projectId}/conversations/{sessionId}/messages".format(
         client.base_url, projectId=project_id, sessionId=session_id
@@ -30,11 +34,17 @@ def _get_kwargs(
 
     headers: Dict[str, str] = client.get_headers()
     cookies: Dict[str, Any] = client.get_cookies()
+    if not isinstance(cache_control, Unset) and cache_control is not None:
+        headers["Cache-Control"] = str(cache_control)
 
     params: Dict[str, Any] = {}
+    True if stream else False
+
     params["stream"] = 1 if stream else 0
 
     params["lang"] = lang
+
+    params["external_id"] = external_id
 
     params = {k: v for k, v in params.items() if v is not UNSET and v is not None}
 
@@ -56,14 +66,13 @@ def _get_kwargs(
     }
 
 
-def _parse_response(
-    *, client: {}, response: None
-) -> Optional[
+def _parse_response(*, client: {}, response: None) -> Optional[
     Union[
         SendMessageResponse200,
         SendMessageResponse400,
         SendMessageResponse401,
         SendMessageResponse404,
+        SendMessageResponse429,
         SendMessageResponse500,
     ]
 ]:
@@ -83,6 +92,10 @@ def _parse_response(
         response_404 = SendMessageResponse404.from_dict(json.loads(response.text))
 
         return response_404
+    if response.status_code == HTTPStatus.TOO_MANY_REQUESTS:
+        response_429 = SendMessageResponse429.from_dict(json.loads(response.text))
+
+        return response_429
     if response.status_code == HTTPStatus.INTERNAL_SERVER_ERROR:
         response_500 = SendMessageResponse500.from_dict(json.loads(response.text))
 
@@ -93,14 +106,13 @@ def _parse_response(
         return None
 
 
-def _build_response(
-    *, client: {}, response: None, content: Optional[bytes] = None
-) -> Response[
+def _build_response(*, client: {}, response: None, content: Optional[bytes] = None) -> Response[
     Union[
         SendMessageResponse200,
         SendMessageResponse400,
         SendMessageResponse401,
         SendMessageResponse404,
+        SendMessageResponse429,
         SendMessageResponse500,
     ]
 ]:
@@ -121,6 +133,8 @@ def sync_detailed(
     json_body: SendMessageJsonBody,
     stream: Union[Unset, None, bool] = False,
     lang: Union[Unset, None, str] = "en",
+    external_id: Union[Unset, None, str] = UNSET,
+    cache_control: Union[Unset, None, SendMessageCacheControl] = UNSET,
 ):
     """Send a message to a conversation.
 
@@ -141,6 +155,8 @@ def sync_detailed(
         session_id (str):  Example: 1.
         stream (Union[Unset, None, bool]):
         lang (Union[Unset, None, str]):  Default: 'en'.
+        external_id (Union[Unset, None, str]):
+        cache_control (Union[Unset, None, SendMessageCacheControl]):
         json_body (SendMessageJsonBody):
 
     Raises:
@@ -148,7 +164,7 @@ def sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Union[SendMessageResponse200, SendMessageResponse400, SendMessageResponse401, SendMessageResponse404, SendMessageResponse500]]
+        Response[Union[SendMessageResponse200, SendMessageResponse400, SendMessageResponse401, SendMessageResponse404, SendMessageResponse429, SendMessageResponse500]]
     """
 
     kwargs = _get_kwargs(
@@ -158,6 +174,8 @@ def sync_detailed(
         json_body=json_body,
         stream=stream,
         lang=lang,
+        external_id=external_id,
+        cache_control=cache_control,
     )
 
     response = requests.request(
@@ -178,12 +196,15 @@ def sync(
     json_body: SendMessageJsonBody,
     stream: Union[Unset, None, bool] = False,
     lang: Union[Unset, None, str] = "en",
+    external_id: Union[Unset, None, str] = UNSET,
+    cache_control: Union[Unset, None, SendMessageCacheControl] = UNSET,
 ) -> Optional[
     Union[
         SendMessageResponse200,
         SendMessageResponse400,
         SendMessageResponse401,
         SendMessageResponse404,
+        SendMessageResponse429,
         SendMessageResponse500,
     ]
 ]:
@@ -206,6 +227,8 @@ def sync(
         session_id (str):  Example: 1.
         stream (Union[Unset, None, bool]):
         lang (Union[Unset, None, str]):  Default: 'en'.
+        external_id (Union[Unset, None, str]):
+        cache_control (Union[Unset, None, SendMessageCacheControl]):
         json_body (SendMessageJsonBody):
 
     Raises:
@@ -213,7 +236,7 @@ def sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Union[SendMessageResponse200, SendMessageResponse400, SendMessageResponse401, SendMessageResponse404, SendMessageResponse500]
+        Union[SendMessageResponse200, SendMessageResponse400, SendMessageResponse401, SendMessageResponse404, SendMessageResponse429, SendMessageResponse500]
     """
 
     return sync_detailed(
@@ -223,6 +246,8 @@ def sync(
         json_body=json_body,
         stream=stream,
         lang=lang,
+        external_id=external_id,
+        cache_control=cache_control,
     ).parsed
 
 
@@ -234,12 +259,15 @@ async def asyncio_detailed(
     json_body: SendMessageJsonBody,
     stream: Union[Unset, None, bool] = False,
     lang: Union[Unset, None, str] = "en",
+    external_id: Union[Unset, None, str] = UNSET,
+    cache_control: Union[Unset, None, SendMessageCacheControl] = UNSET,
 ) -> Response[
     Union[
         SendMessageResponse200,
         SendMessageResponse400,
         SendMessageResponse401,
         SendMessageResponse404,
+        SendMessageResponse429,
         SendMessageResponse500,
     ]
 ]:
@@ -250,6 +278,8 @@ async def asyncio_detailed(
         json_body=json_body,
         stream=stream,
         lang=lang,
+        external_id=external_id,
+        cache_control=cache_control,
     )
 
     response = requests.request(
@@ -270,12 +300,15 @@ async def asyncio(
     json_body: SendMessageJsonBody,
     stream: Union[Unset, None, bool] = False,
     lang: Union[Unset, None, str] = "en",
+    external_id: Union[Unset, None, str] = UNSET,
+    cache_control: Union[Unset, None, SendMessageCacheControl] = UNSET,
 ) -> Optional[
     Union[
         SendMessageResponse200,
         SendMessageResponse400,
         SendMessageResponse401,
         SendMessageResponse404,
+        SendMessageResponse429,
         SendMessageResponse500,
     ]
 ]:
@@ -298,6 +331,8 @@ async def asyncio(
         session_id (str):  Example: 1.
         stream (Union[Unset, None, bool]):
         lang (Union[Unset, None, str]):  Default: 'en'.
+        external_id (Union[Unset, None, str]):
+        cache_control (Union[Unset, None, SendMessageCacheControl]):
         json_body (SendMessageJsonBody):
 
     Raises:
@@ -305,7 +340,7 @@ async def asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Union[SendMessageResponse200, SendMessageResponse400, SendMessageResponse401, SendMessageResponse404, SendMessageResponse500]
+        Union[SendMessageResponse200, SendMessageResponse400, SendMessageResponse401, SendMessageResponse404, SendMessageResponse429, SendMessageResponse500]
     """
 
     return (
@@ -316,5 +351,7 @@ async def asyncio(
             json_body=json_body,
             stream=stream,
             lang=lang,
+            external_id=external_id,
+            cache_control=cache_control,
         )
     ).parsed

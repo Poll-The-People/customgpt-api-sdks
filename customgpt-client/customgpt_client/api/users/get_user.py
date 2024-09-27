@@ -119,6 +119,7 @@ async def asyncio_detailed(
     *,
     client: {},
 ) -> Response[Union[GetUserResponse200, GetUserResponse401, GetUserResponse500]]:
+
     kwargs = _get_kwargs(
         client=client,
     )

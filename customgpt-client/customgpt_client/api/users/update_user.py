@@ -133,6 +133,7 @@ async def asyncio_detailed(
     client: {},
     multipart_data: UpdateUserMultipartData,
 ) -> Response[Union[UpdateUserResponse200, UpdateUserResponse401, UpdateUserResponse500]]:
+
     kwargs = _get_kwargs(
         client=client,
         multipart_data=multipart_data,

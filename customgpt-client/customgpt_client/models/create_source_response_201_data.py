@@ -29,7 +29,7 @@ class CreateSourceResponse201Data:
     id: Union[Unset, int] = UNSET
     created_at: Union[Unset, datetime.datetime] = UNSET
     updated_at: Union[Unset, datetime.datetime] = UNSET
-    type: Union[Unset, str] = "sitemap"
+    type: Union[Unset, str] = UNSET
     settings: Union[Unset, "CreateSourceResponse201DataSettings"] = UNSET
     pages: Union[Unset, None, List["CreateSourceResponse201DataPagesItem"]] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
@@ -78,7 +78,7 @@ class CreateSourceResponse201Data:
             field_dict["settings"] = settings
         if pages is not UNSET:
             for index, field_value in enumerate(pages):
-                field_dict[f"pages[]"] = field_value
+                field_dict[f"pages[{index}]"] = field_value
 
         return field_dict
 

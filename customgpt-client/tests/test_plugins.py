@@ -15,9 +15,9 @@ def test_sync_plugins():
         project_name="test",
         sitemap_path="https://adorosario.github.io/small-sitemap.xml",
     )
-    response_project = response.parsed
+    response_create = response.parsed
+    project_id = response_create.data.id
     assert response.status_code == 201
-    project_id = response_project.data.id
     json_project = {}
     is_chat_active = 0
     while not is_chat_active:
@@ -68,9 +68,9 @@ async def test_async_plugins():
         project_name="test",
         sitemap_path="https://adorosario.github.io/small-sitemap.xml",
     )
-    response_project = response.parsed
+    response_create = response.parsed
+    project_id = response_create.data.id
     assert response.status_code == 201
-    project_id = response_project.data.id
     json_project = {}
     is_chat_active = 0
     while not is_chat_active:

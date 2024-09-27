@@ -144,6 +144,7 @@ async def asyncio_detailed(
         PreviewCitationResponse400, PreviewCitationResponse401, PreviewCitationResponse404, PreviewCitationResponse500
     ]
 ]:
+
     kwargs = _get_kwargs(
         id=id,
         client=client,

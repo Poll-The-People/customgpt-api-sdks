@@ -87,7 +87,7 @@ class MessagesConversationResponse200DataMessagesDataItem:
             field_dict["conversation_id"] = conversation_id
         if citations is not UNSET:
             for index, field_value in enumerate(citations):
-                field_dict[f"citations[]"] = field_value
+                field_dict[f"citations[{index}]"] = field_value
         if metadata is not UNSET:
             field_dict["metadata"] = metadata
 

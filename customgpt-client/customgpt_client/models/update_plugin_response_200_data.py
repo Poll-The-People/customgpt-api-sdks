@@ -34,7 +34,7 @@ class UpdatePluginResponse200Data:
         keywords = self.keywords
         description = self.description
         logo = self.logo
-        is_active = self.is_active
+        is_active = True if self.is_active else False
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)

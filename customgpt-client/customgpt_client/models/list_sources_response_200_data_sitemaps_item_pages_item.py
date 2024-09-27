@@ -25,6 +25,7 @@ class ListSourcesResponse200DataSitemapsItemPagesItem:
         index_status (Union[Unset, ListSourcesResponse200DataSitemapsItemPagesItemIndexStatus]): Index status of the
             page Default: ListSourcesResponse200DataSitemapsItemPagesItemIndexStatus.QUEUED. Example: queued.
         is_file (Union[Unset, bool]): Whether the page is a file or not Example: True.
+        is_refreshable (Union[Unset, bool]): Whether the page can be refreshed or not Example: True.
         is_file_kept (Union[Unset, bool]): Whether the file is kept after processing or not.\nNote: This is omitted in
             the response if the page is not a file Default: True. Example: True.
         filename (Union[Unset, None, str]): Filename of the page.\nNote: This is omitted in the response if the page is
@@ -35,8 +36,6 @@ class ListSourcesResponse200DataSitemapsItemPagesItem:
             00:00:00.
         updated_at (Union[Unset, datetime.datetime]): Date and time when the page was updated Example: 2021-01-01
             00:00:00.
-        deleted_at (Union[Unset, None, datetime.datetime]): Date and time when the page was deleted Example: 2021-01-01
-            00:00:00.
     """
 
     id: Union[Unset, int] = UNSET
@@ -44,15 +43,15 @@ class ListSourcesResponse200DataSitemapsItemPagesItem:
     page_url_hash: Union[Unset, str] = UNSET
     project_id: Union[Unset, int] = UNSET
     s3_path: Union[Unset, None, str] = UNSET
-    crawl_status: Union[Unset, str] = "queued"
-    index_status: Union[Unset, str] = "queued"
+    crawl_status: Union[Unset, str] = UNSET
+    index_status: Union[Unset, str] = UNSET
     is_file: Union[Unset, bool] = False
+    is_refreshable: Union[Unset, bool] = False
     is_file_kept: Union[Unset, bool] = True
     filename: Union[Unset, None, str] = UNSET
     filesize: Union[Unset, None, int] = UNSET
     created_at: Union[Unset, datetime.datetime] = UNSET
     updated_at: Union[Unset, datetime.datetime] = UNSET
-    deleted_at: Union[Unset, None, datetime.datetime] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
@@ -69,8 +68,12 @@ class ListSourcesResponse200DataSitemapsItemPagesItem:
         if not isinstance(self.index_status, Unset):
             index_status = self.index_status
 
-        is_file = self.is_file
-        is_file_kept = self.is_file_kept
+        is_file = True if self.is_file else False
+
+        is_refreshable = True if self.is_refreshable else False
+
+        is_file_kept = True if self.is_file_kept else False
+
         filename = self.filename
         filesize = self.filesize
         created_at: Union[Unset, str] = UNSET
@@ -80,10 +83,6 @@ class ListSourcesResponse200DataSitemapsItemPagesItem:
         updated_at: Union[Unset, str] = UNSET
         if not isinstance(self.updated_at, Unset):
             updated_at = self.updated_at.isoformat()
-
-        deleted_at: Union[Unset, None, str] = UNSET
-        if not isinstance(self.deleted_at, Unset):
-            deleted_at = self.deleted_at.isoformat() if self.deleted_at else None
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
@@ -104,6 +103,8 @@ class ListSourcesResponse200DataSitemapsItemPagesItem:
             field_dict["index_status"] = index_status
         if is_file is not UNSET:
             field_dict["is_file"] = is_file
+        if is_refreshable is not UNSET:
+            field_dict["is_refreshable"] = is_refreshable
         if is_file_kept is not UNSET:
             field_dict["is_file_kept"] = is_file_kept
         if filename is not UNSET:
@@ -114,8 +115,6 @@ class ListSourcesResponse200DataSitemapsItemPagesItem:
             field_dict["created_at"] = created_at
         if updated_at is not UNSET:
             field_dict["updated_at"] = updated_at
-        if deleted_at is not UNSET:
-            field_dict["deleted_at"] = deleted_at
 
         return field_dict
 
@@ -137,6 +136,8 @@ class ListSourcesResponse200DataSitemapsItemPagesItem:
 
         is_file = src_dict.get("is_file")
 
+        is_refreshable = src_dict.get("is_refreshable")
+
         is_file_kept = src_dict.get("is_file_kept")
 
         filename = src_dict.get("filename")
@@ -157,15 +158,6 @@ class ListSourcesResponse200DataSitemapsItemPagesItem:
         else:
             updated_at = isoparse(_updated_at)
 
-        _deleted_at = src_dict.get("deleted_at")
-        deleted_at: Union[Unset, None, datetime.datetime]
-        if _deleted_at is None:
-            deleted_at = None
-        elif isinstance(_deleted_at, Unset):
-            deleted_at = UNSET
-        else:
-            deleted_at = isoparse(_deleted_at)
-
         list_sources_response_200_data_sitemaps_item_pages_item = cls(
             id=id,
             page_url=page_url,
@@ -175,12 +167,12 @@ class ListSourcesResponse200DataSitemapsItemPagesItem:
             crawl_status=crawl_status,
             index_status=index_status,
             is_file=is_file,
+            is_refreshable=is_refreshable,
             is_file_kept=is_file_kept,
             filename=filename,
             filesize=filesize,
             created_at=created_at,
             updated_at=updated_at,
-            deleted_at=deleted_at,
         )
 
         list_sources_response_200_data_sitemaps_item_pages_item.additional_properties = src_dict

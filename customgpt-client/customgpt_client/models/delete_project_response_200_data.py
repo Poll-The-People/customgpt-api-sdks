@@ -18,7 +18,7 @@ class DeleteProjectResponse200Data:
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        deleted = self.deleted
+        deleted = True if self.deleted else False
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
