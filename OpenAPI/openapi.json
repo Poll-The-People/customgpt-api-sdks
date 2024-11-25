@@ -15492,6 +15492,198 @@
                     }
                 ]
             }
+        },
+        "\/api\/v1\/limits\/usage": {
+            "get": {
+                "operation_name": "get_usage_limits",
+                "tags": [
+                    "Limits"
+                ],
+                "summary": "Get user projects, words and queries limit.",
+                "responses": {
+                    "200": {
+                        "description": "Retrieve user usage limits",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "description": "The status of the response",
+                                            "enum": [
+                                                "error",
+                                                "success"
+                                            ],
+                                            "type": "string",
+                                            "example": "success"
+                                        },
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "max_projects_num": {
+                                                    "description": "The maximum number of projects allowed for this team.",
+                                                    "type": "integer",
+                                                    "example": 10
+                                                },
+                                                "current_projects_num": {
+                                                    "description": "The total number of projects currently belonging to this team.",
+                                                    "type": "integer",
+                                                    "example": 10
+                                                },
+                                                "max_total_storage_credits": {
+                                                    "description": "The maximum number of storage credits allowed for this team.",
+                                                    "type": "integer",
+                                                    "example": 10
+                                                },
+                                                "current_total_storage_credits": {
+                                                    "description": "The amount of storage credits currently in use.",
+                                                    "type": "integer",
+                                                    "example": 10
+                                                },
+                                                "max_queries": {
+                                                    "description": "The maximum number of queries allowed per billing cycle for this team.",
+                                                    "type": "integer",
+                                                    "example": 10
+                                                },
+                                                "current_queries": {
+                                                    "description": "The number of queries used in the current billing cycle.",
+                                                    "type": "integer",
+                                                    "example": 10
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "API Token is either missing or invalid",
+                        "content":
+                        {
+                            "application/json":
+                            {
+                                "schema":
+                                {
+                                    "type": "object",
+                                    "properties":
+                                    {
+                                        "status":
+                                        {
+                                            "description": "The status of the response",
+                                            "enum":
+                                            [
+                                                "error",
+                                                "success"
+                                            ],
+                                            "type": "string",
+                                            "example": "error"
+                                        },
+                                        "url":
+                                        {
+                                            "description": "The URL of the request",
+                                            "type": "string",
+                                            "example": "https://app.customgpt.ai/api/v1/projects/1"
+                                        },
+                                        "data":
+                                        {
+                                            "type": "object",
+                                            "properties":
+                                            {
+                                                "code":
+                                                {
+                                                    "description": "The error status code",
+                                                    "enum":
+                                                    [
+                                                        400,
+                                                        401,
+                                                        403,
+                                                        404,
+                                                        500,
+                                                        503
+                                                    ],
+                                                    "type": "integer",
+                                                    "example": 401
+                                                },
+                                                "message":
+                                                {
+                                                    "type": "string",
+                                                    "example": "API Token is either missing or invalid"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content":
+                        {
+                            "application/json":
+                            {
+                                "schema":
+                                {
+                                    "type": "object",
+                                    "properties":
+                                    {
+                                        "status":
+                                        {
+                                            "description": "The status of the response",
+                                            "enum":
+                                            [
+                                                "error",
+                                                "success"
+                                            ],
+                                            "type": "string",
+                                            "example": "error"
+                                        },
+                                        "url":
+                                        {
+                                            "description": "The URL of the request",
+                                            "type": "string",
+                                            "example": "https://app.customgpt.ai/api/v1/projects/1"
+                                        },
+                                        "data":
+                                        {
+                                            "type": "object",
+                                            "properties":
+                                            {
+                                                "code":
+                                                {
+                                                    "description": "The error status code",
+                                                    "enum":
+                                                    [
+                                                        400,
+                                                        401,
+                                                        403,
+                                                        404,
+                                                        500,
+                                                        503
+                                                    ],
+                                                    "type": "integer",
+                                                    "example": 500
+                                                },
+                                                "message":
+                                                {
+                                                    "type": "string",
+                                                    "example": "Internal Server Error"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "BearerToken": []
+                    }
+                ]
+            }
         }
     },
     "components":

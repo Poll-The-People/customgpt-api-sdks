@@ -1,5 +1,3 @@
-# Imports
-
 import ssl
 from typing import Any, Dict, Union
 
@@ -14,6 +12,7 @@ from customgpt_client.api.conversations import (
     send_message,
     update_conversation,
 )
+from customgpt_client.api.limits import get_api_v1_limits_usage
 from customgpt_client.api.page_metadata import get_metadata, update_metadata
 from customgpt_client.api.pages import delete_page, get_pages, preview_citation, reindex_page
 from customgpt_client.api.project_plugins import create_plugin, get_plugin, update_plugin
@@ -50,7 +49,6 @@ from customgpt_client.models import (
     UpdateUserMultipartData,
 )
 
-# Initialize the client
 
 def set_client():
     api_key = CustomGPT.api_key if hasattr(CustomGPT, "api_key") else ""
@@ -59,7 +57,6 @@ def set_client():
     headers = CustomGPT.headers if hasattr(CustomGPT, "headers") else {}
     return CustomGPT(api_key=api_key, base_url=base_url, timeout=timeout, headers=headers)
 
-# Function to retrieve data from kwargs
 
 def pluck_data(fields, kwargs):
     json = {}
@@ -118,10 +115,6 @@ class CustomGPT:
         """Get headers to be used in authenticated endpoints"""
         auth_header_value = f"{self.prefix} {self.api_key}" if self.prefix else self.api_key
         return {self.auth_header_name: auth_header_value, **self.headers}
-
-# Class for representing the Project object of the CustomGPT API
-# The Project object contains methods for creating, updating, deleting, and listing projects, 
-# both synchronously and asynchronously
 
     class Project:
         def list(*args: Any, **kwargs: Any):
@@ -222,10 +215,6 @@ class CustomGPT:
 
             return stats_project.asyncio_detailed(client=client, *args, **kwargs)
 
-# Class for representing the Page object of the CustomGPT API
-# The Page object contains methods for getting, deleting, reindexing, and previewing pages,
-# both synchronously and asynchronously
-
     class Page:
         def get(*args: Any, **kwargs: Any):
             client = set_client()
@@ -267,10 +256,6 @@ class CustomGPT:
 
             return preview_citation.asyncio_detailed(client=client, *args, **kwargs)
 
-# Class for representing the PageMetadata object of the CustomGPT API
-# The PageMetadata object contains methods for getting and updating page metadata,
-# both synchronously and asynchronously
-
     class PageMetadata:
         def get(*args: Any, **kwargs: Any):
             client = set_client()
@@ -297,10 +282,6 @@ class CustomGPT:
             kwargs["json_body"] = UpdateMetadataJsonBody(**json)
 
             return update_metadata.asyncio_detailed(client=client, *args, **kwargs)
-
-# Class for representing the ProjectSettings object of the CustomGPT API
-# The ProjectSettings object contains methods for getting and updating project settings,
-# both synchronously and asynchronously
 
     class ProjectSettings:
         def get(*args: Any, **kwargs: Any):
@@ -377,11 +358,6 @@ class CustomGPT:
 
             return update_project_settings.asyncio_detailed(client=client, *args, **kwargs)
 
-# Class for representing the ProjectPlugins object of the CustomGPT API
-# The ProjectPlugins object contains methods for getting, updating, and creating project plugins,
-# both synchronously and asynchronously
-# Note: The ProjectPlugins object has been deprecated and will be removed soon
-
     class ProjectPlugins:
         def get(*args: Any, **kwargs: Any):
             client = set_client()
@@ -424,11 +400,6 @@ class CustomGPT:
             kwargs["json_body"] = CreatePluginJsonBody(**json)
 
             return create_plugin.asyncio_detailed(client=client, *args, **kwargs)
-
-# Class for representing the Conversation object of the CustomGPT API
-# The Conversation object contains methods for creating, updating, deleting, 
-# listing, and sending messages to conversations,
-# both synchronously and asynchronously
 
     class Conversation:
         def get(*args: Any, **kwargs: Any):
@@ -509,9 +480,6 @@ class CustomGPT:
 
             return send_message.asyncio_detailed(client=client, *args, **kwargs)
 
-# Class for representing the Citation object of the CustomGPT API
-# The Citation object contains methods for getting citations both synchronously and asynchronously
-
     class Citation:
         def get(*args: Any, **kwargs: Any):
             client = set_client()
@@ -522,10 +490,6 @@ class CustomGPT:
             client = set_client()
 
             return get_citation.asyncio_detailed(client=client, *args, **kwargs)
-
-# Class for representing the Source object of the CustomGPT API
-# The Source object contains methods for creating, deleting, and listing sources,
-# both synchronously and asynchronously
 
     class Source:
         def list(*args: Any, **kwargs: Any):
@@ -645,10 +609,6 @@ class CustomGPT:
 
             return analysis_reports.asyncio_detailed(client=client, *args, **kwargs)
 
-# Class for representing the User object of the CustomGPT API
-# The User object contains methods for getting and updating user information,
-# both synchronously and asynchronously
-
     class User:
         def get(*args: Any, **kwargs: Any):
             client = set_client()
@@ -675,3 +635,14 @@ class CustomGPT:
             kwargs["multipart_data"] = UpdateUserMultipartData(**json)
 
             return update_user.asyncio_detailed(client=client, *args, **kwargs)
+
+    class Limit:
+        def get(*args: Any, **kwargs: Any):
+            client = set_client()
+
+            return get_api_v1_limits_usage.sync_detailed(client=client, *args, **kwargs)
+
+        def aget(*args: Any, **kwargs: Any):
+            client = set_client()
+
+            return get_api_v1_limits_usage.asyncio_detailed(client=client, *args, **kwargs)
