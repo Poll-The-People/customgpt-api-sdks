@@ -53,7 +53,8 @@ def set_client():
     api_key = CustomGPT.api_key if hasattr(CustomGPT, "api_key") else ""
     base_url = CustomGPT.base_url if hasattr(CustomGPT, "base_url") else "https://app.customgpt.ai"
     timeout = CustomGPT.timeout if hasattr(CustomGPT, "timeout") else 100.0
-    return CustomGPT(api_key=api_key, base_url=base_url, timeout=timeout)
+    headers = CustomGPT.headers if hasattr(CustomGPT, "headers") else {}
+    return CustomGPT(api_key=api_key, base_url=base_url, timeout=timeout, headers=headers)
 
 
 def pluck_data(fields, kwargs):

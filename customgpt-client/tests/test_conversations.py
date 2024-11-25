@@ -1,5 +1,7 @@
 import time
+
 import pytest
+
 from customgpt_client import CustomGPT
 from tests.credentials import credentials
 
