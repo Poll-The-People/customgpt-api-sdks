@@ -16,7 +16,7 @@ def test_sync_projects():
     assert response.status_code == 201
 
     response = CustomGPT.Project.update(
-        project_id=response.parsed.data.id,
+        project_id=response_create.data.id,
         project_name="test2",
         sitemap_path="https://adorosario.github.io/small-sitemap.xml",
     )
@@ -43,7 +43,7 @@ def test_sync_projects():
             "query_credits_used",
             "total_queries",
             "total_words_indexed",
-            "index_credits_used",
+            "total_storage_credits_used",
         ]
     )
     response = CustomGPT.Project.list()
@@ -53,16 +53,12 @@ def test_sync_projects():
     response = CustomGPT.Project.delete(project_id=response_create.data.id)
     assert response.status_code == 200
 
-
-def test_error_projects():
-    CustomGPT.base_url, CustomGPT.api_key = credentials()
-
     response = CustomGPT.Project.update(
-        project_id=12334,
+        project_id=response_create.data.id,
         project_name="test2",
         sitemap_path="https://adorosario.github.io/small-sitemap.xml",
     )
-    assert response.status_code == 403
+    assert response.status_code == 404
 
 
 @pytest.mark.asyncio
@@ -106,7 +102,7 @@ async def test_async_projects():
             "query_credits_used",
             "total_queries",
             "total_words_indexed",
-            "index_credits_used",
+            "total_storage_credits_used",
         ]
     )
     response = await CustomGPT.Project.alist()

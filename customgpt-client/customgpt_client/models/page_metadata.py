@@ -11,21 +11,24 @@ T = TypeVar("T", bound="PageMetadata")
 class PageMetadata:
     """
     Attributes:
-        url (Union[Unset, str]): The URL of the page Example: https://www.example.com.
-        title (Union[Unset, str]): The title of the page Example: Example Domain.
-        description (Union[Unset, str]): The description of the page Example: This domain is for use in illustrative
-            examples in documents. You may use this domain in literature without prior coordination or asking for
-            permission..
-        image (Union[Unset, str]): The image of the page Example: https://www.example.com/image.png.
+        id (Union[Unset, int]): The unique identifier of the page Example: 1.
+        url (Union[Unset, None, str]): The URL of the page Example: https://www.example.com.
+        title (Union[Unset, None, str]): The title of the page Example: Example Domain.
+        description (Union[Unset, None, str]): The description of the page Example: This domain is for use in
+            illustrative examples in documents. You may use this domain in literature without prior coordination or asking
+            for permission..
+        image (Union[Unset, None, str]): The image of the page Example: https://www.example.com/image.png.
     """
 
-    url: Union[Unset, str] = UNSET
-    title: Union[Unset, str] = UNSET
-    description: Union[Unset, str] = UNSET
-    image: Union[Unset, str] = UNSET
+    id: Union[Unset, int] = UNSET
+    url: Union[Unset, None, str] = UNSET
+    title: Union[Unset, None, str] = UNSET
+    description: Union[Unset, None, str] = UNSET
+    image: Union[Unset, None, str] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        id = self.id
         url = self.url
         title = self.title
         description = self.description
@@ -34,6 +37,8 @@ class PageMetadata:
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
+        if id is not UNSET:
+            field_dict["id"] = id
         if url is not UNSET:
             field_dict["url"] = url
         if title is not UNSET:
@@ -47,6 +52,8 @@ class PageMetadata:
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+        id = src_dict.get("id")
+
         url = src_dict.get("url")
 
         title = src_dict.get("title")
@@ -56,6 +63,7 @@ class PageMetadata:
         image = src_dict.get("image")
 
         page_metadata = cls(
+            id=id,
             url=url,
             title=title,
             description=description,

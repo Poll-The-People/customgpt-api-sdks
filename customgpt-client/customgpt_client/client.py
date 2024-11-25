@@ -1,5 +1,3 @@
-# Imports
-
 import ssl
 from typing import Any, Dict, Union
 
@@ -14,19 +12,27 @@ from customgpt_client.api.conversations import (
     send_message,
     update_conversation,
 )
-from customgpt_client.api.page_metadata import get_page_metadata, update_page_metadata
+from customgpt_client.api.limits import get_api_v1_limits_usage
+from customgpt_client.api.page_metadata import get_metadata, update_metadata
 from customgpt_client.api.pages import delete_page, get_pages, preview_citation, reindex_page
 from customgpt_client.api.project_plugins import create_plugin, get_plugin, update_plugin
-from customgpt_client.api.project_settings import get_settings, update_settings
+from customgpt_client.api.project_settings import get_project_settings, update_project_settings
 from customgpt_client.api.projects import (
     create_project,
     delete_project,
     get_project,
     list_projects,
+    replicate_project,
     stats_project,
     update_project,
 )
-from customgpt_client.api.sources import create_source, delete_source, list_sources
+from customgpt_client.api.reports_analytics import (
+    analysis_reports,
+    conversations_reports,
+    queries_reports,
+    traffic_reports,
+)
+from customgpt_client.api.sources import create_source, delete_source, list_sources, synchronize_source, update_source
 from customgpt_client.api.users import get_user, update_user
 from customgpt_client.models import (
     CreateConversationJsonBody,
@@ -35,22 +41,22 @@ from customgpt_client.models import (
     CreateSourceMultipartData,
     SendMessageJsonBody,
     UpdateConversationJsonBody,
-    UpdatePageMetadataJsonBody,
+    UpdateMetadataJsonBody,
     UpdatePluginJsonBody,
     UpdateProjectMultipartData,
-    UpdateSettingsMultipartData,
+    UpdateProjectSettingsMultipartData,
+    UpdateSourceJsonBody,
     UpdateUserMultipartData,
 )
 
-# Initialize the client
 
 def set_client():
     api_key = CustomGPT.api_key if hasattr(CustomGPT, "api_key") else ""
     base_url = CustomGPT.base_url if hasattr(CustomGPT, "base_url") else "https://app.customgpt.ai"
     timeout = CustomGPT.timeout if hasattr(CustomGPT, "timeout") else 100.0
-    return CustomGPT(api_key=api_key, base_url=base_url, timeout=timeout)
+    headers = CustomGPT.headers if hasattr(CustomGPT, "headers") else {}
+    return CustomGPT(api_key=api_key, base_url=base_url, timeout=timeout, headers=headers)
 
-# Function to retrieve data from kwargs
 
 def pluck_data(fields, kwargs):
     json = {}
@@ -110,10 +116,6 @@ class CustomGPT:
         auth_header_value = f"{self.prefix} {self.api_key}" if self.prefix else self.api_key
         return {self.auth_header_name: auth_header_value, **self.headers}
 
-# Class for representing the Project object of the CustomGPT API
-# The Project object contains methods for creating, updating, deleting, and listing projects, 
-# both synchronously and asynchronously
-
     class Project:
         def list(*args: Any, **kwargs: Any):
             client = set_client()
@@ -127,7 +129,7 @@ class CustomGPT:
 
         def create(*args: Any, **kwargs: Any):
             client = set_client()
-            fields = ["project_name", "sitemap_path", "file_data_retension", "file"]
+            fields = ["project_name", "sitemap_path", "file_data_retension", "is_ocr_enabled", "is_anonymized", "file"]
             json = pluck_data(fields, kwargs)
             kwargs["multipart_data"] = CreateProjectMultipartData(**json)
 
@@ -135,7 +137,7 @@ class CustomGPT:
 
         def acreate(*args: Any, **kwargs: Any):
             client = set_client()
-            fields = ["project_name", "sitemap_path", "file_data_retension", "file"]
+            fields = ["project_name", "sitemap_path", "file_data_retension", "is_ocr_enabled", "is_anonymized", "file"]
             json = pluck_data(fields, kwargs)
             kwargs["multipart_data"] = CreateProjectMultipartData(**json)
 
@@ -153,7 +155,15 @@ class CustomGPT:
 
         def update(*args: Any, **kwargs: Any):
             client = set_client()
-            fields = ["project_name", "is_shared", "sitemap_path", "file_data_retension", "file"]
+            fields = [
+                "project_name",
+                "is_shared",
+                "sitemap_path",
+                "file_data_retension",
+                "is_ocr_enabled",
+                "is_anonymized",
+                "file",
+            ]
             json = pluck_data(fields, kwargs)
             kwargs["multipart_data"] = UpdateProjectMultipartData(**json)
 
@@ -161,7 +171,15 @@ class CustomGPT:
 
         def aupdate(*args: Any, **kwargs: Any):
             client = set_client()
-            fields = ["project_name", "is_shared", "sitemap_path", "file_data_retension", "file"]
+            fields = [
+                "project_name",
+                "is_shared",
+                "sitemap_path",
+                "file_data_retension",
+                "is_ocr_enabled",
+                "is_anonymized",
+                "file",
+            ]
             json = pluck_data(fields, kwargs)
             kwargs["multipart_data"] = UpdateProjectMultipartData(**json)
 
@@ -177,6 +195,16 @@ class CustomGPT:
 
             return delete_project.asyncio_detailed(client=client, *args, **kwargs)
 
+        def replicate(*args: Any, **kwargs: Any):
+            client = set_client()
+
+            return replicate_project.sync_detailed(client=client, *args, **kwargs)
+
+        def areplicate(*args: Any, **kwargs: Any):
+            client = set_client()
+
+            return replicate_project.asyncio_detailed(client=client, *args, **kwargs)
+
         def stats(*args: Any, **kwargs: Any):
             client = set_client()
 
@@ -186,10 +214,6 @@ class CustomGPT:
             client = set_client()
 
             return stats_project.asyncio_detailed(client=client, *args, **kwargs)
-
-# Class for representing the Page object of the CustomGPT API
-# The Page object contains methods for getting, deleting, reindexing, and previewing pages,
-# both synchronously and asynchronously
 
     class Page:
         def get(*args: Any, **kwargs: Any):
@@ -232,51 +256,43 @@ class CustomGPT:
 
             return preview_citation.asyncio_detailed(client=client, *args, **kwargs)
 
-# Class for representing the PageMetadata object of the CustomGPT API
-# The PageMetadata object contains methods for getting and updating page metadata,
-# both synchronously and asynchronously
-
     class PageMetadata:
         def get(*args: Any, **kwargs: Any):
             client = set_client()
 
-            return get_page_metadata.sync_detailed(client=client, *args, **kwargs)
+            return get_metadata.sync_detailed(client=client, *args, **kwargs)
 
         def aget(*args: Any, **kwargs: Any):
             client = set_client()
 
-            return get_page_metadata.asyncio_detailed(client=client, *args, **kwargs)
+            return get_metadata.asyncio_detailed(client=client, *args, **kwargs)
 
         def update(*args: Any, **kwargs: Any):
             client = set_client()
             fields = ["title", "url", "description", "image"]
             json = pluck_data(fields, kwargs)
-            kwargs["json_body"] = UpdatePageMetadataJsonBody(**json)
+            kwargs["json_body"] = UpdateMetadataJsonBody(**json)
 
-            return update_page_metadata.sync_detailed(client=client, *args, **kwargs)
+            return update_metadata.sync_detailed(client=client, *args, **kwargs)
 
         def aupdate(*args: Any, **kwargs: Any):
             client = set_client()
             fields = ["title", "url", "description", "image"]
             json = pluck_data(fields, kwargs)
-            kwargs["json_body"] = UpdatePageMetadataJsonBody(**json)
+            kwargs["json_body"] = UpdateMetadataJsonBody(**json)
 
-            return update_page_metadata.asyncio_detailed(client=client, *args, **kwargs)
-
-# Class for representing the ProjectSettings object of the CustomGPT API
-# The ProjectSettings object contains methods for getting and updating project settings,
-# both synchronously and asynchronously
+            return update_metadata.asyncio_detailed(client=client, *args, **kwargs)
 
     class ProjectSettings:
         def get(*args: Any, **kwargs: Any):
             client = set_client()
 
-            return get_settings.sync_detailed(client=client, *args, **kwargs)
+            return get_project_settings.sync_detailed(client=client, *args, **kwargs)
 
         def aget(*args: Any, **kwargs: Any):
             client = set_client()
 
-            return get_settings.asyncio_detailed(client=client, *args, **kwargs)
+            return get_project_settings.asyncio_detailed(client=client, *args, **kwargs)
 
         def update(*args: Any, **kwargs: Any):
             client = set_client()
@@ -288,6 +304,7 @@ class CustomGPT:
                 "response_source",
                 "chatbot_msg_lang",
                 "chatbot_color",
+                "chatbot_toolbar_color",
                 "persona_instructions",
                 "citations_answer_source_label_msg",
                 "citations_sources_label_msg",
@@ -295,15 +312,19 @@ class CustomGPT:
                 "chatbot_siesta_msg",
                 "is_loading_indicator_enabled",
                 "enable_citations",
+                "enable_feedbacks",
                 "citations_view_type",
                 "no_answer_message",
                 "ending_message",
                 "remove_branding",
+                "enable_recaptcha_for_public_chatbots",
+                "chatbot_model",
+                "is_selling_enabled",
             ]
             json = pluck_data(fields, kwargs)
-            kwargs["multipart_data"] = UpdateSettingsMultipartData(**json)
+            kwargs["multipart_data"] = UpdateProjectSettingsMultipartData(**json)
 
-            return update_settings.sync_detailed(client=client, *args, **kwargs)
+            return update_project_settings.sync_detailed(client=client, *args, **kwargs)
 
         def aupdate(*args: Any, **kwargs: Any):
             client = set_client()
@@ -315,6 +336,7 @@ class CustomGPT:
                 "response_source",
                 "chatbot_msg_lang",
                 "chatbot_color",
+                "chatbot_toolbar_color",
                 "persona_instructions",
                 "citations_answer_source_label_msg",
                 "citations_sources_label_msg",
@@ -322,20 +344,19 @@ class CustomGPT:
                 "chatbot_siesta_msg",
                 "is_loading_indicator_enabled",
                 "enable_citations",
+                "enable_feedbacks",
                 "citations_view_type",
                 "no_answer_message",
                 "ending_message",
                 "remove_branding",
+                "enable_recaptcha_for_public_chatbots",
+                "chatbot_model",
+                "is_selling_enabled",
             ]
             json = pluck_data(fields, kwargs)
-            kwargs["multipart_data"] = UpdateSettingsMultipartData(**json)
+            kwargs["multipart_data"] = UpdateProjectSettingsMultipartData(**json)
 
-            return update_settings.asyncio_detailed(client=client, *args, **kwargs)
-
-# Class for representing the ProjectPlugins object of the CustomGPT API
-# The ProjectPlugins object contains methods for getting, updating, and creating project plugins,
-# both synchronously and asynchronously
-# Note: The ProjectPlugins object has been deprecated and will be removed soon
+            return update_project_settings.asyncio_detailed(client=client, *args, **kwargs)
 
     class ProjectPlugins:
         def get(*args: Any, **kwargs: Any):
@@ -379,11 +400,6 @@ class CustomGPT:
             kwargs["json_body"] = CreatePluginJsonBody(**json)
 
             return create_plugin.asyncio_detailed(client=client, *args, **kwargs)
-
-# Class for representing the Conversation object of the CustomGPT API
-# The Conversation object contains methods for creating, updating, deleting, 
-# listing, and sending messages to conversations,
-# both synchronously and asynchronously
 
     class Conversation:
         def get(*args: Any, **kwargs: Any):
@@ -450,7 +466,7 @@ class CustomGPT:
 
         def send(*args: Any, **kwargs: Any):
             client = set_client()
-            fields = ["prompt", "custom_persona"]
+            fields = ["prompt", "custom_persona", "chatbot_model", "response_source"]
             json = pluck_data(fields, kwargs)
             kwargs["json_body"] = SendMessageJsonBody(**json)
 
@@ -458,14 +474,11 @@ class CustomGPT:
 
         def asend(*args: Any, **kwargs: Any):
             client = set_client()
-            fields = ["prompt", "custom_persona"]
+            fields = ["prompt", "custom_persona", "chatbot_model", "response_source"]
             json = pluck_data(fields, kwargs)
             kwargs["json_body"] = SendMessageJsonBody(**json)
 
             return send_message.asyncio_detailed(client=client, *args, **kwargs)
-
-# Class for representing the Citation object of the CustomGPT API
-# The Citation object contains methods for getting citations both synchronously and asynchronously
 
     class Citation:
         def get(*args: Any, **kwargs: Any):
@@ -477,10 +490,6 @@ class CustomGPT:
             client = set_client()
 
             return get_citation.asyncio_detailed(client=client, *args, **kwargs)
-
-# Class for representing the Source object of the CustomGPT API
-# The Source object contains methods for creating, deleting, and listing sources,
-# both synchronously and asynchronously
 
     class Source:
         def list(*args: Any, **kwargs: Any):
@@ -495,7 +504,7 @@ class CustomGPT:
 
         def create(*args: Any, **kwargs: Any):
             client = set_client()
-            fields = ["sitemap_path", "file_data_retension", "file"]
+            fields = ["sitemap_path", "file_data_retension", "is_ocr_enabled", "is_anonymized", "file"]
             json = pluck_data(fields, kwargs)
             kwargs["multipart_data"] = CreateSourceMultipartData(**json)
 
@@ -503,11 +512,41 @@ class CustomGPT:
 
         def acreate(*args: Any, **kwargs: Any):
             client = set_client()
-            fields = ["sitemap_path", "file_data_retension", "file"]
+            fields = ["sitemap_path", "file_data_retension", "is_ocr_enabled", "is_anonymized", "file"]
             json = pluck_data(fields, kwargs)
             kwargs["multipart_data"] = CreateSourceMultipartData(**json)
 
             return create_source.asyncio_detailed(client=client, *args, **kwargs)
+
+        def update(*args: Any, **kwargs: Any):
+            client = set_client()
+            fields = [
+                "executive_js",
+                "data_refresh_frequency",
+                "create_new_pages",
+                "remove_unexist_pages",
+                "refresh_existing_pages",
+                "refresh_schedule",
+            ]
+            json = pluck_data(fields, kwargs)
+            kwargs["json_body"] = UpdateSourceJsonBody(**json)
+
+            return update_source.sync_detailed(client=client, *args, **kwargs)
+
+        def aupdate(*args: Any, **kwargs: Any):
+            client = set_client()
+            fields = [
+                "executive_js",
+                "data_refresh_frequency",
+                "create_new_pages",
+                "remove_unexist_pages",
+                "refresh_existing_pages",
+                "refresh_schedule",
+            ]
+            json = pluck_data(fields, kwargs)
+            kwargs["json_body"] = UpdateSourceJsonBody(**json)
+
+            return update_source.asyncio_detailed(client=client, *args, **kwargs)
 
         def delete(*args: Any, **kwargs: Any):
             client = set_client()
@@ -519,9 +558,56 @@ class CustomGPT:
 
             return delete_source.asyncio_detailed(client=client, *args, **kwargs)
 
-# Class for representing the User object of the CustomGPT API
-# The User object contains methods for getting and updating user information,
-# both synchronously and asynchronously
+        def synchronize(*args: Any, **kwargs: Any):
+            client = set_client()
+
+            return synchronize_source.sync_detailed(client=client, *args, **kwargs)
+
+        def asynchronize(*args: Any, **kwargs: Any):
+            client = set_client()
+
+            return synchronize_source.asyncio_detailed(client=client, *args, **kwargs)
+
+    class ReportsAnalytics:
+        def traffic(*args: Any, **kwargs: Any):
+            client = set_client()
+
+            return traffic_reports.sync_detailed(client=client, *args, **kwargs)
+
+        def atraffic(*args: Any, **kwargs: Any):
+            client = set_client()
+
+            return traffic_reports.asyncio_detailed(client=client, *args, **kwargs)
+
+        def queries(*args: Any, **kwargs: Any):
+            client = set_client()
+
+            return queries_reports.sync_detailed(client=client, *args, **kwargs)
+
+        def aqueries(*args: Any, **kwargs: Any):
+            client = set_client()
+
+            return queries_reports.asyncio_detailed(client=client, *args, **kwargs)
+
+        def conversations(*args: Any, **kwargs: Any):
+            client = set_client()
+
+            return conversations_reports.sync_detailed(client=client, *args, **kwargs)
+
+        def aconversations(*args: Any, **kwargs: Any):
+            client = set_client()
+
+            return conversations_reports.asyncio_detailed(client=client, *args, **kwargs)
+
+        def analysis(*args: Any, **kwargs: Any):
+            client = set_client()
+
+            return analysis_reports.sync_detailed(client=client, *args, **kwargs)
+
+        def aanalysis(*args: Any, **kwargs: Any):
+            client = set_client()
+
+            return analysis_reports.asyncio_detailed(client=client, *args, **kwargs)
 
     class User:
         def get(*args: Any, **kwargs: Any):
@@ -549,3 +635,14 @@ class CustomGPT:
             kwargs["multipart_data"] = UpdateUserMultipartData(**json)
 
             return update_user.asyncio_detailed(client=client, *args, **kwargs)
+
+    class Limit:
+        def get(*args: Any, **kwargs: Any):
+            client = set_client()
+
+            return get_api_v1_limits_usage.sync_detailed(client=client, *args, **kwargs)
+
+        def aget(*args: Any, **kwargs: Any):
+            client = set_client()
+
+            return get_api_v1_limits_usage.asyncio_detailed(client=client, *args, **kwargs)

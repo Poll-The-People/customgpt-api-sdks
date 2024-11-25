@@ -19,7 +19,7 @@ class DeletePageResponse200:
         data (Union[Unset, DeletePageResponse200Data]):
     """
 
-    status: Union[Unset, str] = "success"
+    status: Union[Unset, str] = UNSET
     data: Union[Unset, "DeletePageResponse200Data"] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 

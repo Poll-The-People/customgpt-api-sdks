@@ -31,7 +31,7 @@ class UpdatePluginJsonBody:
         human_name = self.human_name
         keywords = self.keywords
         description = self.description
-        is_active = self.is_active
+        is_active = True if self.is_active else False
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)

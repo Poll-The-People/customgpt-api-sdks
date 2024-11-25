@@ -19,7 +19,7 @@ class CreatePluginResponse201:
         data (Union[Unset, CreatePluginResponse201Data]):
     """
 
-    status: Union[Unset, str] = "success"
+    status: Union[Unset, str] = UNSET
     data: Union[Unset, "CreatePluginResponse201Data"] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 

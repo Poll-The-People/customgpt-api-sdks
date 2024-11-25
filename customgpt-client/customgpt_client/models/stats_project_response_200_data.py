@@ -16,7 +16,9 @@ class StatsProjectResponse200Data:
         pages_indexed (Union[Unset, int]): Number of pages indexed for the project Example: 100.
         crawl_credits_used (Union[Unset, int]): Number of crawl credits used for the project Example: 100.
         query_credits_used (Union[Unset, int]): Number of query credits used for the project Example: 100.
-        index_credits_used (Union[Unset, int]): Number of index credits used for the project Example: 100.
+        total_queries (Union[Unset, int]): Number of queries used for the project Example: 100.
+        total_words_indexed (Union[Unset, int]): Number of index credits used for the project Example: 100.
+        total_storage_credits_used (Union[Unset, int]): Number of words stored for the project Example: 100.
     """
 
     pages_found: Union[Unset, int] = UNSET
@@ -24,7 +26,9 @@ class StatsProjectResponse200Data:
     pages_indexed: Union[Unset, int] = UNSET
     crawl_credits_used: Union[Unset, int] = UNSET
     query_credits_used: Union[Unset, int] = UNSET
-    index_credits_used: Union[Unset, int] = UNSET
+    total_queries: Union[Unset, int] = UNSET
+    total_words_indexed: Union[Unset, int] = UNSET
+    total_storage_credits_used: Union[Unset, int] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
@@ -33,7 +37,9 @@ class StatsProjectResponse200Data:
         pages_indexed = self.pages_indexed
         crawl_credits_used = self.crawl_credits_used
         query_credits_used = self.query_credits_used
-        index_credits_used = self.index_credits_used
+        total_queries = self.total_queries
+        total_words_indexed = self.total_words_indexed
+        total_storage_credits_used = self.total_storage_credits_used
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
@@ -48,8 +54,12 @@ class StatsProjectResponse200Data:
             field_dict["crawl_credits_used"] = crawl_credits_used
         if query_credits_used is not UNSET:
             field_dict["query_credits_used"] = query_credits_used
-        if index_credits_used is not UNSET:
-            field_dict["index_credits_used"] = index_credits_used
+        if total_queries is not UNSET:
+            field_dict["total_queries"] = total_queries
+        if total_words_indexed is not UNSET:
+            field_dict["total_words_indexed"] = total_words_indexed
+        if total_storage_credits_used is not UNSET:
+            field_dict["total_storage_credits_used"] = total_storage_credits_used
 
         return field_dict
 
@@ -65,7 +75,11 @@ class StatsProjectResponse200Data:
 
         query_credits_used = src_dict.get("query_credits_used")
 
-        index_credits_used = src_dict.get("index_credits_used")
+        total_queries = src_dict.get("total_queries")
+
+        total_words_indexed = src_dict.get("total_words_indexed")
+
+        total_storage_credits_used = src_dict.get("total_storage_credits_used")
 
         stats_project_response_200_data = cls(
             pages_found=pages_found,
@@ -73,7 +87,9 @@ class StatsProjectResponse200Data:
             pages_indexed=pages_indexed,
             crawl_credits_used=crawl_credits_used,
             query_credits_used=query_credits_used,
-            index_credits_used=index_credits_used,
+            total_queries=total_queries,
+            total_words_indexed=total_words_indexed,
+            total_storage_credits_used=total_storage_credits_used,
         )
 
         stats_project_response_200_data.additional_properties = src_dict

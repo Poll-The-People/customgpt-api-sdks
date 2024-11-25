@@ -12,11 +12,11 @@ class CreateSourceResponse400Data:
     """
     Attributes:
         code (Union[Unset, CreateSourceResponse400DataCode]): The error status code Example: 400.
-        message (Union[Unset, CreateSourceResponse400DataMessage]): The error message Example: Sitemap URL is empty.
+        message (Union[Unset, str]): The error message Example: Sitemap URL is empty.
     """
 
-    code: Union[Unset, str] = "400"
-    message: Union[Unset, str] = "Sitemap URL is empty"
+    code: Union[Unset, str] = UNSET
+    message: Union[Unset, str] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
@@ -24,9 +24,7 @@ class CreateSourceResponse400Data:
         if not isinstance(self.code, Unset):
             code = self.code
 
-        message: Union[Unset, str] = UNSET
-        if not isinstance(self.message, Unset):
-            message = self.message
+        message = self.message
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)

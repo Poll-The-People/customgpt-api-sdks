@@ -12,7 +12,7 @@ def test_sync_pages():
         sitemap_path="https://adorosario.github.io/small-sitemap.xml",
     )
     response_create = response.parsed
-    project_id = response_create.data["id"]
+    project_id = response_create.data.id
     response = CustomGPT.Page.get(project_id=project_id)
     assert response.status_code == 200
     response_page = response.parsed

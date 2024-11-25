@@ -36,9 +36,7 @@ def _get_kwargs(
     }
 
 
-def _parse_response(
-    *, client: {}, response: None
-) -> Optional[
+def _parse_response(*, client: {}, response: None) -> Optional[
     Union[
         DeleteSourceResponse200,
         DeleteSourceResponse400,
@@ -73,9 +71,7 @@ def _parse_response(
         return None
 
 
-def _build_response(
-    *, client: {}, response: None, content: Optional[bytes] = None
-) -> Response[
+def _build_response(*, client: {}, response: None, content: Optional[bytes] = None) -> Response[
     Union[
         DeleteSourceResponse200,
         DeleteSourceResponse400,
@@ -179,6 +175,7 @@ async def asyncio_detailed(
         DeleteSourceResponse500,
     ]
 ]:
+
     kwargs = _get_kwargs(
         project_id=project_id,
         source_id=source_id,

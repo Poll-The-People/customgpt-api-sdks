@@ -16,8 +16,8 @@ class CreateProjectResponse400Data:
             empty.
     """
 
-    code: Union[Unset, str] = "400"
-    message: Union[Unset, str] = "Project name can't be empty"
+    code: Union[Unset, str] = UNSET
+    message: Union[Unset, str] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:

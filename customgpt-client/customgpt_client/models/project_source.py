@@ -7,7 +7,7 @@ from dateutil.parser import isoparse
 from ..types import UNSET, Unset
 
 if TYPE_CHECKING:
-    from ..models.page import Page
+    from ..models.project_source_pages_item import ProjectSourcePagesItem
     from ..models.project_source_settings import ProjectSourceSettings
 
 
@@ -23,15 +23,15 @@ class ProjectSource:
         updated_at (Union[Unset, datetime.datetime]): The project source update date Example: 2021-01-01 00:00:00.
         type (Union[Unset, ProjectSourceType]): The project source type Example: sitemap.
         settings (Union[Unset, ProjectSourceSettings]): The project source settings
-        pages (Union[Unset, None, List['Page']]): The project source pages
+        pages (Union[Unset, None, List['ProjectSourcePagesItem']]): The project source pages
     """
 
     id: Union[Unset, int] = UNSET
     created_at: Union[Unset, datetime.datetime] = UNSET
     updated_at: Union[Unset, datetime.datetime] = UNSET
-    type: Union[Unset, str] = "sitemap"
+    type: Union[Unset, str] = UNSET
     settings: Union[Unset, "ProjectSourceSettings"] = UNSET
-    pages: Union[Unset, None, List["Page"]] = UNSET
+    pages: Union[Unset, None, List["ProjectSourcePagesItem"]] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
@@ -78,13 +78,13 @@ class ProjectSource:
             field_dict["settings"] = settings
         if pages is not UNSET:
             for index, field_value in enumerate(pages):
-                field_dict[f"pages[]"] = field_value
+                field_dict[f"pages[{index}]"] = field_value
 
         return field_dict
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        from ..models.page import Page
+        from ..models.project_source_pages_item import ProjectSourcePagesItem
         from ..models.project_source_settings import ProjectSourceSettings
 
         id = src_dict.get("id")
@@ -115,7 +115,7 @@ class ProjectSource:
         pages = []
         _pages = src_dict.get("pages")
         for pages_item_data in _pages or []:
-            pages_item = Page.from_dict(pages_item_data)
+            pages_item = ProjectSourcePagesItem.from_dict(pages_item_data)
 
             pages.append(pages_item)
 

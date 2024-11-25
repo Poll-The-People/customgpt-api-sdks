@@ -6,9 +6,7 @@ import requests
 
 from ... import errors
 from ...models.list_sources_response_200 import ListSourcesResponse200
-from ...models.list_sources_response_400 import ListSourcesResponse400
 from ...models.list_sources_response_401 import ListSourcesResponse401
-from ...models.list_sources_response_404 import ListSourcesResponse404
 from ...models.list_sources_response_500 import ListSourcesResponse500
 from ...types import Response
 
@@ -35,31 +33,15 @@ def _get_kwargs(
 
 def _parse_response(
     *, client: {}, response: None
-) -> Optional[
-    Union[
-        ListSourcesResponse200,
-        ListSourcesResponse400,
-        ListSourcesResponse401,
-        ListSourcesResponse404,
-        ListSourcesResponse500,
-    ]
-]:
+) -> Optional[Union[ListSourcesResponse200, ListSourcesResponse401, ListSourcesResponse500]]:
     if response.status_code == HTTPStatus.OK:
         response_200 = ListSourcesResponse200.from_dict(json.loads(response.text))
 
         return response_200
-    if response.status_code == HTTPStatus.BAD_REQUEST:
-        response_400 = ListSourcesResponse400.from_dict(json.loads(response.text))
-
-        return response_400
     if response.status_code == HTTPStatus.UNAUTHORIZED:
         response_401 = ListSourcesResponse401.from_dict(json.loads(response.text))
 
         return response_401
-    if response.status_code == HTTPStatus.NOT_FOUND:
-        response_404 = ListSourcesResponse404.from_dict(json.loads(response.text))
-
-        return response_404
     if response.status_code == HTTPStatus.INTERNAL_SERVER_ERROR:
         response_500 = ListSourcesResponse500.from_dict(json.loads(response.text))
 
@@ -72,15 +54,7 @@ def _parse_response(
 
 def _build_response(
     *, client: {}, response: None, content: Optional[bytes] = None
-) -> Response[
-    Union[
-        ListSourcesResponse200,
-        ListSourcesResponse400,
-        ListSourcesResponse401,
-        ListSourcesResponse404,
-        ListSourcesResponse500,
-    ]
-]:
+) -> Response[Union[ListSourcesResponse200, ListSourcesResponse401, ListSourcesResponse500]]:
     parse = _parse_response(client=client, response=response)
     return Response(
         status_code=HTTPStatus(response.status_code),
@@ -109,7 +83,7 @@ def sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Union[ListSourcesResponse200, ListSourcesResponse400, ListSourcesResponse401, ListSourcesResponse404, ListSourcesResponse500]]
+        Response[Union[ListSourcesResponse200, ListSourcesResponse401, ListSourcesResponse500]]
     """
 
     kwargs = _get_kwargs(
@@ -128,15 +102,7 @@ def sync(
     project_id: int,
     *,
     client: {},
-) -> Optional[
-    Union[
-        ListSourcesResponse200,
-        ListSourcesResponse400,
-        ListSourcesResponse401,
-        ListSourcesResponse404,
-        ListSourcesResponse500,
-    ]
-]:
+) -> Optional[Union[ListSourcesResponse200, ListSourcesResponse401, ListSourcesResponse500]]:
     """List a certain project's sources.
 
      Retrieve a list of all sources associated with a given project. This endpoint provides a collection
@@ -151,7 +117,7 @@ def sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Union[ListSourcesResponse200, ListSourcesResponse400, ListSourcesResponse401, ListSourcesResponse404, ListSourcesResponse500]
+        Union[ListSourcesResponse200, ListSourcesResponse401, ListSourcesResponse500]
     """
 
     return sync_detailed(
@@ -164,15 +130,8 @@ async def asyncio_detailed(
     project_id: int,
     *,
     client: {},
-) -> Response[
-    Union[
-        ListSourcesResponse200,
-        ListSourcesResponse400,
-        ListSourcesResponse401,
-        ListSourcesResponse404,
-        ListSourcesResponse500,
-    ]
-]:
+) -> Response[Union[ListSourcesResponse200, ListSourcesResponse401, ListSourcesResponse500]]:
+
     kwargs = _get_kwargs(
         project_id=project_id,
         client=client,
@@ -189,15 +148,7 @@ async def asyncio(
     project_id: int,
     *,
     client: {},
-) -> Optional[
-    Union[
-        ListSourcesResponse200,
-        ListSourcesResponse400,
-        ListSourcesResponse401,
-        ListSourcesResponse404,
-        ListSourcesResponse500,
-    ]
-]:
+) -> Optional[Union[ListSourcesResponse200, ListSourcesResponse401, ListSourcesResponse500]]:
     """List a certain project's sources.
 
      Retrieve a list of all sources associated with a given project. This endpoint provides a collection
@@ -212,7 +163,7 @@ async def asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Union[ListSourcesResponse200, ListSourcesResponse400, ListSourcesResponse401, ListSourcesResponse404, ListSourcesResponse500]
+        Union[ListSourcesResponse200, ListSourcesResponse401, ListSourcesResponse500]
     """
 
     return (

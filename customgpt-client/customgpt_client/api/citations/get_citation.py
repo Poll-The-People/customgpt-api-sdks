@@ -87,8 +87,8 @@ def sync_detailed(
     People/customgpt-cookbook/blob/main/examples/SDK_Get_Citation_Details.ipynb).
 
     Args:
-        project_id (int):
-        citation_id (int):
+        project_id (int):  Example: 1.
+        citation_id (int):  Example: 1.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -126,8 +126,8 @@ def sync(
     People/customgpt-cookbook/blob/main/examples/SDK_Get_Citation_Details.ipynb).
 
     Args:
-        project_id (int):
-        citation_id (int):
+        project_id (int):  Example: 1.
+        citation_id (int):  Example: 1.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -150,6 +150,7 @@ async def asyncio_detailed(
     *,
     client: {},
 ) -> Response[Union[GetCitationResponse200, GetCitationResponse400, GetCitationResponse401, GetCitationResponse404]]:
+
     kwargs = _get_kwargs(
         project_id=project_id,
         citation_id=citation_id,
@@ -178,8 +179,8 @@ async def asyncio(
     People/customgpt-cookbook/blob/main/examples/SDK_Get_Citation_Details.ipynb).
 
     Args:
-        project_id (int):
-        citation_id (int):
+        project_id (int):  Example: 1.
+        citation_id (int):  Example: 1.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.

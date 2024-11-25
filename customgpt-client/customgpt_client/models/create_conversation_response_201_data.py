@@ -15,8 +15,6 @@ class CreateConversationResponse201Data:
     Attributes:
         created_at (Union[Unset, datetime.datetime]): When was this conversation created? Example: 2023-04-30 16:43:53.
         updated_at (Union[Unset, datetime.datetime]): When was this conversation updated? Example: 2023-04-30 16:43:53.
-        deleted_at (Union[Unset, None, datetime.datetime]): When was this conversation deleted? Example: 2023-04-30
-            16:43:53.
         id (Union[Unset, int]): Conversation ID Example: 1.
         name (Union[Unset, str]): Conversation name Example: Conversation 1.
         project_id (Union[Unset, str]): Project ID for this conversation Example: 1.
@@ -26,7 +24,6 @@ class CreateConversationResponse201Data:
 
     created_at: Union[Unset, datetime.datetime] = UNSET
     updated_at: Union[Unset, datetime.datetime] = UNSET
-    deleted_at: Union[Unset, None, datetime.datetime] = UNSET
     id: Union[Unset, int] = UNSET
     name: Union[Unset, str] = UNSET
     project_id: Union[Unset, str] = UNSET
@@ -43,10 +40,6 @@ class CreateConversationResponse201Data:
         if not isinstance(self.updated_at, Unset):
             updated_at = self.updated_at.isoformat()
 
-        deleted_at: Union[Unset, None, str] = UNSET
-        if not isinstance(self.deleted_at, Unset):
-            deleted_at = self.deleted_at.isoformat() if self.deleted_at else None
-
         id = self.id
         name = self.name
         project_id = self.project_id
@@ -60,8 +53,6 @@ class CreateConversationResponse201Data:
             field_dict["created_at"] = created_at
         if updated_at is not UNSET:
             field_dict["updated_at"] = updated_at
-        if deleted_at is not UNSET:
-            field_dict["deleted_at"] = deleted_at
         if id is not UNSET:
             field_dict["id"] = id
         if name is not UNSET:
@@ -91,15 +82,6 @@ class CreateConversationResponse201Data:
         else:
             updated_at = isoparse(_updated_at)
 
-        _deleted_at = src_dict.get("deleted_at")
-        deleted_at: Union[Unset, None, datetime.datetime]
-        if _deleted_at is None:
-            deleted_at = None
-        elif isinstance(_deleted_at, Unset):
-            deleted_at = UNSET
-        else:
-            deleted_at = isoparse(_deleted_at)
-
         id = src_dict.get("id")
 
         name = src_dict.get("name")
@@ -113,7 +95,6 @@ class CreateConversationResponse201Data:
         create_conversation_response_201_data = cls(
             created_at=created_at,
             updated_at=updated_at,
-            deleted_at=deleted_at,
             id=id,
             name=name,
             project_id=project_id,

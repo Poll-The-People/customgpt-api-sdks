@@ -64,7 +64,7 @@ class {{ class_name }}:
     {% for property in model.required_properties + model.optional_properties %}
     {% if property.default is none and property.required %}
     {% if property.__class__.__name__ == 'EnumProperty' %}
-    {{property.name}}: Union[Unset, str] = Unset
+    {{property.name}}: Union[Unset, str] = UNSET
     {% else %}
     {{ property.to_string() }}
     {% endif %}
@@ -74,7 +74,7 @@ class {{ class_name }}:
     {% for property in model.required_properties + model.optional_properties %}
     {% if property.default is not none or not property.required %}
     {% if property.__class__.__name__ == 'EnumProperty' %}
-    {{property.name}}: Union[Unset, str] = Unset
+    {{property.name}}: Union[Unset, str] = UNSET
     {% else %}
     {{ property.to_string() }}
     {% endif %}
@@ -131,7 +131,7 @@ field_dict.update({
 if {{ property.python_name }} is not UNSET:
     {% if property.__class__.__name__ == 'ListProperty' %}
     for index, field_value in enumerate({{property.name}}):
-        field_dict[f"{{property.name}}[]"] = field_value
+        field_dict[f"{{property.name}}[{index}]"] = field_value
     {% else %}
     field_dict["{{ property.name }}"] = {{ property.python_name }}
     {% endif %}

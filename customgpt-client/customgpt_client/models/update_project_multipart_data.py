@@ -16,6 +16,8 @@ class UpdateProjectMultipartData:
         is_shared (Union[Unset, bool]): Whether the project is shared or not Example: True.
         sitemap_path (Union[Unset, str]): Sitemap path Example: https://example.com/sitemap.xml.
         file_data_retension (Union[Unset, bool]): File data retension Example: True.
+        is_ocr_enabled (Union[Unset, bool]): OCR enabled
+        is_anonymized (Union[Unset, bool]): Anonymized
         file (Union[Unset, File]): File Example: file.pdf.
     """
 
@@ -23,14 +25,22 @@ class UpdateProjectMultipartData:
     is_shared: Union[Unset, bool] = UNSET
     sitemap_path: Union[Unset, str] = UNSET
     file_data_retension: Union[Unset, bool] = UNSET
+    is_ocr_enabled: Union[Unset, bool] = UNSET
+    is_anonymized: Union[Unset, bool] = UNSET
     file: Union[Unset, File] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
         project_name = self.project_name
-        is_shared = self.is_shared
+        is_shared = True if self.is_shared else False
+
         sitemap_path = self.sitemap_path
-        file_data_retension = self.file_data_retension
+        file_data_retension = True if self.file_data_retension else False
+
+        is_ocr_enabled = True if self.is_ocr_enabled else False
+
+        is_anonymized = True if self.is_anonymized else False
+
         file: Union[Unset, FileJsonType] = UNSET
         if not isinstance(self.file, Unset):
             file = self.file.to_tuple()
@@ -46,6 +56,10 @@ class UpdateProjectMultipartData:
             field_dict["sitemap_path"] = sitemap_path
         if file_data_retension is not UNSET:
             field_dict["file_data_retension"] = file_data_retension
+        if is_ocr_enabled is not UNSET:
+            field_dict["is_ocr_enabled"] = is_ocr_enabled
+        if is_anonymized is not UNSET:
+            field_dict["is_anonymized"] = is_anonymized
         if file is not UNSET:
             field_dict["file"] = file
 
@@ -62,6 +76,7 @@ class UpdateProjectMultipartData:
             if isinstance(self.is_shared, Unset)
             else (None, str(self.is_shared).lower().encode(), "text/plain")
         )
+
         sitemap_path = (
             self.sitemap_path
             if isinstance(self.sitemap_path, Unset)
@@ -72,6 +87,19 @@ class UpdateProjectMultipartData:
             if isinstance(self.file_data_retension, Unset)
             else (None, str(self.file_data_retension).lower().encode(), "text/plain")
         )
+
+        is_ocr_enabled = (
+            self.is_ocr_enabled
+            if isinstance(self.is_ocr_enabled, Unset)
+            else (None, str(self.is_ocr_enabled).lower().encode(), "text/plain")
+        )
+
+        is_anonymized = (
+            self.is_anonymized
+            if isinstance(self.is_anonymized, Unset)
+            else (None, str(self.is_anonymized).lower().encode(), "text/plain")
+        )
+
         file: Union[Unset, FileJsonType] = UNSET
         if not isinstance(self.file, Unset):
             file = self.file.to_tuple()
@@ -89,6 +117,10 @@ class UpdateProjectMultipartData:
             field_dict["sitemap_path"] = sitemap_path
         if file_data_retension is not UNSET:
             field_dict["file_data_retension"] = file_data_retension
+        if is_ocr_enabled is not UNSET:
+            field_dict["is_ocr_enabled"] = is_ocr_enabled
+        if is_anonymized is not UNSET:
+            field_dict["is_anonymized"] = is_anonymized
         if file is not UNSET:
             field_dict["file"] = file
 
@@ -104,6 +136,10 @@ class UpdateProjectMultipartData:
 
         file_data_retension = src_dict.get("file_data_retension")
 
+        is_ocr_enabled = src_dict.get("is_ocr_enabled")
+
+        is_anonymized = src_dict.get("is_anonymized")
+
         _file = src_dict.get("file")
         file: Union[Unset, File]
         if isinstance(_file, Unset):
@@ -116,6 +152,8 @@ class UpdateProjectMultipartData:
             is_shared=is_shared,
             sitemap_path=sitemap_path,
             file_data_retension=file_data_retension,
+            is_ocr_enabled=is_ocr_enabled,
+            is_anonymized=is_anonymized,
             file=file,
         )
 

@@ -36,9 +36,7 @@ def _get_kwargs(
     }
 
 
-def _parse_response(
-    *, client: {}, response: None
-) -> Optional[
+def _parse_response(*, client: {}, response: None) -> Optional[
     Union[
         ReindexPageResponse200,
         ReindexPageResponse400,
@@ -73,9 +71,7 @@ def _parse_response(
         return None
 
 
-def _build_response(
-    *, client: {}, response: None, content: Optional[bytes] = None
-) -> Response[
+def _build_response(*, client: {}, response: None, content: Optional[bytes] = None) -> Response[
     Union[
         ReindexPageResponse200,
         ReindexPageResponse400,
@@ -183,6 +179,7 @@ async def asyncio_detailed(
         ReindexPageResponse500,
     ]
 ]:
+
     kwargs = _get_kwargs(
         project_id=project_id,
         page_id=page_id,

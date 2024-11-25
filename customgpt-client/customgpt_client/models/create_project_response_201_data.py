@@ -18,12 +18,11 @@ class CreateProjectResponse201Data:
         sitemap_path (Union[Unset, str]): Project sitemap Example: https://www.example.com/sitemap.xml.
         is_chat_active (Union[Unset, bool]): Whether the chat bot is active or not Example: True.
         user_id (Union[Unset, int]): User ID of the project owner Example: 1.
+        team_id (Union[Unset, int]): Team ID of the project owner Example: 1.
         created_at (Union[Unset, datetime.datetime]): Date and time when the project was created Default:
             isoparse('2023-05-08 13:06:55'). Example: 2021-01-01 00:00:00.
         updated_at (Union[Unset, datetime.datetime]): Date and time when the project was last updated Default:
             isoparse('2023-05-08 13:06:55'). Example: 2021-01-01 00:00:00.
-        deleted_at (Union[Unset, None, datetime.datetime]): Date and time when the project was deleted Example:
-            2021-01-01 00:00:00.
         type (Union[Unset, CreateProjectResponse201DataType]): Project type Default:
             CreateProjectResponse201DataType.SITEMAP. Example: SITEMAP.
         is_shared (Union[Unset, bool]): Whether the project is shared or not Example: True.
@@ -39,10 +38,10 @@ class CreateProjectResponse201Data:
     sitemap_path: Union[Unset, str] = UNSET
     is_chat_active: Union[Unset, bool] = False
     user_id: Union[Unset, int] = UNSET
+    team_id: Union[Unset, int] = UNSET
     created_at: Union[Unset, datetime.datetime] = isoparse("2023-05-08 13:06:55")
     updated_at: Union[Unset, datetime.datetime] = isoparse("2023-05-08 13:06:55")
-    deleted_at: Union[Unset, None, datetime.datetime] = UNSET
-    type: Union[Unset, str] = "SITEMAP"
+    type: Union[Unset, str] = UNSET
     is_shared: Union[Unset, bool] = False
     shareable_slug: Union[Unset, None, str] = UNSET
     shareable_link: Union[Unset, None, str] = UNSET
@@ -54,8 +53,10 @@ class CreateProjectResponse201Data:
         id = self.id
         project_name = self.project_name
         sitemap_path = self.sitemap_path
-        is_chat_active = self.is_chat_active
+        is_chat_active = True if self.is_chat_active else False
+
         user_id = self.user_id
+        team_id = self.team_id
         created_at: Union[Unset, str] = UNSET
         if not isinstance(self.created_at, Unset):
             created_at = self.created_at.isoformat()
@@ -64,15 +65,12 @@ class CreateProjectResponse201Data:
         if not isinstance(self.updated_at, Unset):
             updated_at = self.updated_at.isoformat()
 
-        deleted_at: Union[Unset, None, str] = UNSET
-        if not isinstance(self.deleted_at, Unset):
-            deleted_at = self.deleted_at.isoformat() if self.deleted_at else None
-
         type: Union[Unset, str] = UNSET
         if not isinstance(self.type, Unset):
             type = self.type
 
-        is_shared = self.is_shared
+        is_shared = True if self.is_shared else False
+
         shareable_slug = self.shareable_slug
         shareable_link = self.shareable_link
         embed_code = self.embed_code
@@ -91,12 +89,12 @@ class CreateProjectResponse201Data:
             field_dict["is_chat_active"] = is_chat_active
         if user_id is not UNSET:
             field_dict["user_id"] = user_id
+        if team_id is not UNSET:
+            field_dict["team_id"] = team_id
         if created_at is not UNSET:
             field_dict["created_at"] = created_at
         if updated_at is not UNSET:
             field_dict["updated_at"] = updated_at
-        if deleted_at is not UNSET:
-            field_dict["deleted_at"] = deleted_at
         if type is not UNSET:
             field_dict["type"] = type
         if is_shared is not UNSET:
@@ -124,6 +122,8 @@ class CreateProjectResponse201Data:
 
         user_id = src_dict.get("user_id")
 
+        team_id = src_dict.get("team_id")
+
         _created_at = src_dict.get("created_at")
         created_at: Union[Unset, datetime.datetime]
         if isinstance(_created_at, Unset):
@@ -137,15 +137,6 @@ class CreateProjectResponse201Data:
             updated_at = UNSET
         else:
             updated_at = isoparse(_updated_at)
-
-        _deleted_at = src_dict.get("deleted_at")
-        deleted_at: Union[Unset, None, datetime.datetime]
-        if _deleted_at is None:
-            deleted_at = None
-        elif isinstance(_deleted_at, Unset):
-            deleted_at = UNSET
-        else:
-            deleted_at = isoparse(_deleted_at)
 
         type = src_dict.get("type")
 
@@ -165,9 +156,9 @@ class CreateProjectResponse201Data:
             sitemap_path=sitemap_path,
             is_chat_active=is_chat_active,
             user_id=user_id,
+            team_id=team_id,
             created_at=created_at,
             updated_at=updated_at,
-            deleted_at=deleted_at,
             type=type,
             is_shared=is_shared,
             shareable_slug=shareable_slug,

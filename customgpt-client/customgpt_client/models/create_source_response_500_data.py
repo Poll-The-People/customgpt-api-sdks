@@ -15,7 +15,7 @@ class CreateSourceResponse500Data:
         message (Union[Unset, str]):  Example: Internal Server Error.
     """
 
-    code: Union[Unset, str] = "500"
+    code: Union[Unset, str] = UNSET
     message: Union[Unset, str] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 

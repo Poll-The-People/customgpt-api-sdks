@@ -15,10 +15,8 @@ def test_sync_citations():
         sitemap_path="https://adorosario.github.io/small-sitemap.xml",
     )
     response_create = response.parsed
-    project_id = response_create.data["id"]
-    response = CustomGPT.Conversation.create(
-        project_id=project_id, name="test_converation"
-    )
+    project_id = response_create.data.id
+    response = CustomGPT.Conversation.create(project_id=project_id, name="test_converation")
     response_create = response.parsed
     session_id = response_create.data["session_id"]
     assert response_create.data["name"] == "test_converation"
@@ -50,15 +48,13 @@ async def test_async_citations():
     CustomGPT.base_url, CustomGPT.api_key = credentials()
 
     CustomGPT.timeout = 10000
-    response = await CustomGPT.Project.acreate(
+    response = CustomGPT.Project.create(
         project_name="test",
         sitemap_path="https://adorosario.github.io/small-sitemap.xml",
     )
     response_create = response.parsed
     project_id = response_create.data.id
-    response = await CustomGPT.Conversation.acreate(
-        project_id=project_id, name="test_converation"
-    )
+    response = await CustomGPT.Conversation.acreate(project_id=project_id, name="test_converation")
     response_create = response.parsed
     session_id = response_create.data.session_id
     assert response_create.data.name == "test_converation"
@@ -81,7 +77,5 @@ async def test_async_citations():
     )
     citation_id = response.parsed.data.citations[0]
 
-    response = await CustomGPT.Citation.aget(
-        project_id=project_id, citation_id=citation_id
-    )
+    response = await CustomGPT.Citation.aget(project_id=project_id, citation_id=citation_id)
     assert response.status_code == 200

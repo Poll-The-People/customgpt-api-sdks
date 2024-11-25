@@ -12,35 +12,59 @@ class ListSourcesResponse200DataUploadsSettings:
     """The project source settings
 
     Attributes:
-        data_refresh (Union[Unset, bool]): Whether the project source data should be refreshed Example: True.
         executive_js (Union[Unset, bool]): Whether the project source should execute JavaScript Default: True. Example:
             True.
-        data_refresh_frequency (Union[Unset, str]): The project source data refresh frequency Default: 'never'. Example:
-            never.
+        data_refresh_frequency (Union[Unset, ListSourcesResponse200DataUploadsSettingsDataRefreshFrequency]): The
+            project source data refresh frequency Default:
+            ListSourcesResponse200DataUploadsSettingsDataRefreshFrequency.NEVER. Example: never.
+        create_new_pages (Union[Unset, bool]): Add new pages to project automatically during refresh project source
+            Default: True. Example: True.
+        remove_unexist_pages (Union[Unset, bool]): Remove pages from project automatically during refresh project source
+            Default: True.
+        refresh_existing_pages (Union[Unset, ListSourcesResponse200DataUploadsSettingsRefreshExistingPages]): Refresh
+            existing page during refresh project source Default:
+            ListSourcesResponse200DataUploadsSettingsRefreshExistingPages.NEVER. Example: never.
         sitemap_path (Union[Unset, str]): The project source sitemap path Example: https://example.com/sitemap.xml.
     """
 
-    data_refresh: Union[Unset, bool] = False
     executive_js: Union[Unset, bool] = True
-    data_refresh_frequency: Union[Unset, str] = "never"
+    data_refresh_frequency: Union[Unset, str] = UNSET
+    create_new_pages: Union[Unset, bool] = True
+    remove_unexist_pages: Union[Unset, bool] = True
+    refresh_existing_pages: Union[Unset, str] = UNSET
     sitemap_path: Union[Unset, str] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        data_refresh = self.data_refresh
-        executive_js = self.executive_js
-        data_refresh_frequency = self.data_refresh_frequency
+        executive_js = True if self.executive_js else False
+
+        data_refresh_frequency: Union[Unset, str] = UNSET
+        if not isinstance(self.data_refresh_frequency, Unset):
+            data_refresh_frequency = self.data_refresh_frequency
+
+        create_new_pages = True if self.create_new_pages else False
+
+        remove_unexist_pages = True if self.remove_unexist_pages else False
+
+        refresh_existing_pages: Union[Unset, str] = UNSET
+        if not isinstance(self.refresh_existing_pages, Unset):
+            refresh_existing_pages = self.refresh_existing_pages
+
         sitemap_path = self.sitemap_path
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
-        if data_refresh is not UNSET:
-            field_dict["data_refresh"] = data_refresh
         if executive_js is not UNSET:
             field_dict["executive_js"] = executive_js
         if data_refresh_frequency is not UNSET:
             field_dict["data_refresh_frequency"] = data_refresh_frequency
+        if create_new_pages is not UNSET:
+            field_dict["create_new_pages"] = create_new_pages
+        if remove_unexist_pages is not UNSET:
+            field_dict["remove_unexist_pages"] = remove_unexist_pages
+        if refresh_existing_pages is not UNSET:
+            field_dict["refresh_existing_pages"] = refresh_existing_pages
         if sitemap_path is not UNSET:
             field_dict["sitemap_path"] = sitemap_path
 
@@ -48,18 +72,24 @@ class ListSourcesResponse200DataUploadsSettings:
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        data_refresh = src_dict.get("data_refresh")
-
         executive_js = src_dict.get("executive_js")
 
         data_refresh_frequency = src_dict.get("data_refresh_frequency")
 
+        create_new_pages = src_dict.get("create_new_pages")
+
+        remove_unexist_pages = src_dict.get("remove_unexist_pages")
+
+        refresh_existing_pages = src_dict.get("refresh_existing_pages")
+
         sitemap_path = src_dict.get("sitemap_path")
 
         list_sources_response_200_data_uploads_settings = cls(
-            data_refresh=data_refresh,
             executive_js=executive_js,
             data_refresh_frequency=data_refresh_frequency,
+            create_new_pages=create_new_pages,
+            remove_unexist_pages=remove_unexist_pages,
+            refresh_existing_pages=refresh_existing_pages,
             sitemap_path=sitemap_path,
         )
 

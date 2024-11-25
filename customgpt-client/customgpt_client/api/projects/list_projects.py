@@ -6,6 +6,7 @@ import requests
 
 from ... import errors
 from ...models.list_projects_order import ListProjectsOrder
+from ...models.list_projects_order_by import ListProjectsOrderBy
 from ...models.list_projects_response_200 import ListProjectsResponse200
 from ...models.list_projects_response_401 import ListProjectsResponse401
 from ...models.list_projects_response_500 import ListProjectsResponse500
@@ -18,8 +19,10 @@ def _get_kwargs(
     page: Union[Unset, None, int] = 1,
     duration: Union[Unset, None, int] = UNSET,
     order: Union[Unset, None, ListProjectsOrder] = ListProjectsOrder.DESC,
+    order_by: Union[Unset, None, ListProjectsOrderBy] = ListProjectsOrderBy.ID,
     width: Union[Unset, None, str] = "100%",
     height: Union[Unset, None, str] = "auto",
+    name: Union[Unset, None, str] = UNSET,
 ) -> Dict[str, Any]:
     url = "{}/api/v1/projects".format(client.base_url)
 
@@ -37,9 +40,17 @@ def _get_kwargs(
 
     params["order"] = json_order
 
+    json_order_by: Union[Unset, None, str] = UNSET
+    if not isinstance(order_by, Unset):
+        json_order_by = order_by if order_by else None
+
+    params["orderBy"] = json_order_by
+
     params["width"] = width
 
     params["height"] = height
+
+    params["name"] = name
 
     params = {k: v for k, v in params.items() if v is not UNSET and v is not None}
 
@@ -93,8 +104,10 @@ def sync_detailed(
     page: Union[Unset, None, int] = 1,
     duration: Union[Unset, None, int] = UNSET,
     order: Union[Unset, None, ListProjectsOrder] = ListProjectsOrder.DESC,
+    order_by: Union[Unset, None, ListProjectsOrderBy] = ListProjectsOrderBy.ID,
     width: Union[Unset, None, str] = "100%",
     height: Union[Unset, None, str] = "auto",
+    name: Union[Unset, None, str] = UNSET,
 ):
     """List all projects.
 
@@ -110,9 +123,13 @@ def sync_detailed(
     Args:
         page (Union[Unset, None, int]):  Default: 1. Example: 1.
         duration (Union[Unset, None, int]):
-        order (Union[Unset, None, ListProjectsOrder]):  Default: ListProjectsOrder.DESC.
+        order (Union[Unset, None, ListProjectsOrder]):  Default: ListProjectsOrder.DESC. Example:
+            desc.
+        order_by (Union[Unset, None, ListProjectsOrderBy]):  Default: ListProjectsOrderBy.ID.
+            Example: id.
         width (Union[Unset, None, str]):  Default: '100%'. Example: 50rem.
         height (Union[Unset, None, str]):  Default: 'auto'. Example: 50rem.
+        name (Union[Unset, None, str]):  Example: Sample project.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -127,8 +144,10 @@ def sync_detailed(
         page=page,
         duration=duration,
         order=order,
+        order_by=order_by,
         width=width,
         height=height,
+        name=name,
     )
 
     response = requests.request(
@@ -144,8 +163,10 @@ def sync(
     page: Union[Unset, None, int] = 1,
     duration: Union[Unset, None, int] = UNSET,
     order: Union[Unset, None, ListProjectsOrder] = ListProjectsOrder.DESC,
+    order_by: Union[Unset, None, ListProjectsOrderBy] = ListProjectsOrderBy.ID,
     width: Union[Unset, None, str] = "100%",
     height: Union[Unset, None, str] = "auto",
+    name: Union[Unset, None, str] = UNSET,
 ) -> Optional[Union[ListProjectsResponse200, ListProjectsResponse401, ListProjectsResponse500]]:
     """List all projects.
 
@@ -161,9 +182,13 @@ def sync(
     Args:
         page (Union[Unset, None, int]):  Default: 1. Example: 1.
         duration (Union[Unset, None, int]):
-        order (Union[Unset, None, ListProjectsOrder]):  Default: ListProjectsOrder.DESC.
+        order (Union[Unset, None, ListProjectsOrder]):  Default: ListProjectsOrder.DESC. Example:
+            desc.
+        order_by (Union[Unset, None, ListProjectsOrderBy]):  Default: ListProjectsOrderBy.ID.
+            Example: id.
         width (Union[Unset, None, str]):  Default: '100%'. Example: 50rem.
         height (Union[Unset, None, str]):  Default: 'auto'. Example: 50rem.
+        name (Union[Unset, None, str]):  Example: Sample project.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -178,8 +203,10 @@ def sync(
         page=page,
         duration=duration,
         order=order,
+        order_by=order_by,
         width=width,
         height=height,
+        name=name,
     ).parsed
 
 
@@ -189,16 +216,21 @@ async def asyncio_detailed(
     page: Union[Unset, None, int] = 1,
     duration: Union[Unset, None, int] = UNSET,
     order: Union[Unset, None, ListProjectsOrder] = ListProjectsOrder.DESC,
+    order_by: Union[Unset, None, ListProjectsOrderBy] = ListProjectsOrderBy.ID,
     width: Union[Unset, None, str] = "100%",
     height: Union[Unset, None, str] = "auto",
+    name: Union[Unset, None, str] = UNSET,
 ) -> Response[Union[ListProjectsResponse200, ListProjectsResponse401, ListProjectsResponse500]]:
+
     kwargs = _get_kwargs(
         client=client,
         page=page,
         duration=duration,
         order=order,
+        order_by=order_by,
         width=width,
         height=height,
+        name=name,
     )
 
     response = requests.request(
@@ -214,8 +246,10 @@ async def asyncio(
     page: Union[Unset, None, int] = 1,
     duration: Union[Unset, None, int] = UNSET,
     order: Union[Unset, None, ListProjectsOrder] = ListProjectsOrder.DESC,
+    order_by: Union[Unset, None, ListProjectsOrderBy] = ListProjectsOrderBy.ID,
     width: Union[Unset, None, str] = "100%",
     height: Union[Unset, None, str] = "auto",
+    name: Union[Unset, None, str] = UNSET,
 ) -> Optional[Union[ListProjectsResponse200, ListProjectsResponse401, ListProjectsResponse500]]:
     """List all projects.
 
@@ -231,9 +265,13 @@ async def asyncio(
     Args:
         page (Union[Unset, None, int]):  Default: 1. Example: 1.
         duration (Union[Unset, None, int]):
-        order (Union[Unset, None, ListProjectsOrder]):  Default: ListProjectsOrder.DESC.
+        order (Union[Unset, None, ListProjectsOrder]):  Default: ListProjectsOrder.DESC. Example:
+            desc.
+        order_by (Union[Unset, None, ListProjectsOrderBy]):  Default: ListProjectsOrderBy.ID.
+            Example: id.
         width (Union[Unset, None, str]):  Default: '100%'. Example: 50rem.
         height (Union[Unset, None, str]):  Default: 'auto'. Example: 50rem.
+        name (Union[Unset, None, str]):  Example: Sample project.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -249,7 +287,9 @@ async def asyncio(
             page=page,
             duration=duration,
             order=order,
+            order_by=order_by,
             width=width,
             height=height,
+            name=name,
         )
     ).parsed
